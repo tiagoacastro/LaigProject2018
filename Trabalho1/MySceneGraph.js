@@ -1,14 +1,15 @@
 var DEGREE_TO_RAD = Math.PI / 180;
 
 // Order of the groups in the XML document.
-var VIEWS_INDEX = 0;
-var AMBIENT_INDEX = 1;
-var LIGHTS_INDEX = 2;
-var TEXTURES_INDEX = 3;
-var MATERIALS_INDEX = 4;
-var TRANSFORMATIONS_INDEX = 5;
-var PRIMITIVES_INDEX = 6;
-var COMPONENTS_INDEX = 7;
+var SCENE_INDEX = 0
+var VIEWS_INDEX = 1;
+var AMBIENT_INDEX = 2;
+var LIGHTS_INDEX = 3;
+var TEXTURES_INDEX = 4;
+var MATERIALS_INDEX = 5;
+var TRANSFORMATIONS_INDEX = 6;
+var PRIMITIVES_INDEX = 7;
+var COMPONENTS_INDEX = 8;
 
 /**
  * MySceneGraph class, representing the scene graph.
@@ -87,6 +88,19 @@ class MySceneGraph {
         var error;
 
         // Processes each node, verifying errors.
+
+        // <scene>
+        var index;
+        if ((index = nodeNames.indexOf("scene")) == -1)
+            return "tag <scene> missing";
+        else {
+            if (index != SCENE_INDEX)
+                this.onXMLMinorError("tag <scene> out of order");
+
+            //Parse scene block
+            if ((error = this.parseScene(nodes[index])) != null)
+                return error;
+        }
 
         // <views>
         var index;
@@ -185,23 +199,19 @@ class MySceneGraph {
             if ((error = this.parseComponents(nodes[index])) != null)
                 return error;
         }
+
+        console.log(this);
     }
 
     /**
      * Parses the <views> block.
      */
-    parseViews(viewsNode) {
+    parseScene(sceneNode) {
 
-        var children = viewsNode.children;
+        this.root = this.reader.getString(sceneNode, 'root');
+        this.axis_length = this.reader.getFloat(sceneNode, 'axis_length');       
 
-        var nodeNames = [];
-
-        for (var i = 0; i < children.length; i++)
-            nodeNames.push(children[i].nodeName);
-
-        
-
-        this.log("Parsed views");
+        this.log("Parsed scene");
 
         return null;
     }
