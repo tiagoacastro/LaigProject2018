@@ -1,2 +1,2 @@
 # LaigProject2018
-Laig Projects depeloped with @Quendrique
+Laig Projects developed with @Quendrique
