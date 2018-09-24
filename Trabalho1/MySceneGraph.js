@@ -162,28 +162,47 @@ class MySceneGraph {
                 return error;
         }
 
-        // <transformations>
-        if ((index = nodeNames.indexOf("transformations")) == -1)
-            return "tag <transformations> missing";
+        // <primitives>
+        if ((index = nodeNames.indexOf("primitives")) == -1)
+            return "tag <primitives> missing";
         else {
-            if (index != TRANSFORMATIONS_INDEX)
-                this.onXMLMinorError("tag <transformations> out of order");
+            if (index != PRIMITIVES_INDEX)
+                this.onXMLMinorError("tag <primitives> out of order");
 
-            //Parse transformations block
-            if ((error = this.parseTransformations(nodes[index])) != null)
+            //Parse primitives block
+            if ((error = this.parsePrimitives(nodes[index])) != null)
                 return error;
         }
 
-        // <transformations>
-        if ((index = nodeNames.indexOf("transformations")) == -1)
-            return "tag <transformations> missing";
+        // <components>
+        if ((index = nodeNames.indexOf("components")) == -1)
+            return "tag <components> missing";
         else {
-            if (index != TRANSFORMATIONS_INDEX)
-                this.onXMLMinorError("tag <transformations> out of order");
+            if (index != COMPONENTS_INDEX)
+                this.onXMLMinorError("tag <components> out of order");
 
-            //Parse transformations block
-            if ((error = this.parseTransformations(nodes[index])) != null)
+            //Parse components block
+            if ((error = this.parseComponents(nodes[index])) != null)
                 return error;
         }
+    }
+
+    /**
+     * Parses the <views> block.
+     */
+    parseViews(viewsNode) {
+
+        var children = viewsNode.children;
+
+        var nodeNames = [];
+
+        for (var i = 0; i < children.length; i++)
+            nodeNames.push(children[i].nodeName);
+
+        
+
+        this.log("Parsed views");
+
+        return null;
     }
 }
