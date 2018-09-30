@@ -329,7 +329,7 @@ class MySceneGraph {
      * Callback to be executed on any minor error, showing a warning on the console.
      * @param {string} message
      */
-    onXMLMinorErro(message) {
+    onXMLMinorError(message) {
         console.warn("Warning: " + message);
     }
 
