@@ -205,6 +205,7 @@ class MySceneGraph {
 
     /**
      * Parses the <scene> block.
+     * @param {scene block element} sceneNode
      */
     parseScene(sceneNode) {
         this.root = this.reader.getString(sceneNode, 'root');
@@ -225,6 +226,7 @@ class MySceneGraph {
 
     /**
      * Parses the <ambient> block.
+     * @param {ambient block element} ambientNode
      */
     parseAmbient(ambientNode) {
         var children = ambientNode.children;
@@ -302,6 +304,7 @@ class MySceneGraph {
 
     /**
      * Parses the <primitives> block.
+     * @param {primitives block element} primitivesNode
      */
     parsePrimitives(primitivesNode) {
         var children = primitivesNode.children;
