@@ -235,65 +235,59 @@ class MySceneGraph {
             nodeNames.push(children[i].nodeName);
 
         var indexAmbient = nodeNames.indexOf("ambient");
-        this.ambientR = 2;
-        this.ambientG = 2;
-        this.ambientB = 2;
-        this.ambientA = 1;
+        this.ambient = [2, 2, 2, 1];
         if (indexAmbient == -1) {
             this.onXMLMinorError("ambient planes missing; assuming 'r = 2' and 'g = 2' and 'b = 2' and 'a = 1'");
         }
         else {
-            this.ambientR = this.reader.getFloat(children[indexAmbient], 'r');
-            this.ambientG = this.reader.getFloat(children[indexAmbient], 'g');
-            this.ambientB = this.reader.getFloat(children[indexAmbient], 'b');
-            this.ambientA = this.reader.getFloat(children[indexAmbient], 'a');
+            this.ambient[0] = this.reader.getFloat(children[indexAmbient], 'r');
+            this.ambient[1] = this.reader.getFloat(children[indexAmbient], 'g');
+            this.ambient[2] = this.reader.getFloat(children[indexAmbient], 'b');
+            this.ambient[3] = this.reader.getFloat(children[indexAmbient], 'a');
 
-            if (!(this.ambientR != null && !isNaN(this.ambientR))) {
-                this.ambientR = 2;
+            if (!(this.ambient[0] != null && !isNaN(this.ambient[0]))) {
+                this.ambient[0] = 2;
                 this.onXMLMinorError("unable to parse value for r plane; assuming 'r = 2'");
             }
-            if (!(this.ambientG != null && !isNaN(this.ambientG))) {
-                this.ambientG = 2;
+            if (!(this.ambient[1] != null && !isNaN(this.ambient[1]))) {
+                this.ambient[1] = 2;
                 this.onXMLMinorError("unable to parse value for g plane; assuming 'g = 2'");
             }
-            if (!(this.ambientB != null && !isNaN(this.ambientB))) {
-                this.ambientB = 2;
+            if (!(this.ambient[2] != null && !isNaN(this.ambient[2]))) {
+                this.ambient[2] = 2;
                 this.onXMLMinorError("unable to parse value for b plane; assuming 'b = 2'");
             }
-            if (!(this.ambientA != null && !isNaN(this.ambientA))) {
-                this.ambientA = 1;
+            if (!(this.ambient[3] != null && !isNaN(this.ambient[3]))) {
+                this.ambient[3] = 1;
                 this.onXMLMinorError("unable to parse value for a plane; assuming 'a = 1'");
             }
         }
 
         var indexBackground = nodeNames.indexOf("background");
-        this.backgroundR = 2;
-        this.backgroundG = 2;
-        this.backgroundB = 2;
-        this.backgroundA = 1;
+        this.background = [2, 2, 2, 1];
         if (indexBackground == -1) {
             this.onXMLMinorError("background planes missing; assuming 'r = 2' and 'g = 2' and 'b = 2' and 'a = 1'");
         }
         else {
-            this.backgroundR = this.reader.getFloat(children[indexBackground], 'r');
-            this.backgroundG = this.reader.getFloat(children[indexBackground], 'g');
-            this.backgroundB = this.reader.getFloat(children[indexBackground], 'b');
-            this.backgroundA = this.reader.getFloat(children[indexBackground], 'a');
+            this.background[0] = this.reader.getFloat(children[indexBackground], 'r');
+            this.background[1] = this.reader.getFloat(children[indexBackground], 'g');
+            this.background[2] = this.reader.getFloat(children[indexBackground], 'b');
+            this.background[3] = this.reader.getFloat(children[indexBackground], 'a');
 
-            if (!(this.backgroundR != null && !isNaN(this.backgroundR))) {
-                this.backgroundR = 2;
+            if (!(this.background[0] != null && !isNaN(this.background[0]))) {
+                this.background[0] = 2;
                 this.onXMLMinorError("unable to parse value for r plane; assuming 'r = 2'");
             }
-            if (!(this.backgroundG != null && !isNaN(this.backgroundG))) {
-                this.backgroundG = 2;
+            if (!(this.background[1] != null && !isNaN(this.background[1]))) {
+                this.background[1] = 2;
                 this.onXMLMinorError("unable to parse value for g plane; assuming 'g = 2'");
             }
-            if (!(this.backgroundB != null && !isNaN(this.backgroundB))) {
-                this.backgroundB = 2;
+            if (!(this.background[2] != null && !isNaN(this.background[2]))) {
+                this.background[2] = 2;
                 this.onXMLMinorError("unable to parse value for b plane; assuming 'b = 2'");
             }
-            if (!(this.backgroundA != null && !isNaN(this.backgroundA))) {
-                this.backgroundA = 1;
+            if (!(this.background[3] != null && !isNaN(this.background[3]))) {
+                this.background[3] = 1;
                 this.onXMLMinorError("unable to parse value for a plane; assuming 'a = 1'");
             }
         }     
