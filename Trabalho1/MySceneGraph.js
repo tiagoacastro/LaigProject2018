@@ -298,7 +298,9 @@ class MySceneGraph {
 
     parseLights(lightsNode) {
 
-        /*
+        this.lights = [];
+        var numLights = 0;
+
         var children = lightsNode.children;
 
         var nodeNames = [];
@@ -314,10 +316,10 @@ class MySceneGraph {
             //omni
             if (children[i].nodeName == "omni") {
                 
-                let lightAux = children[i].children;
-                let omniLight =  new MyOmniLight();
+                var lightAux = children[i].children;
+                var omniLight =  new MyOmniLight();
 
-                omniLight = this.parseOmniLight(lightAux);
+                omniLight = this.parseOmniLight(children[i]);
 
                 var aux = this.reader.getFloat(children[i], 'enabled');
                 if (!(aux != null && !isNaN(aux) && (aux == 0 || aux == 1))) {
@@ -326,88 +328,24 @@ class MySceneGraph {
 
             }
 
-            //Get id of the current light
-            var lightId = this.reader.getString(children[i], 'id');
-            if (lightId == null) {
-                return "no ID defined for light";
-            }
-
-            //Check for repeated IDs
-            if (this.lights[lightId] != null) {
-                return "ID must be unique for each light (conflict: ID = " + lightId + ")";
-            }
-
-            //Specs for current light
-            grandChildren = children[i].children;
-
-            nodeNames = [];
-            for (var j = 0; j < grandChildren.lenght; j++) {
-                nodeNames.push(grandChildren[j].nodeName);
-            }
-
-            //Get indices of each element
-            var locationIndex = nodeNames.indexOf("location");
-            var ambientIndex = nodeNames.indexOf("ambient");
-            var diffuseIndex = nodeNames.indexOf("diffuse");
-            var specularIndex = nodeNames.indexOf("specular");
-            var targetIndex = nodeNames.indexOf("target");
-
-            //Light location
-            var lightLocation = [];
-            if (locationIndex != -1) {
-                //x
-                var x = this.reader.getFloat(grandChildren[positionIndex], 'x');
-                if (!(x != null && !isNaN(x))) {
-                    return "unable to parse x-coordinate of the light position for ID = " + lightId;
-                }
-                else {
-                    positionLight.push(x);
-                }
-                //y
-                var y = this.reader.getFloat(grandChildren[positionIndex], 'y');
-                if (!(y != null && !isNaN(y))) {
-                    return "unable to parse y-coordinate of the light position for ID = " + lightId;
-                }
-                else {
-                    positionLight.push(y);
-                }
-                //z
-                var z = this.reader.getFloat(grandChildren[positionIndex], 'z');
-                if (!(z != null && !isNaN(z))) {
-                    return "unable to parse z-coordinate of the light position for ID = " + lightId;
-                }
-                else {
-                    positionLight.push(z);
-                }
-                //w
-                var w = this.reader.getFloat(grandChildren[positionIndex], 'w');
-                if (!(w != null && !isNaN(w))) {
-                    return "unable to parse w-coordinate of the light position for ID = " + lightId;
-                }
-                else {
-                    positionLight.push(w);
-                }
-            }
-
         }
 
         this.log("Parsed lights");
 
         return null;
-        */
-
+        
     }
 
     parseOmniLight(omni) {
-        /*
-        let omniAux = new MyOmniLight();
+        
+        var omniAux = new MyOmniLight();
 
-        let aux = this.reader.getFloat(omni, 'enabled');
+        var aux = this.reader.getFloat(omni, 'enabled');
         if (!(aux != null && !isNaN(aux) && (aux == 0 || aux == 1))) {
             this.onXMLMinorError("unable to parse value component of the 'enable light' field for ID = " + lightId + "; assuming 'value = 1'")
         }
 
-        let lightId = this.reader.getString(omni, 'id');
+        var lightId = this.reader.getString(omni, 'id');
         if (lightId == null) {
             return "no ID defined for light";
         }
@@ -416,60 +354,59 @@ class MySceneGraph {
             return "ID must be unique for each light (conflict: ID = " + lightId + ")";
         }
 
-        let specs = omni.children;
 
-        let nodeNames = [];
+        var specs = omni.children;
+
+        var nodeNames = [];
         for (var i = 0; i < specs.length; i++) {
-            nodeNames.push(grandChildren[i].nodeName);
+            nodeNames.push(specs[i].nodeName);
         }
-            //Get indices of each element
-            let locationIndex = nodeNames.indexOf("location");
-            let ambientIndex = nodeNames.indexOf("ambient");
-            let diffuseIndex = nodeNames.indexOf("diffuse");
-            let specularIndex = nodeNames.indexOf("specular");
-            let targetIndex = nodeNames.indexOf("target");
 
-            //Light location
-            var lightLocation = [];
-            if (locationIndex != -1) {
-                //x
-                let x = this.reader.getFloat(specs[positionIndex], 'x');
-                if (!(x != null && !isNaN(x))) {
-                    return "unable to parse x-coordinate of the light position for ID = " + lightId;
-                }
-                else {
-                    positionLight.push(x);
-                }
-                //y
-                var y = this.reader.getFloat(specs[positionIndex], 'y');
-                if (!(y != null && !isNaN(y))) {
-                    return "unable to parse y-coordinate of the light position for ID = " + lightId;
-                }
-                else {
-                    positionLight.push(y);
-                }
-                //z
-                var z = this.reader.getFloat(specs[positionIndex], 'z');
-                if (!(z != null && !isNaN(z))) {
-                    return "unable to parse z-coordinate of the light position for ID = " + lightId;
-                }
-                else {
-                    positionLight.push(z);
-                }
-                //w
-                var w = this.reader.getFloat(specs[positionIndex], 'w');
-                if (!(w != null && !isNaN(w))) {
-                    return "unable to parse w-coordinate of the light position for ID = " + lightId;
-                }
-                else {
-                    positionLight.push(w);
-                }
+        //Get indices of each element
+        var locationIndex = nodeNames.indexOf("location");
+        var ambientIndex = nodeNames.indexOf("ambient");
+        var diffuseIndex = nodeNames.indexOf("diffuse");
+        var specularIndex = nodeNames.indexOf("specular");
+        var targetIndex = nodeNames.indexOf("target");
+
+        //Light location
+        var lightLocation = [];
+        if (locationIndex != -1) {
+            //x
+            let x = this.reader.getFloat(specs[locationIndex], 'x');
+            if (!(x != null && !isNaN(x))) {
+                return "unable to parse x-coordinate of the light position for ID = " + lightId;
             }
+            else {
+                lightLocation.push(x);
+            }
+            //y
+            var y = this.reader.getFloat(specs[locationIndex], 'y');
+            if (!(y != null && !isNaN(y))) {
+                return "unable to parse y-coordinate of the light position for ID = " + lightId;
+            }
+            else {
+                lightLocation.push(y);
+            }
+            //z
+            var z = this.reader.getFloat(specs[locationIndex], 'z');
+            if (!(z != null && !isNaN(z))) {
+                return "unable to parse z-coordinate of the light position for ID = " + lightId;
+            }
+            else {
+                lightLocation.push(z);
+            }
+            //w
+            var w = this.reader.getFloat(specs[locationIndex], 'w');
+            if (!(w != null && !isNaN(w))) {
+                return "unable to parse w-coordinate of the light position for ID = " + lightId;
+            }
+            else {
+                lightLocation.push(w);
+            }
+        }
         
-
         return omniAux;
-
-        */
 
     }
 
