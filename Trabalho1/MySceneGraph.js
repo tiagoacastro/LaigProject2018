@@ -83,6 +83,7 @@ class MySceneGraph {
 
         for (var i = 0; i < nodes.length; i++) {
             nodeNames.push(nodes[i].nodeName);
+            console.log(nodes[i].nodeName);
         }
 
         var error;
@@ -296,6 +297,10 @@ class MySceneGraph {
         return null;
     }
 
+    parseLights(lightsNode) {
+        return null;
+    }
+
     /**
      * Parses the <primitives> block.
      * @param {primitives block element} primitivesNode
@@ -310,6 +315,34 @@ class MySceneGraph {
 
         this.log("Parsed primitives");
 
+        return null;
+    }
+
+    parseViews(viewsNode) {
+        return null;
+    }
+
+    parseAmbient(ambientNode) {
+        return null;
+    }
+
+    parseTextures(texturesNode) {
+        return null;
+    }
+
+    parseMaterials(materialsNode) {
+        return null;
+    }
+
+    parseTransformations(transformationsNode) {
+        return null;
+    }
+
+    parsePrimitives(primitivesNode) {
+        return null;
+    }
+
+    parseComponents(componentsNode) {
         return null;
     }
 
