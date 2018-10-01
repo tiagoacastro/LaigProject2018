@@ -1,5 +1,5 @@
 <yas>
-    <scene root="unique_scene" axis_length="1"/>
+    <scene root="unique_scene" axis_length="3"/>
     
     <views default="view">
         <ortho id="unique_ortho" near="1" far="1" left="1" right="1" top="1" bottom="1"/>
@@ -7,14 +7,14 @@
 
     <ambient>
         <ambient r="1" g="1" b="1" a="1" />
-        <background r="1" g="1" b="1" a="1" />
+        <background r="0" g="0" b="0" a="1" />
     </ambient>
 
     <lights>
         <omni id="unique_light" enabled="1" >
             <location x="1" y="1" z="1" w="1" />
             <ambient r="1" g="1" b="1" a="1" />
-            <di1use r="1" g="1" b="1" a="1" />
+            <difuse r="1" g="1" b="1" a="1" />
             <specular r="1" g="1" b="1" a="1" />
         </omni>
     </lights>

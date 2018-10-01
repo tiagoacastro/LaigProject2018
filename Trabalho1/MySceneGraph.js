@@ -228,15 +228,16 @@ class MySceneGraph {
      * @param {ambient block element} ambientNode
      */
     parseAmbient(ambientNode) {
+
         var children = ambientNode.children;
         var nodeNames = [];
         for (var i = 0; i < children.length; i++)
             nodeNames.push(children[i].nodeName);
 
         var indexAmbient = nodeNames.indexOf("ambient");
-        this.ambient = [2, 2, 2, 1];
+        this.ambient = [0, 0, 0, 1];
         if (indexAmbient == -1) {
-            this.onXMLMinorError("ambient planes missing; assuming 'r = 2' and 'g = 2' and 'b = 2' and 'a = 1'");
+            this.onXMLMinorError("ambient planes missing; assuming 'r = 0' and 'g = 0' and 'b = 0' and 'a = 1'");
         }
         else {
             this.ambient[0] = this.reader.getFloat(children[indexAmbient], 'r');
@@ -245,16 +246,16 @@ class MySceneGraph {
             this.ambient[3] = this.reader.getFloat(children[indexAmbient], 'a');
 
             if (!(this.ambient[0] != null && !isNaN(this.ambient[0]))) {
-                this.ambient[0] = 2;
-                this.onXMLMinorError("unable to parse value for r plane; assuming 'r = 2'");
+                this.ambient[0] = 0;
+                this.onXMLMinorError("unable to parse value for r plane; assuming 'r = 0'");
             }
             if (!(this.ambient[1] != null && !isNaN(this.ambient[1]))) {
-                this.ambient[1] = 2;
-                this.onXMLMinorError("unable to parse value for g plane; assuming 'g = 2'");
+                this.ambient[1] = 0;
+                this.onXMLMinorError("unable to parse value for g plane; assuming 'g = 0'");
             }
             if (!(this.ambient[2] != null && !isNaN(this.ambient[2]))) {
-                this.ambient[2] = 2;
-                this.onXMLMinorError("unable to parse value for b plane; assuming 'b = 2'");
+                this.ambient[2] = 0;
+                this.onXMLMinorError("unable to parse value for b plane; assuming 'b = 0'");
             }
             if (!(this.ambient[3] != null && !isNaN(this.ambient[3]))) {
                 this.ambient[3] = 1;
@@ -263,9 +264,9 @@ class MySceneGraph {
         }
 
         var indexBackground = nodeNames.indexOf("background");
-        this.background = [2, 2, 2, 1];
+        this.background = [0, 0, 0, 1];
         if (indexBackground == -1) {
-            this.onXMLMinorError("background planes missing; assuming 'r = 2' and 'g = 2' and 'b = 2' and 'a = 1'");
+            this.onXMLMinorError("background planes missing; assuming 'r = 0' and 'g = 0' and 'b = 0' and 'a = 1'");
         }
         else {
             this.background[0] = this.reader.getFloat(children[indexBackground], 'r');
@@ -274,15 +275,15 @@ class MySceneGraph {
             this.background[3] = this.reader.getFloat(children[indexBackground], 'a');
 
             if (!(this.background[0] != null && !isNaN(this.background[0]))) {
-                this.background[0] = 2;
+                this.background[0] = 0;
                 this.onXMLMinorError("unable to parse value for r plane; assuming 'r = 2'");
             }
             if (!(this.background[1] != null && !isNaN(this.background[1]))) {
-                this.background[1] = 2;
+                this.background[1] = 0;
                 this.onXMLMinorError("unable to parse value for g plane; assuming 'g = 2'");
             }
             if (!(this.background[2] != null && !isNaN(this.background[2]))) {
-                this.background[2] = 2;
+                this.background[2] = 0;
                 this.onXMLMinorError("unable to parse value for b plane; assuming 'b = 2'");
             }
             if (!(this.background[3] != null && !isNaN(this.background[3]))) {
@@ -296,7 +297,184 @@ class MySceneGraph {
     }
 
     parseLights(lightsNode) {
+
+        /*
+        var children = lightsNode.children;
+
+        var nodeNames = [];
+
+        //Should have at least one light (omni or spot)
+        for (var i = 0; i < children.length; i++) {
+
+            if (children[i].nodeName != "omni" && children[i].nodeName != "spot") {
+                this.onXMLMinorError("unknown tag <" + children.nodeName + ">");
+                continue;
+            }
+
+            //omni
+            if (children[i].nodeName == "omni") {
+                
+                let lightAux = children[i].children;
+                let omniLight =  new MyOmniLight();
+
+                omniLight = this.parseOmniLight(lightAux);
+
+                var aux = this.reader.getFloat(children[i], 'enabled');
+                if (!(aux != null && !isNaN(aux) && (aux == 0 || aux == 1))) {
+                    this.onXMLMinorError("unable to parse value component of the 'enable light' field for ID = " + lightId + "; assuming 'value = 1'")
+                }
+
+            }
+
+            //Get id of the current light
+            var lightId = this.reader.getString(children[i], 'id');
+            if (lightId == null) {
+                return "no ID defined for light";
+            }
+
+            //Check for repeated IDs
+            if (this.lights[lightId] != null) {
+                return "ID must be unique for each light (conflict: ID = " + lightId + ")";
+            }
+
+            //Specs for current light
+            grandChildren = children[i].children;
+
+            nodeNames = [];
+            for (var j = 0; j < grandChildren.lenght; j++) {
+                nodeNames.push(grandChildren[j].nodeName);
+            }
+
+            //Get indices of each element
+            var locationIndex = nodeNames.indexOf("location");
+            var ambientIndex = nodeNames.indexOf("ambient");
+            var diffuseIndex = nodeNames.indexOf("diffuse");
+            var specularIndex = nodeNames.indexOf("specular");
+            var targetIndex = nodeNames.indexOf("target");
+
+            //Light location
+            var lightLocation = [];
+            if (locationIndex != -1) {
+                //x
+                var x = this.reader.getFloat(grandChildren[positionIndex], 'x');
+                if (!(x != null && !isNaN(x))) {
+                    return "unable to parse x-coordinate of the light position for ID = " + lightId;
+                }
+                else {
+                    positionLight.push(x);
+                }
+                //y
+                var y = this.reader.getFloat(grandChildren[positionIndex], 'y');
+                if (!(y != null && !isNaN(y))) {
+                    return "unable to parse y-coordinate of the light position for ID = " + lightId;
+                }
+                else {
+                    positionLight.push(y);
+                }
+                //z
+                var z = this.reader.getFloat(grandChildren[positionIndex], 'z');
+                if (!(z != null && !isNaN(z))) {
+                    return "unable to parse z-coordinate of the light position for ID = " + lightId;
+                }
+                else {
+                    positionLight.push(z);
+                }
+                //w
+                var w = this.reader.getFloat(grandChildren[positionIndex], 'w');
+                if (!(w != null && !isNaN(w))) {
+                    return "unable to parse w-coordinate of the light position for ID = " + lightId;
+                }
+                else {
+                    positionLight.push(w);
+                }
+            }
+
+        }
+
+        this.log("Parsed lights");
+
         return null;
+        */
+
+    }
+
+    parseOmniLight(omni) {
+        /*
+        let omniAux = new MyOmniLight();
+
+        let aux = this.reader.getFloat(omni, 'enabled');
+        if (!(aux != null && !isNaN(aux) && (aux == 0 || aux == 1))) {
+            this.onXMLMinorError("unable to parse value component of the 'enable light' field for ID = " + lightId + "; assuming 'value = 1'")
+        }
+
+        let lightId = this.reader.getString(omni, 'id');
+        if (lightId == null) {
+            return "no ID defined for light";
+        }
+
+        if (this.lights[lightId] != null) {
+            return "ID must be unique for each light (conflict: ID = " + lightId + ")";
+        }
+
+        let specs = omni.children;
+
+        let nodeNames = [];
+        for (var i = 0; i < specs.length; i++) {
+            nodeNames.push(grandChildren[i].nodeName);
+        }
+            //Get indices of each element
+            let locationIndex = nodeNames.indexOf("location");
+            let ambientIndex = nodeNames.indexOf("ambient");
+            let diffuseIndex = nodeNames.indexOf("diffuse");
+            let specularIndex = nodeNames.indexOf("specular");
+            let targetIndex = nodeNames.indexOf("target");
+
+            //Light location
+            var lightLocation = [];
+            if (locationIndex != -1) {
+                //x
+                let x = this.reader.getFloat(specs[positionIndex], 'x');
+                if (!(x != null && !isNaN(x))) {
+                    return "unable to parse x-coordinate of the light position for ID = " + lightId;
+                }
+                else {
+                    positionLight.push(x);
+                }
+                //y
+                var y = this.reader.getFloat(specs[positionIndex], 'y');
+                if (!(y != null && !isNaN(y))) {
+                    return "unable to parse y-coordinate of the light position for ID = " + lightId;
+                }
+                else {
+                    positionLight.push(y);
+                }
+                //z
+                var z = this.reader.getFloat(specs[positionIndex], 'z');
+                if (!(z != null && !isNaN(z))) {
+                    return "unable to parse z-coordinate of the light position for ID = " + lightId;
+                }
+                else {
+                    positionLight.push(z);
+                }
+                //w
+                var w = this.reader.getFloat(specs[positionIndex], 'w');
+                if (!(w != null && !isNaN(w))) {
+                    return "unable to parse w-coordinate of the light position for ID = " + lightId;
+                }
+                else {
+                    positionLight.push(w);
+                }
+            }
+        
+
+        return omniAux;
+
+        */
+
+    }
+
+    parseSpotLight(spot) {
+
     }
 
     /**
