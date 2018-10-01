@@ -104,7 +104,6 @@ class MySceneGraph {
         }
 
         // <views>
-        var index;
         if ((index = nodeNames.indexOf("views")) == -1)
             return "tag <views> missing";
         else {
@@ -117,7 +116,6 @@ class MySceneGraph {
         }
 
         // <ambient>
-        var index;
         if ((index = nodeNames.indexOf("ambient")) == -1)
             return "tag <ambient> missing";
         else {
@@ -212,14 +210,16 @@ class MySceneGraph {
         this.root = this.reader.getString(sceneNode, 'root');
         this.axis_length = this.reader.getFloat(sceneNode, 'axis_length'); 
         
-        if (!(this.root != null && !isNaN(this.root))) {
-            this.root = 1;
-            this.onXMLMinorError("unable to parse value for root plane; assuming 'root = 1'");
+        if (this.root == null) {
+            this.root = "unique_scene";
+            this.onXMLMinorError("unable to parse value for root plane; assuming 'root = 'unique_scene''");
         }
         if (!(this.axis_length != null && !isNaN(this.axis_length))) {
             this.axis_length = 1;
             this.onXMLMinorError("unable to parse value for axis_length plane; assuming 'axis_length = 1'");
         }
+
+        this.log(this.axis_length);
 
         this.log("Parsed scene");
         return null;
@@ -293,7 +293,7 @@ class MySceneGraph {
             }
         }     
 
-        this.log("Parsed scene");
+        this.log("Parsed ambient");
         return null;
     }
 
@@ -319,30 +319,37 @@ class MySceneGraph {
     }
 
     parseViews(viewsNode) {
-        return null;
-    }
 
-    parseAmbient(ambientNode) {
+        this.log("Parsed views");
+
         return null;
     }
 
     parseTextures(texturesNode) {
+
+        this.log("Parsed textures");
+
         return null;
     }
 
     parseMaterials(materialsNode) {
+
+        this.log("Parsed materials");
+
         return null;
     }
 
     parseTransformations(transformationsNode) {
-        return null;
-    }
 
-    parsePrimitives(primitivesNode) {
+        this.log("Parsed transformations");
+
         return null;
     }
 
     parseComponents(componentsNode) {
+
+        this.log("Parsed components");
+
         return null;
     }
 
@@ -362,7 +369,6 @@ class MySceneGraph {
     onXMLMinorError(message) {
         console.warn("Warning: " + message);
     }
-
 
     /**
      * Callback to be executed on any message.
