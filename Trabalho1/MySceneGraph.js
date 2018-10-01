@@ -348,6 +348,126 @@ class MySceneGraph {
 
     parseComponents(componentsNode) {
 
+        var children = componentsNode.children;
+
+        var grandChildren = [];
+        var nodeNames = [];
+
+        this.components = [];
+        var numComponents = 0;
+
+        var transformations= [];
+        var materials = [];
+        var texture = {
+            id: "",
+            lengthS: 1,
+            lengthT: 1
+        };
+        var childrenComponent = [];
+
+        //there should be at least one component
+        for (var i = 0; i < children.length; i++) {
+
+            var component = new MyComponent();
+            
+            if (children[i].nodeName != "component") {
+                this.onXMLMinorError("unknown tag <" + children[i].nodeName + ">");
+                continue;
+            }
+
+            //get id of current component
+            var componentId = this.reader.getString(children[i], 'id');
+            if (componentId == null) {
+                return "no ID defined for component";
+            }
+            
+            //check for repeated IDs
+            if (this.components[componentId] != null) {
+                return "ID must be unique for each component (conflict: ID = " + componentId + ")";
+            }
+
+            grandChildren = children[i].children;
+
+            //specifications for the current component
+
+            //TODO need validity checks in all the ids!! 
+
+            for (var j = 0; j < grandChildren.length; j++) {
+                nodeNames.push(grandChildren[j].nodeName);
+            }
+
+            //get indices of each element
+            var transformationIndex = nodeNames.indexOf("transformation");
+            var materialsIndex = nodeNames.indexOf("materials");
+            var textureIndex = nodeNames.indexOf("texture");
+            var childrenIndex = nodeNames.indexOf("children");
+
+            //transformation(s ?) to be applied (only working with transformation references, not explicit transformation declarations)
+            if (transformationIndex == -1) {
+                this.onXMLMinorError("transformation reference value missing for ID = " + componentId + "; assuming 'value = 1'");
+            } else {
+                var transformationAux = grandChildren[transformationIndex].children;
+                
+                for (var j = 0; j < transformationAux.length; j++) {
+                    if (transformationAux[j].nodeName == "transformationref") {
+                        transformations.push(this.reader.getString(transformationAux[j], 'id'));
+                        console.log(this.reader.getString(transformationAux[j], 'id'))
+                    }
+                }
+
+            }
+
+            //materials to be applied
+            var materialsRef;
+            if (materialsIndex == -1) {
+                this.onXMLMinorError("transformation reference value missing for ID = " + componentId + "; assuming 'value = 1'");
+            } else {
+                var materialsAux = grandChildren[materialsIndex].children;
+                
+                for (var j = 0; j < materialsAux.length; j++) {
+                    if (materialsAux[j].nodeName == "material") {
+                        materials.push(this.reader.getString(materialsAux[j], 'id'));
+                        console.log(this.reader.getString(materialsAux[j], 'id'));
+                    }
+                }
+
+            }
+
+            //texture to be applied
+            if (textureIndex == -1) {
+                this.onXMLMinorError("texture value missing for ID = " + componentId);
+            } else {
+                texture.id = this.reader.getString(grandChildren[textureIndex], 'id');
+                texture.lengthS = this.reader.getFloat(grandChildren[textureIndex], 'length_s');
+                texture.lengthT = this.reader.getFloat(grandChildren[textureIndex], 'length_t');
+            }
+
+            //children
+            if (childrenIndex == -1) {
+                this.onXMLMinorError("children value missing for ID = " + componentId);
+            } else {
+                var childrenAux = grandChildren[childrenIndex].children;
+                
+                for (var j = 0; j < childrenAux.length; j++) {
+                    if (childrenAux[j].nodeName == "primitiveref") {
+                        childrenComponent.push(this.reader.getString(childrenAux[j], 'id'));
+                        console.log(this.reader.getString(childrenAux[j], 'id'));
+                    }
+                }
+            } 
+
+            component.transformation = transformations;
+            component.materials = materials;
+            component.texture = texture;
+            component.children = childrenComponent;
+            this.components.push(component);
+            numComponents++;
+
+        }
+
+        console.log("Parsed nodes");
+        return null;
+
         this.log("Parsed components");
 
         return null;
