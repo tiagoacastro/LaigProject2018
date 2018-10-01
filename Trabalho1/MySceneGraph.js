@@ -219,8 +219,6 @@ class MySceneGraph {
             this.onXMLMinorError("unable to parse value for axis_length plane; assuming 'axis_length = 1'");
         }
 
-        this.log(this.axis_length);
-
         this.log("Parsed scene");
         return null;
     }
