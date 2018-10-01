@@ -366,7 +366,7 @@ class MySceneGraph {
         //there should be at least one component
         for (var i = 0; i < children.length; i++) {
 
-            var component = new MyComponent();
+            let component = new MyComponent();
             
             if (children[i].nodeName != "component") {
                 this.onXMLMinorError("unknown tag <" + children[i].nodeName + ">");
@@ -404,34 +404,19 @@ class MySceneGraph {
             if (transformationIndex == -1) {
                 this.onXMLMinorError("transformation reference value missing for ID = " + componentId + "; assuming 'value = 1'");
             } else {
-                var transformationAux = grandChildren[transformationIndex].children;
-                
-                for (var j = 0; j < transformationAux.length; j++) {
-                    if (transformationAux[j].nodeName == "transformationref") {
-                        transformations.push(this.reader.getString(transformationAux[j], 'id'));
-                        console.log(this.reader.getString(transformationAux[j], 'id'))
-                    }
-                }
-
+                let transformationAux = grandChildren[transformationIndex].children;
+                transformations = this.parseComponentTransformations(transformationAux);
             }
 
-            //materials to be applied
-            var materialsRef;
+            //materials
             if (materialsIndex == -1) {
-                this.onXMLMinorError("transformation reference value missing for ID = " + componentId + "; assuming 'value = 1'");
+                this.onXMLMinorError("material reference value missing for ID = " + componentId + "; assuming 'value = 1'");
             } else {
-                var materialsAux = grandChildren[materialsIndex].children;
-                
-                for (var j = 0; j < materialsAux.length; j++) {
-                    if (materialsAux[j].nodeName == "material") {
-                        materials.push(this.reader.getString(materialsAux[j], 'id'));
-                        console.log(this.reader.getString(materialsAux[j], 'id'));
-                    }
-                }
-
+                let materialsAux = grandChildren[materialsIndex].children;
+                materials = this.parseComponentMaterials(materialsAux);
             }
 
-            //texture to be applied
+            //texture
             if (textureIndex == -1) {
                 this.onXMLMinorError("texture value missing for ID = " + componentId);
             } else {
@@ -445,30 +430,62 @@ class MySceneGraph {
                 this.onXMLMinorError("children value missing for ID = " + componentId);
             } else {
                 var childrenAux = grandChildren[childrenIndex].children;
-                
-                for (var j = 0; j < childrenAux.length; j++) {
-                    if (childrenAux[j].nodeName == "primitiveref") {
-                        childrenComponent.push(this.reader.getString(childrenAux[j], 'id'));
-                        console.log(this.reader.getString(childrenAux[j], 'id'));
-                    }
-                }
+                children = this.parseComponentChildren(childrenAux);
             } 
 
             component.transformation = transformations;
             component.materials = materials;
-            component.texture = texture;
+            component.texture = texture.id;
+            component.textureLengthS = texture.lengthS;
+            component.textureLengthT = texture.lengthT;
             component.children = childrenComponent;
             this.components.push(component);
             numComponents++;
 
         }
 
-        console.log("Parsed nodes");
         return null;
+    }
 
-        this.log("Parsed components");
+    parseComponentTransformations(transformations) {
 
-        return null;
+        let transformationsAux = [];
+
+        for (var i = 0; i < transformations.length; i++) {
+            if (transformations[i].nodeName == "transformationref") {
+                transformationsAux.push(this.reader.getString(transformations[i], 'id'));
+            }
+        }
+
+        return transformationsAux;
+    }
+
+    parseComponentMaterials(materials) {
+
+        let materialsAux = [];
+
+        for (var i = 0; i < materials.length; i++) {
+            if (materials[i].nodeName == "material") {
+                materialsAux.push(this.reader.getString(materials[i], 'id'));
+            }
+        }
+
+        return materialsAux;
+
+    }
+
+    parseComponentChildren(children) {
+        
+        let childrenAux = [];
+
+        for (var i = 0; i < children.length; i++) {
+            if (children[i].nodeName == "material") {
+                childrenAux.push(this.reader.getString(children[i], 'id'));
+            }
+        }
+
+        return childrenAux;
+
     }
 
     /*
@@ -502,5 +519,6 @@ class MySceneGraph {
     displayScene() {
         // entry point for graph rendering
         //TODO: Render loop starting at root of graph
+        return null;
     }
 }

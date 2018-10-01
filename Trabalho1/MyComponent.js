@@ -5,5 +5,6 @@ class MyComponent {
         this.texture = texture || "";
         this.textureLengthS = textureLengthS || 1;
         this.textureLengthT = textureLengthT || 1;
+        this.children = children;
     }
 }
