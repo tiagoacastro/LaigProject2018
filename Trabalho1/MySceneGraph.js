@@ -214,12 +214,18 @@ class MySceneGraph {
             this.root = "unique_scene";
             this.onXMLMinorError("unable to parse value for root plane; assuming 'root = 'unique_scene''");
         }
+
         if (!(this.axis_length != null && !isNaN(this.axis_length))) {
             this.axis_length = 1;
             this.onXMLMinorError("unable to parse value for axis_length plane; assuming 'axis_length = 1'");
         }
+        if(this.axis_length <= 0) {
+            this.axis_length = 1;
+            this.onXMLMinorError("axis_length must be higher than 0; assuming 'axis_length = 1'");
+        }
 
         this.log("Parsed scene");
+
         return null;
     }
 
@@ -249,17 +255,36 @@ class MySceneGraph {
                 this.ambient[0] = 0;
                 this.onXMLMinorError("unable to parse value for r plane; assuming 'r = 0'");
             }
+            if (this.ambient[0] < 0 || this.ambient[0] > 255){
+                this.ambient[0] = 0;
+                this.onXMLMinorError("r must be between 0 and 255");
+            }
+
             if (!(this.ambient[1] != null && !isNaN(this.ambient[1]))) {
                 this.ambient[1] = 0;
                 this.onXMLMinorError("unable to parse value for g plane; assuming 'g = 0'");
             }
+            if (this.ambient[1] < 0 || this.ambient[1] > 255){
+                this.ambient[1] = 0;
+                this.onXMLMinorError("g must be between 0 and 255");
+            }
+
             if (!(this.ambient[2] != null && !isNaN(this.ambient[2]))) {
                 this.ambient[2] = 0;
                 this.onXMLMinorError("unable to parse value for b plane; assuming 'b = 0'");
             }
+            if (this.ambient[2] < 0 || this.ambient[2] > 255){
+                this.ambient[2] = 0;
+                this.onXMLMinorError("b must be between 0 and 255");
+            }
+
             if (!(this.ambient[3] != null && !isNaN(this.ambient[3]))) {
                 this.ambient[3] = 1;
                 this.onXMLMinorError("unable to parse value for a plane; assuming 'a = 1'");
+            }
+            if (this.ambient[3] < 0 || this.ambient[3] > 255){
+                this.ambient[3] = 0;
+                this.onXMLMinorError("a must be between 0 and 255");
             }
         }
 
@@ -278,17 +303,36 @@ class MySceneGraph {
                 this.background[0] = 0;
                 this.onXMLMinorError("unable to parse value for r plane; assuming 'r = 2'");
             }
+            if (this.background[0] < 0 || this.background[0] > 255){
+                this.background[0] = 0;
+                this.onXMLMinorError("r must be between 0 and 255");
+            }
+
             if (!(this.background[1] != null && !isNaN(this.background[1]))) {
                 this.background[1] = 0;
                 this.onXMLMinorError("unable to parse value for g plane; assuming 'g = 2'");
             }
+            if (this.background[1] < 0 || this.background[1] > 255){
+                this.background[1] = 0;
+                this.onXMLMinorError("g must be between 0 and 255");
+            }
+
             if (!(this.background[2] != null && !isNaN(this.background[2]))) {
                 this.background[2] = 0;
                 this.onXMLMinorError("unable to parse value for b plane; assuming 'b = 2'");
             }
+            if (this.background[2] < 0 || this.background[2] > 255){
+                this.background[2] = 0;
+                this.onXMLMinorError("b must be between 0 and 255");
+            }
+
             if (!(this.background[3] != null && !isNaN(this.background[3]))) {
                 this.background[3] = 1;
                 this.onXMLMinorError("unable to parse value for a plane; assuming 'a = 1'");
+            }
+            if (this.background[3] < 0 || this.background[3] > 255){
+                this.background[3] = 0;
+                this.onXMLMinorError("a must be between 0 and 255");
             }
         }     
 
