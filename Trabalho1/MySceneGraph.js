@@ -678,6 +678,37 @@ class MySceneGraph {
      * @return torus object
      */
     parseTorus(torusNode){
+        let inner = this.reader.getFloat(sphereNode, 'inner');
+        if (!(inner != null && !isNaN(inner))) {
+            inner = 1;
+            this.onXMLMinorError("unable to parse value for inner plane; assuming 'inner = 1'");
+        }
+        if(inner <= 0) {
+            inner = 1;
+            this.onXMLMinorError("inner can't be equal or lower than 0, assuming 'inner = 1'");
+        }
+
+        let outer = this.reader.getFloat(sphereNode, 'outer');
+        if (!(outer != null && !isNaN(outer))) {
+            outer = 2;
+            this.onXMLMinorError("unable to parse value for outer plane; assuming 'outer = 2'");
+        }
+        if(outer <= 0) {
+            outer = 2;
+            this.onXMLMinorError("outer can't be equal or lower than 0, assuming 'outer = 2'");
+        }
+
+        if(outer < inner){
+            let aux = outer;
+            outer = inner;
+            inner = aux;
+            this.onXMLMinorError("outer can't be lower than inner, assuming 'outer = inner and inner = outer'");
+        }
+        if(outer == inner){
+            outer = 2*inner;
+            this.onXMLMinorError("outer can't be equal to inner, assuming 'outer = 2*inner'");
+        }
+
         let slices = this.reader.getFloat(torusNode, 'slices');
         if (!(slices != null && !isNaN(slices))) {
             slices = 1;
@@ -686,6 +717,16 @@ class MySceneGraph {
         if(slices <= 1 || slices % 1 != 0) {
             slices = 1;
             this.onXMLMinorError("slices can't be 0 or floats, assuming 'slices = 1'");
+        }
+
+        let loops = this.reader.getFloat(torusNode, 'loops');
+        if (!(loops != null && !isNaN(loops))) {
+            loops = 1;
+            this.onXMLMinorError("unable to parse value for loops plane; assuming 'loops = 1'");
+        }
+        if(loops <= 1 || loops % 1 != 0) {
+            loops = 1;
+            this.onXMLMinorError("loops can't be 0 or floats, assuming 'loops = 1'");
         }
     }
 
