@@ -243,7 +243,7 @@ class MySceneGraph {
         var indexAmbient = nodeNames.indexOf("ambient");
         this.ambient = [0, 0, 0, 1];
         if (indexAmbient == -1) {
-            this.onXMLMinorError("ambient planes missing; assuming 'r = 0' and 'g = 0' and 'b = 0' and 'a = 1'");
+            this.onXMLError("ambient planes missing; assuming 'r = 0' and 'g = 0' and 'b = 0' and 'a = 1'");
         }
         else {
             this.ambient[0] = this.reader.getFloat(children[indexAmbient], 'r');
@@ -291,7 +291,7 @@ class MySceneGraph {
         var indexBackground = nodeNames.indexOf("background");
         this.background = [0, 0, 0, 1];
         if (indexBackground == -1) {
-            this.onXMLMinorError("background planes missing; assuming 'r = 0' and 'g = 0' and 'b = 0' and 'a = 1'");
+            this.onXMLError("background planes missing; assuming 'r = 0' and 'g = 0' and 'b = 0' and 'a = 1'");
         }
         else {
             this.background[0] = this.reader.getFloat(children[indexBackground], 'r');
@@ -459,16 +459,282 @@ class MySceneGraph {
     }
 
     /**
+     * Parses the <rectangle> block.
+     * @param {rectangle element} rectangleNode
+     * @return rectangle object
+     */
+    parseRectangle(rectangleNode){
+        let x1 = this.reader.getFloat(rectangleNode, 'x1');
+        if (!(x1 != null && !isNaN(x1))) {
+            x1 = 0;
+            this.onXMLMinorError("unable to parse value for x1 plane; assuming 'x1 = 0'");
+        }
+
+        let y1 = this.reader.getFloat(rectangleNode, 'y1');
+        if (!(y1 != null && !isNaN(y1))) {
+            y1 = 0;
+            this.onXMLMinorError("unable to parse value for y1 plane; assuming 'y1 = 0'");
+        }
+
+        let x2 = this.reader.getFloat(rectangleNode, 'x2');
+        if (!(x2 != null && !isNaN(x2))) {
+            x2 = 1;
+            this.onXMLMinorError("unable to parse value for x2 plane; assuming 'x2 = 1'");
+        }
+
+        let y2 = this.reader.getFloat(rectangleNode, 'y2');
+        if (!(y2 != null && !isNaN(y2))) {
+            y2 = 1;
+            this.onXMLMinorError("unable to parse value for y2 plane; assuming 'y2 = 1'");
+        }
+
+        //criar retangulo
+        var rectangle = null;
+
+        this.log("Parsed rectangle");
+
+        return rectangle;
+    }
+
+    /**
+     * Parses the <triangle> block.
+     * @param {triangle element} triangleNode
+     * @return triangle object
+     */
+    parseTriangle(triangleNode){
+        let x1 = this.reader.getFloat(triangleNode, 'x1');
+        if (!(x1 != null && !isNaN(x1))) {
+            x1 = 0;
+            this.onXMLMinorError("unable to parse value for x1 plane; assuming 'x1 = 0'");
+        }
+
+        let y1 = this.reader.getFloat(triangleNode, 'y1');
+        if (!(y1 != null && !isNaN(y1))) {
+            y1 = 0;
+            this.onXMLMinorError("unable to parse value for y1 plane; assuming 'y1 = 0'");
+        }
+
+        let z1 = this.reader.getFloat(triangleNode, 'z1');
+        if (!(z1 != null && !isNaN(z1))) {
+            z1 = 0;
+            this.onXMLMinorError("unable to parse value for z1 plane; assuming 'z1 = 0'");
+        }
+
+        let x2 = this.reader.getFloat(triangleNode, 'x2');
+        if (!(x2 != null && !isNaN(x2))) {
+            x2 = 1;
+            this.onXMLMinorError("unable to parse value for x2 plane; assuming 'x2 = 1'");
+        }
+
+        let y2 = this.reader.getFloat(triangleNode, 'y2');
+        if (!(y2 != null && !isNaN(y2))) {
+            y2 = 1;
+            this.onXMLMinorError("unable to parse value for y2 plane; assuming 'y2 = 1'");
+        }
+
+        let z2 = this.reader.getFloat(triangleNode, 'z2');
+        if (!(z2 != null && !isNaN(z2))) {
+            z2 = 1;
+            this.onXMLMinorError("unable to parse value for z2 plane; assuming 'z2 = 1'");
+        }
+
+        let x3 = this.reader.getFloat(triangleNode, 'x3');
+        if (!(x3 != null && !isNaN(x3))) {
+            x3 = 1;
+            this.onXMLMinorError("unable to parse value for x3 plane; assuming 'x3 = 1'");
+        }
+
+        let y3 = this.reader.getFloat(triangleNode, 'y3');
+        if (!(y3 != null && !isNaN(y3))) {
+            y3 = 1;
+            this.onXMLMinorError("unable to parse value for y3 plane; assuming 'y3 = 1'");
+        }
+
+        let z3 = this.reader.getFloat(triangleNode, 'z3');
+        if (!(z3 != null && !isNaN(z3))) {
+            z3 = 0;
+            this.onXMLMinorError("unable to parse value for z3 plane; assuming 'z3 = 0'");
+        }
+
+        //criar triangulo
+        var triangle = null;
+
+        this.log("Parsed triangle");
+
+        return triangle;
+    }
+
+    /**
+     * Parses the <cylinder> block.
+     * @param {cylinder element} cylinderNode
+     * @return cylinder object
+     */
+    parseCylinder(cylinderNode){
+        let base = this.reader.getFloat(cylinderNode, 'base');
+        if (!(base != null && !isNaN(base))) {
+            base = 1;
+            this.onXMLMinorError("unable to parse value for base plane; assuming 'base = 1'");
+        }
+        if(base <= 0) {
+            base = 1;
+            this.onXMLMinorError("base can't be equal or lower than 0, assuming 'base = 1'");
+        }
+
+        let top = this.reader.getFloat(cylinderNode, 'top');
+        if (!(top != null && !isNaN(top))) {
+            top = 1;
+            this.onXMLMinorError("unable to parse value for top plane; assuming 'top = 1'");
+        }
+        if(top <= 0) {
+            top = 1;
+            this.onXMLMinorError("top can't be equal or lower than 0, assuming 'top = 1'");
+        }
+
+        let height = this.reader.getFloat(cylinderNode, 'height');
+        if (!(height != null && !isNaN(height))) {
+            height = 1;
+            this.onXMLMinorError("unable to parse value for height plane; assuming 'height = 1'");
+        }
+        if(height <= 0) {
+            height = 1;
+            this.onXMLMinorError("height can't be equal or lower than 0, assuming 'height = 1'");
+        }
+
+        let slices = this.reader.getFloat(cylinderNode, 'slices');
+        if (!(slices != null && !isNaN(slices))) {
+            slices = 1;
+            this.onXMLMinorError("unable to parse value for slices plane; assuming 'slices = 1'");
+        }
+        if(slices <= 1 || slices % 1 != 0) {
+            slices = 1;
+            this.onXMLMinorError("slices can't be 0 or floats, assuming 'slices = 1'");
+        }
+
+        let stacks = this.reader.getFloat(cylinderNode, 'stacks');
+        if (!(stacks != null && !isNaN(stacks))) {
+            stacks = 1;
+            this.onXMLMinorError("unable to parse value for stacks plane; assuming 'stacks = 1'");
+        }
+        if(stacks <= 1 || stacks % 1 != 0) {
+            stacks = 1;
+            this.onXMLMinorError("stacks can't be 0 or floats, assuming 'stacks = 1'");
+        }
+
+        //criar cilindro
+        var cylinder = null;
+
+        this.log("Parsed cylinder");
+
+        return cylinder;
+    }
+
+    /**
+     * Parses the <sphere> block.
+     * @param {sphere element} sphereNode
+     * @return sphere object
+     */
+    parseSphere(sphereNode){
+        let radius = this.reader.getFloat(sphereNode, 'radius');
+        if (!(radius != null && !isNaN(radius))) {
+            radius = 1;
+            this.onXMLMinorError("unable to parse value for radius plane; assuming 'radius = 1'");
+        }
+        if(radius <= 0) {
+            radius = 1;
+            this.onXMLMinorError("radius can't be equal or lower than 0, assuming 'radius = 1'");
+        }
+
+        let slices = this.reader.getFloat(sphereNode, 'slices');
+        if (!(slices != null && !isNaN(slices))) {
+            slices = 1;
+            this.onXMLMinorError("unable to parse value for slices plane; assuming 'slices = 1'");
+        }
+        if(slices <= 1 || slices % 1 != 0) {
+            slices = 1;
+            this.onXMLMinorError("slices can't be 0 or floats, assuming 'slices = 1'");
+        }
+
+        let stacks = this.reader.getFloat(sphereNode, 'stacks');
+        if (!(stacks != null && !isNaN(stacks))) {
+            stacks = 1;
+            this.onXMLMinorError("unable to parse value for stacks plane; assuming 'stacks = 1'");
+        }
+        if(stacks <= 1 || stacks % 1 != 0) {
+            stacks = 1;
+            this.onXMLMinorError("stacks can't be 0 or floats, assuming 'stacks = 1'");
+        }
+
+        //criar esfera
+        var sphere = null;
+
+        this.log("Parsed sphere");
+
+        return sphere;
+    }
+
+    /**
+     * Parses the <torus> block.
+     * @param {torus element} torusNode
+     * @return torus object
+     */
+    parseTorus(torusNode){
+        let slices = this.reader.getFloat(torusNode, 'slices');
+        if (!(slices != null && !isNaN(slices))) {
+            slices = 1;
+            this.onXMLMinorError("unable to parse value for slices plane; assuming 'slices = 1'");
+        }
+        if(slices <= 1 || slices % 1 != 0) {
+            slices = 1;
+            this.onXMLMinorError("slices can't be 0 or floats, assuming 'slices = 1'");
+        }
+    }
+
+    /**
      * Parses the <primitives> block.
      * @param {primitives block element} primitivesNode
      */
     parsePrimitives(primitivesNode) {
         var children = primitivesNode.children;
-        var nodeNames = [];
-        for (var i = 0; i < children.length; i++)
-            nodeNames.push(children[i].nodeName); 
-        
 
+        this.primitives = [];
+
+        for (var i = 0; i < children.length; i++){
+            var primitive = new MyPrimitive();
+
+            if(children[i].nodeName != "primitive")
+                this.onXMLError("primitive with wrong plane");
+
+            let id = this.reader.getString(children[i], 'id');
+            if (id == null) {
+                this.onXMLError("unable to parse value for primitive id");
+            }
+
+            for(var j = 0; j < this.primitives.length; j++){
+                if(this.primitives[j].id == id)
+                    this.onXMLError("repeated id");
+            }
+
+            switch(children[i].children[0].nodeName){
+                case "rectangle":
+                    primitive.child = this.parseRectangle(children[i].children[0]);
+                    break;
+                case "triangle":
+                    primitive.child = this.parseTriangle(children[i].children[0]);
+                    break;
+                case "cylinder":
+                    primitive.child = this.parseCylinder(children[i].children[0]);
+                    break;
+                case "sphere":
+                    primitive.child = this.parseSphere(children[i].children[0]);
+                    break;
+                case "torus":
+                    primitive.child = this.parseTorus(children[i].children[0]);
+                    break;
+            }
+            
+            primitive.id = id;
+            this.primitives.push(primitive);
+        } 
 
         this.log("Parsed primitives");
 
