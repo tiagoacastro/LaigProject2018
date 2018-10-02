@@ -678,7 +678,7 @@ class MySceneGraph {
      * @return torus object
      */
     parseTorus(torusNode){
-        let inner = this.reader.getFloat(sphereNode, 'inner');
+        let inner = this.reader.getFloat(torusNode, 'inner');
         if (!(inner != null && !isNaN(inner))) {
             inner = 1;
             this.onXMLMinorError("unable to parse value for inner plane; assuming 'inner = 1'");
@@ -688,7 +688,7 @@ class MySceneGraph {
             this.onXMLMinorError("inner can't be equal or lower than 0, assuming 'inner = 1'");
         }
 
-        let outer = this.reader.getFloat(sphereNode, 'outer');
+        let outer = this.reader.getFloat(torusNode, 'outer');
         if (!(outer != null && !isNaN(outer))) {
             outer = 2;
             this.onXMLMinorError("unable to parse value for outer plane; assuming 'outer = 2'");
