@@ -58,19 +58,18 @@ class XMLscene extends CGFscene {
                 var light = this.graph.lights[key];
 
                 //lights are predefined in cgfscene
-                this.lights[i].setPosition(light[1][0], light[1][1], light[1][2], light[1][3]);
-                this.lights[i].setAmbient(light[2][0], light[2][1], light[2][2], light[2][3]);
-                this.lights[i].setDiffuse(light[3][0], light[3][1], light[3][2], light[3][3]);
-                this.lights[i].setSpecular(light[4][0], light[4][1], light[4][2], light[4][3]);
+                this.lights[i].setPosition(light.location[0], light.location[1], light.location[2], light.location[3]);
+                this.lights[i].setAmbient(light.ambient[0], light.ambient[1], light.ambient[2], light.ambient[3]);
+                this.lights[i].setDiffuse(light.diffuse[0], light.diffuse[1], light.diffuse[2], light.diffuse[3]);
+                this.lights[i].setSpecular(light.specular[0], light.specular[1], light.specular[2], light.specular[3]);
 
                 this.lights[i].setVisible(true);
-                if (light[0])
+                if (light.enabled)
                     this.lights[i].enable();
                 else
                     this.lights[i].disable();
 
                 this.lights[i].update();
-
                 i++;
             }
         }

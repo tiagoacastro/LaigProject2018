@@ -347,8 +347,6 @@ class MySceneGraph {
 
         var children = lightsNode.children;
 
-        var nodeNames = [];
-
         //Should have at least one light (omni or spot)
         for (var i = 0; i < children.length; i++) {
 
@@ -360,15 +358,11 @@ class MySceneGraph {
             //omni
             if (children[i].nodeName == "omni") {
                 
-                var lightAux = children[i].children;
                 var omniLight =  new MyOmniLight();
 
                 omniLight = this.parseOmniLight(children[i]);
-
-                var aux = this.reader.getFloat(children[i], 'enabled');
-                if (!(aux != null && !isNaN(aux) && (aux == 0 || aux == 1))) {
-                    this.onXMLMinorError("unable to parse value component of the 'enable light' field for ID = " + lightId + "; assuming 'value = 1'")
-                }
+                this.lights.push(omniLight);
+                numLights++;
 
             }
 
@@ -398,6 +392,7 @@ class MySceneGraph {
             return "ID must be unique for each light (conflict: ID = " + lightId + ")";
         }
 
+        omniAux.id = lightId;
 
         var specs = omni.children;
 
@@ -411,13 +406,12 @@ class MySceneGraph {
         var ambientIndex = nodeNames.indexOf("ambient");
         var diffuseIndex = nodeNames.indexOf("diffuse");
         var specularIndex = nodeNames.indexOf("specular");
-        var targetIndex = nodeNames.indexOf("target");
 
         //Light location
         var lightLocation = [];
         if (locationIndex != -1) {
             //x
-            let x = this.reader.getFloat(specs[locationIndex], 'x');
+            var x = this.reader.getFloat(specs[locationIndex], 'x');
             if (!(x != null && !isNaN(x))) {
                 return "unable to parse x-coordinate of the light position for ID = " + lightId;
             }
@@ -448,8 +442,112 @@ class MySceneGraph {
             else {
                 lightLocation.push(w);
             }
+
+            omniAux.location = lightLocation;
         }
-        
+
+        //ambient values
+        var ambientValues = [];
+        if (ambientIndex != -1) {
+            var r = this.reader.getFloat(specs[ambientIndex], 'r');
+            if (r == null || isNaN(r)) {
+                return "unable to parse r value of light ID = " + lightId;
+            } else {
+                ambientValues.push(r);
+            }
+
+            var g = this.reader.getFloat(specs[ambientIndex], 'g');
+            if (g == null || isNaN(g)) {
+                return "unable to parse g value of light ID = " + lightId;
+            } else {
+                ambientValues.push(g);
+            }
+
+            var b = this.reader.getFloat(specs[ambientIndex], 'b');
+            if (b == null || isNaN(b)) {
+                return "unable to parse b value of light ID = " + lightId;
+            } else {
+                ambientValues.push(b);
+            }
+
+            var a = this.reader.getFloat(specs[ambientIndex], 'r');
+            if (a == null || isNaN(a)) {
+                return "unable to parse r value of light ID = " + lightId;
+            } else {
+                ambientValues.push(a);
+            }
+
+            omniAux.ambient = ambientValues;
+        }
+
+        //diffuse values
+        var diffuseValues = [];
+        if (diffuseIndex != -1) {
+            var r = this.reader.getFloat(specs[diffuseIndex], 'r');
+            if (r == null || isNaN(r)) {
+                return "unable to parse r value of light ID = " + lightId;
+            } else {
+                diffuseValues.push(r);
+            }
+
+            var g = this.reader.getFloat(specs[diffuseIndex], 'g');
+            if (g == null || isNaN(g)) {
+                return "unable to parse g value of light ID = " + lightId;
+            } else {
+                diffuseValues.push(g);
+            }
+
+            var b = this.reader.getFloat(specs[diffuseIndex], 'b');
+            if (b == null || isNaN(b)) {
+                return "unable to parse b value of light ID = " + lightId;
+            } else {
+                diffuseValues.push(b);
+            }
+
+            var a = this.reader.getFloat(specs[diffuseIndex], 'r');
+            if (a == null || isNaN(a)) {
+                return "unable to parse r value of light ID = " + lightId;
+            } else {
+                diffuseValues.push(a);
+            }
+
+            omniAux.diffuse = diffuseValues;
+        }
+
+        //specular values
+        var specularValues = [];
+        if (specularIndex != -1) {
+            var r = this.reader.getFloat(specs[specularIndex], 'r');
+            if (r == null || isNaN(r)) {
+                return "unable to parse r value of light ID = " + lightId;
+            } else {
+                specularValues.push(r);
+            }
+
+            var g = this.reader.getFloat(specs[specularIndex], 'g');
+            if (g == null || isNaN(g)) {
+                return "unable to parse g value of light ID = " + lightId;
+            } else {
+                specularValues.push(g);
+            }
+
+            var b = this.reader.getFloat(specs[specularIndex], 'b');
+            if (b == null || isNaN(b)) {
+                return "unable to parse b value of light ID = " + lightId;
+            } else {
+                specularValues.push(b);
+            }
+
+            var a = this.reader.getFloat(specs[specularIndex], 'r');
+            if (a == null || isNaN(a)) {
+                return "unable to parse r value of light ID = " + lightId;
+            } else {
+                specularValues.push(a);
+            }
+
+            omniAux.specular = specularValues;
+        }
+
         return omniAux;
 
     }
@@ -556,9 +654,7 @@ class MySceneGraph {
             this.onXMLMinorError("unable to parse value for z3 plane; assuming 'z3 = 0'");
         }
 
-        //criar triangulo
-        var triangle = null;
-
+        var triangle = new MyTriangle(this.scene, x1, x2, x3, y1, y2, y3, z1, z2, z3);
         this.log("Parsed triangle");
 
         return triangle;
@@ -877,11 +973,51 @@ class MySceneGraph {
         return null;
     }
 
-    parseTransformations(transformationsNode) {
+    parseTransformations(transformationNode) {
+
+        var children = transformationNode.children;
+
+        this.transformations = [];
+
+        for (var i = 0; i < children.length; i++) {
+
+            if (children[i].nodeName != "transformation") {
+                this.onXMLMinorError("unknown tag <" + children[i].nodeName + ">");
+                continue;
+            }
+
+            var transformation = new MyTransformation();
+            transformation = this.parseTransformationAux(children[i]);
+
+        }
 
         this.log("Parsed transformations");
 
         return null;
+    }
+
+    parseTransformationAux(transformation) {
+
+        var transformationAux = new MyTransformation();
+
+        var specs = transformation.children;
+
+        var transformationId = this.reader.getString(transformation, 'id');
+        if (transformationId == null) {
+            return "no ID defined for transformation";
+        }
+
+        if (this.transformations[transformationId] != null) {
+            return "ID must be unique for each transformation (conflict: ID = " + transformationId + ")";
+        }
+
+        transformationAux.id = transformationId;
+
+        var nodeNames = [];
+        for (var i = 0; i < specs.length; i++) {
+            nodeNames.push(specs[i].nodeName);
+        }
+
     }
 
     parseComponents(componentsNode) {
@@ -1059,6 +1195,15 @@ class MySceneGraph {
     displayScene() {
         // entry point for graph rendering
         //TODO: Render loop starting at root of graph
+        for (var i = 0; i < this.primitives.length; i++) {
+            if (this.primitives[i].id == "triangle") { //temp, just to check if something was drawn
+                this.displayPrimitive(this.primitives[i]);
+            }
+        }
         return null;
+    }
+
+    displayPrimitive(primitive) {
+        primitive.child.display();
     }
 }
