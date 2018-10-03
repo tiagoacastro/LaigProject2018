@@ -728,7 +728,16 @@ class MySceneGraph {
             loops = 1;
             this.onXMLMinorError("loops can't be 0 or floats, assuming 'loops = 1'");
         }
+
+        //criar torus
+        var torus = null;
+
+        this.log("Parsed torus");
+
+        return torus;
     }
+
+    //implementar nos parsers das primitivas a sua criação com os valores
 
     /**
      * Parses the <primitives> block.
@@ -782,7 +791,61 @@ class MySceneGraph {
         return null;
     }
 
+    /**
+     * Parses the <perspective> block.
+     * @param {perspective block element} perspectiveNode 
+     * @return  perspective camera
+     */
+    parsePerspective(perspectiveNode){
+        var perspective = null;
+
+        this.log("Parsed perspective");
+
+        return perspective;
+    }
+
+    /**
+     * Parses the <ortho> block.
+     * @param {ortho block element} orthoNode 
+     * @return  ortho camera
+     */
+    parseOrtho(orthoNode){
+        var ortho = null;
+        
+        this.log("Parsed ortho");
+
+        return ortho;
+    }
+
+    //implementar no parser das camaras a criacao da camara
+
+    /**
+     * Parses the <views> block.
+     * @param {views block element} viewsNode
+     */
     parseViews(viewsNode) {
+        var children = viewsNode.children;
+
+        this.cameras = [];
+
+        this.default = this.reader.getString(viewsNode, 'default');
+        if (this.default == null) {
+            this.onXMLError("unable to parse default view");
+        }
+
+        for (var i = 0; i < children.length; i++)
+            switch(children[i].nodeName){
+                case "perspective":
+                    var perspective = this.parsePerspective(children[i]);
+
+                    this.cameras.push(perspective);
+                    break;
+                case "ortho":
+                    var ortho = this.parseOrtho(children[i]);
+
+                    this.cameras.push(ortho);
+                    break;
+            }
 
         this.log("Parsed views");
 
