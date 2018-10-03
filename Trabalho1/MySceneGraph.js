@@ -833,7 +833,17 @@ class MySceneGraph {
             this.onXMLError("unable to parse default view");
         }
 
-        for (var i = 0; i < children.length; i++)
+        for (var i = 0; i < children.length; i++){
+            let id = this.reader.getString(children[i], 'id');
+            if (id == null) {
+                this.onXMLError("unable to parse value for view id");
+            }
+
+            for(var j = 0; j < this.cameras.length; j++){
+                if(this.cameras[j].id == id)
+                    this.onXMLError("repeated id");
+            }
+
             switch(children[i].nodeName){
                 case "perspective":
                     var perspective = this.parsePerspective(children[i]);
@@ -846,6 +856,7 @@ class MySceneGraph {
                     this.cameras.push(ortho);
                     break;
             }
+        }
 
         this.log("Parsed views");
 
