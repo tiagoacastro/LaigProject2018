@@ -793,7 +793,7 @@ class MySceneGraph {
             outer = 2;
             this.onXMLMinorError("outer can't be equal or lower than 0, assuming 'outer = 2'");
         }
-
+        /*
         if(outer < inner){
             let aux = outer;
             outer = inner;
@@ -804,7 +804,7 @@ class MySceneGraph {
             outer = 2*inner;
             this.onXMLMinorError("outer can't be equal to inner, assuming 'outer = 2*inner'");
         }
-
+        */
         let slices = this.reader.getFloat(torusNode, 'slices');
         if (!(slices != null && !isNaN(slices))) {
             slices = 1;
@@ -893,8 +893,84 @@ class MySceneGraph {
      * @return  perspective camera
      */
     parsePerspective(perspectiveNode){
-        var perspective = null;
+        let near = this.reader.getFloat(perspectiveNode, 'near');
+        if (!(near != null && !isNaN(near))) {
+            near = 0;
+            this.onXMLMinorError("unable to parse value for near plane; assuming 'near = 0'");
+        }
 
+        let far = this.reader.getFloat(perspectiveNode, 'far');
+        if (!(far != null && !isNaN(far))) {
+            far = 10;
+            this.onXMLMinorError("unable to parse value for far plane; assuming 'far = 10'");
+        }
+
+        let angle = this.reader.getFloat(perspectiveNode, 'angle');
+        if (!(angle != null && !isNaN(angle))) {
+            angle = Math.PI/4;
+            this.onXMLMinorError("unable to parse value for angle plane; assuming 'angle = 45'");
+        }
+
+        angle = angle * Math.PI / 180;              //degrees to radians
+
+        var children = perspectiveNode.children;
+        var nodeNames = [];
+        for (var i = 0; i < children.length; i++)
+            nodeNames.push(children[i].nodeName);
+
+        var indexFrom = nodeNames.indexOf("from");
+        let from = [0,0,0];
+        if (indexFrom == -1) {
+            this.onXMLError("from planes missing; assuming 'x = 0' and 'y = 0' and 'z = 0'");
+        }
+        else {
+            from[0] = this.reader.getFloat(children[indexFrom], 'x');
+            from[1] = this.reader.getFloat(children[indexFrom], 'y');
+            from[2] = this.reader.getFloat(children[indexFrom], 'z');
+
+            if (!(from[0] != null && !isNaN(from[0]))) {
+                from[0] = 0;
+                this.onXMLMinorError("unable to parse value for x plane; assuming 'x = 0'");
+            }
+
+            if (!(from[1] != null && !isNaN(from[1]))) {
+                from[1] = 0;
+                this.onXMLMinorError("unable to parse value for y plane; assuming 'y = 0'");
+            }
+
+            if (!(from[2] != null && !isNaN(from[2]))) {
+                from[2] = 0;
+                this.onXMLMinorError("unable to parse value for z plane; assuming 'z = 0'");
+            }
+        }
+        
+        var indexTo = nodeNames.indexOf("to");
+        let to = [10,10,10];
+        if (indexTo == -1) {
+            this.onXMLError("to planes missing; assuming 'x = 10' and 'y = 10' and 'z = 10'");
+        }
+        else {
+            to[0] = this.reader.getFloat(children[indexTo], 'x');
+            to[1] = this.reader.getFloat(children[indexTo], 'y');
+            to[2] = this.reader.getFloat(children[indexTo], 'z');
+
+            if (!(to[0] != null && !isNaN(to[0]))) {
+                to[0] = 10;
+                this.onXMLMinorError("unable to parse value for x plane; assuming 'x = 10'");
+            }
+
+            if (!(to[1] != null && !isNaN(to[1]))) {
+                to[1] = 10;
+                this.onXMLMinorError("unable to parse value for y plane; assuming 'y = 10'");
+            }
+
+            if (!(to[2] != null && !isNaN(to[2]))) {
+                to[2] = 10;
+                this.onXMLMinorError("unable to parse value for z plane; assuming 'z = 10'");
+            }
+        }
+
+        var perspective = null; //CGFcamera(angle, near, far, from, to);
         this.log("Parsed perspective");
 
         return perspective;
@@ -907,13 +983,12 @@ class MySceneGraph {
      */
     parseOrtho(orthoNode){
         var ortho = null;
-        
         this.log("Parsed ortho");
 
         return ortho;
     }
 
-    //implementar no parser das camaras a criacao da camara
+    //implementar no parser das camaras a criacao da camara e parse do ortho
 
     /**
      * Parses the <views> block.
@@ -940,18 +1015,20 @@ class MySceneGraph {
                     this.onXMLError("repeated id");
             }
 
+            var camera = new MyCamera();
+
             switch(children[i].nodeName){
                 case "perspective":
-                    var perspective = this.parsePerspective(children[i]);
-
-                    this.cameras.push(perspective);
+                    camera.camera = this.parsePerspective(children[i]);
                     break;
                 case "ortho":
-                    var ortho = this.parseOrtho(children[i]);
-
-                    this.cameras.push(ortho);
+                    camera.camera = this.parseOrtho(children[i]);
                     break;
             }
+
+            camera.id = id;
+
+            this.cameras.push(camera);
         }
 
         this.log("Parsed views");
