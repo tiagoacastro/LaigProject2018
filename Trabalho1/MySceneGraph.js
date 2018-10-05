@@ -587,8 +587,7 @@ class MySceneGraph {
         }
 
         //criar retangulo
-        var rectangle = null;
-
+        var rectangle = new MyRectangle(this.scene, x1, x2, y1, y2);
         this.log("Parsed rectangle");
 
         return rectangle;
@@ -1093,7 +1092,92 @@ class MySceneGraph {
         var nodeNames = [];
         for (var i = 0; i < specs.length; i++) {
             nodeNames.push(specs[i].nodeName);
+
+            switch(specs[i].nodeName) {
+                case "scale":
+                    var scaleAux = [];
+                    //x
+                    var x = this.reader.getFloat(specs[i], 'x');
+                    if (!(x != null && !isNaN(x))) {
+                        return "unable to parse x-coordinate of the light position for ID = " + transformationId;
+                    }
+                    else {
+                        scaleAux.push(x);
+                    }
+                    //y
+                    var y = this.reader.getFloat(specs[i], 'y');
+                    if (!(y != null && !isNaN(y))) {
+                        return "unable to parse y-coordinate of the light position for ID = " + transformationId;
+                    }
+                    else {
+                        scaleAux.push(y);
+                    }
+                    //z
+                    var z = this.reader.getFloat(specs[i], 'z');
+                    if (!(z != null && !isNaN(z))) {
+                        return "unable to parse z-coordinate of the light position for ID = " + transformationId;
+                    }
+                    else {
+                        scaleAux.push(z);
+                    }
+
+                    transformationAux.scale.push(scaleAux);
+                    break;
+                case "translate":
+                    var translateAux = [];
+                    //x
+                    var x = this.reader.getFloat(specs[i], 'x');
+                    if (!(x != null && !isNaN(x))) {
+                        return "unable to parse x-coordinate of the light position for ID = " + transformationId;
+                    }
+                    else {
+                        translateAux.push(x);
+                    }
+                    //y
+                    var y = this.reader.getFloat(specs[i], 'y');
+                    if (!(y != null && !isNaN(y))) {
+                        return "unable to parse y-coordinate of the light position for ID = " + transformationId;
+                    }
+                    else {
+                        translateAux.push(y);
+                    }
+                    //z
+                    var z = this.reader.getFloat(specs[i], 'z');
+                    if (!(z != null && !isNaN(z))) {
+                        return "unable to parse z-coordinate of the light position for ID = " + transformationId;
+                    }
+                    else {
+                        translateAux.push(z);
+                    }
+
+                    transformationAux.translate.push(translateAux);
+                    break;
+                case "rotate":
+                    var rotateAux = [];
+                    //axis
+                    var x = this.reader.getString(specs[i], 'axis');
+                    if (!(x != null)) {
+                        return "unable to parse x-coordinate of the light position for ID = " + transformationId;
+                    }
+                    else {
+                        rotateAux.push(x);
+                    }
+                    //angle
+                    var y = this.reader.getFloat(specs[i], 'angle');
+                    if (!(y != null && !isNaN(y))) {
+                        return "unable to parse y-coordinate of the light position for ID = " + transformationId;
+                    }
+                    else {
+                        rotateAux.push(y);
+                    }
+
+                    transformationAux.translate.push(translateAux);
+                    break;
+            }
+
         }
+
+        this.transformations = transformationAux;
 
     }
 
@@ -1273,7 +1357,7 @@ class MySceneGraph {
         // entry point for graph rendering
         //TODO: Render loop starting at root of graph
         for (var i = 0; i < this.primitives.length; i++) {
-            if (this.primitives[i].id == "triangle") { //temp, just to check if something was drawn
+            if (this.primitives[i].id == "triangle" || this.primitives[i].id == "rectangle") { //temp, just to check if something was drawn
                 this.displayPrimitive(this.primitives[i]);
             }
         }
