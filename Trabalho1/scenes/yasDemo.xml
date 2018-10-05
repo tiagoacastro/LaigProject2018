@@ -52,7 +52,7 @@
                       x3="1" y3="1" z3="0" />
         </primitive>
         <primitive id="cylinder">
-            <cylinder base="2" top="2" height="5" slices="3" stacks="4" />
+            <cylinder base="2" top="2" height="5" slices="20" stacks="4" />
         </primitive>
         <primitive id="sphere">
             <sphere radius="2" slices="3" stacks="5" />

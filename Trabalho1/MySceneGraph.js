@@ -716,7 +716,7 @@ class MySceneGraph {
         }
 
         //criar cilindro
-        var cylinder = null;
+        var cylinder = new MyCylinder(this.scene, base, top, height, slices, stacks);
 
         this.log("Parsed cylinder");
 
@@ -1357,7 +1357,7 @@ class MySceneGraph {
         // entry point for graph rendering
         //TODO: Render loop starting at root of graph
         for (var i = 0; i < this.primitives.length; i++) {
-            if (this.primitives[i].id == "triangle" || this.primitives[i].id == "rectangle") { //temp, just to check if something was drawn
+            if (/*this.primitives[i].id == "triangle" || this.primitives[i].id == "rectangle" || */this.primitives[i].id == "cylinder") { //temp, just to check if something was drawn
                 this.displayPrimitive(this.primitives[i]);
             }
         }
