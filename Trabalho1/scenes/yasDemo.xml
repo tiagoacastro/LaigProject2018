@@ -37,6 +37,15 @@
     </materials>
 
     <transformations>
+        <transformation id="place_lower_snowman_sphere">
+            <translate x="0" y="0" z="1.5" />
+        </transformation>
+        <transformation id="place_middle_snowman_sphere">
+            <translate x="0" y="0" z="4" />
+        </transformation>
+        <transformation id="place_upper_snowman_sphere">
+            <translate x="0" y="0" z="5.5"/>
+        </transformation>
         <transformation id="unique_transformation">
             <scale x="1" y="1" z="1"/>
         </transformation>
@@ -54,8 +63,14 @@
         <primitive id="cylinder">
             <cylinder base="2" top="2" height="5" slices="20" stacks="4" />
         </primitive>
-        <primitive id="sphere">
-            <sphere radius="5" slices="20" stacks="20" />
+        <primitive id="big_sphere">
+            <sphere radius="3" slices="30" stacks="30" />
+        </primitive>
+        <primitive id="medium_sphere">
+            <sphere radius="2" slices="20" stacks="20" />
+        </primitive>
+        <primitive id="small_sphere">
+            <sphere radius="1" slices="10" stacks="10" />
         </primitive>
         <primitive id="torus">
             <torus inner="2" outer="6" slices="4" loops="3" />
@@ -63,16 +78,40 @@
     </primitives>
 
     <components>
-        <component id="unique_component">
+        <component id="lower_snowman_sphere">
             <transformation>
-                <transformationref id="unique_transformation"/>
+                <transformationref id="place_lower_snowman_sphere"/>
             </transformation>
             <materials>
                 <material id="unique_material"/>
             </materials>
             <texture id="unique_texture" length_s="1" length_t="1"/>
             <children>
-                <primitiveref id="sphere"/>
+                <primitiveref id="big_sphere"/>
+            </children>
+        </component>
+        <component id="middle_snowman_sphere">
+            <transformation>
+                <transformationref id="place_middle_snowman_sphere"/>
+            </transformation>
+            <materials>
+                <material id="unique_material"/>
+            </materials>
+            <texture id="unique_texture" length_s="1" length_t="1"/>
+            <children>
+                <primitiveref id="medium_sphere"/>
+            </children>
+        </component>
+        <component id="upper_snowman_sphere">
+            <transformation>
+                <transformationref id="place_upper_snowman_sphere"/>
+            </transformation>
+            <materials>
+                <material id="unique_material"/>
+            </materials>
+            <texture id="unique_texture" length_s="1" length_t="1"/>
+            <children>
+                <primitiveref id="small_sphere"/>
             </children>
         </component>
     </components>
