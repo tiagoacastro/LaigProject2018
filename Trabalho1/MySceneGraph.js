@@ -777,21 +777,13 @@ class MySceneGraph {
             inner = 1;
             this.onXMLMinorError("unable to parse value for inner plane; assuming 'inner = 1'");
         }
-        if(inner <= 0) {
-            inner = 1;
-            this.onXMLMinorError("inner can't be equal or lower than 0, assuming 'inner = 1'");
-        }
 
         let outer = this.reader.getFloat(torusNode, 'outer');
         if (!(outer != null && !isNaN(outer))) {
             outer = 2;
             this.onXMLMinorError("unable to parse value for outer plane; assuming 'outer = 2'");
         }
-        if(outer <= 0) {
-            outer = 2;
-            this.onXMLMinorError("outer can't be equal or lower than 0, assuming 'outer = 2'");
-        }
-        /*
+
         if(outer < inner){
             let aux = outer;
             outer = inner;
@@ -802,7 +794,7 @@ class MySceneGraph {
             outer = 2*inner;
             this.onXMLMinorError("outer can't be equal to inner, assuming 'outer = 2*inner'");
         }
-        */
+
         let slices = this.reader.getFloat(torusNode, 'slices');
         if (!(slices != null && !isNaN(slices))) {
             slices = 1;
@@ -824,7 +816,7 @@ class MySceneGraph {
         }
 
         //criar torus
-        var torus = null;
+        var torus = new MyTorus(this.scene, inner, outer, slices, loops);
 
         this.log("Parsed torus");
 

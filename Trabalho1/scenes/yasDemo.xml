@@ -73,45 +73,21 @@
             <sphere radius="1" slices="10" stacks="10" />
         </primitive>
         <primitive id="torus">
-            <torus inner="2" outer="6" slices="4" loops="3" />
+            <torus inner="2" outer="3" slices="15" loops="60" />
         </primitive>
     </primitives>
 
     <components>
-        <component id="lower_snowman_sphere">
+        <component id="unique_torus">
             <transformation>
-                <transformationref id="place_lower_snowman_sphere"/>
+                <transformationref id="unique_transformation"/>
             </transformation>
             <materials>
                 <material id="unique_material"/>
             </materials>
-            <texture id="unique_texture" length_s="1" length_t="1"/>
+                <texture id="unique_texture" length_s="1" length_t="1"/>
             <children>
-                <primitiveref id="big_sphere"/>
-            </children>
-        </component>
-        <component id="middle_snowman_sphere">
-            <transformation>
-                <transformationref id="place_middle_snowman_sphere"/>
-            </transformation>
-            <materials>
-                <material id="unique_material"/>
-            </materials>
-            <texture id="unique_texture" length_s="1" length_t="1"/>
-            <children>
-                <primitiveref id="medium_sphere"/>
-            </children>
-        </component>
-        <component id="upper_snowman_sphere">
-            <transformation>
-                <transformationref id="place_upper_snowman_sphere"/>
-            </transformation>
-            <materials>
-                <material id="unique_material"/>
-            </materials>
-            <texture id="unique_texture" length_s="1" length_t="1"/>
-            <children>
-                <primitiveref id="small_sphere"/>
+                <primitiveref id="torus"/>
             </children>
         </component>
     </components>
