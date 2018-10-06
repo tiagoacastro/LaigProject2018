@@ -15,14 +15,14 @@ class MySphere extends CGFobject {
         this.vertices = [];
         this.normals = [];
         this.indices = [];
-        this.originalTexCoords = [];
+        this.texCoordsAux = [];
     
         var theta = (2 * Math.PI) / this.slices;
         var phi = (Math.PI) / this.stacks;
-        var n_verts = 0;
+        var n = 0;
     
-        var patchLengthx = 1 / this.slices;
-        var patchLengthy = 1 / this.stacks;
+        var patchX = 1 / this.slices;
+        var patchY = 1 / this.stacks;
         var xCoord = 0;
         var yCoord = 0;
     
@@ -35,27 +35,27 @@ class MySphere extends CGFobject {
                 let z = Math.cos(phi * j);
     
                 this.vertices.push(this.radius * x, this.radius * y, this.radius * z);
-                n_verts++;
+                n++;
     
                 this.normals.push(x, y, z);
     
                 if (i > 0 && j > 0) {
-                    this.indices.push(n_verts - this.stacks - 1, n_verts - 1, n_verts - this.stacks - 2);
-                    this.indices.push(n_verts - 1, n_verts - 2, n_verts - this.stacks - 2);
+                    this.indices.push(n - this.stacks - 1, n - 1, n - this.stacks - 2);
+                    this.indices.push(n - 1, n - 2, n - this.stacks - 2);
                 }
     
     
-                    yCoord += patchLengthy;
+                yCoord += patchY;
 
-                this.originalTexCoords.push(  xCoord,yCoord);
+                this.texCoordsAux.push(xCoord, yCoord);
             }
     
             yCoord = 0;
-            xCoord += patchLengthx;
+            xCoord += patchX;
     
         }
     
-        this.texCoords = this.originalTexCoords.slice();
+        this.texCoords = this.texCoordsAux.slice();
         this.primitiveType = this.scene.gl.TRIANGLES;
         this.initGLBuffers();
     };
