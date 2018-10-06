@@ -55,7 +55,7 @@
             <cylinder base="2" top="2" height="5" slices="20" stacks="4" />
         </primitive>
         <primitive id="sphere">
-            <sphere radius="2" slices="3" stacks="5" />
+            <sphere radius="5" slices="20" stacks="20" />
         </primitive>
         <primitive id="torus">
             <torus inner="2" outer="6" slices="4" loops="3" />
@@ -72,7 +72,7 @@
             </materials>
             <texture id="unique_texture" length_s="1" length_t="1"/>
             <children>
-                <primitiveref id="unique_primitive"/>
+                <primitiveref id="sphere"/>
             </children>
         </component>
     </components>

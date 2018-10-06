@@ -32,7 +32,7 @@ class MyCylinder extends CGFobject
 		alpha = (alpha * Math.PI)/180;
 
         //stack increment
-        var stackInc =  1/this.stacks;
+        var stackInc =  this.height/this.stacks;
         var stackHeight = 0;
         var prevStackHeight = 0;
 

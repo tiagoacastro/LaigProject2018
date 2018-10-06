@@ -760,8 +760,7 @@ class MySceneGraph {
         }
 
         //criar esfera
-        var sphere = null;
-
+        var sphere = new MySphere(this.scene, radius, slices, stacks);
         this.log("Parsed sphere");
 
         return sphere;
@@ -1064,6 +1063,7 @@ class MySceneGraph {
 
             var transformation = new MyTransformation();
             transformation = this.parseTransformationAux(children[i]);
+            this.transformations.push(transformation);
 
         }
 
@@ -1089,9 +1089,7 @@ class MySceneGraph {
 
         transformationAux.id = transformationId;
 
-        var nodeNames = [];
         for (var i = 0; i < specs.length; i++) {
-            nodeNames.push(specs[i].nodeName);
 
             switch(specs[i].nodeName) {
                 case "scale":
@@ -1177,7 +1175,7 @@ class MySceneGraph {
 
         }
 
-        this.transformations = transformationAux;
+        return transformationAux;
 
     }
 
@@ -1275,9 +1273,10 @@ class MySceneGraph {
             component.texture = texture.id;
             component.textureLengthS = texture.lengthS;
             component.textureLengthT = texture.lengthT;
-            component.children = childrenComponent;
+            component.children = children;
             this.components.push(component);
             numComponents++;
+            
 
         }
 
@@ -1315,10 +1314,15 @@ class MySceneGraph {
         
         let childrenAux = [];
 
+        let child = new MyComponentChildren();
+
         for (var i = 0; i < children.length; i++) {
-            if (children[i].nodeName == "material") {
-                childrenAux.push(this.reader.getString(children[i], 'id'));
+            if (children[i].nodeName == "primitiveref" || children[i].nodeName == "componentref") {
+                child.ref = children[i].nodeName;
+                child.id = this.reader.getString(children[i], 'id');
+                childrenAux.push(child);
             }
+            child = new MyComponentChildren();
         }
 
         return childrenAux;
@@ -1357,14 +1361,54 @@ class MySceneGraph {
         // entry point for graph rendering
         //TODO: Render loop starting at root of graph
         for (var i = 0; i < this.primitives.length; i++) {
-            if (/*this.primitives[i].id == "triangle" || this.primitives[i].id == "rectangle" || */this.primitives[i].id == "cylinder") { //temp, just to check if something was drawn
+            /*
+            if (this.primitives[i].id == "triangle" || this.primitives[i].id == "rectangle" || this.primitives[i].id == "sphere") { //temp, just to check if something was drawn
                 this.displayPrimitive(this.primitives[i]);
             }
+            */
+
+            this.processComponents();
+
         }
         return null;
+    }
+
+    processComponents() {
+
+        for (var i = 0; i < this.components.length; i++) {
+            var component = this.components[i];
+            this.parseComponentsAux(component);
+        }
+
+    }
+
+    parseComponentsAux(component) {
+
+        for (let i = 0; i < component.children.length; i++) {
+
+            switch(component.children[i].ref) {
+                case "primitiveref":
+                this.displayPrimitiveAux(component.children[i].id);
+                break;
+                case "componentref":
+                break;
+            }
+
+        }
+
     }
 
     displayPrimitive(primitive) {
         primitive.child.display();
     }
+
+    displayPrimitiveAux(primitiveid) {
+        for (let i = 0; i < this.primitives.length; i++) {
+            if (this.primitives[i].id == primitiveid) {
+                this.primitives[i].child.display();
+            }
+        }
+    }
+
+
 }
