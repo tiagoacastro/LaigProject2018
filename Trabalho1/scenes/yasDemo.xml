@@ -87,10 +87,6 @@
             <scale x="1.5" y="0.1" z="0.5"/>
         </transformation>
 
-        <transformation id="set_tv">
-            <translate x="3" y="0.9" z="3"/>
-        </transformation>
-
         <transformation id="set_ceiling_lamp">
             <translate x="4" y="2.9" z="4"/>
         </transformation>
@@ -200,6 +196,7 @@
                 <componentref id="ground"/>
                 <componentref id="tv"/>
                 <componentref id="ceiling_lamp"/>
+                <componentref id="table"/>
             </children>
         </component>
 
