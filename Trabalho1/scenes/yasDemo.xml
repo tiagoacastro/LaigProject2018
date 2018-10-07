@@ -18,7 +18,7 @@
         <omni id="unique_light" enabled="1" >
             <location x="5" y="5" z="5" w="1" />
             <ambient r="1" g="1" b="1" a="1" />
-            <difuse r="1" g="1" b="1" a="1" />
+            <diffuse r="1" g="1" b="1" a="1" />
             <specular r="1" g="1" b="1" a="1" />
         </omni>
     </lights>
@@ -31,13 +31,13 @@
         <material id="red" shininess = "1" >
             <emission r="128" g="0" b="0" a="1" />
             <ambient r="128" g="0" b="0" a="1" />
-            <di1use r="128" g="0" b="0" a="1" />
+            <diffuse r="128" g="0" b="0" a="1" />
             <specular r="128" g="0" b="0" a="1" />
         </material>
     </materials>
 
     <transformations>
-        <transformation id="null_transformation">
+        <transformation id="identity">
             <translate x="0" y="0" z="0"/>
         </transformation>
         <transformation id="set_side_wall">
@@ -76,12 +76,12 @@
     <components>
         <component id="root">
             <transformation>
-                <transformationref id="null_transformation"/>
+                <transformationref id="identity"/>
             </transformation>
             <materials>
                 <material id="red"/>
             </materials>
-            <texture id="none"/>
+            <texture id="none" length_s="1" length_t="1" />
             <children>
                 <componentref id="side_wall"/>
                 <componentref id="back_wall"/>
@@ -95,7 +95,7 @@
             <materials>
                 <material id="inherit"/>
             </materials>
-            <texture id="none"/>
+            <texture id="none" length_s="1" length_t="1" />
             <children>
                 <primitiveref id="rectangle"/>
             </children>
@@ -107,7 +107,7 @@
             <materials>
                 <material id="inherit"/>
             </materials>
-            <texture id="none"/>
+            <texture id="none" length_s="1" length_t="1" />
             <children>
                 <componentref id="side_wall"/>
             </children>
@@ -119,7 +119,7 @@
             <materials>
                 <material id="inherit"/>
             </materials>
-            <texture id="none"/>
+            <texture id="none" length_s="1" length_t="1" />
             <children>
                 <componentref id="side_wall"/>
             </children>

@@ -83,7 +83,6 @@ class MySceneGraph {
 
         for (var i = 0; i < nodes.length; i++) {
             nodeNames.push(nodes[i].nodeName);
-            console.log(nodes[i].nodeName);
         }
 
         var error;
@@ -198,8 +197,7 @@ class MySceneGraph {
             if ((error = this.parseComponents(nodes[index])) != null)
                 return error;
         }
-
-        console.log(this);
+        
     }
 
     /**
@@ -1183,11 +1181,7 @@ class MySceneGraph {
 
         var transformations= [];
         var materials = [];
-        var texture = {
-            id: "",
-            lengthS: 1,
-            lengthT: 1
-        };
+        var texture = new MyTexture();
         var childrenComponent = [];
 
         //there should be at least one component
@@ -1264,9 +1258,7 @@ class MySceneGraph {
 
             component.transformation = transformations;
             component.materials = materials;
-            component.texture = texture.id;
-            component.textureLengthS = texture.lengthS;
-            component.textureLengthT = texture.lengthT;
+            component.texture = texture;
             component.children = childrenTmp;
             this.components.push(component);
             numComponents++;
@@ -1352,21 +1344,22 @@ class MySceneGraph {
      */
     displayScene() {
         for (var i = 0; i < this.primitives.length; i++) {
-            this.processComponents();
+            this.processRoot();
         }
         return null;
     }
 
-    processComponents() {
+    processRoot() {
 
-        for (var i = 0; i < this.components.length; i++) {
-            var component = this.components[i];
-            this.processComponentsAux(component);
+        for (let i = 0; i < this.components.length; i++) {
+            if (this.components[i].id = this.root) {
+                this.processComponents(this.components[i]);
+            }
         }
 
     }
 
-    processComponentsAux(component) {
+    processComponents(component) {
 
         for (let i = 0; i < component.children.length; i++) {
 
@@ -1382,7 +1375,7 @@ class MySceneGraph {
                     if (this.components[j].id == component.children[i].id) {
                         this.scene.pushMatrix();
                             this.applyTransformation(component);
-                            this.processComponentsAux(this.components[j]);
+                            this.processComponents(this.components[j]);
                         this.scene.popMatrix();
                         break;
                     }
