@@ -1422,13 +1422,13 @@ class MySceneGraph {
         for (let i = 0; i < transformation.rotate.length; i++) {
             switch(transformation.rotate[i][0]) {
                 case "x":
-                this.scene.rotate(transformation.rotate[i][1], 1, 0, 0);
+                this.scene.rotate(transformation.rotate[i][1]*DEGREE_TO_RAD, 1, 0, 0);
                 break;
                 case "y":
-                this.scene.rotate(transformation.rotate[i][1], 0, 1, 0);
+                this.scene.rotate(transformation.rotate[i][1]*DEGREE_TO_RAD, 0, 1, 0);
                 break;
                 case "z":
-                this.scene.rotate(transformation.rotate[i][1], 0, 0, 1);
+                this.scene.rotate(transformation.rotate[i][1]*DEGREE_TO_RAD, 0, 0, 1);
                 break;
             }
         }
