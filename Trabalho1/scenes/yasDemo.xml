@@ -46,8 +46,11 @@
         <transformation id="place_upper_snowman_sphere">
             <translate x="0" y="0" z="5.5"/>
         </transformation>
-        <transformation id="unique_transformation">
-            <scale x="1" y="1" z="1"/>
+        <transformation id="null_transformation">
+            <translate x="0" y="0" z="0"/>
+        </transformation>
+        <transformation id="first_translation">
+            <translate x="3" y="3" z="3"/>
         </transformation>
     </transformations>
 
@@ -78,9 +81,9 @@
     </primitives>
 
     <components>
-        <component id="unique_torus">
+        <component id="torus">
             <transformation>
-                <transformationref id="unique_transformation"/>
+                <transformationref id="null_transformation"/>
             </transformation>
             <materials>
                 <material id="unique_material"/>
@@ -90,6 +93,20 @@
                 <primitiveref id="torus"/>
             </children>
         </component>
+
+        <component id="component">
+            <transformation>
+                <transformationref id="first_translation"/>
+            </transformation>
+            <materials>
+                <material id="unique_material"/>
+            </materials>
+                <texture id="unique_texture" length_s="1" length_t="1"/>
+            <children>
+                <componentref id="torus"/>
+            </children>
+        </component>
+
     </components>
 
 </yas>

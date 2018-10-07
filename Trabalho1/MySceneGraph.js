@@ -1140,7 +1140,9 @@ class MySceneGraph {
                         translateAux.push(z);
                     }
 
+                    console.log(translateAux[0]);
                     transformationAux.translate.push(translateAux);
+                    console.log(transformationAux);
                     break;
                 case "rotate":
                     var rotateAux = [];
@@ -1211,6 +1213,8 @@ class MySceneGraph {
                 return "ID must be unique for each component (conflict: ID = " + componentId + ")";
             }
 
+            component.id = componentId;
+
             grandChildren = children[i].children;
 
             //specifications for the current component
@@ -1257,7 +1261,7 @@ class MySceneGraph {
                 this.onXMLMinorError("children value missing for ID = " + componentId);
             } else {
                 var childrenAux = grandChildren[childrenIndex].children;
-                children = this.parseComponentChildren(childrenAux);
+                var childrenTmp = this.parseComponentChildren(childrenAux);
             } 
 
             component.transformation = transformations;
@@ -1265,7 +1269,7 @@ class MySceneGraph {
             component.texture = texture.id;
             component.textureLengthS = texture.lengthS;
             component.textureLengthT = texture.lengthT;
-            component.children = children;
+            component.children = childrenTmp;
             this.components.push(component);
             numComponents++;
             
@@ -1350,17 +1354,8 @@ class MySceneGraph {
      * Displays the scene, processing each node, starting in the root node.
      */
     displayScene() {
-        // entry point for graph rendering
-        //TODO: Render loop starting at root of graph
         for (var i = 0; i < this.primitives.length; i++) {
-            /*
-            if (this.primitives[i].id == "triangle" || this.primitives[i].id == "rectangle" || this.primitives[i].id == "sphere") { //temp, just to check if something was drawn
-                this.displayPrimitive(this.primitives[i]);
-            }
-            */
-
             this.processComponents();
-
         }
         return null;
     }
@@ -1369,20 +1364,31 @@ class MySceneGraph {
 
         for (var i = 0; i < this.components.length; i++) {
             var component = this.components[i];
-            this.parseComponentsAux(component);
+            this.processComponentsAux(component);
         }
 
     }
 
-    parseComponentsAux(component) {
+    processComponentsAux(component) {
 
         for (let i = 0; i < component.children.length; i++) {
 
             switch(component.children[i].ref) {
                 case "primitiveref":
-                this.displayPrimitiveAux(component.children[i].id);
+                this.displayPrimitive(component.children[i].id);
                 break;
                 case "componentref":
+                for (let j = 0; j < this.components.length; j++) {
+                    //console.log(this.components[j].id);
+                    //console.log(component.children[i].id);
+                    if (this.components[j].id == component.children[i].id) {
+                        //console.log("found component through id");
+                        this.scene.pushMatrix();
+                        this.applyTransformation(component);
+                        this.processComponentsAux(this.components[j]);
+                        this.scene.popMatrix();
+                    }
+                }
                 break;
             }
 
@@ -1390,17 +1396,59 @@ class MySceneGraph {
 
     }
 
-    displayPrimitive(primitive) {
-        primitive.child.display();
-    }
-
-    displayPrimitiveAux(primitiveid) {
+    displayPrimitive(primitiveid) {
         for (let i = 0; i < this.primitives.length; i++) {
             if (this.primitives[i].id == primitiveid) {
+                //this.scene.pushMatrix();
+                //this.scene.translate(5,5,5);
                 this.primitives[i].child.display();
+                //this.scene.popMatrix();
             }
         }
     }
 
+    applyTransformation(component) {
+
+        //console.log("applyTransformation called");
+
+        for (let i = 0; i < component.transformation.length; i++) {
+            this.applyTransformationAux(component.transformation[i]);
+        }
+    }
+
+    applyTransformationAux(transformationid) {
+
+        for (let i = 0; i < this.transformations.length; i++) {
+            if (this.transformations[i].id == transformationid) {
+                this.processTransformation(this.transformations[i]);
+            }
+        }
+    }
+
+    processTransformation(transformation) {
+
+        //console.log(transformation.translate[0][0]);
+
+        for (let i = 0; i < transformation.translate.length; i++) {
+            //console.log(transformation.translate[0][0]);
+            this.scene.translate(transformation.translate[i][0],transformation.translate[i][1],transformation.translate[i][2]);
+        }
+        for (let i = 0; i < transformation.scale.length; i++) {
+            this.scene.scale(transformation.scale[i][0],transformation.scale[i][1],transformation.scale[i][2]);
+        }
+        for (let i = 0; i < transformation.rotate.length; i++) {
+            switch(transformation.rotate[i][0]) {
+                case "x":
+                this.scene.rotate(transformation.rotate[i][1], 1, 0, 0);
+                break;
+                case "y":
+                this.scene.rotate(transformation.rotate[i][1], 0, 1, 0);
+                break;
+                case "z":
+                this.scene.rotate(transformation.rotate[i][1], 0, 0, 1);
+                break;
+            }
+        }
+    }
 
 }
