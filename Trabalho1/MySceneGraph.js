@@ -1352,8 +1352,9 @@ class MySceneGraph {
     processRoot() {
 
         for (let i = 0; i < this.components.length; i++) {
-            if (this.components[i].id = this.root) {
+            if (this.components[i].id == this.root) {
                 this.processComponents(this.components[i]);
+                break;
             }
         }
 

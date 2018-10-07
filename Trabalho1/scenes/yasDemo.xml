@@ -144,6 +144,61 @@
             </children>
         </component>
 
+        <component id="tv">
+            <transformation>
+                <transformationref id="identity"/>
+            </transformation>
+            <materials>
+                <material id="inherit"/>
+            </materials>
+            <texture id="none" length_s="1" length_t="1" />
+            <children>
+                <componentref id="tv_screen"/>
+                <componentref id="tv_stand_arm"/>
+                <componentref id="tv_stand_base"/>
+            </children>
+        </component>
+
+        <component id="tv_screen">
+            <transformation>
+                <transformationref id="set_tv_screen"/>
+            </transformation>
+            <materials>
+                <material id="inherit"/>
+            </materials>
+            <texture id="none" length_s="1" length_t="1" />
+            <children>
+                <componentref id="cube"/>
+            </children>
+        </component>
+
+        <component id="tv_stand_arm">
+            <transformation>
+                <transformationref id="set_tv_stadnd_arm"/>
+            </transformation>
+            <materials>
+                <material id="inherit"/>
+            </materials>
+            <texture id="none" length_s="1" length_t="1" />
+            <children>
+                <componentref id="cube"/>
+            </children>
+        </component>
+
+        <component id="tv_stand_base">
+            <transformation>
+                <transformationref id="set_tv_stadnd_base"/>
+            </transformation>
+            <materials>
+                <material id="inherit"/>
+            </materials>
+            <texture id="none" length_s="1" length_t="1" />
+            <children>
+                <componentref id="cube"/>
+            </children>
+        </component>
+
+
         <component id="cube_face0">
             <transformation>
                 <transformationref id="set_cube_face0"/>
