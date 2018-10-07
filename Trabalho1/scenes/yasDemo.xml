@@ -1,5 +1,5 @@
 <yas>
-    <scene root="unique_scene" axis_length="3"/>
+    <scene root="root" axis_length="5"/>
     
     <views default="view">
         <perspective id="unique_perspective" near="0" far="10" angle="45">
@@ -16,7 +16,7 @@
 
     <lights>
         <omni id="unique_light" enabled="1" >
-            <location x="1" y="1" z="1" w="1" />
+            <location x="5" y="5" z="5" w="1" />
             <ambient r="1" g="1" b="1" a="1" />
             <difuse r="1" g="1" b="1" a="1" />
             <specular r="1" g="1" b="1" a="1" />
@@ -24,36 +24,32 @@
     </lights>
 
     <textures>
-        <texture id="unique_texture" file="test_texture.jpg" />
+        <texture id="rocks" file="rocks.jpg" />
     </textures>
 
     <materials>
-        <material id="unique_material" shininess = "1" >
-            <emission r="1" g="1" b="1" a="1" />
-            <ambient r="1" g="1" b="1" a="1" />
-            <di1use r="1" g="1" b="1" a="1" />
-            <specular r="1" g="1" b="1" a="1" />
+        <material id="red" shininess = "1" >
+            <emission r="128" g="0" b="0" a="1" />
+            <ambient r="128" g="0" b="0" a="1" />
+            <di1use r="128" g="0" b="0" a="1" />
+            <specular r="128" g="0" b="0" a="1" />
         </material>
     </materials>
 
     <transformations>
-        <transformation id="place_lower_snowman_sphere">
-            <translate x="0" y="0" z="0" />
-        </transformation>
-        <transformation id="place_middle_snowman_sphere">
-            <translate x="0" y="2.75" z="0" />
-        </transformation>
-        <transformation id="place_upper_snowman_sphere">
-            <translate x="0" y="5" z="0"/>
-        </transformation>
         <transformation id="null_transformation">
             <translate x="0" y="0" z="0"/>
         </transformation>
-        <transformation id="first_translation">
-            <translate x="3" y="3" z="3"/>
+        <transformation id="set_side_wall">
+            <scale x="1" y="5" z="5"/>
         </transformation>
-        <transformation id="rotation">
-            <rotate axis="x" angle="10"/>
+        <transformation id="set_back_wall">
+            <rotate axis="z" angle="-90"/>
+            <scale x="1" y="-1" z="1"/>
+        </transformation>
+        <transformation id="set_ground">
+            <rotate axis="y" angle="90"/>
+            <scale x="1" y="1" z="-1"/>
         </transformation>
     </transformations>
 
@@ -62,21 +58,15 @@
             <rectangle x1="0" y1="0" x2="1" y2="1"/>
         </primitive>
         <primitive id="triangle">
-            <triangle x1="1" y1="1" z1="1"
-                      x2="0" y2="0" z2="0"
-                      x3="1" y3="1" z3="0" />
+            <triangle x1="0" y1="0" z1="0"
+                      x2="1" y2="0" z2="0"
+                      x3="0" y3="0" z3="1" />
         </primitive>
         <primitive id="cylinder">
             <cylinder base="2" top="2" height="5" slices="20" stacks="4" />
         </primitive>
-        <primitive id="big_sphere">
-            <sphere radius="2" slices="30" stacks="30" />
-        </primitive>
-        <primitive id="medium_sphere">
-            <sphere radius="1.5" slices="20" stacks="20" />
-        </primitive>
-        <primitive id="small_sphere">
-            <sphere radius="1" slices="10" stacks="10" />
+        <primitive id="sphere">
+            <sphere radius="3" slices="30" stacks="30" />
         </primitive>
         <primitive id="torus">
             <torus inner="2" outer="3" slices="15" loops="60" />
@@ -84,61 +74,56 @@
     </primitives>
 
     <components>
-
-        <component id="head">
+        <component id="root">
             <transformation>
-                <transformationref id="place_upper_snowman_sphere"/>
+                <transformationref id="null_transformation"/>
             </transformation>
             <materials>
-                <material id="unique_material"/>
+                <material id="red"/>
             </materials>
-                <texture id="unique_texture" length_s="1" length_t="1"/>
+            <texture id="none"/>
             <children>
-                <primitiveref id="small_sphere"/>
+                <componentref id="side_wall"/>
+                <componentref id="back_wall"/>
+                <componentref id="ground"/>
             </children>
         </component>
-
-        <component id="upper_body">
+        <component id="side_wall">
             <transformation>
-                <transformationref id="place_middle_snowman_sphere"/>
+                <transformationref id="set_side_wall"/>
             </transformation>
             <materials>
-                <material id="unique_material"/>
+                <material id="inherit"/>
             </materials>
-                <texture id="unique_texture" length_s="1" length_t="1"/>
+            <texture id="none"/>
             <children>
-                <primitiveref id="medium_sphere"/>
+                <primitiveref id="rectangle"/>
             </children>
         </component>
-
-        <component id="lower_body">
+        <component id="back_wall">
             <transformation>
-                <transformationref id="place_lower_snowman_sphere"/>
+                <transformationref id="set_back_wall"/>
             </transformation>
             <materials>
-                <material id="unique_material"/>
+                <material id="inherit"/>
             </materials>
-                <texture id="unique_texture" length_s="1" length_t="1"/>
+            <texture id="none"/>
             <children>
-                <primitiveref id="big_sphere"/>
+                <componentref id="side_wall"/>
             </children>
         </component>
-
-        <component id="snowman">
+        <component id="ground">
             <transformation>
-                <transformationref id="null_translation"/>
+                <transformationref id="set_ground"/>
             </transformation>
             <materials>
-                <material id="unique_material"/>
+                <material id="inherit"/>
             </materials>
-                <texture id="unique_texture" length_s="1" length_t="1"/>
+            <texture id="none"/>
             <children>
-                <componentref id="head"/>
-                <componentref id="upper_body"/>
-                <componentref id="lower_body"/>
+                <componentref id="side_wall"/>
             </children>
         </component>
-
     </components>
 
 </yas>
