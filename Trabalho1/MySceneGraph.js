@@ -1083,14 +1083,15 @@ class MySceneGraph {
 
             switch(specs[i].nodeName) {
                 case "scale":
-                    var scaleAux = [];
+                    var scaleAux = new MyTransformationElement();
+                    scaleAux.type = "scale";
                     //x
                     var x = this.reader.getFloat(specs[i], 'x');
                     if (!(x != null && !isNaN(x))) {
                         return "unable to parse x-coordinate of the light position for ID = " + transformationId;
                     }
                     else {
-                        scaleAux.push(x);
+                        scaleAux.content.push(x);
                     }
                     //y
                     var y = this.reader.getFloat(specs[i], 'y');
@@ -1098,7 +1099,7 @@ class MySceneGraph {
                         return "unable to parse y-coordinate of the light position for ID = " + transformationId;
                     }
                     else {
-                        scaleAux.push(y);
+                        scaleAux.content.push(y);
                     }
                     //z
                     var z = this.reader.getFloat(specs[i], 'z');
@@ -1106,20 +1107,21 @@ class MySceneGraph {
                         return "unable to parse z-coordinate of the light position for ID = " + transformationId;
                     }
                     else {
-                        scaleAux.push(z);
+                        scaleAux.content.push(z);
                     }
 
-                    transformationAux.scale.push(scaleAux);
+                    transformationAux.transformations.push(scaleAux);
                     break;
                 case "translate":
-                    var translateAux = [];
+                    var translateAux = new MyTransformationElement();
+                    translateAux.type = "translate";
                     //x
                     var x = this.reader.getFloat(specs[i], 'x');
                     if (!(x != null && !isNaN(x))) {
                         return "unable to parse x-coordinate of the light position for ID = " + transformationId;
                     }
                     else {
-                        translateAux.push(x);
+                        translateAux.content.push(x);
                     }
                     //y
                     var y = this.reader.getFloat(specs[i], 'y');
@@ -1127,7 +1129,7 @@ class MySceneGraph {
                         return "unable to parse y-coordinate of the light position for ID = " + transformationId;
                     }
                     else {
-                        translateAux.push(y);
+                        translateAux.content.push(y);
                     }
                     //z
                     var z = this.reader.getFloat(specs[i], 'z');
@@ -1135,20 +1137,21 @@ class MySceneGraph {
                         return "unable to parse z-coordinate of the light position for ID = " + transformationId;
                     }
                     else {
-                        translateAux.push(z);
+                        translateAux.content.push(z);
                     }
 
-                    transformationAux.translate.push(translateAux);
+                    transformationAux.transformations.push(translateAux);
                     break;
                 case "rotate":
-                    var rotateAux = [];
+                    var rotateAux = new MyTransformationElement();
+                    rotateAux.type = "rotate";
                     //axis
                     var axis = this.reader.getString(specs[i], 'axis');
                     if (!(axis != null)) {
                         return "unable to parse x-coordinate of the light position for ID = " + transformationId;
                     }
                     else {
-                        rotateAux.push(axis);
+                        rotateAux.content.push(axis);
                     }
                     //angle
                     var angle = this.reader.getFloat(specs[i], 'angle');
@@ -1156,10 +1159,10 @@ class MySceneGraph {
                         return "unable to parse y-coordinate of the light position for ID = " + transformationId;
                     }
                     else {
-                        rotateAux.push(angle);
+                        rotateAux.content.push(angle);
                     }
 
-                    transformationAux.rotate.push(rotateAux);
+                    transformationAux.transformations.push(rotateAux);
                     break;
             }
 
@@ -1414,23 +1417,27 @@ class MySceneGraph {
 
     processTransformation(transformation) {
 
-        for (let i = 0; i < transformation.translate.length; i++) {
-            this.scene.translate(transformation.translate[i][0],transformation.translate[i][1],transformation.translate[i][2]);
-        }
-        for (let i = 0; i < transformation.scale.length; i++) {
-            this.scene.scale(transformation.scale[i][0],transformation.scale[i][1],transformation.scale[i][2]);
-        }
-        for (let i = 0; i < transformation.rotate.length; i++) {
-            switch(transformation.rotate[i][0]) {
-                case "x":
-                this.scene.rotate(transformation.rotate[i][1]*DEGREE_TO_RAD, 1, 0, 0);
-                break;
-                case "y":
-                this.scene.rotate(transformation.rotate[i][1]*DEGREE_TO_RAD, 0, 1, 0);
-                break;
-                case "z":
-                this.scene.rotate(transformation.rotate[i][1]*DEGREE_TO_RAD, 0, 0, 1);
-                break;
+        for (let i = 0; i < transformation.transformations.length; i++) {
+            switch(transformation.transformations[i].type) {
+                case "translate":
+                    this.scene.translate(transformation.transformations[i].content[0],transformation.transformations[i].content[1],transformation.transformations[i].content[2]);
+                    break;
+                case "scale":
+                    this.scene.scale(transformation.transformations[i].content[0],transformation.transformations[i].content[1],transformation.transformations[i].content[2]);
+                    break;
+                case "rotate":
+                    switch(transformation.transformations[i].content[0]) {
+                        case "x":
+                        this.scene.rotate(transformation.transformations[i].content[1]*DEGREE_TO_RAD, 1, 0, 0);
+                        break;
+                        case "y":
+                        this.scene.rotate(transformation.transformations[i].content[1]*DEGREE_TO_RAD, 0, 1, 0);
+                        break;
+                        case "z":
+                        this.scene.rotate(transformation.transformations[i].content[1]*DEGREE_TO_RAD, 0, 0, 1);
+                        break;
+                    }
+                    break;
             }
         }
     }

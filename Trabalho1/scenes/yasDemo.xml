@@ -79,42 +79,38 @@
         </transformation>
 
         <transformation id="set_tv_screen">
-            <rotate axis="x" angle="90"/>
             <scale x="2.5" y="1.5" z="0.1"/>
         </transformation>
 
         <transformation id="set_tv_stand_arm">
             <translate x="0" y="-0.75" z="0"/>
-            <rotate axis="x" angle="90"/>
-            <scale x="0.5" y="0.25" z="0.09"/>
+            <scale x="0.25" y="0.25" z="0.05"/>
         </transformation>
 
         <transformation id="set_tv_stand_base">
             <translate x="0" y="-0.9" z="0"/>
-            <rotate axis="x" angle="90"/>
-            <scale x="1.5" y="0.1" z="0.5"/>
+            <scale x="1.5" y="0.1" z="0.75"/>
         </transformation>
 
         <transformation id="set_ceiling_lamp">
-            <translate x="3" y="5" z="5"/>
+            <translate x="4" y="5" z="4"/>
         </transformation>
 
         <transformation id="set_ceiling_lamp_shade">
-            <translate x="0" y="0" z="0"/>
-            <rotate axis="x" angle="-90"/>
             <scale x="0.5" y="0.5" z="0.5"/>
+            <rotate axis="x" angle="-90"/>
         </transformation>
 
         <transformation id="set_ceiling_lamp_wire">
             <translate x="0" y="0.5" z="0"/>
-            <rotate axis="x" angle="-90"/>
             <scale x="0.05" y="0.5" z="0.05"/>
+            <rotate axis="x" angle="-90"/>
         </transformation>
 
         <transformation id="set_ceiling_lamp_base">
-            <translate x="0" y="1.1" z="0"/>
-            <rotate axis="x" angle="90"/>
+            <translate x="0" y="1" z="0"/>
             <scale x="0.25" y="0.1" z="0.25"/>
+            <rotate axis="x" angle="-90"/>
         </transformation>
 
         <transformation id="set_cube_face0">
@@ -147,20 +143,20 @@
         </transformation>
 
         <transformation id="set_side_wall">
-            <translate x="3" y="3" z="0"/>
-            <scale x="6" y="6" z="1"/>
+            <translate x="3.5" y="3.5" z="0"/>
+            <scale x="7" y="7" z="1"/>
         </transformation>
 
         <transformation id="set_back_wall">
-            <translate x="0" y="3" z="3"/>
+            <translate x="0" y="3.5" z="3.5"/>
             <rotate axis="y" angle="90"/>
-            <scale x="6" y="6" z="1"/>
+            <scale x="7" y="7" z="1"/>
         </transformation>
         
         <transformation id="set_ground">
-            <translate x="3" y="0" z="3"/>
+            <translate x="3.5" y="0" z="3.5"/>
             <rotate axis="x" angle="-90"/>
-            <scale x="6" y="6" z="1"/>
+            <scale x="7" y="7" z="1"/>
         </transformation>
 
     </transformations>
@@ -200,9 +196,9 @@
                 <componentref id="back_wall"/>
                 <componentref id="ground"/>
                 <componentref id="tv"/>
-                <componentref id="ceiling_lamp"/>
                 <componentref id="table"/>
                 <componentref id="saturn"/>
+                <componentref id="ceiling_lamp"/>
             </children>
         </component>
 
