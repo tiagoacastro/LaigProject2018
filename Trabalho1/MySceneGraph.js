@@ -1140,30 +1140,28 @@ class MySceneGraph {
                         translateAux.push(z);
                     }
 
-                    console.log(translateAux[0]);
                     transformationAux.translate.push(translateAux);
-                    console.log(transformationAux);
                     break;
                 case "rotate":
                     var rotateAux = [];
                     //axis
-                    var x = this.reader.getString(specs[i], 'axis');
-                    if (!(x != null)) {
+                    var axis = this.reader.getString(specs[i], 'axis');
+                    if (!(axis != null)) {
                         return "unable to parse x-coordinate of the light position for ID = " + transformationId;
                     }
                     else {
-                        rotateAux.push(x);
+                        rotateAux.push(axis);
                     }
                     //angle
-                    var y = this.reader.getFloat(specs[i], 'angle');
-                    if (!(y != null && !isNaN(y))) {
+                    var angle = this.reader.getFloat(specs[i], 'angle');
+                    if (!(angle != null && !isNaN(angle))) {
                         return "unable to parse y-coordinate of the light position for ID = " + transformationId;
                     }
                     else {
-                        rotateAux.push(y);
+                        rotateAux.push(angle);
                     }
 
-                    transformationAux.translate.push(translateAux);
+                    transformationAux.rotate.push(rotateAux);
                     break;
             }
 
@@ -1272,7 +1270,6 @@ class MySceneGraph {
             component.children = childrenTmp;
             this.components.push(component);
             numComponents++;
-            
 
         }
 
@@ -1375,18 +1372,19 @@ class MySceneGraph {
 
             switch(component.children[i].ref) {
                 case "primitiveref":
-                this.displayPrimitive(component.children[i].id);
+                this.scene.pushMatrix();
+                    this.applyTransformation(component);
+                    this.displayPrimitive(component.children[i].id);
+                this.scene.popMatrix();
                 break;
                 case "componentref":
                 for (let j = 0; j < this.components.length; j++) {
-                    //console.log(this.components[j].id);
-                    //console.log(component.children[i].id);
                     if (this.components[j].id == component.children[i].id) {
-                        //console.log("found component through id");
                         this.scene.pushMatrix();
-                        this.applyTransformation(component);
-                        this.processComponentsAux(this.components[j]);
+                            this.applyTransformation(component);
+                            this.processComponentsAux(this.components[j]);
                         this.scene.popMatrix();
+                        break;
                     }
                 }
                 break;
@@ -1399,17 +1397,12 @@ class MySceneGraph {
     displayPrimitive(primitiveid) {
         for (let i = 0; i < this.primitives.length; i++) {
             if (this.primitives[i].id == primitiveid) {
-                //this.scene.pushMatrix();
-                //this.scene.translate(5,5,5);
                 this.primitives[i].child.display();
-                //this.scene.popMatrix();
             }
         }
     }
 
     applyTransformation(component) {
-
-        //console.log("applyTransformation called");
 
         for (let i = 0; i < component.transformation.length; i++) {
             this.applyTransformationAux(component.transformation[i]);
@@ -1427,10 +1420,7 @@ class MySceneGraph {
 
     processTransformation(transformation) {
 
-        //console.log(transformation.translate[0][0]);
-
         for (let i = 0; i < transformation.translate.length; i++) {
-            //console.log(transformation.translate[0][0]);
             this.scene.translate(transformation.translate[i][0],transformation.translate[i][1],transformation.translate[i][2]);
         }
         for (let i = 0; i < transformation.scale.length; i++) {
