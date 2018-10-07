@@ -41,6 +41,35 @@
             <translate x="0" y="0" z="0"/>
         </transformation>
 
+        <transformation id="set_leg0">
+            <translate x="1.1" y="1" z="1.6"/>
+            <scale x="0.2" y="2" z="0.2"/>
+        </transformation>
+
+        <transformation id="set_leg1">
+            <translate x="4.9" y="1" z="1.6"/>
+            <scale x="0.2" y="2" z="0.2"/>
+        </transformation>
+
+        <transformation id="set_leg2">
+            <translate x="1.1" y="1" z="3.4"/>
+            <scale x="0.2" y="2" z="0.2"/>
+        </transformation>
+
+        <transformation id="set_leg3">
+            <translate x="4.9" y="1" z="3.4"/>
+            <scale x="0.2" y="2" z="0.2"/>
+        </transformation>
+
+        <transformation id="set_table_top">
+            <translate x="3" y="2" z="2.5"/>
+            <scale x="4" y="0.4" z="2"/>
+        </transformation>
+
+        <transformation id="set_tv">
+            <translate x="3" y="3.1" z="3"/>
+        </transformation>
+
         <transformation id="set_tv_screen">
             <rotate axis="x" angle="90"/>
             <scale x="2.5" y="1.5" z="0.1"/>
@@ -56,10 +85,6 @@
             <translate x="0" y="-0.9" z="0"/>
             <rotate axis="x" angle="90"/>
             <scale x="1.5" y="0.1" z="0.5"/>
-        </transformation>
-
-        <transformation id="set_tv">
-            <translate x="3" y="0.9" z="3"/>
         </transformation>
 
         <transformation id="set_cube_face0">
@@ -145,10 +170,11 @@
                 <componentref id="back_wall"/>
                 <componentref id="ground"/>
                 <componentref id="tv"/>
+                <componentref id="table"/>
             </children>
         </component>
 
-        <component id="cube">
+        <component id="table">
             <transformation>
                 <transformationref id="identity"/>
             </transformation>
@@ -157,12 +183,89 @@
             </materials>
             <texture id="none" length_s="1" length_t="1" />
             <children>
-                <componentref id="cube_face0"/>
-                <componentref id="cube_face1"/>
-                <componentref id="cube_face2"/>
-                <componentref id="cube_face3"/>
-                <componentref id="cube_face4"/>
-                <componentref id="cube_face5"/>
+                <componentref id="table_top"/>
+                <componentref id="legs"/>
+            </children>
+        </component>
+
+        <component id="table_top">
+            <transformation>
+                <transformationref id="set_table_top"/>
+            </transformation>
+            <materials>
+                <material id="inherit"/>
+            </materials>
+            <texture id="none" length_s="1" length_t="1" />
+            <children>
+                <componentref id="cube"/>
+            </children>
+        </component>
+
+        <component id="legs">
+            <transformation>
+                <transformationref id="identity"/>
+            </transformation>
+            <materials>
+                <material id="inherit"/>
+            </materials>
+            <texture id="none" length_s="1" length_t="1" />
+            <children>
+                <componentref id="leg0"/>
+                <componentref id="leg1"/>
+                <componentref id="leg2"/>
+                <componentref id="leg3"/>
+            </children>
+        </component>
+
+        <component id="leg0">
+            <transformation>
+                <transformationref id="set_leg0"/>
+            </transformation>
+            <materials>
+                <material id="inherit"/>
+            </materials>
+            <texture id="none" length_s="1" length_t="1" />
+            <children>
+                <componentref id="cube"/>
+            </children>
+        </component>
+
+        <component id="leg1">
+            <transformation>
+                <transformationref id="set_leg1"/>
+            </transformation>
+            <materials>
+                <material id="inherit"/>
+            </materials>
+            <texture id="none" length_s="1" length_t="1" />
+            <children>
+                <componentref id="cube"/>
+            </children>
+        </component>
+
+        <component id="leg2">
+            <transformation>
+                <transformationref id="set_leg2"/>
+            </transformation>
+            <materials>
+                <material id="inherit"/>
+            </materials>
+            <texture id="none" length_s="1" length_t="1" />
+            <children>
+                <componentref id="cube"/>
+            </children>
+        </component>
+
+        <component id="leg3">
+            <transformation>
+                <transformationref id="set_leg3"/>
+            </transformation>
+            <materials>
+                <material id="inherit"/>
+            </materials>
+            <texture id="none" length_s="1" length_t="1" />
+            <children>
+                <componentref id="cube"/>
             </children>
         </component>
 
@@ -220,6 +323,23 @@
             </children>
         </component>
 
+        <component id="cube">
+            <transformation>
+                <transformationref id="identity"/>
+            </transformation>
+            <materials>
+                <material id="inherit"/>
+            </materials>
+            <texture id="none" length_s="1" length_t="1" />
+            <children>
+                <componentref id="cube_face0"/>
+                <componentref id="cube_face1"/>
+                <componentref id="cube_face2"/>
+                <componentref id="cube_face3"/>
+                <componentref id="cube_face4"/>
+                <componentref id="cube_face5"/>
+            </children>
+        </component>
 
         <component id="cube_face0">
             <transformation>
