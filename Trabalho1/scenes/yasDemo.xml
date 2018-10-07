@@ -42,7 +42,7 @@
         </transformation>
 
         <transformation id="set_saturn">
-            <translate x="-10" y="10" z="0"/>
+            <translate x="8" y="8" z="8"/>
         </transformation>
 
         <transformation id="set_hoop">
