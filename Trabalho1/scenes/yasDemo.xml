@@ -3,8 +3,8 @@
     
     <views default="view">
         <perspective id="unique_perspective" near="0" far="10" angle="45">
-            <from x="0" y="0" z="0" />
-            <to x="10" y="10" z="10" />
+            <from x="10" y="10" z="10" />
+            <to x="0" y="0" z="0" />
         </perspective>
         <ortho id="unique_ortho" near="1" far="1" left="1" right="1" top="1" bottom="1"/>
     </views>
