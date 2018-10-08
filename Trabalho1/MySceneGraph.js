@@ -958,7 +958,10 @@ class MySceneGraph {
             }
         }
 
-        var perspective = null; //CGFcamera(angle, near, far, from, to);
+        let fromV = vec3.fromValues(from[0], from[1], from[2]);
+        let toV = vec3.fromValues(to[0], to[1], to[2]);
+
+        var perspective = new CGFcamera(angle, near, far, fromV, toV);
         this.log("Parsed perspective");
 
         return perspective;
