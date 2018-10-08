@@ -41,6 +41,10 @@
             <translate x="0" y="0" z="0"/>
         </transformation>
 
+        <transformation id="set_cone">
+            <translate x="4" y="8" z="8"/>
+        </transformation>
+
         <transformation id="set_saturn">
             <translate x="8" y="8" z="8"/>
         </transformation>
@@ -173,6 +177,9 @@
         <primitive id="cylinder">
             <cylinder base="1" top="1" height="1" slices="20" stacks="4" />
         </primitive>
+        <primitive id="cone">
+            <cylinder base="1.5" top="1" height="2" slices="20" stacks="8" />
+        </primitive>
         <primitive id="sphere">
             <sphere radius="0.5" slices="20" stacks="20" />
         </primitive>
@@ -199,6 +206,20 @@
                 <componentref id="table"/>
                 <componentref id="saturn"/>
                 <componentref id="ceiling_lamp"/>
+                <componentref id="cone"/>
+            </children>
+        </component>
+
+        <component id="cone">
+            <transformation>
+                <transformationref id="set_cone"/>
+            </transformation>
+            <materials>
+                <material id="inherit"/>
+            </materials>
+            <texture id="none" length_s="1" length_t="1" />
+            <children>
+                <primitiveref id="cone"/>
             </children>
         </component>
 
