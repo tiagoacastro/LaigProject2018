@@ -1,12 +1,12 @@
 <yas>
     <scene root="root" axis_length="5"/>
     
-    <views default="view">
-        <perspective id="unique_perspective" near="0" far="10" angle="45">
+    <views default="unique_perspective"> 
+        <perspective id="unique_perspective" near="0.1" far="50" angle="45">
             <from x="10" y="10" z="10" />
             <to x="0" y="0" z="0" />
         </perspective>
-        <ortho id="unique_ortho" near="1" far="1" left="1" right="1" top="1" bottom="1"/>
+        <ortho id="unique_ortho" near="0.1" far="50" left="10" right="10" top="10" bottom="10"/> 
     </views>
 
     <ambient>
@@ -29,10 +29,10 @@
 
     <materials>
         <material id="red" shininess = "1" >
-            <emission r="128" g="0" b="0" a="1" />
-            <ambient r="128" g="0" b="0" a="1" />
-            <diffuse r="128" g="0" b="0" a="1" />
-            <specular r="128" g="0" b="0" a="1" />
+            <emission r="1" g="0" b="0" a="1" /> 
+            <ambient r="1" g="0" b="0" a="1" /> 
+            <diffuse r="1" g="0" b="0" a="1" /> 
+            <specular r="1" g="0" b="0" a="1" /> 
         </material>
     </materials>
 
