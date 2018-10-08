@@ -1026,16 +1026,240 @@ class MySceneGraph {
 
     parseTextures(texturesNode) {
 
+        var children = texturesNode.children;
+        this.textures = [];
+
+        for (let i = 0; i < children.length; i++) {
+
+            if (children[i].nodeName != "texture") {
+                this.onXMLMinorError("unknown tag <" + children[i].nodeName + ">");
+                continue;
+            }
+            this.textures.push(this.parseTexturesAux(children[i]));
+        }
+
         this.log("Parsed textures");
 
         return null;
     }
 
+    parseTexturesAux(texture) {
+
+        var textureAux = new MyTexture();
+        var textureId = this.reader.getString(texture, 'id');
+        if (textureId == null) {
+            return "no ID defined for texture";
+        }
+
+        if (this.textures[textureId] != null) { //does this work even? 
+            return "ID must be unique for each texture (conflict: ID = " + textureId + ")";
+        }
+
+        textureAux.id = textureId;
+        var textureFile = this.reader.getString(texture, 'file');
+        if (textureFile == null) {
+            return "no file defined for texture";
+        }
+
+        textureAux.file = textureFile;
+        return textureAux;
+        
+    }
+
     parseMaterials(materialsNode) {
+
+        var children = materialsNode.children;
+        this.materials = [];
+
+        for (let i = 0; i < children.length; i++) {
+
+            if (children[i].nodeName != "material") {
+                this.onXMLMinorError("unknown tag <" + children[i].nodeName + ">");
+                continue;
+            }
+            this.materials.push(this.parseMaterialsAux(children[i]));
+        }
 
         this.log("Parsed materials");
 
         return null;
+    }
+
+    parseMaterialsAux(material) {
+
+        var materialAux = new MyMaterial();
+
+        var specs = material.children;
+
+        var materialId = this.reader.getString(material, 'id');
+        if (materialId == null) {
+            return "no ID defined for material";
+        }
+
+        if (this.materials[materialId] != null) {
+            return "ID must be unique for each transformation (conflict: ID = " + materialId + ")";
+        }
+
+        materialAux.id = materialId;
+
+        for (var i = 0; i < specs.length; i++) {
+
+            switch(specs[i].nodeName) {
+                case "emission":
+                    var emissionAux = [];
+                    //r
+                    var r = this.reader.getFloat(specs[i], 'r');
+                    if (!(r != null && !isNaN(r))) {
+                        return "unable to parse r value of the material emission for ID = " + materialId;
+                    }
+                    else {
+                        emissionAux.push(r);
+                    }
+                    //g
+                    var g = this.reader.getFloat(specs[i], 'g');
+                    if (!(g != null && !isNaN(g))) {
+                        return "unable to parse r value of the material emission for ID = " + materialId;
+                    }
+                    else {
+                        emissionAux.push(g);
+                    }
+                    //b
+                    var b = this.reader.getFloat(specs[i], 'b');
+                    if (!(b != null && !isNaN(b))) {
+                        return "unable to parse r value of the material emission for ID = " + materialId;
+                    }
+                    else {
+                        emissionAux.push(b);
+                    }
+                    //a
+                    var a = this.reader.getFloat(specs[i], 'a');
+                    if (!(a != null && !isNaN(a))) {
+                        return "unable to parse r value of the material emission for ID = " + materialId;
+                    }
+                    else {
+                        emissionAux.push(a);
+                    }
+
+                    materialAux.emission = emissionAux;
+                    break;
+                case "ambient":
+                    var ambientAux = [];
+                    //r
+                    var r = this.reader.getFloat(specs[i], 'r');
+                    if (!(r != null && !isNaN(r))) {
+                        return "unable to parse x-coordinate of the light position for ID = " + transformationId;
+                    }
+                    else {
+                        ambientAux.push(r);
+                    }
+                    //g
+                    var y = this.reader.getFloat(specs[i], 'g');
+                    if (!(g != null && !isNaN(g))) {
+                        return "unable to parse y-coordinate of the light position for ID = " + transformationId;
+                    }
+                    else {
+                        ambientAux.push(g);
+                    }
+                    //b
+                    var z = this.reader.getFloat(specs[i], 'b');
+                    if (!(b != null && !isNaN(b))) {
+                        return "unable to parse z-coordinate of the light position for ID = " + transformationId;
+                    }
+                    else {
+                        ambientAux.push(b);
+                    }
+                    //a
+                    var a = this.reader.getFloat(specs[i], 'a');
+                    if (!(a != null && !isNaN(a))) {
+                        return "unable to parse r value of the material emission for ID = " + materialId;
+                    }
+                    else {
+                        ambientAux.push(a);
+                    }
+
+                    materialAux.ambient = ambientAux;
+                    break;
+                case "diffuse":
+                    var diffuseAux = [];
+                    //r
+                    var r = this.reader.getFloat(specs[i], 'r');
+                    if (!(r != null && !isNaN(r))) {
+                        return "unable to parse x-coordinate of the light position for ID = " + transformationId;
+                    }
+                    else {
+                        diffuseAux.push(r);
+                    }
+                    //g
+                    var y = this.reader.getFloat(specs[i], 'g');
+                    if (!(g != null && !isNaN(g))) {
+                        return "unable to parse y-coordinate of the light position for ID = " + transformationId;
+                    }
+                    else {
+                        diffuseAux.push(g);
+                    }
+                    //b
+                    var z = this.reader.getFloat(specs[i], 'b');
+                    if (!(b != null && !isNaN(b))) {
+                        return "unable to parse z-coordinate of the light position for ID = " + transformationId;
+                    }
+                    else {
+                        diffuseAux.push(b);
+                    }
+                    //a
+                    var a = this.reader.getFloat(specs[i], 'a');
+                    if (!(a != null && !isNaN(a))) {
+                        return "unable to parse r value of the material emission for ID = " + materialId;
+                    }
+                    else {
+                        diffuseAux.push(a);
+                    }
+
+                    materialAux.diffuse = diffuseAux;
+                    break;
+                case "specular":
+                    var specularAux = [];
+                    //r
+                    var r = this.reader.getFloat(specs[i], 'r');
+                    if (!(r != null && !isNaN(r))) {
+                        return "unable to parse x-coordinate of the light position for ID = " + transformationId;
+                    }
+                    else {
+                        specularAux.push(r);
+                    }
+                    //g
+                    var y = this.reader.getFloat(specs[i], 'g');
+                    if (!(g != null && !isNaN(g))) {
+                        return "unable to parse y-coordinate of the light position for ID = " + transformationId;
+                    }
+                    else {
+                        specularAux.push(g);
+                    }
+                    //b
+                    var z = this.reader.getFloat(specs[i], 'b');
+                    if (!(b != null && !isNaN(b))) {
+                        return "unable to parse z-coordinate of the light position for ID = " + transformationId;
+                    }
+                    else {
+                        specularAux.push(b);
+                    }
+                    //a
+                    var a = this.reader.getFloat(specs[i], 'a');
+                    if (!(a != null && !isNaN(a))) {
+                        return "unable to parse r value of the material emission for ID = " + materialId;
+                    }
+                    else {
+                        specularAux.push(a);
+                    }
+
+                    materialAux.specular = specularAux;
+                    break;
+            }
+
+        }
+
+        return materialAux;
+
+
     }
 
     parseTransformations(transformationNode) {
@@ -1184,7 +1408,7 @@ class MySceneGraph {
 
         var transformations= [];
         var materials = [];
-        var texture = new MyTexture();
+        var texture = new MyTextureComponent();
         var childrenComponent = [];
 
         //there should be at least one component

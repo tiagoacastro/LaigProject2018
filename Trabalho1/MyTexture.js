@@ -1,7 +1,6 @@
 class MyTexture {
-    constructor(id, lengthS, lengthT) {
+    constructor(id, file) {
         this.id = id || "";
-        this.lengthS = lengthS || 1;
-        this.lengthT = lengthT || 1;
+        this.file = file || "";
     }
 }
