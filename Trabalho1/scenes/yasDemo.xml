@@ -2,11 +2,11 @@
     <scene root="root" axis_length="5"/>
     
     <views default="unique_perspective"> 
-        <perspective id="unique_perspective" near="0.1" far="50" angle="45">
-            <from x="10" y="10" z="10" />
-            <to x="0" y="0" z="0" />
+        <perspective id="unique_perspective" near="0.1" far="15" angle="90">
+            <from x="2" y="2.2" z="-5" />
+            <to x="2" y="2.2" z="0" />
         </perspective>
-        <ortho id="unique_ortho" near="0.1" far="50" left="10" right="10" top="10" bottom="10"/> 
+        <ortho id="unique_ortho" near="0.1" far="10" left="0" right="10" top="10" bottom="0"/> 
     </views>
 
     <ambient>

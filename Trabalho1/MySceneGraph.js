@@ -883,20 +883,20 @@ class MySceneGraph {
     parsePerspective(perspectiveNode){
         let near = this.reader.getFloat(perspectiveNode, 'near');
         if (!(near != null && !isNaN(near))) {
-            near = 0;
-            this.onXMLMinorError("unable to parse value for near plane; assuming 'near = 0'");
+            near = 0.1;
+            this.onXMLMinorError("unable to parse value for near plane; assuming 'near = 0.1'");
         }
 
         let far = this.reader.getFloat(perspectiveNode, 'far');
         if (!(far != null && !isNaN(far))) {
-            far = 10;
-            this.onXMLMinorError("unable to parse value for far plane; assuming 'far = 10'");
+            far = 30;
+            this.onXMLMinorError("unable to parse value for far plane; assuming 'far = 30'");
         }
 
         let angle = this.reader.getFloat(perspectiveNode, 'angle');
         if (!(angle != null && !isNaN(angle))) {
-            angle = Math.PI/4;
-            this.onXMLMinorError("unable to parse value for angle plane; assuming 'angle = 45'");
+            angle = Math.PI/2;
+            this.onXMLMinorError("unable to parse value for angle plane; assuming 'angle = 90'");
         }
 
         angle = angle * Math.PI / 180;              //degrees to radians
@@ -907,9 +907,9 @@ class MySceneGraph {
             nodeNames.push(children[i].nodeName);
 
         var indexFrom = nodeNames.indexOf("from");
-        let from = [0,0,0];
+        let from = [20,20,20];
         if (indexFrom == -1) {
-            this.onXMLError("from planes missing; assuming 'x = 0' and 'y = 0' and 'z = 0'");
+            this.onXMLError("from planes missing; assuming 'x = 20' and 'y = 20' and 'z = 20'");
         }
         else {
             from[0] = this.reader.getFloat(children[indexFrom], 'x');
@@ -917,25 +917,25 @@ class MySceneGraph {
             from[2] = this.reader.getFloat(children[indexFrom], 'z');
 
             if (!(from[0] != null && !isNaN(from[0]))) {
-                from[0] = 0;
-                this.onXMLMinorError("unable to parse value for x plane; assuming 'x = 0'");
+                from[0] = 20;
+                this.onXMLMinorError("unable to parse value for x plane; assuming 'x = 20'");
             }
 
             if (!(from[1] != null && !isNaN(from[1]))) {
-                from[1] = 0;
-                this.onXMLMinorError("unable to parse value for y plane; assuming 'y = 0'");
+                from[1] = 20;
+                this.onXMLMinorError("unable to parse value for y plane; assuming 'y = 20'");
             }
 
             if (!(from[2] != null && !isNaN(from[2]))) {
-                from[2] = 0;
-                this.onXMLMinorError("unable to parse value for z plane; assuming 'z = 0'");
+                from[2] = 20;
+                this.onXMLMinorError("unable to parse value for z plane; assuming 'z = 20'");
             }
         }
         
         var indexTo = nodeNames.indexOf("to");
-        let to = [10,10,10];
+        let to = [0,0,0];
         if (indexTo == -1) {
-            this.onXMLError("to planes missing; assuming 'x = 10' and 'y = 10' and 'z = 10'");
+            this.onXMLError("to planes missing; assuming 'x = 0' and 'y = 0' and 'z = 0'");
         }
         else {
             to[0] = this.reader.getFloat(children[indexTo], 'x');
@@ -943,18 +943,18 @@ class MySceneGraph {
             to[2] = this.reader.getFloat(children[indexTo], 'z');
 
             if (!(to[0] != null && !isNaN(to[0]))) {
-                to[0] = 10;
-                this.onXMLMinorError("unable to parse value for x plane; assuming 'x = 10'");
+                to[0] = 0;
+                this.onXMLMinorError("unable to parse value for x plane; assuming 'x = 0'");
             }
 
             if (!(to[1] != null && !isNaN(to[1]))) {
-                to[1] = 10;
-                this.onXMLMinorError("unable to parse value for y plane; assuming 'y = 10'");
+                to[1] = 0;
+                this.onXMLMinorError("unable to parse value for y plane; assuming 'y = 0'");
             }
 
             if (!(to[2] != null && !isNaN(to[2]))) {
-                to[2] = 10;
-                this.onXMLMinorError("unable to parse value for z plane; assuming 'z = 10'");
+                to[2] = 0;
+                this.onXMLMinorError("unable to parse value for z plane; assuming 'z = 0'");
             }
         }
 
@@ -973,7 +973,43 @@ class MySceneGraph {
      * @return  ortho camera
      */
     parseOrtho(orthoNode){
-        var ortho = null;
+        let near = this.reader.getFloat(orthoNode, 'near');
+        if (!(near != null && !isNaN(near))) {
+            near = 0.1;
+            this.onXMLMinorError("unable to parse value for near plane; assuming 'near = 0.1'");
+        }
+
+        let far = this.reader.getFloat(orthoNode, 'far');
+        if (!(far != null && !isNaN(far))) {
+            far = 10;
+            this.onXMLMinorError("unable to parse value for far plane; assuming 'far = 10'");
+        }
+
+        let left = this.reader.getFloat(orthoNode, 'left');
+        if (!(left != null && !isNaN(left))) {
+            left = 0;
+            this.onXMLMinorError("unable to parse value for left plane; assuming 'left = 0'");
+        }
+
+        let right = this.reader.getFloat(orthoNode, 'right');
+        if (!(right != null && !isNaN(right))) {
+            right = 10;
+            this.onXMLMinorError("unable to parse value for right plane; assuming 'right = 10'");
+        }
+
+        let top = this.reader.getFloat(orthoNode, 'top');
+        if (!(top != null && !isNaN(top))) {
+            top = 10;
+            this.onXMLMinorError("unable to parse value for top plane; assuming 'top = 10'");
+        }
+
+        let bottom = this.reader.getFloat(orthoNode, 'bottom');
+        if (!(bottom != null && !isNaN(bottom))) {
+            bottom = 0;
+            this.onXMLMinorError("unable to parse value for bottom plane; assuming 'bottom = 0'");
+        }
+
+        var ortho = null; //new CGFcameraOrtho(left, right, bottom, top, near, far, );
         this.log("Parsed ortho");
 
         return ortho;
@@ -990,8 +1026,8 @@ class MySceneGraph {
 
         this.cameras = [];
 
-        this.default = this.reader.getString(viewsNode, 'default');
-        if (this.default == null) {
+        let def = this.reader.getString(viewsNode, 'default');
+        if (def == null) {
             this.onXMLError("unable to parse default view");
         }
 
@@ -1020,6 +1056,11 @@ class MySceneGraph {
             camera.id = id;
 
             this.cameras.push(camera);
+
+            if(id == def){
+                this.scene.camera = camera.camera;
+                this.scene.interface.setActiveCamera(camera.camera);
+            }
         }
 
         this.log("Parsed views");
