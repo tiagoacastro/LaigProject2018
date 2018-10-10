@@ -43,7 +43,7 @@ class MyTorus extends CGFobject
             for (var s = 0; s <= this.slices; s++) {
     
                 this.vertices.push(Math.cos(s * slicesAng) * this.r * Math.cos(l * loopsAng) + x, Math.cos(s * slicesAng) * this.r * Math.sin(l * loopsAng) + y, Math.sin(s * slicesAng) * this.r);
-                this.normals.push(Math.cos(l * loopsAng), Math.sin(l * loopsAng), Math.sin(s * slicesAng));
+                this.normals.push(Math.cos(l * loopsAng) * Math.cos(s * slicesAng), Math.cos(s * slicesAng) * Math.sin(l * loopsAng), Math.sin(s * slicesAng));
     
                 this.texCoords.push(xCoord, yCoord);
     
