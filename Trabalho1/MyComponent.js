@@ -1,11 +1,9 @@
 class MyComponent {
-    constructor(id, transformation, materials, texture, textureLengthS, textureLengthT, children) {
+    constructor(id, transformation, materials, texture, children) {
         this.id = id || "";
         this.transformation = transformation || [];
         this.materials = materials || [];
         this.texture = texture || "";
-        this.textureLengthS = textureLengthS || 1;
-        this.textureLengthT = textureLengthT || 1;
-        this.children = children;
+        this.children = children || "";
     }
 }

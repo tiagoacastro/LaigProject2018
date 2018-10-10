@@ -1521,13 +1521,13 @@ class MySceneGraph {
 
         var transformations= [];
         var materials = [];
-        var texture = new MyTextureComponent();
         var childrenComponent = [];
 
         //there should be at least one component
         for (var i = 0; i < children.length; i++) {
 
             let component = new MyComponent();
+            let textureAux = new MyTextureComponent();
             
             if (children[i].nodeName != "component") {
                 this.onXMLMinorError("unknown tag <" + children[i].nodeName + ">");
@@ -1583,9 +1583,10 @@ class MySceneGraph {
             if (textureIndex == -1) {
                 this.onXMLMinorError("texture value missing for ID = " + componentId);
             } else {
-                texture.id = this.reader.getString(grandChildren[textureIndex], 'id');
-                texture.lengthS = this.reader.getFloat(grandChildren[textureIndex], 'length_s');
-                texture.lengthT = this.reader.getFloat(grandChildren[textureIndex], 'length_t');
+                textureAux.id = this.reader.getString(grandChildren[textureIndex], 'id');
+                console.log(this.reader.getString(grandChildren[textureIndex], 'id'));
+                textureAux.lengthS = this.reader.getFloat(grandChildren[textureIndex], 'length_s');
+                textureAux.lengthT = this.reader.getFloat(grandChildren[textureIndex], 'length_t');
             }
 
             //children
@@ -1598,8 +1599,9 @@ class MySceneGraph {
 
             component.transformation = transformations;
             component.materials = materials;
-            component.texture = texture;
+            component.texture = textureAux;
             component.children = childrenTmp;
+            console.log(component);
             this.components.push(component);
             numComponents++;
 
@@ -1722,7 +1724,6 @@ class MySceneGraph {
                             this.applyTransformation(component);
                             this.processComponents(this.components[j]);
                         this.scene.popMatrix();
-                        break;
                     }
                 }
                 break;
@@ -1736,7 +1737,9 @@ class MySceneGraph {
 
         var appearance = new CGFappearance(this.scene);
 
-        if (textureId != "inherit") {
+        console.log(textureId);
+
+        if (textureId != "inherit" && textureId != "none") {
             for (let j = 0; j < this.textures.length; j++) {
                 if (textureId == this.textures[j].id) {
                     
