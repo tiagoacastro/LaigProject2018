@@ -909,7 +909,7 @@ class MySceneGraph {
         var indexFrom = nodeNames.indexOf("from");
         let from = [20,20,20];
         if (indexFrom == -1) {
-            this.onXMLError("from planes missing; assuming 'x = 0' and 'y = 0' and 'z = 0'");
+            this.onXMLError("from planes missing; assuming 'x = 20' and 'y = 20' and 'z = 20'");
         }
         else {
             from[0] = this.reader.getFloat(children[indexFrom], 'x');
@@ -918,24 +918,24 @@ class MySceneGraph {
 
             if (!(from[0] != null && !isNaN(from[0]))) {
                 from[0] = 20;
-                this.onXMLMinorError("unable to parse value for x plane; assuming 'x = 0'");
+                this.onXMLMinorError("unable to parse value for x plane; assuming 'x = 20'");
             }
 
             if (!(from[1] != null && !isNaN(from[1]))) {
                 from[1] = 20;
-                this.onXMLMinorError("unable to parse value for y plane; assuming 'y = 0'");
+                this.onXMLMinorError("unable to parse value for y plane; assuming 'y = 20'");
             }
 
             if (!(from[2] != null && !isNaN(from[2]))) {
                 from[2] = 20;
-                this.onXMLMinorError("unable to parse value for z plane; assuming 'z = 0'");
+                this.onXMLMinorError("unable to parse value for z plane; assuming 'z = 20'");
             }
         }
         
         var indexTo = nodeNames.indexOf("to");
         let to = [0,0,0];
         if (indexTo == -1) {
-            this.onXMLError("to planes missing; assuming 'x = 10' and 'y = 10' and 'z = 10'");
+            this.onXMLError("to planes missing; assuming 'x = 0' and 'y = 0' and 'z = 0'");
         }
         else {
             to[0] = this.reader.getFloat(children[indexTo], 'x');
@@ -944,17 +944,17 @@ class MySceneGraph {
 
             if (!(to[0] != null && !isNaN(to[0]))) {
                 to[0] = 0;
-                this.onXMLMinorError("unable to parse value for x plane; assuming 'x = 10'");
+                this.onXMLMinorError("unable to parse value for x plane; assuming 'x = 0'");
             }
 
             if (!(to[1] != null && !isNaN(to[1]))) {
                 to[1] = 0;
-                this.onXMLMinorError("unable to parse value for y plane; assuming 'y = 10'");
+                this.onXMLMinorError("unable to parse value for y plane; assuming 'y = 0'");
             }
 
             if (!(to[2] != null && !isNaN(to[2]))) {
                 to[2] = 0;
-                this.onXMLMinorError("unable to parse value for z plane; assuming 'z = 10'");
+                this.onXMLMinorError("unable to parse value for z plane; assuming 'z = 0'");
             }
         }
 
@@ -1009,7 +1009,68 @@ class MySceneGraph {
             this.onXMLMinorError("unable to parse value for bottom plane; assuming 'bottom = 0'");
         }
 
-        var ortho = null; //new CGFcameraOrtho(left, right, bottom, top, near, far, );
+        var children = orthoNode.children;
+        var nodeNames = [];
+        for (var i = 0; i < children.length; i++)
+            nodeNames.push(children[i].nodeName);
+
+        var indexFrom = nodeNames.indexOf("from");
+        let from = [20,20,20];
+        if (indexFrom == -1) {
+            this.onXMLError("from planes missing; assuming 'x = 20' and 'y = 20' and 'z = 20'");
+        }
+        else {
+            from[0] = this.reader.getFloat(children[indexFrom], 'x');
+            from[1] = this.reader.getFloat(children[indexFrom], 'y');
+            from[2] = this.reader.getFloat(children[indexFrom], 'z');
+
+            if (!(from[0] != null && !isNaN(from[0]))) {
+                from[0] = 20;
+                this.onXMLMinorError("unable to parse value for x plane; assuming 'x = 20'");
+            }
+
+            if (!(from[1] != null && !isNaN(from[1]))) {
+                from[1] = 20;
+                this.onXMLMinorError("unable to parse value for y plane; assuming 'y = 20'");
+            }
+
+            if (!(from[2] != null && !isNaN(from[2]))) {
+                from[2] = 20;
+                this.onXMLMinorError("unable to parse value for z plane; assuming 'z = 20'");
+            }
+        }
+        
+        var indexTo = nodeNames.indexOf("to");
+        let to = [0,0,0];
+        if (indexTo == -1) {
+            this.onXMLError("to planes missing; assuming 'x = 0' and 'y = 0' and 'z = 0'");
+        }
+        else {
+            to[0] = this.reader.getFloat(children[indexTo], 'x');
+            to[1] = this.reader.getFloat(children[indexTo], 'y');
+            to[2] = this.reader.getFloat(children[indexTo], 'z');
+
+            if (!(to[0] != null && !isNaN(to[0]))) {
+                to[0] = 0;
+                this.onXMLMinorError("unable to parse value for x plane; assuming 'x = 0'");
+            }
+
+            if (!(to[1] != null && !isNaN(to[1]))) {
+                to[1] = 0;
+                this.onXMLMinorError("unable to parse value for y plane; assuming 'y = 0'");
+            }
+
+            if (!(to[2] != null && !isNaN(to[2]))) {
+                to[2] = 0;
+                this.onXMLMinorError("unable to parse value for z plane; assuming 'z = 0'");
+            }
+        }
+
+        let fromV = vec3.fromValues(from[0], from[1], from[2]);
+        let toV = vec3.fromValues(to[0], to[1], to[2]);
+        let vec = vec3.fromValues(0, 1, 0);
+
+        var ortho = new CGFcameraOrtho(left, right, bottom, top, near, far, fromV, toV, vec);
         this.log("Parsed ortho");
 
         return ortho;
