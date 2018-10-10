@@ -55,4 +55,4 @@ class MyCylinder extends CGFobject
         this.primitiveType = this.scene.gl.TRIANGLES;
         this.initGLBuffers();
     };
-}
+};

@@ -253,36 +253,36 @@ class MySceneGraph {
                 this.ambient[0] = 0;
                 this.onXMLMinorError("unable to parse value for r plane; assuming 'r = 0'");
             }
-            if (this.ambient[0] < 0 || this.ambient[0] > 1){
+            if (this.ambient[0] < 0 || this.ambient[0] > 255){
                 this.ambient[0] = 0;
-                this.onXMLMinorError("r must be between 0 and 1; assuming 'r = 0'");
+                this.onXMLMinorError("r must be between 0 and 255");
             }
 
             if (!(this.ambient[1] != null && !isNaN(this.ambient[1]))) {
                 this.ambient[1] = 0;
                 this.onXMLMinorError("unable to parse value for g plane; assuming 'g = 0'");
             }
-            if (this.ambient[1] < 0 || this.ambient[1] > 1){
+            if (this.ambient[1] < 0 || this.ambient[1] > 255){
                 this.ambient[1] = 0;
-                this.onXMLMinorError("g must be between 0 and 1; assuming 'g = 0'");
+                this.onXMLMinorError("g must be between 0 and 255");
             }
 
             if (!(this.ambient[2] != null && !isNaN(this.ambient[2]))) {
                 this.ambient[2] = 0;
                 this.onXMLMinorError("unable to parse value for b plane; assuming 'b = 0'");
             }
-            if (this.ambient[2] < 0 || this.ambient[2] > 1){
+            if (this.ambient[2] < 0 || this.ambient[2] > 255){
                 this.ambient[2] = 0;
-                this.onXMLMinorError("b must be between 0 and 1; assuming 'b = 0'");
+                this.onXMLMinorError("b must be between 0 and 255");
             }
 
             if (!(this.ambient[3] != null && !isNaN(this.ambient[3]))) {
                 this.ambient[3] = 1;
                 this.onXMLMinorError("unable to parse value for a plane; assuming 'a = 1'");
             }
-            if (this.ambient[3] < 0 || this.ambient[3] > 1){
-                this.ambient[3] = 1;
-                this.onXMLMinorError("a must be between 0 and 1; assuming 'a = 1'");
+            if (this.ambient[3] < 0 || this.ambient[3] > 255){
+                this.ambient[3] = 0;
+                this.onXMLMinorError("a must be between 0 and 255");
             }
         }
 
@@ -299,38 +299,38 @@ class MySceneGraph {
 
             if (!(this.background[0] != null && !isNaN(this.background[0]))) {
                 this.background[0] = 0;
-                this.onXMLMinorError("unable to parse value for r plane; assuming 'r = 0'");
+                this.onXMLMinorError("unable to parse value for r plane; assuming 'r = 2'");
             }
-            if (this.background[0] < 0 || this.background[0] > 1){
+            if (this.background[0] < 0 || this.background[0] > 255){
                 this.background[0] = 0;
-                this.onXMLMinorError("r must be between 0 and 1; assuming 'r = 0'");
+                this.onXMLMinorError("r must be between 0 and 255");
             }
 
             if (!(this.background[1] != null && !isNaN(this.background[1]))) {
                 this.background[1] = 0;
-                this.onXMLMinorError("unable to parse value for g plane; assuming 'g = 0'");
+                this.onXMLMinorError("unable to parse value for g plane; assuming 'g = 2'");
             }
-            if (this.background[1] < 0 || this.background[1] > 1){
+            if (this.background[1] < 0 || this.background[1] > 255){
                 this.background[1] = 0;
-                this.onXMLMinorError("g must be between 0 and 1; assuming 'g = 0'");
+                this.onXMLMinorError("g must be between 0 and 255");
             }
 
             if (!(this.background[2] != null && !isNaN(this.background[2]))) {
                 this.background[2] = 0;
-                this.onXMLMinorError("unable to parse value for b plane; assuming 'b = 0'");
+                this.onXMLMinorError("unable to parse value for b plane; assuming 'b = 2'");
             }
-            if (this.background[2] < 0 || this.background[2] > 1){
+            if (this.background[2] < 0 || this.background[2] > 255){
                 this.background[2] = 0;
-                this.onXMLMinorError("b must be between 0 and 1; assuming 'b = 0'");
+                this.onXMLMinorError("b must be between 0 and 255");
             }
 
             if (!(this.background[3] != null && !isNaN(this.background[3]))) {
                 this.background[3] = 1;
                 this.onXMLMinorError("unable to parse value for a plane; assuming 'a = 1'");
             }
-            if (this.background[3] < 0 || this.background[3] > 1){
-                this.background[3] = 1;
-                this.onXMLMinorError("a must be between 0 and 1; assuming 'a = 1'");
+            if (this.background[3] < 0 || this.background[3] > 255){
+                this.background[3] = 0;
+                this.onXMLMinorError("a must be between 0 and 255");
             }
         }     
 
@@ -884,19 +884,19 @@ class MySceneGraph {
         let near = this.reader.getFloat(perspectiveNode, 'near');
         if (!(near != null && !isNaN(near))) {
             near = 0.1;
-            this.onXMLMinorError("unable to parse value for near plane; assuming 'near = 0.1'");
+            this.onXMLMinorError("unable to parse value for near plane; assuming 'near = 0'");
         }
 
         let far = this.reader.getFloat(perspectiveNode, 'far');
         if (!(far != null && !isNaN(far))) {
             far = 30;
-            this.onXMLMinorError("unable to parse value for far plane; assuming 'far = 30'");
+            this.onXMLMinorError("unable to parse value for far plane; assuming 'far = 10'");
         }
 
         let angle = this.reader.getFloat(perspectiveNode, 'angle');
         if (!(angle != null && !isNaN(angle))) {
             angle = Math.PI/2;
-            this.onXMLMinorError("unable to parse value for angle plane; assuming 'angle = 90'");
+            this.onXMLMinorError("unable to parse value for angle plane; assuming 'angle = 45'");
         }
 
         angle = angle * Math.PI / 180;              //degrees to radians
@@ -909,7 +909,7 @@ class MySceneGraph {
         var indexFrom = nodeNames.indexOf("from");
         let from = [20,20,20];
         if (indexFrom == -1) {
-            this.onXMLError("from planes missing; assuming 'x = 20' and 'y = 20' and 'z = 20'");
+            this.onXMLError("from planes missing; assuming 'x = 0' and 'y = 0' and 'z = 0'");
         }
         else {
             from[0] = this.reader.getFloat(children[indexFrom], 'x');
@@ -918,24 +918,24 @@ class MySceneGraph {
 
             if (!(from[0] != null && !isNaN(from[0]))) {
                 from[0] = 20;
-                this.onXMLMinorError("unable to parse value for x plane; assuming 'x = 20'");
+                this.onXMLMinorError("unable to parse value for x plane; assuming 'x = 0'");
             }
 
             if (!(from[1] != null && !isNaN(from[1]))) {
                 from[1] = 20;
-                this.onXMLMinorError("unable to parse value for y plane; assuming 'y = 20'");
+                this.onXMLMinorError("unable to parse value for y plane; assuming 'y = 0'");
             }
 
             if (!(from[2] != null && !isNaN(from[2]))) {
                 from[2] = 20;
-                this.onXMLMinorError("unable to parse value for z plane; assuming 'z = 20'");
+                this.onXMLMinorError("unable to parse value for z plane; assuming 'z = 0'");
             }
         }
         
         var indexTo = nodeNames.indexOf("to");
         let to = [0,0,0];
         if (indexTo == -1) {
-            this.onXMLError("to planes missing; assuming 'x = 0' and 'y = 0' and 'z = 0'");
+            this.onXMLError("to planes missing; assuming 'x = 10' and 'y = 10' and 'z = 10'");
         }
         else {
             to[0] = this.reader.getFloat(children[indexTo], 'x');
@@ -944,17 +944,17 @@ class MySceneGraph {
 
             if (!(to[0] != null && !isNaN(to[0]))) {
                 to[0] = 0;
-                this.onXMLMinorError("unable to parse value for x plane; assuming 'x = 0'");
+                this.onXMLMinorError("unable to parse value for x plane; assuming 'x = 10'");
             }
 
             if (!(to[1] != null && !isNaN(to[1]))) {
                 to[1] = 0;
-                this.onXMLMinorError("unable to parse value for y plane; assuming 'y = 0'");
+                this.onXMLMinorError("unable to parse value for y plane; assuming 'y = 10'");
             }
 
             if (!(to[2] != null && !isNaN(to[2]))) {
                 to[2] = 0;
-                this.onXMLMinorError("unable to parse value for z plane; assuming 'z = 0'");
+                this.onXMLMinorError("unable to parse value for z plane; assuming 'z = 10'");
             }
         }
 
@@ -1056,7 +1056,6 @@ class MySceneGraph {
             camera.id = id;
 
             this.cameras.push(camera);
-
             if(id == def){
                 this.scene.camera = camera.camera;
                 this.scene.interface.setActiveCamera(camera.camera);
@@ -1105,8 +1104,10 @@ class MySceneGraph {
             return "no file defined for texture";
         }
 
-        textureAux.file = textureFile;
-        return textureAux;
+        
+        textureAux.file = "./scenes/images/" + textureFile;
+        textureAux.cgf = new CGFtexture(this.scene, textureAux.file);
+        return textureAux;  
         
     }
 
@@ -1145,6 +1146,13 @@ class MySceneGraph {
         }
 
         materialAux.id = materialId;
+
+        var materialShininess = this.reader.getString(material, 'shininess');
+        if (materialShininess == null) {
+            return "no shininess defined for material";
+        }
+
+        materialAux.shininess = materialShininess;
 
         for (var i = 0; i < specs.length; i++) {
 
@@ -1635,6 +1643,10 @@ class MySceneGraph {
 
         for (let i = 0; i < component.children.length; i++) {
 
+            if (component.materials[0] != "inherit") {
+                this.applyAppearance(component.materials[0], component.texture.id);
+            }
+
             switch(component.children[i].ref) {
                 case "primitiveref":
                 this.scene.pushMatrix();
@@ -1655,6 +1667,32 @@ class MySceneGraph {
                 break;
             }
 
+        }
+
+    }
+
+    applyAppearance(materialId, textureId) {
+
+        var appearance = new CGFappearance(this.scene);
+
+        if (textureId != "inherit") {
+            for (let j = 0; j < this.textures.length; j++) {
+                if (textureId == this.textures[j].id) {
+                    
+                    appearance.setTexture(this.textures[j].cgf);
+                    break;
+                }
+            }
+        }
+
+        for (let i = 0; i < this.materials.length; i++) {
+            if (materialId == this.materials[i].id) {
+                appearance.setDiffuse(this.materials[i].diffuse[0], this.materials[i].diffuse[1], this.materials[i].diffuse[2])
+                appearance.setSpecular(this.materials[i].specular[0], this.materials[i].specular[1], this.materials[i].specular[2])
+                appearance.setAmbient(this.materials[i].ambient[0], this.materials[i].ambient[1], this.materials[i].ambient[2])
+                appearance.setShininess(this.materials[i].shininess);
+                appearance.apply();
+            }
         }
 
     }
