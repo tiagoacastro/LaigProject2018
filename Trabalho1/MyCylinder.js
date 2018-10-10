@@ -4,55 +4,45 @@ class MyCylinder extends CGFobject
 	{
 		super(scene);
         
-        this.base = base;
-        this.top = top;
-        this.height = height;
+        this.scene = scene;
         this.slices = slices;
         this.stacks = stacks;
+        this.height = height;
+        this.rtop = top;
+        this.rbase = base;
 
-		this.initBuffers();
+        this.baselessCylinder = new MyBaselessCylinder(scene, base, top, height, slices, stacks);
+
+        this.top = new MyCircle(scene, slices);
+
+        this.bottom = new MyCircle(scene, slices);
+
+		this.display();
 	};
 
-    initBuffers()
+    display()
 	{
+        this.baselessCylinder.display();
 
-        this.vertices = [];
-        this.indices = [];
-        this.normals = [];
-		this.texCoords = [];
-
-        var ang=2*Math.PI/this.slices;
-        let dif = this.base - this.top;
-        /*let abs = dif;
-        if(abs < 0)
-            abs = -abs;
-        let incl = Math.tanh(abs/this.height);*/
-
-        for(let j =0; j <= this.stacks; j++){
-            let r = this.base - dif*j/this.stacks;
-
-            for(let i=0; i < this.slices; i++){
-                this.vertices.push(r*Math.cos(ang *i),r*Math.sin(ang*i),this.height*j/this.stacks);
-                this.normals.push(Math.cos(i*ang),Math.sin(i*ang),0);
-                this.texCoords.push(i/this.slices,j/this.stacks);
+        this.scene.pushMatrix();
+            this.scene.translate(0, 0, this.height);
+            if(this.top !=null){
+                this.scene.pushMatrix();
+                    this.scene.scale(this.rtop,this.rtop,1);
+                    this.top.display();
+                this.scene.popMatrix();
             }
-        }
-
-        var numPontos=this.stacks*this.slices;
-
-        for (let i =0; i < numPontos; i++){
-            if((i+1)%this.slices==0){
-                this.indices.push(i,i+1-this.slices, i+1);
-                this.indices.push(i,i+1, i+this.slices);
+        this.scene.popMatrix();
+    
+        this.scene.pushMatrix();
+            this.scene.rotate(Math.PI, 0, 1, 0);
+            this.scene.scale(-1, -1, 1);
+            if(this.bottom !=null){
+                this.scene.pushMatrix();
+                    this.scene.scale(this.rbase,this.rbase,1);
+                    this.bottom.display();
+                this.scene.popMatrix();
             }
-            else {
-                this.indices.push(i, i+1, i+1+this.slices);
-                this.indices.push(i, i+1+this.slices, i+this.slices);
-            }
-        }
-        
-
-        this.primitiveType = this.scene.gl.TRIANGLES;
-        this.initGLBuffers();
+        this.scene.popMatrix();
     };
-};
+}; 
