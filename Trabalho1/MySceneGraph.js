@@ -359,6 +359,7 @@ class MySceneGraph {
                 var omniLight =  new MyOmniLight();
 
                 omniLight = this.parseOmniLight(children[i]);
+                
                 this.lights.push(omniLight);
                 numLights++;
             }
@@ -369,6 +370,7 @@ class MySceneGraph {
                 var spotLight =  new MySpotLight();
 
                 spotLight = this.parseSpotLight(children[i]);
+             
                 this.lights.push(spotLight);
                 numLights++;
             }
@@ -609,6 +611,9 @@ class MySceneGraph {
         //Light location
         var lightLocation = [];
         if (locationIndex != -1) {
+
+            
+
             //x
             var x = this.reader.getFloat(specs[locationIndex], 'x');
             if (!(x != null && !isNaN(x))) {
@@ -648,6 +653,9 @@ class MySceneGraph {
         //Light target
         var lightTarget = [];
         if (targetIndex != -1) {
+
+            
+
             //x
             var x = this.reader.getFloat(specs[targetIndex], 'x');
             if (!(x != null && !isNaN(x))) {
@@ -671,14 +679,6 @@ class MySceneGraph {
             }
             else {
                 lightTarget.push(z);
-            }
-            //w
-            var w = this.reader.getFloat(specs[targetIndex], 'w');
-            if (!(w != null && !isNaN(w))) {
-                return "unable to parse w-coordinate of the light position for ID = " + lightId;
-            }
-            else {
-                lightTarget.push(w);
             }
 
             spotAux.target = lightTarget;
@@ -1820,7 +1820,7 @@ class MySceneGraph {
                 this.onXMLMinorError("texture value missing for ID = " + componentId);
             } else {
                 textureAux.id = this.reader.getString(grandChildren[textureIndex], 'id');
-                console.log(this.reader.getString(grandChildren[textureIndex], 'id'));
+                
                 textureAux.lengthS = this.reader.getFloat(grandChildren[textureIndex], 'length_s');
                 textureAux.lengthT = this.reader.getFloat(grandChildren[textureIndex], 'length_t');
             }
@@ -1837,7 +1837,7 @@ class MySceneGraph {
             component.materials = materials;
             component.texture = textureAux;
             component.children = childrenTmp;
-            console.log(component);
+        
             this.components.push(component);
             numComponents++;
 
@@ -1851,9 +1851,101 @@ class MySceneGraph {
         let transformationsAux = [];
 
         for (var i = 0; i < transformations.length; i++) {
-            if (transformations[i].nodeName == "transformationref") {
-                transformationsAux.push(this.reader.getString(transformations[i], 'id'));
+
+            let refAux = [];
+            refAux.push("ref");
+            let translateAux = [];
+            translateAux.push("translate");
+            let scaleAux = [];
+            scaleAux.push("scale");
+            let rotateAux = [];
+            rotateAux.push("rotate");
+           
+            
+
+            switch(transformations[i].nodeName) {
+
+                case "transformationref":
+                    refAux.push(this.reader.getString(transformations[i], 'id'));
+                    transformationsAux.push(refAux);
+                break;
+                case "scale":
+                    //x
+                    var x = this.reader.getFloat(transformations[i], 'x');
+                    if (!(x != null && !isNaN(x))) {
+                        return "unable to parse x-coordinate of the light position for ID = " + transformationId;
+                    }
+                    else {
+                        scaleAux.push(x);
+                    }
+                    //y
+                    var y = this.reader.getFloat(transformations[i], 'y');
+                    if (!(y != null && !isNaN(y))) {
+                        return "unable to parse y-coordinate of the light position for ID = " + transformationId;
+                    }
+                    else {
+                        scaleAux.push(y);
+                    }
+                    //z
+                    var z = this.reader.getFloat(transformations[i], 'z');
+                    if (!(z != null && !isNaN(z))) {
+                        return "unable to parse z-coordinate of the light position for ID = " + transformationId;
+                    }
+                    else {
+                        scaleAux.push(z);
+                    }
+                    transformationsAux.push(scaleAux);
+                    break;
+                 case "translate":
+                    //x
+                    var x = this.reader.getFloat(transformations[i], 'x');
+                    if (!(x != null && !isNaN(x))) {
+                        return "unable to parse x-coordinate of the light position for ID = " + transformationId;
+                    }
+                    else {
+                        translateAux.push(x);
+                    }
+                    //y
+                    var y = this.reader.getFloat(transformations[i], 'y');
+                    if (!(y != null && !isNaN(y))) {
+                        return "unable to parse y-coordinate of the light position for ID = " + transformationId;
+                    }
+                    else {
+                        translateAux.push(y);
+                    }
+                    //z
+                    var z = this.reader.getFloat(transformations[i], 'z');
+                    if (!(z != null && !isNaN(z))) {
+                        return "unable to parse z-coordinate of the light position for ID = " + transformationId;
+                    }
+                    else {
+                        translateAux.push(z);
+                    }
+
+                    transformationsAux.push(translateAux);
+                    break;
+                 case "rotate":
+                    //axis
+                    var axis = this.reader.getString(transformations[i], 'axis');
+                    if (!(axis != null)) {
+                        return "unable to parse x-coordinate of the light position for ID = " + transformationId;
+                    }
+                    else {
+                        rotateAux.push(axis);
+                    }
+                    //angle
+                    var angle = this.reader.getFloat(transformations[i], 'angle');
+                    if (!(angle != null && !isNaN(angle))) {
+                        return "unable to parse y-coordinate of the light position for ID = " + transformationId;
+                    }
+                    else {
+                        rotateAux.push(angle);
+                    }
+
+                    transformationsAux.push(rotateAux);
+                    break;
             }
+
         }
 
         return transformationsAux;
@@ -1972,7 +2064,7 @@ class MySceneGraph {
     applyAppearance(materialId, textureId) {
 
         var appearance = new CGFappearance(this.scene);
-        
+
         if (textureId != "inherit" && textureId != "none") {
             for (let j = 0; j < this.textures.length; j++) {
                 if (textureId == this.textures[j].id) {
@@ -2010,13 +2102,38 @@ class MySceneGraph {
         }
     }
 
-    applyTransformationAux(transformationid) {
+    applyTransformationAux(transformation) {
 
-        for (let i = 0; i < this.transformations.length; i++) {
-            if (this.transformations[i].id == transformationid) {
-                this.processTransformation(this.transformations[i]);
-            }
+        switch(transformation[0]) {
+            case "ref":
+                for (let i = 0; i < this.transformations.length; i++) {
+                    if (this.transformations[i].id == transformation[1]) {
+                        this.processTransformation(this.transformations[i]);
+                    }
+                }
+            break;
+            case "translate":
+                this.scene.translate(transformation[1],transformation[2],transformation[3]);
+            break;
+            case "scale":
+                this.scene.scale(transformation[1],transformation[2],transformation[3]);
+            break;
+            case "rotate":
+               
+                switch(transformation[1]) {
+                    case "x":
+                    this.scene.rotate(transformation[2]*DEGREE_TO_RAD, 1, 0, 0);
+                    break;
+                    case "y":
+                    this.scene.rotate(transformation[2]*DEGREE_TO_RAD, 0, 1, 0);
+                    break;
+                    case "z":
+                    this.scene.rotate(transformation[2]*DEGREE_TO_RAD, 0, 0, 1);
+                    break;
+                }
+            break;
         }
+
     }
 
     processTransformation(transformation) {
