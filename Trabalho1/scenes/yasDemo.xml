@@ -22,12 +22,19 @@
     </ambient>
 
     <lights>
-        <omni id="unique_light" enabled="1" >
+        <omni id="unique_light" enabled="1">
             <location x="5" y="5" z="5" w="1" />
             <ambient r="1" g="1" b="1" a="1" />
             <diffuse r="1" g="1" b="1" a="1" />
             <specular r="1" g="1" b="1" a="1" />
         </omni>
+        <spot id="unique_light" enabled="1" angle="45" exponent="1">
+            <location x="6" y="6" z="6" w="1" />
+            <target x="5" y="5" z="5" w="1" />
+            <ambient r="1" g="1" b="1" a="1" />
+            <diffuse r="1" g="1" b="1" a="1" />
+            <specular r="1" g="1" b="1" a="1" />
+        </spot>
     </lights>
 
     <textures>

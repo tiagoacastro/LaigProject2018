@@ -1,6 +1,7 @@
 class MyOmniLight {
 
     constructor(id, enabled, location, ambient, diffuse, specular) {
+        this.ref = "omni";
         this.id = id || "";
         this.enabled = enabled || 0;
         this.location = location || [0,0,0];
