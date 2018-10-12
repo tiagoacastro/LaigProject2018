@@ -2147,6 +2147,7 @@ class MySceneGraph {
                     this.scene.scale(transformation.transformations[i].content[0],transformation.transformations[i].content[1],transformation.transformations[i].content[2]);
                     break;
                 case "rotate":
+                        //console.log(transformation.transformations[i].content[1]);
                     switch(transformation.transformations[i].content[0]) {
                         case "x":
                         this.scene.rotate(transformation.transformations[i].content[1]*DEGREE_TO_RAD, 1, 0, 0);
