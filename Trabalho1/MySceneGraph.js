@@ -1037,17 +1037,6 @@ class MySceneGraph {
             this.onXMLMinorError("unable to parse value for outer plane; assuming 'outer = 2'");
         }
 
-        if(outer < inner){
-            let aux = outer;
-            outer = inner;
-            inner = aux;
-            this.onXMLMinorError("outer can't be lower than inner, assuming 'outer = inner and inner = outer'");
-        }
-        if(outer == inner){
-            outer = 2*inner;
-            this.onXMLMinorError("outer can't be equal to inner, assuming 'outer = 2*inner'");
-        }
-
         let slices = this.reader.getFloat(torusNode, 'slices');
         if (!(slices != null && !isNaN(slices))) {
             slices = 1;
@@ -1148,6 +1137,29 @@ class MySceneGraph {
             this.onXMLMinorError("unable to parse value for far plane; assuming 'far = 10'");
         }
 
+        if(far < near){
+            let aux = near;
+            near = far;
+            far = aux;
+            this.onXMLMinorError("far plane < near plane, switching values");
+        }
+
+        if(near <= 0){
+            near = 0.1;
+            this.onXMLMinorError("near plane shouldn't be 0 or lower, changed to 0.1");
+        }
+
+        if(far <= 0){
+            far = 30;
+            this.onXMLMinorError("far plane shouldn't be 0 or lower, changed to 30");
+        }
+
+        if(far == near){
+            near = 0.1;
+            far = 30;
+            this.onXMLMinorError("near and far are equal, chaning near to 0.1 and far to 30");
+        }
+
         let angle = this.reader.getFloat(perspectiveNode, 'angle');
         if (!(angle != null && !isNaN(angle))) {
             angle = Math.PI/2;
@@ -1240,6 +1252,29 @@ class MySceneGraph {
             this.onXMLMinorError("unable to parse value for far plane; assuming 'far = 10'");
         }
 
+        if(far < near){
+            let aux = near;
+            near = far;
+            far = aux;
+            this.onXMLMinorError("far plane < near plane, switching values");
+        }
+
+        if(near <= 0){
+            near = 0.1;
+            this.onXMLMinorError("near plane shouldn't be 0 or lower, changed to 0.1");
+        }
+
+        if(far <= 0){
+            far = 10;
+            this.onXMLMinorError("far plane shouldn't be 0 or lower, changed to 10");
+        }
+
+        if(far == near){
+            near = 0.1;
+            far = 10;
+            this.onXMLMinorError("near and far are equal, chaning near to 0.1 and far to 10");
+        }
+
         let left = this.reader.getFloat(orthoNode, 'left');
         if (!(left != null && !isNaN(left))) {
             left = 0;
@@ -1252,6 +1287,18 @@ class MySceneGraph {
             this.onXMLMinorError("unable to parse value for right plane; assuming 'right = 10'");
         }
 
+        if(right < left){
+            let aux = left;
+            left = right;
+            right = aux;
+            this.onXMLMinorError("right plane < left plane, switching values");
+        }
+
+        if(left == right){
+            right = left+5;
+            this.onXMLMinorError("right and left can't be equal, right = left + 5");
+        }
+
         let top = this.reader.getFloat(orthoNode, 'top');
         if (!(top != null && !isNaN(top))) {
             top = 10;
@@ -1262,6 +1309,18 @@ class MySceneGraph {
         if (!(bottom != null && !isNaN(bottom))) {
             bottom = 0;
             this.onXMLMinorError("unable to parse value for bottom plane; assuming 'bottom = 0'");
+        }
+
+        if(top < bottom){
+            let aux = top;
+            top = bottom;
+            bottom = aux;
+            this.onXMLMinorError("top plane < bottom plane, switching values");
+        }
+
+        if(top == bottom){
+            top = bottom+5;
+            this.onXMLMinorError("top and bottom can't be equal, top = bottom + 5");
         }
 
         var children = orthoNode.children;
