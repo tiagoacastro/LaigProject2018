@@ -1071,40 +1071,42 @@ class MySceneGraph {
         this.primitives = [];
 
         for (var i = 0; i < children.length; i++){
-            var primitive = new MyPrimitive();
+
+            var primitive = [];
 
             if(children[i].nodeName != "primitive")
-                this.onXMLError("primitive with wrong plane");
+                return "primitive with wrong plane";
 
             let id = this.reader.getString(children[i], 'id');
             if (id == null) {
-                this.onXMLError("unable to parse value for primitive id");
+                return "unable to parse value for primitive id";
             }
 
             for(var j = 0; j < this.primitives.length; j++){
                 if(this.primitives[j].id == id)
-                    this.onXMLError("repeated id");
+                    return "repeated id in primitives";
             }
+
+            primitive.push(id);
 
             switch(children[i].children[0].nodeName){
                 case "rectangle":
-                    primitive.child = this.parseRectangle(children[i].children[0]);
+                    primitive.push(this.parseRectangle(children[i].children[0]));
                     break;
                 case "triangle":
-                    primitive.child = this.parseTriangle(children[i].children[0]);
+                    primitive.push(this.parseTriangle(children[i].children[0]));
                     break;
                 case "cylinder":
-                    primitive.child = this.parseCylinder(children[i].children[0]);
+                    primitive.push(this.parseCylinder(children[i].children[0]));
                     break;
                 case "sphere":
-                    primitive.child = this.parseSphere(children[i].children[0]);
+                    primitive.push(this.parseSphere(children[i].children[0]));
                     break;
                 case "torus":
-                    primitive.child = this.parseTorus(children[i].children[0]);
+                    primitive.push(this.parseTorus(children[i].children[0]));
                     break;
             }
             
-            primitive.id = id;
             this.primitives.push(primitive);
         } 
 
@@ -2238,8 +2240,8 @@ class MySceneGraph {
 
     displayPrimitive(primitiveid) {
         for (let i = 0; i < this.primitives.length; i++) {
-            if (this.primitives[i].id == primitiveid) {
-                this.primitives[i].child.display();
+            if (this.primitives[i][0] == primitiveid) {
+                this.primitives[i][1].display();
             }
         }
     }
