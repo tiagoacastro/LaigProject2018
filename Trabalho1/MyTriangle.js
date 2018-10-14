@@ -1,15 +1,15 @@
 class MyTriangle extends CGFobject{
     constructor(scene, x1, x2, x3, y1, y2, y3, z1, z2 , z3) {
         super(scene);
-        this.x1 = x1 || 0;
-        this.x2 = x2 || 1;
-        this.x3 = x3 || 0;
-        this.y1 = y1 || 0;
-        this.y2 = y2 || 0;
-        this.y3 = y3 || 1;
-        this.z1 = z1 || 0;
-        this.z2 = z2 || 0;
-        this.z3 = z3 || 0;
+        this.x1 = x1;
+        this.x2 = x2;
+        this.x3 = x3;
+        this.y1 = y1;
+        this.y2 = y2;
+        this.y3 = y3;
+        this.z1 = z1;
+        this.z2 = z2;
+        this.z3 = z3;
 
         //temp values
 
