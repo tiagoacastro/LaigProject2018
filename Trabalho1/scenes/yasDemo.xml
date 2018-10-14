@@ -174,7 +174,7 @@
         </transformation>
 
         <transformation id="set_ceiling_lamp">
-            <translate x="3" y="5.5" z="4"/>
+            <translate x="3" y="5.9" z="2.7"/>
         </transformation>
 
         <transformation id="set_ceiling_lamp_shade">
@@ -240,6 +240,10 @@
             <scale x="7" y="7" z="1"/>
         </transformation>
 
+        <transformation id="set_ceiling">
+            <translate x="0" y="7" z="0"/>
+            <scale x="7" y="1" z="7"/>
+        </transformation>
     </transformations>
 
     <primitives>
@@ -276,6 +280,7 @@
                 <componentref id="side_wall"/>
                 <componentref id="back_wall"/>
                 <componentref id="ground"/>
+                <componentref id="ceiling"/>
                 <componentref id="tv"/>
                 <componentref id="table"/>
                 <componentref id="saturn"/>
@@ -755,6 +760,19 @@
             <texture id="leaves" length_s="1" length_t="1" />
             <children>
                 <primitiveref id="rectangle"/>
+            </children>
+        </component>
+
+        <component id="ceiling">
+            <transformation>
+                <transformationref id="set_ceiling"/>
+            </transformation>
+            <materials>
+                <material id="green"/>
+            </materials>
+            <texture id="leaves" length_s="1" length_t="1" />
+            <children>
+                <primitiveref id="triangle"/>
             </children>
         </component>
 
