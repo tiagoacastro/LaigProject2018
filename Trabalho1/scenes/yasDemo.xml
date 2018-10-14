@@ -80,6 +80,33 @@
             <translate x="0" y="0" z="0"/>
         </transformation>
 
+        <transformation id="set_cushion_upper">
+            <translate x="0.725" y="2.1" z="0.4"/>
+            <scale x="0.75" y="0.3" z="0.6"/>
+        </transformation>
+
+        <transformation id="set_cushion_lower">
+            <translate x="0.725" y="0.56" z="0.35"/>
+            <scale x="0.75" y="0.6" z="0.75"/>
+        </transformation>
+
+        <transformation id="set_chair_legs">
+            <translate x="2" y="0" z="0"/>
+            <scale x="0.3" y="0.6" z="0.5"/>
+        </transformation>
+
+        <transformation id="set_chair_back">
+            <translate x="2.9" y="2.2" z="0.8"/>
+            <scale x="1" y="2" z="1"/>
+            <rotate axis="x" angle="90"/>
+            <scale x="1.3" y="0.1" z="1"/>
+        </transformation>
+
+        <transformation id="set_chair_top">
+            <translate x="2.9" y="1.2" z="1.25"/>
+            <scale x="1.3" y="0.1" z="1"/>
+        </transformation>
+
         <transformation id="set_saturn">
             <translate x="8" y="8" z="8"/>
         </transformation>
@@ -113,8 +140,12 @@
             <scale x="4" y="0.4" z="2"/>
         </transformation>
 
+        <transformation id="set_table">
+            <translate x="0" y="0" z="1"/>
+        </transformation>
+
         <transformation id="set_tv">
-            <translate x="3" y="3.1" z="3"/>
+            <translate x="3" y="3.1" z="4"/>
         </transformation>
 
         <transformation id="set_tv_screen">
@@ -137,7 +168,7 @@
         </transformation>
 
         <transformation id="set_ceiling_lamp">
-            <translate x="4" y="5" z="4"/>
+            <translate x="3" y="5.5" z="4"/>
         </transformation>
 
         <transformation id="set_ceiling_lamp_shade">
@@ -243,6 +274,7 @@
                 <componentref id="table"/>
                 <componentref id="saturn"/>
                 <componentref id="ceiling_lamp"/>
+                <componentref id="chair"/>
             </children>
         </component>
 
@@ -288,7 +320,7 @@
 
         <component id="table">
             <transformation>
-                <transformationref id="identity"/>
+                <transformationref id="set_table"/>
             </transformation>
             <materials>
                 <material id="red"/>
@@ -297,6 +329,75 @@
             <children>
                 <componentref id="table_top"/>
                 <componentref id="legs"/>
+            </children>
+        </component>
+
+        <component id="chair">
+            <transformation>
+                <transformationref id="identity"/>
+            </transformation>
+            <materials>
+                <material id="inherit"/>
+            </materials>
+            <texture id="none" length_s="1" length_t="1" />
+            <children>
+                <componentref id="chair_top"/>
+                <componentref id="chair_legs"/>
+                <componentref id="chair_back"/>
+                <componentref id="cushion_upper"/>
+                <componentref id="cushion_lower"/>
+            </children>
+        </component>
+
+        <component id="cushion_upper">
+            <transformation>
+                <transformationref id="set_cushion_upper"/>
+            </transformation>
+            <materials>
+                <material id="red"/>
+            </materials>
+            <texture id="none" length_s="1" length_t="1" />
+            <children>
+                <componentref id="chair_back"/>
+            </children>
+        </component>
+
+        <component id="cushion_lower">
+            <transformation>
+                <transformationref id="set_cushion_lower"/>
+            </transformation>
+            <materials>
+                <material id="red"/>
+            </materials>
+            <texture id="none" length_s="1" length_t="1" />
+            <children>
+                <componentref id="chair_top"/>
+            </children>
+        </component>
+
+        <component id="chair_back">
+            <transformation>
+                <transformationref id="set_chair_back"/>
+            </transformation>
+            <materials>
+                <material id="inherit"/>
+            </materials>
+            <texture id="none" length_s="1" length_t="1" />
+            <children>
+                <componentref id="cube"/>
+            </children>
+        </component>
+
+        <component id="chair_top">
+            <transformation>
+                <transformationref id="set_chair_top"/>
+            </transformation>
+            <materials>
+                <material id="inherit"/>
+            </materials>
+            <texture id="none" length_s="1" length_t="1" />
+            <children>
+                <componentref id="cube"/>
             </children>
         </component>
 
@@ -310,6 +411,19 @@
             <texture id="none" length_s="1" length_t="1" />
             <children>
                 <componentref id="cube"/>
+            </children>
+        </component>
+
+        <component id="chair_legs">
+            <transformation>
+                <transformationref id="set_chair_legs"/>
+            </transformation>
+            <materials>
+                <material id="inherit"/>
+            </materials>
+            <texture id="none" length_s="1" length_t="1" />
+            <children>
+                <componentref id="legs"/>
             </children>
         </component>
 
@@ -469,7 +583,7 @@
                 <transformationref id="set_tv_screen_screen"/>
             </transformation>
             <materials>
-                <material id="inherit"/>
+                <material id="red"/>
             </materials>
             <texture id="windows" length_s="1" length_t="1" />
             <children>
@@ -604,7 +718,7 @@
                 <transformationref id="set_side_wall"/>
             </transformation>
             <materials>
-                <material id="inherit"/>
+                <material id="red"/>
             </materials>
             <texture id="none" length_s="1" length_t="1" />
             <children>
