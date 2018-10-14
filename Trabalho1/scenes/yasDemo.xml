@@ -80,6 +80,15 @@
             <translate x="0" y="0" z="0"/>
         </transformation>
 
+        <transformation id="set_painting">
+            <translate x="0" y="3.5" z="3.5"/>
+            <rotate axis="y" angle="90"/>
+        </transformation>
+
+        <transformation id="set_painting_interior">
+            <scale x="1" y="1" z="0.01"/>
+        </transformation>
+
         <transformation id="set_bin">
             <translate x="6" y="0" z="1"/>
             <rotate axis="x" angle="-90"/>
@@ -312,6 +321,47 @@
                 <componentref id="ceiling_lamp"/>
                 <componentref id="chair"/>
                 <componentref id="bin"/>
+                <componentref id="painting"/>
+            </children>
+        </component>
+
+        <component id="painting">
+            <transformation>
+                <transformationref id="set_painting"/>
+            </transformation>
+            <materials>
+                <material id="none"/>
+            </materials>
+            <texture id="none" length_s="1" length_t="1" />
+            <children>
+                <componentref id="painting_interior"/>
+                <componentref id="painting_frame"/>
+            </children>
+        </component>
+
+        <component id="painting_frame">
+            <transformation>
+                <transformationref id="identity"/>
+            </transformation>
+            <materials>
+                <material id="green"/>
+            </materials>
+            <texture id="none" length_s="1" length_t="1" />
+            <children>
+                <primitiveref id="torus_hoop"/>
+            </children>
+        </component>
+
+        <component id="painting_interior">
+            <transformation>
+                <transformationref id="set_painting_interior"/>
+            </transformation>
+            <materials>
+                <material id="red"/>
+            </materials>
+            <texture id="none" length_s="1" length_t="1" />
+            <children>
+                <primitiveref id="cylinder"/>
             </children>
         </component>
 
