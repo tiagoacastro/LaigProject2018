@@ -197,6 +197,10 @@ class MySceneGraph {
             if ((error = this.parseComponents(nodes[index])) != null)
                 return error;
         }
+
+        //structure the root node so that it has a parent texture and material (its own)
+
+        this.structureRoot();
         
     }
 
@@ -1459,6 +1463,7 @@ class MySceneGraph {
             this.textures.push(textureAux);
         }
 
+        console.log(this.textures);
         this.log("Parsed textures");
 
         return null;
@@ -1477,7 +1482,6 @@ class MySceneGraph {
             return "ID must be unique for each texture (conflict: ID = " + textureId + ")";
         }
 
-        
         textureAux.push(textureId);
 
         var textureFile = this.reader.getString(texture, 'file');
@@ -2131,6 +2135,18 @@ class MySceneGraph {
 
     }
 
+    structureRoot() {
+
+        for (let i = 0; i < this.components.length; i++) {
+            if (this.components[i][0] == this.root) {
+                this.components[i][5] = this.components[i][2][0]; 
+                this.components[i][6] = this.components[i][3][0];
+                return;
+            }
+        }
+
+    }
+
     /*
      * Callback to be executed on any read error, showing an error on the console.
      * @param {string} message
@@ -2160,9 +2176,12 @@ class MySceneGraph {
      * Displays the scene, processing each node, starting in the root node.
      */
     displayScene() {
+        /*
         for (var i = 0; i < this.primitives.length; i++) {
             this.processRoot();
         }
+        */
+       this.processRoot();
         return null;
     }
 
@@ -2179,11 +2198,9 @@ class MySceneGraph {
 
     processComponents(component) {
 
-        for (let i = 0; i < component[4].length; i++) {
+        this.applyAppearance(component);
 
-            if (component[2][0] != "inherit") {
-                this.applyAppearance(component[2][0], component[3][0]);
-            }
+        for (let i = 0; i < component[4].length; i++) {
 
             switch(component[4][i][0]) {
                 case "primitiveref":
@@ -2196,10 +2213,21 @@ class MySceneGraph {
                 for (let j = 0; j < this.components.length; j++) {
                    
                     if (this.components[j][0] == component[4][i][1]) {
-                        
+
+                        if (component[2][0] == "inherit") {
+                            this.components[j][5] = component[5];
+                        } else {
+                            this.components[j][5] = component[2][0];
+                        }
+
+                        if (component[3][0] == "inherit") {
+                            this.components[j][6] = component[6];
+                        } else {
+                            this.components[j][6] = component[3][0];
+                        }
+
                         this.scene.pushMatrix();
                             this.applyTransformation(component);
-                      
                             this.processComponents(this.components[j]);
                         this.scene.popMatrix();
                     }
@@ -2211,31 +2239,56 @@ class MySceneGraph {
 
     }
 
-    applyAppearance(materialId, textureId) {
+    applyAppearance(component) {
 
         var appearance = new CGFappearance(this.scene);
 
-        if (textureId != "inherit" && textureId != "none") {
-            for (let j = 0; j < this.textures.length; j++) {
-                if (textureId == this.textures[j][0]) {
-                    
-                    appearance.setTexture(this.textures[j][2]);
-                    break;
+        switch(component[3][0]) {
+            case "inherit":
+                for (let j = 0; j < this.textures.length; j++) {
+                    if (component[6] == this.textures[j][0]) {
+                        appearance.setTexture(this.textures[j][2]);
+                        break;
+                    }
                 }
-            }
+                break;
+            case "none":
+                break;
+            default:
+                for (let j = 0; j < this.textures.length; j++) {
+                    if (component[3][0] == this.textures[j][0]) {
+                        appearance.setTexture(this.textures[j][2]);
+                        break;
+                    }
+                }
         }
 
-        for (let i = 0; i < this.materials.length; i++) {
-            if (materialId == this.materials[i][0]) {
-                appearance.setDiffuse(this.materials[i][4][0], this.materials[i][4][1], this.materials[i][4][2])
-                appearance.setSpecular(this.materials[i][5][0], this.materials[i][5][1], this.materials[i][5][2])
-                appearance.setAmbient(this.materials[i][3][0], this.materials[i][3][1], this.materials[i][3][2])
-                appearance.setEmission(this.materials[i][2][0], this.materials[i][2][1], this.materials[i][2][2])
-                appearance.setShininess(this.materials[i][1]);
-                appearance.apply();
-            }
+        switch(component[2][0]) {
+            case "inherit":
+                for (let i = 0; i < this.materials.length; i++) {
+                    if (component[5] == this.materials[i][0]) {
+                        appearance.setDiffuse(this.materials[i][4][0], this.materials[i][4][1], this.materials[i][4][2])
+                        appearance.setSpecular(this.materials[i][5][0], this.materials[i][5][1], this.materials[i][5][2])
+                        appearance.setAmbient(this.materials[i][3][0], this.materials[i][3][1], this.materials[i][3][2])
+                        appearance.setEmission(this.materials[i][2][0], this.materials[i][2][1], this.materials[i][2][2])
+                        appearance.setShininess(this.materials[i][1]);
+                    }
+                }
+                break;
+            default:
+                for (let i = 0; i < this.materials.length; i++) {
+                    if (component[2][0] == this.materials[i][0]) {
+                        appearance.setDiffuse(this.materials[i][4][0], this.materials[i][4][1], this.materials[i][4][2])
+                        appearance.setSpecular(this.materials[i][5][0], this.materials[i][5][1], this.materials[i][5][2])
+                        appearance.setAmbient(this.materials[i][3][0], this.materials[i][3][1], this.materials[i][3][2])
+                        appearance.setEmission(this.materials[i][2][0], this.materials[i][2][1], this.materials[i][2][2])
+                        appearance.setShininess(this.materials[i][1]);
+                    }
+                }
         }
 
+        appearance.apply();
+        
     }
 
     displayPrimitive(primitiveid) {
