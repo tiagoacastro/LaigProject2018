@@ -83,11 +83,17 @@
         <transformation id="set_cushion_upper">
             <translate x="0.725" y="2.1" z="0.4"/>
             <scale x="0.75" y="0.3" z="0.6"/>
+            <translate x="2.9" y="2.2" z="0.8"/>
+            <scale x="1" y="2" z="1"/>
+            <rotate axis="x" angle="90"/>
+            <scale x="1.3" y="0.1" z="1"/>
         </transformation>
 
         <transformation id="set_cushion_lower">
             <translate x="0.725" y="0.56" z="0.35"/>
             <scale x="0.75" y="0.6" z="0.75"/>
+            <translate x="2.9" y="1.2" z="1.25"/>
+            <scale x="1.3" y="0.1" z="1"/>
         </transformation>
 
         <transformation id="set_chair_legs">
@@ -358,7 +364,7 @@
             </materials>
             <texture id="none" length_s="1" length_t="1" />
             <children>
-                <componentref id="chair_back"/>
+                <componentref id="cube"/>
             </children>
         </component>
 
@@ -371,7 +377,7 @@
             </materials>
             <texture id="none" length_s="1" length_t="1" />
             <children>
-                <componentref id="chair_top"/>
+                <componentref id="cube"/>
             </children>
         </component>
 
@@ -751,8 +757,6 @@
                 <primitiveref id="rectangle"/>
             </children>
         </component>
-
-
 
     </components>
 
