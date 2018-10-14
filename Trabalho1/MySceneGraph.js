@@ -421,7 +421,7 @@ class MySceneGraph {
 
         omniAux.push("omni");
         omniAux.push(lightId);
-        omniAux.push(auxEnable);
+        omniAux.push(auxEnable === 1);
 
         var specs = omni.children;
 
@@ -611,7 +611,7 @@ class MySceneGraph {
 
         spotAux.push("spot");
         spotAux.push(lightId);
-        spotAux.push(auxEnable);
+        spotAux.push(auxEnable === 1);
         spotAux.push(auxAngle);
         spotAux.push(auxExponent);
 
@@ -2176,12 +2176,7 @@ class MySceneGraph {
      * Displays the scene, processing each node, starting in the root node.
      */
     displayScene() {
-        /*
-        for (var i = 0; i < this.primitives.length; i++) {
-            this.processRoot();
-        }
-        */
-       this.processRoot();
+        this.processRoot();
         return null;
     }
 

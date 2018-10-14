@@ -33,17 +33,51 @@ class MyTriangle extends CGFobject{
             0, 1, 2,
         ];
 
-        this.normals = [
-            0, 0, 1,
-            0, 0, 1,
-            0, 0, 1,
+        this.p1 = vec3.fromValues(this.x1, this.y1, this.z1);
+        this.p2 = vec3.fromValues(this.x2, this.y2, this.z2);
+        this.p3 = vec3.fromValues(this.x3, this.y3, this.z3);
+
+        this.v12 = vec3.create();
+        this.v12 = [
+            this.p2[0]-this.p1[0],
+            this.p2[1]-this.p1[1],
+            this.p2[2]-this.p1[2]
         ];
 
+        this.v23 = [
+            this.p3[0]-this.p2[0],
+            this.p3[1]-this.p2[1],
+            this.p3[2]-this.p2[2]
+        ];
+
+        this.n = vec3.create();
+        this.n = vec3.cross(this.n, this.v12, this.v23);
+        this.n = vec3.normalize(this.n, this.n);
+
+        this.normals = [
+            this.n[0], this.n[1], this.n[2], 
+            this.n[0], this.n[1], this.n[2],
+            this.n[0], this.n[1], this.n[2]
+        ];
+
+        this.distA = Math.sqrt(Math.pow(this.x3-this.x1, 2)+Math.pow(this.y3-this.y1, 2)+Math.pow(this.z3-this.z1, 2));
+        this.distB = Math.sqrt(Math.pow(this.x2-this.x1, 2)+Math.pow(this.y2-this.y1, 2)+Math.pow(this.z2-this.z1, 2));
+        this.distC = Math.sqrt(Math.pow(this.x3-this.x2, 2)+Math.pow(this.y3-this.y2, 2)+Math.pow(this.z3-this.z2, 2));
+
+        this.cosAlpha = (-Math.pow(this.distA, 2) + Math.pow(this.distB, 2) + Math.pow(this.distC, 2))/(2*this.distB*this.distC);
+        this.cosGama = (Math.pow(this.distA, 2) + Math.pow(this.distB, 2) - Math.pow(this.distC, 2))/(2*this.distA*this.distB);
+        this.cosBeta = (-Math.pow(this.distA, 2) - Math.pow(this.distB, 2) + Math.pow(this.distC, 2))/(2*this.distA*this.distC);
+
+        this.beta = Math.acos(this.cosBeta);
+
+        this.p0Text = [this.distC - this.distA * this.cosBeta, this.maxT - this.distA * Math.sin(this.beta)];
+        this.p1Text = [this.minS, this.maxT];
+        this.p2Text = [this.distC, this.maxT];
+
         this.texCoords = [
-            this.minS,this.maxT,
-            this.maxS,this.maxT,
-            this.minS,this.minT,
-            this.maxS,this.minT
+            this.p0Text[0], this.p0Text[1],
+            this.p1Text[0], this.p1Text[1],
+            this.p2Text[0], this.p2Text[1]
         ];
 
         this.primitiveType = this.scene.gl.TRIANGLES;
