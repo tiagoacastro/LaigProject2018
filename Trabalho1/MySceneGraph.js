@@ -1399,10 +1399,10 @@ class MySceneGraph {
     parseViews(viewsNode) {
         var children = viewsNode.children;
 
-        this.cameras = [];
+        this.cameras = {};
 
-        let def = this.reader.getString(viewsNode, 'default');
-        if (def == null) {
+        this.default = this.reader.getString(viewsNode, 'default');
+        if (this.default == null) {
             this.onXMLError("unable to parse default view");
         }
 
@@ -1417,23 +1417,22 @@ class MySceneGraph {
                     this.onXMLError("repeated id");
             }
 
-            var camera = new MyCamera();
+            var camera;
 
             switch(children[i].nodeName){
                 case "perspective":
-                    camera.camera = this.parsePerspective(children[i]);
+                    camera = this.parsePerspective(children[i]);
                     break;
                 case "ortho":
-                    camera.camera = this.parseOrtho(children[i]);
+                    camera = this.parseOrtho(children[i]);
                     break;
             }
 
-            camera.id = id;
+            this.cameras[id]=camera;
 
-            this.cameras.push(camera);
-            if(id == def){
-                this.scene.camera = camera.camera;
-                this.scene.interface.setActiveCamera(camera.camera);
+            if(id == this.default){
+                this.scene.camera = camera;
+                this.scene.interface.setActiveCamera(camera);
             }
         }
 

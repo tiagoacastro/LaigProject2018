@@ -24,8 +24,6 @@ class XMLscene extends CGFscene {
 
         this.sceneInited = false;
 
-        this.initCameras();
-
         this.enableTextures(true);
 
         this.gl.clearDepth(100.0);
@@ -36,12 +34,6 @@ class XMLscene extends CGFscene {
         this.axis = new CGFaxis(this);
     }
 
-    /**
-     * Initializes the scene cameras.
-     */
-    initCameras() {
-        this.camera = new CGFcamera(0.4, 0.1, 500, vec3.fromValues(15, 15, 15), vec3.fromValues(0, 0, 0));
-    }
     /**
      * Initializes the scene lights with the values read from the XML file.
      */
@@ -88,10 +80,6 @@ class XMLscene extends CGFscene {
      * As loading is asynchronous, this may be called already after the application has started the run loop
      */
     onGraphLoaded() {
-        
-        //placeholder values
-        this.camera.near = 0.1;
-        this.camera.far = 500;
 
         this.axis = new CGFaxis(this, this.graph.axis_length);
 
@@ -103,6 +91,7 @@ class XMLscene extends CGFscene {
 
         // Adds lights group.
         this.interface.addLightsGroup(this.graph.lights);
+        this.interface.addViewsGroup(this.graph.cameras);
 
         this.sceneInited = true;
     }
