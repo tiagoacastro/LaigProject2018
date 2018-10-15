@@ -57,10 +57,11 @@ class MyInterface extends CGFinterface {
         this.currentCamera = this.scene.graph.default;
 
         let scene = this.scene;
+        let inter = this;
 
         group.add(this, 'currentCamera', cameraIds).name('Camera').onChange(function(val){
             scene.camera = cameras[val];
-            this.setActiveCamera(scene.camera);
+            inter.setActiveCamera(cameras[val]);
         });
     }
 }

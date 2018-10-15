@@ -10,7 +10,7 @@
             <from x="3" y="3" z="0.9" />
             <to x="3" y="3" z="7" />
         </perspective>
-        <ortho id="room" near="0.1" far="14" left="-7" right="7" top="3.5" bottom="-3.5"> 
+        <ortho id="room" near="0.1" far="21" left="-7" right="7" top="3.5" bottom="-3.5">
             <from x="3.5" y="3.5" z="14" />
             <to x="3.5" y="3.5" z="0" />
         </ortho>
