@@ -187,8 +187,9 @@
         </transformation>
 
         <transformation id="set_tv_screen_screen">
-            <translate x="0" y="0" z="-0.06"/>
-            <scale x="2" y="1.25" z="0.01"/>
+            <translate x="0" y="0" z="-0.051"/>
+            <scale x="2" y="1.25" z="1"/>
+            <rotate axis="y" angle="180"/>
         </transformation>
 
         <transformation id="set_tv_stand_arm">
@@ -728,7 +729,7 @@
             </materials>
             <texture id="windows" length_s="1" length_t="1" />
             <children>
-                <componentref id="cube"/>
+                <primitiveref id="rectangle"/>
             </children>
         </component>
 
