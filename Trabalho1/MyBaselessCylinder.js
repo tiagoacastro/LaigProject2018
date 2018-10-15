@@ -31,14 +31,14 @@ class MyBaselessCylinder extends CGFobject
         for(let j =0; j <= this.stacks; j++){
             let r = this.base - dif*j/this.stacks;
 
-            for(let i=0; i < this.slices; i++){
+            for(let i=0; i < this.slices+1; i++){
                 this.vertices.push(r*Math.cos(ang *i),r*Math.sin(ang*i),this.height*j/this.stacks);
                 this.normals.push(Math.cos(i*ang) * Math.cos(incl),Math.sin(i*ang) * Math.cos(incl), Math.sin(incl));
-                this.texCoords.push(i/this.slices,j/this.stacks);
+                this.texCoords.push(i/(this.slices+1),j/this.stacks);
             }
         }
 
-        var numPontos=this.stacks*this.slices;
+        var numPontos=this.stacks*(this.slices+1);
 
         for (let i =0; i < numPontos; i++){
             if((i+1)%this.slices==0){

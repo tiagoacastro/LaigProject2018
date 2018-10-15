@@ -49,23 +49,23 @@
     </lights>
 
     <textures>
-        <texture id="rocks" file="rocks.jpg" />
-        <texture id="leaves" file="leaves.jpg" />
-        <texture id="windows" file="windows.jpg" />
+        <texture id="windows" file="windows.jpg"/>
+        <texture id="black_plastic" file="black_plastic.jpg"/>
+        <texture id="gray_wood" file="gray_wood.jpg"/>
+        <texture id="velvet" file="velvet.jpg"/>
+        <texture id="black_wood" file="black_wood.jpg"/>
+        <texture id="grey_wash" file="grey_wash.png"/>
+        <texture id="gray_stone" file="gray_stone.jpg"/>
+        <texture id="stainless_steel" file="stainless_steel.jpg"/>
+        <texture id="trash" file="trash.jpg"/>
     </textures>
 
     <materials>
         <material id="red" shininess = "1" >
             <emission r="1" g="0" b="0" a="1" /> 
-            <ambient r="1" g="0" b="0" a="1" /> 
-            <diffuse r="1" g="0" b="0" a="1" /> 
-            <specular r="1" g="0" b="0" a="1" /> 
-        </material>
-        <material id="green" shininess = "1" >
-            <emission r="0" g="1" b="0" a="1" /> 
-            <ambient r="0" g="1" b="0" a="1" /> 
-            <diffuse r="0" g="1" b="0" a="1" /> 
-            <specular r="0" g="1" b="0" a="1" /> 
+            <ambient  r="1" g="0" b="0" a="1" /> 
+            <diffuse  r="1" g="0" b="0" a="1" /> 
+            <specular  r="1" g="0" b="0" a="1" /> 
         </material>
         <material id="default" shininess = "1" >
             <emission r="0.5" g="0.5" b="0.5" a="1" /> 
@@ -150,22 +150,22 @@
         </transformation>
 
         <transformation id="set_leg0">
-            <translate x="1.1" y="1" z="1.6"/>
+            <translate x="1.11" y="1" z="1.61"/>
             <scale x="0.2" y="2" z="0.2"/>
         </transformation>
 
         <transformation id="set_leg1">
-            <translate x="4.9" y="1" z="1.6"/>
+            <translate x="4.89" y="1" z="1.61"/>
             <scale x="0.2" y="2" z="0.2"/>
         </transformation>
 
         <transformation id="set_leg2">
-            <translate x="1.1" y="1" z="3.4"/>
+            <translate x="1.11" y="1" z="3.39"/>
             <scale x="0.2" y="2" z="0.2"/>
         </transformation>
 
         <transformation id="set_leg3">
-            <translate x="4.9" y="1" z="3.4"/>
+            <translate x="4.89" y="1" z="3.39"/>
             <scale x="0.2" y="2" z="0.2"/>
         </transformation>
 
@@ -331,9 +331,9 @@
                 <transformationref id="set_painting"/>
             </transformation>
             <materials>
-                <material id="none"/>
+                <material id="inherit"/>
             </materials>
-            <texture id="none" length_s="1" length_t="1" />
+            <texture id="inherit" length_s="1" length_t="1" />
             <children>
                 <componentref id="painting_interior"/>
                 <componentref id="painting_frame"/>
@@ -345,9 +345,9 @@
                 <transformationref id="identity"/>
             </transformation>
             <materials>
-                <material id="green"/>
+                <material id="inherit"/>
             </materials>
-            <texture id="none" length_s="1" length_t="1" />
+            <texture id="inherit" length_s="1" length_t="1" />
             <children>
                 <primitiveref id="torus_hoop"/>
             </children>
@@ -358,9 +358,9 @@
                 <transformationref id="set_painting_interior"/>
             </transformation>
             <materials>
-                <material id="red"/>
+                <material id="inherit"/>
             </materials>
-            <texture id="none" length_s="1" length_t="1" />
+            <texture id="inherit" length_s="1" length_t="1" />
             <children>
                 <primitiveref id="cylinder"/>
             </children>
@@ -371,9 +371,9 @@
                 <transformationref id="set_bin"/>
             </transformation>
             <materials>
-                <material id="none"/>
+                <material id="inherited"/>
             </materials>
-            <texture id="none" length_s="1" length_t="1" />
+            <texture id="stainless_steel" length_s="1" length_t="1" />
             <children>
                 <componentref id="bin_body"/>
                 <componentref id="bin_top"/>
@@ -386,9 +386,9 @@
                 <transformationref id="set_bin_hoop"/>
             </transformation>
             <materials>
-                <material id="green"/>
+                <material id="inherit"/>
             </materials>
-            <texture id="none" length_s="1" length_t="1" />
+            <texture id="inherit" length_s="1" length_t="1" />
             <children>
                 <primitiveref id="torus_hoop"/>
             </children>
@@ -399,9 +399,9 @@
                 <transformationref id="set_bin_body"/>
             </transformation>
             <materials>
-                <material id="none"/>
+                <material id="inherit"/>
             </materials>
-            <texture id="none" length_s="1" length_t="1" />
+            <texture id="inherit" length_s="1" length_t="1" />
             <children>
                 <primitiveref id="cone"/>
             </children>
@@ -412,9 +412,9 @@
                 <transformationref id="set_bin_top"/>
             </transformation>
             <materials>
-                <material id="red"/>
+                <material id="inherit"/>
             </materials>
-            <texture id="none" length_s="1" length_t="1" />
+            <texture id="trash" length_s="1" length_t="1" />
             <children>
                 <primitiveref id="cylinder"/>
             </children>
@@ -425,9 +425,9 @@
                 <transformationref id="set_saturn"/>
             </transformation>
             <materials>
-                <material id="red"/>
+                <material id="inherit"/>
             </materials>
-            <texture id="none" length_s="1" length_t="1" />
+            <texture id="inherit" length_s="1" length_t="1" />
             <children>
                 <componentref id="planet"/>
                 <componentref id="hoop"/>
@@ -438,10 +438,10 @@
             <transformation>
                 <transformationref id="identity"/>
             </transformation>
-            <materials>
+           <materials>
                 <material id="inherit"/>
             </materials>
-            <texture id="none" length_s="1" length_t="1" />
+            <texture id="inherit" length_s="1" length_t="1" />
             <children>
                 <primitiveref id="sphere"/>
             </children>
@@ -454,7 +454,7 @@
             <materials>
                 <material id="inherit"/>
             </materials>
-            <texture id="none" length_s="1" length_t="1" />
+            <texture id="inherit" length_s="1" length_t="1" />
             <children>
                 <primitiveref id="torus_saturn"/>
             </children>
@@ -465,9 +465,9 @@
                 <transformationref id="set_table"/>
             </transformation>
             <materials>
-                <material id="red"/>
+                <material id="inherit"/>
             </materials>
-            <texture id="none" length_s="1" length_t="1" />
+            <texture id="gray_wood" length_s="1" length_t="1" />
             <children>
                 <componentref id="table_top"/>
                 <componentref id="legs"/>
@@ -481,7 +481,7 @@
             <materials>
                 <material id="inherit"/>
             </materials>
-            <texture id="none" length_s="1" length_t="1" />
+            <texture id="black_wood" length_s="1" length_t="1" />
             <children>
                 <componentref id="chair_top"/>
                 <componentref id="chair_legs"/>
@@ -496,9 +496,9 @@
                 <transformationref id="set_cushion_upper"/>
             </transformation>
             <materials>
-                <material id="red"/>
+                <material id="inherit"/>
             </materials>
-            <texture id="none" length_s="1" length_t="1" />
+            <texture id="velvet" length_s="1" length_t="1" />
             <children>
                 <componentref id="cube"/>
             </children>
@@ -509,9 +509,9 @@
                 <transformationref id="set_cushion_lower"/>
             </transformation>
             <materials>
-                <material id="red"/>
+                <material id="inherit"/>
             </materials>
-            <texture id="none" length_s="1" length_t="1" />
+            <texture id="velvet" length_s="1" length_t="1" />
             <children>
                 <componentref id="cube"/>
             </children>
@@ -524,7 +524,7 @@
             <materials>
                 <material id="inherit"/>
             </materials>
-            <texture id="none" length_s="1" length_t="1" />
+            <texture id="inherit" length_s="1" length_t="1" />
             <children>
                 <componentref id="cube"/>
             </children>
@@ -537,7 +537,7 @@
             <materials>
                 <material id="inherit"/>
             </materials>
-            <texture id="none" length_s="1" length_t="1" />
+            <texture id="inherit" length_s="1" length_t="1" />
             <children>
                 <componentref id="cube"/>
             </children>
@@ -550,7 +550,7 @@
             <materials>
                 <material id="inherit"/>
             </materials>
-            <texture id="none" length_s="1" length_t="1" />
+            <texture id="inherit" length_s="1" length_t="1" />
             <children>
                 <componentref id="cube"/>
             </children>
@@ -563,7 +563,7 @@
             <materials>
                 <material id="inherit"/>
             </materials>
-            <texture id="none" length_s="1" length_t="1" />
+            <texture id="inherit" length_s="1" length_t="1" />
             <children>
                 <componentref id="legs"/>
             </children>
@@ -576,7 +576,7 @@
             <materials>
                 <material id="inherit"/>
             </materials>
-            <texture id="none" length_s="1" length_t="1" />
+            <texture id="inherit" length_s="1" length_t="1" />
             <children>
                 <componentref id="leg0"/>
                 <componentref id="leg1"/>
@@ -592,7 +592,7 @@
             <materials>
                 <material id="inherit"/>
             </materials>
-            <texture id="none" length_s="1" length_t="1" />
+            <texture id="inherit" length_s="1" length_t="1" />
             <children>
                 <componentref id="cube"/>
             </children>
@@ -605,7 +605,7 @@
             <materials>
                 <material id="inherit"/>
             </materials>
-            <texture id="none" length_s="1" length_t="1" />
+            <texture id="inherit" length_s="1" length_t="1" />
             <children>
                 <componentref id="cube"/>
             </children>
@@ -618,7 +618,7 @@
             <materials>
                 <material id="inherit"/>
             </materials>
-            <texture id="none" length_s="1" length_t="1" />
+            <texture id="inherit" length_s="1" length_t="1" />
             <children>
                 <componentref id="cube"/>
             </children>
@@ -631,7 +631,7 @@
             <materials>
                 <material id="inherit"/>
             </materials>
-            <texture id="none" length_s="1" length_t="1" />
+            <texture id="inherit" length_s="1" length_t="1" />
             <children>
                 <componentref id="cube"/>
             </children>
@@ -644,7 +644,7 @@
             <materials>
                 <material id="inherit"/>
             </materials>
-            <texture id="none" length_s="1" length_t="1" />
+            <texture id="black_plastic" length_s="1" length_t="1" />
             <children>
                 <componentref id="tv_screen"/>
                 <componentref id="tv_screen_screen"/>
@@ -660,7 +660,7 @@
             <materials>
                 <material id="inherit"/>
             </materials>
-            <texture id="none" length_s="1" length_t="1" />
+            <texture id="inherit" length_s="1" length_t="1" />
             <children>
                 <componentref id="ceiling_lamp_base"/>
                 <componentref id="ceiling_lamp_wire"/>
@@ -675,7 +675,7 @@
             <materials>
                 <material id="inherit"/>
             </materials>
-            <texture id="none" length_s="1" length_t="1" />
+            <texture id="inherit" length_s="1" length_t="1" />
             <children>
                 <primitiveref id="cylinder"/>
             </children>
@@ -688,7 +688,7 @@
             <materials>
                 <material id="inherit"/>
             </materials>
-            <texture id="none" length_s="1" length_t="1" />
+            <texture id="inherit" length_s="1" length_t="1" />
             <children>
                 <primitiveref id="cylinder"/>
             </children>
@@ -701,7 +701,7 @@
             <materials>
                 <material id="inherit"/>
             </materials>
-            <texture id="none" length_s="1" length_t="1" />
+            <texture id="inherit" length_s="1" length_t="1" />
             <children>
                 <primitiveref id="cylinder"/>
             </children>
@@ -714,7 +714,7 @@
             <materials>
                 <material id="inherit"/>
             </materials>
-            <texture id="none" length_s="1" length_t="1" />
+            <texture id="inherit" length_s="1" length_t="1" />
             <children>
                 <componentref id="cube"/>
             </children>
@@ -725,7 +725,7 @@
                 <transformationref id="set_tv_screen_screen"/>
             </transformation>
             <materials>
-                <material id="red"/>
+                <material id="inherit"/>
             </materials>
             <texture id="windows" length_s="1" length_t="1" />
             <children>
@@ -740,7 +740,7 @@
             <materials>
                 <material id="inherit"/>
             </materials>
-            <texture id="none" length_s="1" length_t="1" />
+            <texture id="inherit" length_s="1" length_t="1" />
             <children>
                 <componentref id="cube"/>
             </children>
@@ -753,7 +753,7 @@
             <materials>
                 <material id="inherit"/>
             </materials>
-            <texture id="none" length_s="1" length_t="1" />
+            <texture id="inherit" length_s="1" length_t="1" />
             <children>
                 <componentref id="cube"/>
             </children>
@@ -766,7 +766,7 @@
             <materials>
                 <material id="inherit"/>
             </materials>
-            <texture id="none" length_s="1" length_t="1" />
+            <texture id="inherit" length_s="1" length_t="1" />
             <children>
                 <componentref id="cube_face0"/>
                 <componentref id="cube_face1"/>
@@ -784,7 +784,7 @@
             <materials>
                 <material id="inherit"/>
             </materials>
-            <texture id="none" length_s="1" length_t="1" />
+            <texture id="inherit" length_s="1" length_t="1" />
             <children>
                 <primitiveref id="rectangle"/>
             </children>
@@ -797,7 +797,7 @@
             <materials>
                 <material id="inherit"/>
             </materials>
-            <texture id="none" length_s="1" length_t="1" />
+            <texture id="inherit" length_s="1" length_t="1" />
             <children>
                 <primitiveref id="rectangle"/>
             </children>
@@ -810,7 +810,7 @@
             <materials>
                 <material id="inherit"/>
             </materials>
-            <texture id="none" length_s="1" length_t="1" />
+            <texture id="inherit" length_s="1" length_t="1" />
             <children>
                 <primitiveref id="rectangle"/>
             </children>
@@ -823,7 +823,7 @@
             <materials>
                 <material id="inherit"/>
             </materials>
-            <texture id="none" length_s="1" length_t="1" />
+            <texture id="inherit" length_s="1" length_t="1" />
             <children>
                 <primitiveref id="rectangle"/>
             </children>
@@ -836,7 +836,7 @@
             <materials>
                 <material id="inherit"/>
             </materials>
-            <texture id="none" length_s="1" length_t="1" />
+            <texture id="inherit" length_s="1" length_t="1" />
             <children>
                 <primitiveref id="rectangle"/>
             </children>
@@ -849,7 +849,7 @@
             <materials>
                 <material id="inherit"/>
             </materials>
-            <texture id="none" length_s="1" length_t="1" />
+            <texture id="inherit" length_s="1" length_t="1" />
             <children>
                 <primitiveref id="rectangle"/>
             </children>
@@ -860,9 +860,9 @@
                 <transformationref id="set_side_wall"/>
             </transformation>
             <materials>
-                <material id="red"/>
+                <material id="inherit"/>
             </materials>
-            <texture id="none" length_s="1" length_t="1" />
+            <texture id="grey_wash" length_s="1" length_t="1" />
             <children>
                 <primitiveref id="rectangle"/>
             </children>
@@ -874,8 +874,8 @@
             </transformation>
             <materials>
                 <material id="inherit"/>
-            </materials>    
-            <texture id="none" length_s="1" length_t="1" />
+            </materials>
+            <texture id="gray_stone" length_s="1" length_t="1" />
             <children>
                 <primitiveref id="rectangle"/>
             </children>
@@ -886,9 +886,9 @@
                 <transformationref id="set_ground"/>
             </transformation>
             <materials>
-                <material id="green"/>
+                <material id="inherit"/>
             </materials>
-            <texture id="leaves" length_s="1" length_t="1" />
+            <texture id="inherit" length_s="1" length_t="1" />
             <children>
                 <primitiveref id="rectangle"/>
             </children>
@@ -899,9 +899,9 @@
                 <transformationref id="set_ceiling"/>
             </transformation>
             <materials>
-                <material id="green"/>
+                <material id="inherit"/>
             </materials>
-            <texture id="leaves" length_s="1" length_t="1" />
+            <texture id="inherit" length_s="1" length_t="1" />
             <children>
                 <primitiveref id="triangle"/>
             </children>
