@@ -10,13 +10,13 @@
             <from x="3" y="3" z="0.9" />
             <to x="3" y="3" z="7" />
         </perspective>
-        <ortho id="vidal" near="0.1" far="2" left="-3.5" right="3.5" top="1.75" bottom="-1.75">
-            <from x="1" y="4" z="3.5" />
-            <to x="0" y="4" z="3.5" />
-        </ortho>
         <ortho id="room" near="0.1" far="21" left="-7" right="7" top="3.5" bottom="-3.5">
             <from x="3.5" y="3.5" z="7" />
             <to x="3.5" y="3.5" z="0" />
+        </ortho>
+        <ortho id="painting" near="0.1" far="2" left="-3.5" right="3.5" top="1.75" bottom="-1.75">
+            <from x="1" y="4" z="3.5" />
+            <to x="0" y="4" z="3.5" />
         </ortho>
     </views>
 
