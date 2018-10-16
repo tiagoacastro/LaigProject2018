@@ -41,12 +41,11 @@ class MyTorus extends CGFobject
     
                 this.texCoords.push(xCoord, yCoord);
     
-    
-                xCoord += patchLengthx;
+                yCoord += patchLengthy;
             }
 
-            xCoord = 0;
-            yCoord += patchLengthy;    
+            yCoord = 0;
+            xCoord += patchLengthx; 
         }
 
         var sides = this.slices +1;

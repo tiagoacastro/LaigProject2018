@@ -41,13 +41,13 @@ class MyBaselessCylinder extends CGFobject
         var numPontos=this.stacks*(this.slices+1);
 
         for (let i =0; i < numPontos; i++){
-            if((i+1)%this.slices==0){
-                this.indices.push(i,i+1-this.slices, i+1);
-                this.indices.push(i,i+1, i+this.slices);
+            if((i+1)%(this.slices+1)==0){
+                this.indices.push(i,i+1-this.slices+1, i+1);
+                this.indices.push(i,i+1, i+this.slices+1);
             }
             else {
-                this.indices.push(i, i+1, i+1+this.slices);
-                this.indices.push(i, i+1+this.slices, i+this.slices);
+                this.indices.push(i, i+1, i+1+this.slices+1);
+                this.indices.push(i, i+1+this.slices+1, i+this.slices+1);
             }
         }
         

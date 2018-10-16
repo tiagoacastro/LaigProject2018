@@ -1,7 +1,7 @@
 <yas>
     <scene root="root" axis_length="5"/>
     
-    <views default="behind_desk"> 
+    <views default="saturn"> 
         <perspective id="saturn" near="0.1" far="50" angle="45">
             <from x="13" y="11" z="11" />
             <to x="0" y="0" z="0" />
@@ -10,8 +10,12 @@
             <from x="3" y="3" z="0.9" />
             <to x="3" y="3" z="7" />
         </perspective>
+        <ortho id="vidal" near="0.1" far="2" left="-3" right="3" top="1.5" bottom="-1.5">
+            <from x="1" y="3.5" z="3.5" />
+            <to x="0" y="3.5" z="3.5" />
+        </ortho>
         <ortho id="room" near="0.1" far="21" left="-7" right="7" top="3.5" bottom="-3.5">
-            <from x="3.5" y="3.5" z="14" />
+            <from x="3.5" y="3.5" z="7" />
             <to x="3.5" y="3.5" z="0" />
         </ortho>
     </views>
@@ -58,6 +62,12 @@
         <texture id="gray_stone" file="gray_stone.jpg"/>
         <texture id="stainless_steel" file="stainless_steel.jpg"/>
         <texture id="trash" file="trash.jpg"/>
+        <texture id="saturn" file="saturn.jpg"/>
+        <texture id="saturn_ring" file="saturn_ring.jpg"/>
+        <texture id="linen" file="linen.jpg"/>
+        <texture id="dolomite" file="dolomite.jpg"/>
+        <texture id="gold" file="gold.jpeg"/>
+        <texture id="vidal" file="vidal.jpg"/>
     </textures>
 
     <materials>
@@ -81,16 +91,23 @@
         </transformation>
 
         <transformation id="set_painting">
-            <translate x="0" y="3.5" z="3.5"/>
+            <translate x="0" y="4" z="3.5"/>
             <rotate axis="y" angle="90"/>
         </transformation>
 
         <transformation id="set_painting_interior">
-            <scale x="1" y="1" z="0.01"/>
+            <translate x="0" y="0" z="0.11"/>
+            <scale x="2" y="2.5" z="1"/>
+        </transformation>
+
+        <transformation id="set_painting_frame">
+            <translate x="0" y="0" z="0.05"/>
+            <scale x="2.5" y="3" z="0.1"/>
         </transformation>
 
         <transformation id="set_bin">
             <translate x="6" y="0" z="1"/>
+            <rotate axis="y" angle="90"/>
             <rotate axis="x" angle="-90"/>
         </transformation>
 
@@ -145,8 +162,13 @@
             <translate x="8" y="8" z="8"/>
         </transformation>
 
+        <transformation id="set_planet">
+            <rotate axis="x" angle="60"/>
+        </transformation>
+
         <transformation id="set_hoop">
             <rotate axis="x" angle="60"/>
+            <scale x="1" y="1" z="0.1"/>
         </transformation>
 
         <transformation id="set_leg0">
@@ -285,16 +307,16 @@
                       x3="0" y3="0" z3="1" />
         </primitive>
         <primitive id="cylinder">
-            <cylinder base="1" top="1" height="1" slices="40" stacks="10" />
+            <cylinder base="1" top="1" height="1" slices="40" stacks="40" />
         </primitive>
         <primitive id="cone">
-            <cylinder base="0.75" top="1" height="2" slices="40" stacks="10" />
+            <cylinder base="0.75" top="1" height="2" slices="40" stacks="40" />
         </primitive>
         <primitive id="sphere">
             <sphere radius="0.5" slices="40" stacks="40" />
         </primitive>
         <primitive id="torus_saturn">
-            <torus inner="0.1" outer="0.7" slices="40" loops="40" />
+            <torus inner="0.2" outer="0.8" slices="40" loops="40" />
         </primitive>
         <primitive id="torus_hoop">
             <torus inner="0.1" outer="1" slices="40" loops="40" />
@@ -342,14 +364,14 @@
 
         <component id="painting_frame">
             <transformation>
-                <transformationref id="identity"/>
+                <transformationref id="set_painting_frame"/>
             </transformation>
             <materials>
                 <material id="inherit"/>
             </materials>
-            <texture id="inherit" length_s="1" length_t="1" />
+            <texture id="gold" length_s="1" length_t="1" />
             <children>
-                <primitiveref id="torus_hoop"/>
+                <componentref id="cube"/>
             </children>
         </component>
 
@@ -360,9 +382,9 @@
             <materials>
                 <material id="inherit"/>
             </materials>
-            <texture id="inherit" length_s="1" length_t="1" />
+            <texture id="vidal" length_s="1" length_t="1" />
             <children>
-                <primitiveref id="cylinder"/>
+                <primitiveref id="rectangle"/>
             </children>
         </component>
 
@@ -436,12 +458,12 @@
 
         <component id="planet">
             <transformation>
-                <transformationref id="identity"/>
+                <transformationref id="set_planet"/>
             </transformation>
            <materials>
                 <material id="inherit"/>
             </materials>
-            <texture id="inherit" length_s="1" length_t="1" />
+            <texture id="saturn" length_s="1" length_t="1" />
             <children>
                 <primitiveref id="sphere"/>
             </children>
@@ -454,7 +476,7 @@
             <materials>
                 <material id="inherit"/>
             </materials>
-            <texture id="inherit" length_s="1" length_t="1" />
+            <texture id="saturn_ring" length_s="1" length_t="1" />
             <children>
                 <primitiveref id="torus_saturn"/>
             </children>
@@ -660,7 +682,7 @@
             <materials>
                 <material id="inherit"/>
             </materials>
-            <texture id="inherit" length_s="1" length_t="1" />
+            <texture id="stainless_steel" length_s="1" length_t="1" />
             <children>
                 <componentref id="ceiling_lamp_base"/>
                 <componentref id="ceiling_lamp_wire"/>
@@ -701,7 +723,7 @@
             <materials>
                 <material id="inherit"/>
             </materials>
-            <texture id="inherit" length_s="1" length_t="1" />
+            <texture id="velvet" length_s="1" length_t="1" />
             <children>
                 <primitiveref id="cylinder"/>
             </children>
@@ -888,7 +910,7 @@
             <materials>
                 <material id="inherit"/>
             </materials>
-            <texture id="inherit" length_s="1" length_t="1" />
+            <texture id="linen" length_s="1" length_t="1" />
             <children>
                 <primitiveref id="rectangle"/>
             </children>
@@ -901,7 +923,7 @@
             <materials>
                 <material id="inherit"/>
             </materials>
-            <texture id="inherit" length_s="1" length_t="1" />
+            <texture id="dolomite" length_s="1" length_t="1" />
             <children>
                 <primitiveref id="triangle"/>
             </children>
