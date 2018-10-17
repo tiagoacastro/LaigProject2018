@@ -37,6 +37,7 @@ class MySceneGraph {
         this.materials = {};
         this.components = {};
         this.textures = {};
+        this.primitives = {};
 
         this.currAppearance = {};
         this.currTexture = {};
@@ -1074,13 +1075,12 @@ class MySceneGraph {
      * @param {primitives block element} primitivesNode
      */
     parsePrimitives(primitivesNode) {
-        var children = primitivesNode.children;
 
-        this.primitives = [];
+        var children = primitivesNode.children
+
+        var primitive = {};
 
         for (var i = 0; i < children.length; i++){
-
-            var primitive = [];
 
             if(children[i].nodeName != "primitive")
                 return "primitive with wrong plane";
@@ -1095,27 +1095,35 @@ class MySceneGraph {
                     return "repeated id in primitives";
             }
 
-            primitive.push(id);
+            //primitive.push(id);
+
 
             switch(children[i].children[0].nodeName){
                 case "rectangle":
-                    primitive.push(this.parseRectangle(children[i].children[0]));
+                    primitive["type"] = "rectangle";
+                    primitive["primitive"] = this.parseRectangle(children[i].children[0]); 
                     break;
                 case "triangle":
-                    primitive.push(this.parseTriangle(children[i].children[0]));
+                    primitive["type"] = "triangle";
+                    primitive["primitive"] = this.parseTriangle(children[i].children[0]); 
                     break;
                 case "cylinder":
-                    primitive.push(this.parseCylinder(children[i].children[0]));
+                    primitive["type"] = "cylinder";
+                    primitive["primitive"] = this.parseCylinder(children[i].children[0]); 
                     break;
                 case "sphere":
-                    primitive.push(this.parseSphere(children[i].children[0]));
+                    primitive["type"] = "sphere";
+                    primitive["primitive"] = this.parseSphere(children[i].children[0]); 
                     break;
                 case "torus":
-                    primitive.push(this.parseTorus(children[i].children[0]));
+                    primitive["type"] = "torus";
+                    primitive["primitive"] = this.parseTorus(children[i].children[0]); 
                     break;
             }
+
+            this.primitives[id] = primitive;
+            primitive = {};
             
-            this.primitives.push(primitive);
         } 
 
         this.log("Parsed primitives");
@@ -2198,8 +2206,8 @@ class MySceneGraph {
                     if (currTexture != null) {
                         currTexture.bind();
                     }
-                    
-                    this.displayPrimitive(component["children"][key]["id"]);    
+    
+                    this.primitives[component["children"][key]["id"]]["primitive"].display();    
 
                     if (currTexture != null) {
                         currTexture.unbind();
@@ -2216,14 +2224,6 @@ class MySceneGraph {
 
         }
 
-    }
-
-    displayPrimitive(primitiveid) {
-        for (let i = 0; i < this.primitives.length; i++) {
-            if (this.primitives[i][0] == primitiveid) {
-                this.primitives[i][1].display();
-            }
-        }
     }
 
     applyTransformation(component) {

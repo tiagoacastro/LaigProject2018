@@ -44,5 +44,20 @@ class MyRectangle extends CGFobject{
         this.primitiveType = this.scene.gl.TRIANGLES;
         this.initGLBuffers();
     }
+
+    updateTexCoords(lengthS, lengthT) {
+        var minS = 0;
+        var minT = 0;
+        var maxS = (this.x2 - this.x1) / lengthS;
+        var maxT = (this.y2 - this.y1) / lengthT;
+
+        this.texCoords = [
+            this.minS,this.maxT,
+            this.maxS,this.maxT,
+            this.minS,this.minT,
+            this.maxS,this.minT
+        ];
+
+    }
  
 }
