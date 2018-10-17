@@ -21,34 +21,34 @@
     </views>
 
     <ambient>
-        <ambient r="1" g="1" b="1" a="0.5" />
+        <ambient r="0.2" g="0.2" b="0.2" a="0.2" />
         <background r="0" g="0" b="0" a="1" />
     </ambient>
 
     <lights>
         <omni id="light1" enabled="1">
             <location x="5" y="5" z="5" w="1" />
-            <ambient r="1" g="1" b="1" a="1" />
-            <diffuse r="1" g="1" b="1" a="1" />
-            <specular r="1" g="1" b="1" a="1" />
+            <ambient r="0.1" g="0.1" b="0.1" a="0.1" />
+            <diffuse r="0.1" g="0.1" b="0.1" a="0.1" />
+            <specular r="0.1" g="0.1" b="0.1" a="0.1" />
         </omni>
         <omni id="light2" enabled="1">
             <location x="7" y="7" z="7" w="1" />
-            <ambient r="1" g="1" b="1" a="1" />
-            <diffuse r="1" g="1" b="1" a="1" />
-            <specular r="1" g="1" b="1" a="1" />
+            <ambient r="0.2" g="0.2" b="0.2" a="0.2" />
+            <diffuse r="0.2" g="0.2" b="0.2" a="0.2" />
+            <specular r="0.2" g="0.2" b="0.2" a="0.2" />
         </omni>
         <omni id="light3" enabled="1">
             <location x="6" y="6" z="6" w="1" />
-            <ambient r="1" g="1" b="1" a="1" />
-            <diffuse r="1" g="1" b="1" a="1" />
-            <specular r="1" g="1" b="1" a="1" />
+            <ambient r="0.4" g="0.4" b="0.4" a="0.4" />
+            <diffuse r="0.4" g="0.4" b="0.4" a="0.4" />
+            <specular r="0.4" g="0.4" b="0.4" a="0.4" />
         </omni>
         <omni id="light4" enabled="1">
             <location x="8" y="8" z="8" w="1" />
-            <ambient r="1" g="1" b="1" a="1" />
-            <diffuse r="1" g="1" b="1" a="1" />
-            <specular r="1" g="1" b="1" a="1" />
+            <ambient r="0.7" g="0.7" b="0.7" a="0.7" />
+            <diffuse r="0.7" g="0.7" b="0.7" a="0.7" />
+            <specular r="0.7" g="0.7" b="0.7" a="0.7" />
         </omni>
     </lights>
 
