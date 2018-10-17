@@ -23,8 +23,8 @@ class MyRectangle extends CGFobject{
         ];
  
         this.indices = [
-            2, 1, 0,
-            1, 2, 3
+            0, 1, 2,
+            3, 2, 1
         ];
  
         this.normals = [
@@ -35,10 +35,10 @@ class MyRectangle extends CGFobject{
         ];
  
         this.texCoords = [
-            this.minS,this.minT,
-            this.maxS,this.minT,
             this.minS,this.maxT,
-            this.maxS,this.maxT
+            this.maxS,this.maxT,
+            this.minS,this.minT,
+            this.maxS,this.minT
         ];
  
         this.primitiveType = this.scene.gl.TRIANGLES;
