@@ -1,0 +1,7 @@
+<spot angle="1" id="painting" enabled="1" exponent="1">
+   	<location z="5.2" y="5.5" x="0.7" w="1"/>
+	<target z="5.2" y="4" x="0"/>
+     	<ambient r="0" g="0" b="0" a="1"/>
+	<diffuse r="0.7" g="0.7" b="0.7" a="1"/>
+     	<specular r="0.7" g="0.7" b="0.7" a="1"/>
+</spot>
