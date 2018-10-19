@@ -46,18 +46,22 @@ class MyRectangle extends CGFobject{
     }
 
     updateTexCoords(lengthS, lengthT) {
-        var minS = 0;
-        var minT = 0;
-        var maxS = (this.x2 - this.x1) / lengthS;
-        var maxT = (this.y2 - this.y1) / lengthT;
+
+        //console.log("entered update tex coords with values " + lengthS + " and " + lengthT);
+
+        this.minS = 0;
+        this.minT = 0;
+        this.maxS = (this.x2 - this.x1) / lengthS;
+        this.maxT = (this.y2 - this.y1) / lengthT;
 
         this.texCoords = [
-            this.minS,this.maxT,
-            this.maxS,this.maxT,
-            this.minS,this.minT,
-            this.maxS,this.minT
+            this.minS, this.maxT,
+            this.maxS, this.maxT,
+            this.minS, this.minT,
+            this.maxS, this.minT
         ];
 
+        this.updateTexCoordsGLBuffers();
     }
  
 }

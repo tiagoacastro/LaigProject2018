@@ -1956,6 +1956,8 @@ class MySceneGraph {
                 textureAux["lengthS"] = lengthS;
                 textureAux["lengthT"] = lengthT;
 
+                console.log(textureAux["lengthS"]);
+
             }
 
             //children
@@ -2166,15 +2168,17 @@ class MySceneGraph {
      * Displays the scene, processing each node, starting in the root node.
      */
     displayScene() {
-        this.processComponents(this.root, this.components[this.root]["materials"][0], this.components[this.root]["texture"]["id"]);        
+        this.processComponents(this.root, this.components[this.root]["materials"][0], this.components[this.root]["texture"]["id"], this.components[this.root]["texture"]["lengthS"], this.components[this.root]["texture"]["lengthT"]);        
         return null;
     }
 
-    processComponents(componentId, parentMaterialId, parentTextureId) {
+    processComponents(componentId, parentMaterialId, parentTextureId, parentLengthS, parentLengthT) {
 
         var component = this.components[componentId];
         var materialId = parentMaterialId;
         var textureId = parentTextureId;
+        var lengthS = parentLengthS;
+        var lengthT = parentLengthT;
 
         this.applyTransformation(component);
 
@@ -2190,7 +2194,9 @@ class MySceneGraph {
             } else {
                 textureId = component["texture"]["id"];
             }
-        }
+            lengthS = component["texture"]["lengthS"];
+            lengthT = component["texture"]["lengthT"];
+        } 
 
         var currAppearance = this.materials[materialId];
         var currTexture = this.textures[textureId];
@@ -2207,6 +2213,11 @@ class MySceneGraph {
                         currTexture.bind();
                     }
     
+                    if (this.primitives[component["children"][key]["id"]]["type"] === "rectangle") {
+                        this.primitives[component["children"][key]["id"]]["primitive"].updateTexCoords(lengthS, lengthT);
+                        //console.log(this.primitives[component["children"][key]["id"]]["primitive"].maxS);
+                        //console.log(this.primitives[component["children"][key]["id"]]["primitive"].maxT);
+                    }
                     this.primitives[component["children"][key]["id"]]["primitive"].display();    
 
                     if (currTexture != null) {
@@ -2216,7 +2227,7 @@ class MySceneGraph {
                 break;
                 case "componentref":
                     this.scene.pushMatrix();
-                        this.processComponents  (component["children"][key]["id"], materialId, textureId);
+                        this.processComponents(component["children"][key]["id"], materialId, textureId, lengthS, lengthT);
                     this.scene.popMatrix();
 
                 break;

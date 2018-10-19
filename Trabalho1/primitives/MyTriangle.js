@@ -11,8 +11,6 @@ class MyTriangle extends CGFobject{
         this.z2 = z2;
         this.z3 = z3;
 
-        //temp values
-
         this.minS = 0;
         this.minT = 0;
         this.maxS = 1;
