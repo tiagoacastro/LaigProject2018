@@ -32,8 +32,8 @@
         <omni id="lamp" enabled="1">
             <location x="3" y="6.1" z="3" w="1"/>
             <ambient r="0" g="0" b="0" a="1"/>
-            <diffuse r="1" g="1" b="1" a="1"/>
-            <specular r="1" g="1" b="1" a="1"/>
+            <diffuse r="5" g="5" b="5" a="1"/>
+            <specular r="5" g="5" b="5" a="1"/>
         </omni>
     </lights>
 
@@ -56,39 +56,46 @@
     </textures>
 
     <materials>
-        <material id="black" shininess = "10" >
+        <material id="default" shininess = "0" >
             <emission r="0" g="0" b="0" a="1" /> 
-            <ambient  r="0.1" g="0.1" b="0.1" a="1" /> 
-            <diffuse  r="0.1" g="0.1" b="0.1" a="1" /> 
-            <specular  r="0.1" g="0.1" b="0.1" a="1" /> 
+            <ambient  r="0" g="0" b="0" a="1" /> 
+            <diffuse  r="0" g="0" b="0" a="1" /> 
+            <specular  r="0" g="0" b="0" a="1" /> 
         </material>
 
-        <material id="light_black" shininess = "20" >
+        <material id="garbage" shininess = "30" >
             <emission r="0" g="0" b="0" a="1" /> 
-            <ambient  r="0.1" g="0.1" b="0.1" a="1" /> 
-            <diffuse  r="0.3" g="0.3" b="0.3" a="1" /> 
-            <specular  r="0.2" g="0.2" b="0.2" a="1" /> 
-        </material>
-
-        <material id="screen" shininess="100" >
-            <emission r="0.6" g="0.6" b="0.6" a="1" />
-            <ambient r="0.1" g="0.1" b="0.1" a="1" />
-            <diffuse r="0.7" g="0.7" b="0.7" a="1" />
-            <specular r="0.7" g="0.7" b="0.7" a="1" />
+            <ambient  r="0.50" g="0.50" b="0.50" a="1" /> 
+            <diffuse  r="0.50" g="0.50" b="0.50" a="1" /> 
+            <specular  r="0.50" g="0.50" b="0.50" a="1" /> 
         </material>
 
         <material id="velvet" shininess="30" >
             <emission r="0" g="0" b="0" a="1" />
-            <ambient r="0.1" g="0.1" b="0.1" a="1" />
-            <diffuse r="0.32" g="0.12" b="0.12" a="1" />
-            <specular r="0.32" g="0.12" b="0.12" a="1" />
+            <ambient r="0.80" g="0.30" b="0.30" a="1" />
+            <diffuse r="0.80" g="0.30" b="0.30" a="1" />
+            <specular r="0.80" g="0.30" b="0.30" a="1" />
         </material>
 
-        <material id="red" shininess = "1" >
-            <emission r="1" g="0" b="0" a="1" /> 
-            <ambient  r="1" g="0" b="0" a="1" /> 
-            <diffuse  r="1" g="0" b="0" a="1" /> 
-            <specular  r="1" g="0" b="0" a="1" /> 
+        <material id="dark" shininess = "20" >
+            <emission r="0" g="0" b="0" a="1" /> 
+            <ambient  r="0.20" g="0.20" b="0.20" a="1" /> 
+            <diffuse  r="0.20" g="0.20" b="0.20" a="1" /> 
+            <specular  r="0.20" g="0.20" b="0.20" a="1" /> 
+        </material>
+
+        <material id="screen" shininess="100" >
+            <emission r="1" g="1" b="1" a="1" />
+            <ambient r="1" g="1" b="1" a="1" />
+            <diffuse r="1" g="1" b="1" a="1" />
+            <specular r="1" g="1" b="1" a="1" />
+        </material>
+
+        <material id="metal" shininess="80" >
+            <emission r="0" g="0" b="0" a="1" />
+            <ambient r="0.75" g="0.75" b="0.75" a="1" />
+            <diffuse r="0.75" g="0.75" b="0.75" a="0.75" />
+            <specular r="0.75" g="0.75" b="0.75" a="1" />
         </material>
     </materials>
 
@@ -379,9 +386,9 @@
                 <transformationref id="set_painting_frame"/>
             </transformation>
             <materials>
-                <material id="red"/>
+                <material id="inherit"/>
             </materials>
-            <texture id="none" length_s="1" length_t="1" />
+            <texture id="gold" length_s="1" length_t="1" />
             <children>
                 <componentref id="cube"/>
             </children>
@@ -405,7 +412,7 @@
                 <transformationref id="set_bin"/>
             </transformation>
             <materials>
-                <material id="inherit"/>
+                <material id="metal"/>
             </materials>
             <texture id="stainless_steel" length_s="1" length_t="1" />
             <children>
@@ -446,7 +453,7 @@
                 <transformationref id="set_bin_top"/>
             </transformation>
             <materials>
-                <material id="inherit"/>
+                <material id="default"/>
             </materials>
             <texture id="trash" length_s="1" length_t="1" />
             <children>
@@ -499,7 +506,7 @@
                 <transformationref id="set_table"/>
             </transformation>
             <materials>
-                <material id="light_black"/>
+                <material id="dark"/>
             </materials>
             <texture id="gray_wood" length_s="2" length_t="1" />
             <children>
@@ -513,7 +520,7 @@
                 <transformationref id="identity"/>
             </transformation>
             <materials>
-                <material id="black"/>
+                <material id="dark"/>
             </materials>
             <texture id="black_wood" length_s="1" length_t="1" />
             <children>
@@ -530,7 +537,7 @@
                 <transformationref id="set_cushion_upper"/>
             </transformation>
             <materials>
-                <material id="inherit"/>
+                <material id="velvet"/>
             </materials>
             <texture id="velvet" length_s="1" length_t="1" />
             <children>
@@ -543,7 +550,7 @@
                 <transformationref id="set_cushion_lower"/>
             </transformation>
             <materials>
-                <material id="inherit"/>
+                <material id="velvet"/>
             </materials>
             <texture id="velvet" length_s="1" length_t="1" />
             <children>
@@ -676,7 +683,7 @@
                 <transformationref id="set_tv"/>
             </transformation>
             <materials>
-                <material id="black"/>
+                <material id="dark"/>
             </materials>
             <texture id="black_plastic" length_s="1" length_t="1" />
             <children>
@@ -692,7 +699,7 @@
                 <transformationref id="set_ceiling_lamp"/>
             </transformation>
             <materials>
-                <material id="inherit"/>
+                <material id="metal"/>
             </materials>
             <texture id="stainless_steel" length_s="1" length_t="1" />
             <children>
@@ -733,7 +740,7 @@
                 <transformationref id="set_ceiling_lamp_shade"/>
             </transformation>
             <materials>
-                <material id="inherit"/>
+                <material id="velvet"/>
             </materials>
             <texture id="velvet" length_s="1" length_t="1" />
             <children>
@@ -907,7 +914,7 @@
                 <transformationref id="set_back_wall"/>
             </transformation>
             <materials>
-                <material id="light_black"/>
+                <material id="dark"/>
             </materials>
             <texture id="gray_stone" length_s="1" length_t="1" />
             <children>
