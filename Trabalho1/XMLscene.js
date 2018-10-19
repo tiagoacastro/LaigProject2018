@@ -34,6 +34,10 @@ class XMLscene extends CGFscene {
         this.gl.depthFunc(this.gl.LEQUAL);
 
         this.axis = new CGFaxis(this);
+        this.axisOn = 1;
+        this.axisDisplay = function(){
+            this.axisOn = !(this.axisOn);
+        };
     }
 
     /**
@@ -103,6 +107,7 @@ class XMLscene extends CGFscene {
         this.gl.clearColor(this.graph.background[0], this.graph.background[1], this.graph.background[2], this.graph.background[3]);
 
         // Adds lights group.
+        this.interface.addAxisCheckBox();
         this.interface.addLightsGroup(this.graph.lights);
         this.interface.addViewsGroup(this.graph.cameras);
 
@@ -131,7 +136,8 @@ class XMLscene extends CGFscene {
 
         if (this.sceneInited) {
             // Draw axis
-            this.axis.display();
+            if(this.axisOn)
+                this.axis.display();
 
             var i = 0;
             for (var key in this.lightValues) {

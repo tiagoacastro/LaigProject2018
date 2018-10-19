@@ -26,6 +26,13 @@ class MyInterface extends CGFinterface {
     }
 
     /**
+     * Adds a tickbox to toggle the axis.
+     */
+    addAxisCheckBox() {
+        this.gui.add(this.scene, "axisDisplay").name('Axis');
+    }
+
+    /**
      * Adds a folder containing the IDs of the lights passed as parameter.
      * @param {array} lights
      */
@@ -42,6 +49,10 @@ class MyInterface extends CGFinterface {
         }
     }
 
+    /**
+     * Adds a folder containing the IDs of the views passed as parameter.
+     * @param {array} cameras
+     */
     addViewsGroup(cameras) {
         var group = this.gui.addFolder("Views");
         group.open();   
