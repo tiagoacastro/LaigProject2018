@@ -379,9 +379,9 @@
                 <transformationref id="set_painting_frame"/>
             </transformation>
             <materials>
-                <material id="inherit"/>
+                <material id="red"/>
             </materials>
-            <texture id="gold" length_s="1" length_t="1" />
+            <texture id="none" length_s="1" length_t="1" />
             <children>
                 <componentref id="cube"/>
             </children>
@@ -405,7 +405,7 @@
                 <transformationref id="set_bin"/>
             </transformation>
             <materials>
-                <material id="inherited"/>
+                <material id="inherit"/>
             </materials>
             <texture id="stainless_steel" length_s="1" length_t="1" />
             <children>
@@ -501,7 +501,7 @@
             <materials>
                 <material id="light_black"/>
             </materials>
-            <texture id="gray_wood" length_s="1" length_t="1" />
+            <texture id="gray_wood" length_s="2" length_t="1" />
             <children>
                 <componentref id="table_top"/>
                 <componentref id="legs"/>

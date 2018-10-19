@@ -67,7 +67,7 @@ class XMLscene extends CGFscene {
                 this.lights[i].setDiffuse(light[8][0], light[8][1], light[8][2], light[8][3]);
                 this.lights[i].setSpecular(light[9][0], light[9][1], light[9][2], light[9][3]);
                 this.lights[i].setSpotCutOff(light[3]);
-                this.lights[i].setTarget(light[6][0], light[6][1], light[6][2]);
+                //this.lights[i].setTarget(light[6][0], light[6][1], light[6][2]);
                 this.lights[i].setSpotExponent(light[4]);
 
             }
