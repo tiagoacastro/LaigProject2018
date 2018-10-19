@@ -1,15 +1,25 @@
 <yas>
     <scene root="root" axis_length="5"/>
     
-    <views default="saturn"> 
+    <views default="overview"> 
+        <perspective id="overview" near="0.1" far="30" angle="45">
+            <from x="10" y="10" z="10" />
+            <to x="0" y="0" z="0" />
+        </perspective>
+
         <perspective id="saturn" near="0.1" far="30" angle="45">
-            <from x="13" y="11" z="11" />
+            <from x="16" y="14" z="14" />
             <to x="0" y="0" z="0" />
         </perspective>
 
         <perspective id="behind_desk" near="0.1" far="30" angle="45">
             <from x="3" y="3" z="0.9" />
             <to x="3" y="3" z="7" />
+        </perspective>
+
+        <perspective id="room_corner" near="0.1" far="30" angle="45">
+            <from x="0.1" y="0.1" z="0.1" />
+            <to x="7" y="7" z="7" />
         </perspective>
 
         <ortho id="room" near="0.1" far="20" left="-7" right="7" top="3.5" bottom="-3.5">
@@ -30,10 +40,34 @@
 
     <lights>
         <omni id="lamp" enabled="1">
-            <location x="3" y="6.1" z="3" w="1"/>
+            <location x="3" y="5.6" z="2.7" w="1"/>
             <ambient r="0" g="0" b="0" a="1"/>
-            <diffuse r="5" g="5" b="5" a="1"/>
-            <specular r="5" g="5" b="5" a="1"/>
+            <diffuse r="0.6" g="0.6" b="0.6" a="1"/>
+            <specular r="0.6" g="0.6" b="0.6" a="1"/>
+        </omni>
+        <omni id="corner" enabled="1">
+            <location x="0.3" y="6.7" z="0.3" w="1"/>
+            <ambient r="0" g="0" b="0" a="1"/>
+            <diffuse r="1" g="1" b="1" a="1"/>
+            <specular r="1" g="1" b="1" a="1"/>
+        </omni>
+        <omni id="red_led" enabled="0">
+            <location x="2.7" y="2.5" z="4.3" w="1"/>
+            <ambient r="0" g="0" b="0" a="1"/>
+            <diffuse r="0.4" g="0" b="0" a="1"/>
+            <specular r="0.4" g="0" b="0" a="1"/>
+        </omni>
+        <omni id="green_led" enabled="0">
+            <location x="3" y="2.5" z="4.3" w="1"/>
+            <ambient r="0" g="0" b="0" a="1"/>
+            <diffuse r="0" g="0.4" b="0" a="1"/>
+            <specular r="0" g="0.4" b="0" a="1"/>
+        </omni>
+        <omni id="blue_led" enabled="0">
+            <location x="3.3" y="2.5" z="4.3" w="1"/>
+            <ambient r="0" g="0" b="0" a="1"/>
+            <diffuse r="0" g="0" b="0.4" a="1"/>
+            <specular r="0" g="0" b="0.4" a="1"/>
         </omni>
     </lights>
 
@@ -56,46 +90,67 @@
     </textures>
 
     <materials>
-        <material id="default" shininess = "0" >
+        <material id="default" shininess = "30" >
             <emission r="0" g="0" b="0" a="1" /> 
-            <ambient  r="0" g="0" b="0" a="1" /> 
-            <diffuse  r="0" g="0" b="0" a="1" /> 
-            <specular  r="0" g="0" b="0" a="1" /> 
-        </material>
-
-        <material id="garbage" shininess = "30" >
-            <emission r="0" g="0" b="0" a="1" /> 
-            <ambient  r="0.50" g="0.50" b="0.50" a="1" /> 
+            <ambient  r="0.1" g="0.1" b="0.1" a="1" /> 
             <diffuse  r="0.50" g="0.50" b="0.50" a="1" /> 
             <specular  r="0.50" g="0.50" b="0.50" a="1" /> 
         </material>
 
         <material id="velvet" shininess="30" >
             <emission r="0" g="0" b="0" a="1" />
-            <ambient r="0.80" g="0.30" b="0.30" a="1" />
+            <ambient  r="0.1" g="0.1" b="0.1" a="1" />  
             <diffuse r="0.80" g="0.30" b="0.30" a="1" />
             <specular r="0.80" g="0.30" b="0.30" a="1" />
         </material>
 
         <material id="dark" shininess = "20" >
             <emission r="0" g="0" b="0" a="1" /> 
-            <ambient  r="0.20" g="0.20" b="0.20" a="1" /> 
-            <diffuse  r="0.20" g="0.20" b="0.20" a="1" /> 
-            <specular  r="0.20" g="0.20" b="0.20" a="1" /> 
+            <ambient  r="0.1" g="0.1" b="0.1" a="1" />   
+            <diffuse  r="0.40" g="0.40" b="0.40" a="1" /> 
+            <specular  r="0.40" g="0.40" b="0.40" a="1" /> 
         </material>
 
-        <material id="screen" shininess="100" >
+        <material id="source" shininess="100" >
             <emission r="1" g="1" b="1" a="1" />
-            <ambient r="1" g="1" b="1" a="1" />
+            <ambient  r="0.1" g="0.1" b="0.1" a="1" />  
             <diffuse r="1" g="1" b="1" a="1" />
             <specular r="1" g="1" b="1" a="1" />
         </material>
 
         <material id="metal" shininess="80" >
             <emission r="0" g="0" b="0" a="1" />
-            <ambient r="0.75" g="0.75" b="0.75" a="1" />
-            <diffuse r="0.75" g="0.75" b="0.75" a="0.75" />
+            <ambient  r="0.1" g="0.1" b="0.1" a="1" /> 
+            <diffuse r="0.75" g="0.75" b="0.75" a="1" />
             <specular r="0.75" g="0.75" b="0.75" a="1" />
+        </material>
+
+        <material id="gold" shininess="40" >
+            <emission r="0" g="0" b="0" a="1" />
+            <ambient  r="0.1" g="0.1" b="0.1" a="1" /> 
+            <diffuse r="0.9" g="0.6" b="0.1" a="1" />
+            <specular r="0.9" g="0.6" b="0.1" a="1" />
+        </material>
+
+        <material id="cream" shininess="30" >
+            <emission r="0" g="0" b="0" a="1" />
+            <ambient  r="0.1" g="0.1" b="0.1" a="1" /> 
+            <diffuse r="0.6" g="0.5" b="0.3" a="1" />
+            <specular r="0.6" g="0.5" b="0.1" a="1" />
+        </material>
+
+        <material id="white" shininess="40" >
+            <emission r="0" g="0" b="0" a="1" />
+            <ambient  r="0.1" g="0.1" b="0.1" a="1" /> 
+            <diffuse r="1" g="1" b="1" a="1" />
+            <specular r="1" g="1" b="1" a="1" />
+        </material>
+
+        <material id="gray" shininess="20" >
+            <emission r="0" g="0" b="0" a="1" />
+            <ambient  r="0.1" g="0.1" b="0.1" a="1" /> 
+            <diffuse r="0.6" g="0.6" b="0.6" a="1" />
+            <specular r="0.6" g="0.6" b="0.6" a="1" />
         </material>
     </materials>
 
@@ -173,7 +228,7 @@
         </transformation>
 
         <transformation id="set_saturn">
-            <translate x="8" y="8" z="8"/>
+            <translate x="12" y="12" z="12"/>
         </transformation>
 
         <transformation id="set_planet">
@@ -239,7 +294,7 @@
         </transformation>
 
         <transformation id="set_ceiling_lamp">
-            <translate x="3" y="5.9" z="2.7"/>
+            <translate x="3" y="5.89" z="2.7"/>
         </transformation>
 
         <transformation id="set_ceiling_lamp_shade">
@@ -386,6 +441,7 @@
                 <transformationref id="set_painting_frame"/>
             </transformation>
             <materials>
+                <material id="gold"/>
                 <material id="inherit"/>
             </materials>
             <texture id="gold" length_s="1" length_t="1" />
@@ -413,6 +469,7 @@
             </transformation>
             <materials>
                 <material id="metal"/>
+                <material id="inherit"/>
             </materials>
             <texture id="stainless_steel" length_s="1" length_t="1" />
             <children>
@@ -454,6 +511,7 @@
             </transformation>
             <materials>
                 <material id="default"/>
+                <material id="inherit"/>
             </materials>
             <texture id="trash" length_s="1" length_t="1" />
             <children>
@@ -466,6 +524,7 @@
                 <transformationref id="set_saturn"/>
             </transformation>
             <materials>
+                <material id="source"/>
                 <material id="inherit"/>
             </materials>
             <texture id="inherit" length_s="1" length_t="1" />
@@ -507,6 +566,7 @@
             </transformation>
             <materials>
                 <material id="dark"/>
+                <material id="inherit"/>
             </materials>
             <texture id="gray_wood" length_s="2" length_t="1" />
             <children>
@@ -521,6 +581,7 @@
             </transformation>
             <materials>
                 <material id="dark"/>
+                <material id="inherit"/>
             </materials>
             <texture id="black_wood" length_s="1" length_t="1" />
             <children>
@@ -538,6 +599,7 @@
             </transformation>
             <materials>
                 <material id="velvet"/>
+                <material id="inherit"/>
             </materials>
             <texture id="velvet" length_s="1" length_t="1" />
             <children>
@@ -551,6 +613,7 @@
             </transformation>
             <materials>
                 <material id="velvet"/>
+                <material id="inherit"/>
             </materials>
             <texture id="velvet" length_s="1" length_t="1" />
             <children>
@@ -684,6 +747,7 @@
             </transformation>
             <materials>
                 <material id="dark"/>
+                <material id="inherit"/>
             </materials>
             <texture id="black_plastic" length_s="1" length_t="1" />
             <children>
@@ -700,6 +764,7 @@
             </transformation>
             <materials>
                 <material id="metal"/>
+                <material id="inherit"/>
             </materials>
             <texture id="stainless_steel" length_s="1" length_t="1" />
             <children>
@@ -741,6 +806,7 @@
             </transformation>
             <materials>
                 <material id="velvet"/>
+                <material id="inherit"/>
             </materials>
             <texture id="velvet" length_s="1" length_t="1" />
             <children>
@@ -766,7 +832,8 @@
                 <transformationref id="set_tv_screen_screen"/>
             </transformation>
             <materials>
-                <material id="screen"/>
+                <material id="source"/>
+                <material id="inherit"/>
             </materials>
             <texture id="windows" length_s="1" length_t="1" />
             <children>
@@ -901,6 +968,7 @@
                 <transformationref id="set_side_wall"/>
             </transformation>
             <materials>
+                <material id="grey"/>
                 <material id="inherit"/>
             </materials>
             <texture id="grey_wash" length_s="1" length_t="1" />
@@ -915,6 +983,7 @@
             </transformation>
             <materials>
                 <material id="dark"/>
+                <material id="inherit"/>
             </materials>
             <texture id="gray_stone" length_s="1" length_t="1" />
             <children>
@@ -927,6 +996,7 @@
                 <transformationref id="set_ground"/>
             </transformation>
             <materials>
+                <material id="cream"/>
                 <material id="inherit"/>
             </materials>
             <texture id="linen" length_s="1" length_t="1" />
@@ -940,6 +1010,7 @@
                 <transformationref id="set_ceiling"/>
             </transformation>
             <materials>
+                <material id="white"/>
                 <material id="inherit"/>
             </materials>
             <texture id="dolomite" length_s="1" length_t="1" />
