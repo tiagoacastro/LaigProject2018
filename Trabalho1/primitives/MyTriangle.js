@@ -28,7 +28,7 @@ class MyTriangle extends CGFobject{
         ];
 
         this.indices = [
-            2, 1, 0,
+            0, 1, 2,
         ];
 
         this.p0 = vec3.fromValues(this.x1, this.y1, this.z1);
