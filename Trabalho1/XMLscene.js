@@ -1,4 +1,5 @@
 var DEGREE_TO_RAD = Math.PI / 180;
+var FPS = 60;
 
 /**
  * XMLscene class, representing the scene that is to be rendered.
@@ -34,6 +35,8 @@ class XMLscene extends CGFscene {
         this.gl.depthFunc(this.gl.LEQUAL);
 
         this.axis = new CGFaxis(this);
+
+        this.setUpdatePeriod(1000 * (1/FPS));
     }
 
     /**
@@ -107,6 +110,47 @@ class XMLscene extends CGFscene {
         this.interface.addViewsGroup(this.graph.cameras);
 
         this.sceneInited = true;
+    }
+
+    
+    checkKeys() {
+
+        var text="Keys pressed: ";
+        var keysPressed=false;
+
+        if (this.interface.wasKeyReleased("KeyM")) {
+            text += " M ";
+            keysPressed = true;
+            this.interface.releasedKeys["KeyM"] = false;
+            this.updateMaterials();
+        }
+
+        if (keysPressed) {
+            console.log(text);
+        } 
+    }
+
+    update() {
+
+        this.checkKeys();
+
+    }
+
+    updateMaterials() {
+
+        for (var key in this.graph.components) {
+
+            console.log(this.graph.components[key]["activeMaterial"]);
+
+            if((this.graph.components[key]["activeMaterial"] >= 0) && (this.graph.components[key]["activeMaterial"] < this.graph.components[key]["materials"].length - 1)) {
+                console.log("changing material");
+                this.graph.components[key]["activeMaterial"] = this.graph.components[key]["activeMaterial"] + 1;
+            } else {
+                this.graph.components[key]["activeMaterial"] = 0;
+            }
+
+        }
+
     }
 
 

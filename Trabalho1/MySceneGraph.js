@@ -52,6 +52,7 @@ class MySceneGraph {
          */
 
         this.reader.open('scenes/' + filename, this);
+
     }
 
 
@@ -1976,11 +1977,14 @@ class MySceneGraph {
             component["materials"] = materials;
             component["texture"] = textureAux;
             component["children"] = childrenTmp;
+            component["activeMaterial"] = 0;
 
             this.components[componentId] = component;
             numComponents++;
 
         }
+
+        console.log(this.components);
 
         return null;
     }
@@ -2090,7 +2094,7 @@ class MySceneGraph {
 
     parseComponentMaterials(materials) {
 
-        var materialsAux = {};
+        var materialsAux = [];
 
         for (var i = 0; i < materials.length; i++) {
             if (materials[i].nodeName == "material") {
@@ -2100,11 +2104,9 @@ class MySceneGraph {
                     return "no id defined for material in component";
                 }
 
-                if (this.materials[id] != null) {
-                    materialsAux[id] = this.materials[id]; 
-                } else {
-                    materialsAux[id] = {};
-                }
+                if (this.materials[id] != null || id === "inherit") {
+                    materialsAux.push(id); 
+                } 
 
             } else {
                 return "unrecognized token in materials tag";
@@ -2168,7 +2170,7 @@ class MySceneGraph {
      * Displays the scene, processing each node, starting in the root node.
      */
     displayScene() {
-        this.processComponents(this.root, this.components[this.root]["materials"][0], this.components[this.root]["texture"]["id"], this.components[this.root]["texture"]["lengthS"], this.components[this.root]["texture"]["lengthT"]);        
+        this.processComponents(this.root, this.components[this.root]["materials"][this.components[this.root]["activeMaterial"]], this.components[this.root]["texture"]["id"], this.components[this.root]["texture"]["lengthS"], this.components[this.root]["texture"]["lengthT"]);        
         return null;
     }
 
@@ -2182,10 +2184,8 @@ class MySceneGraph {
 
         this.applyTransformation(component);
 
-        var firstKeyMaterial = Object.keys(component["materials"])[0]
-
-        if ((this.materials[firstKeyMaterial] != null) && firstKeyMaterial !== "inherit") {
-            materialId = firstKeyMaterial;    
+        if ((this.materials[component["materials"][component["activeMaterial"]]] != null) && component["materials"][component["activeMaterial"]] !== "inherit") {
+            materialId = component["materials"][component["activeMaterial"]];    
         }
 
         if ((this.textures[component["texture"]["id"]] != null) && (component["texture"]["id"] !== "inherit")) {

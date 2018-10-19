@@ -22,6 +22,8 @@ class MyInterface extends CGFinterface {
 
         // add a group of controls (and open/expand by defult)
 
+        this.initKeys();
+
         return true;
     }
 
@@ -57,4 +59,29 @@ class MyInterface extends CGFinterface {
             inter.setActiveCamera(cameras[val]);
         });
     }
+
+    initKeys() {
+		this.scene.gui = this;
+		this.processKeyboard = function(){};
+        this.activeKeys = {};
+        this.releasedKeys = {};
+	};
+
+	processKeyDown(event) {
+		this.activeKeys[event.code]=true;
+	};
+
+	processKeyUp(event) {
+        this.releasedKeys[event.code] = true;
+        this.activeKeys[event.code]=false;
+	};
+
+	isKeyPressed(keyCode) {
+		return this.activeKeys[keyCode] || false;
+    };
+
+    wasKeyReleased(keyCode) {
+        return this.releasedKeys[keyCode] || false;
+    };
+    
 }
