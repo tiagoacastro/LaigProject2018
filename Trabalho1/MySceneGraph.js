@@ -2182,13 +2182,13 @@ class MySceneGraph {
 
         this.applyTransformation(component);
 
-        var firstKeyMaterial = Object.keys(component["materials"])[0];
+        var firstKeyMaterial = Object.keys(component["materials"])[0]
 
-        if (this.materials[component["materials"][firstKeyMaterial]] != null && !('inherit' in component["materials"])) {
-            materialId = component["materials"][firstKeyMaterial];    
+        if ((this.materials[firstKeyMaterial] != null) && firstKeyMaterial !== "inherit") {
+            materialId = firstKeyMaterial;    
         }
 
-        if ((this.textures[component["texture"]["id"]] != null) && (component["texture"]["id"] != "inherit")) {
+        if ((this.textures[component["texture"]["id"]] != null) && (component["texture"]["id"] !== "inherit")) {
             if (component["texture"]["id"] == "none") {
                 textureId = null;
             } else {
@@ -2213,11 +2213,10 @@ class MySceneGraph {
                         currTexture.bind();
                     }
     
-                    if (this.primitives[component["children"][key]["id"]]["type"] === "rectangle") {
+                    if (this.primitives[component["children"][key]["id"]]["type"] === "rectangle" || this.primitives[component["children"][key]["id"]]["type"] === "triangle") {
                         this.primitives[component["children"][key]["id"]]["primitive"].updateTexCoords(lengthS, lengthT);
-                        //console.log(this.primitives[component["children"][key]["id"]]["primitive"].maxS);
-                        //console.log(this.primitives[component["children"][key]["id"]]["primitive"].maxT);
                     }
+
                     this.primitives[component["children"][key]["id"]]["primitive"].display();    
 
                     if (currTexture != null) {

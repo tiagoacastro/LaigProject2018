@@ -31,9 +31,9 @@ class MyTriangle extends CGFobject{
             0, 1, 2,
         ];
 
-        this.p1 = vec3.fromValues(this.x1, this.y1, this.z1);
+        this.p1 = vec3.fromValues(this.x3, this.y3, this.z3);
         this.p2 = vec3.fromValues(this.x2, this.y2, this.z2);
-        this.p3 = vec3.fromValues(this.x3, this.y3, this.z3);
+        this.p3 = vec3.fromValues(this.x1, this.y1, this.z1);
 
         this.v12 = vec3.create();
         this.v12 = [
@@ -58,19 +58,19 @@ class MyTriangle extends CGFobject{
             this.n[0], this.n[1], this.n[2]
         ];
 
-        this.distA = Math.sqrt(Math.pow(this.x3-this.x1, 2)+Math.pow(this.y3-this.y1, 2)+Math.pow(this.z3-this.z1, 2));
-        this.distB = Math.sqrt(Math.pow(this.x2-this.x1, 2)+Math.pow(this.y2-this.y1, 2)+Math.pow(this.z2-this.z1, 2));
-        this.distC = Math.sqrt(Math.pow(this.x3-this.x2, 2)+Math.pow(this.y3-this.y2, 2)+Math.pow(this.z3-this.z2, 2));
+        this.d23 = Math.sqrt(Math.pow(this.x3-this.x1, 2)+Math.pow(this.y3-this.y1, 2)+Math.pow(this.z3-this.z1, 2));
+        this.d13 = Math.sqrt(Math.pow(this.x2-this.x1, 2)+Math.pow(this.y2-this.y1, 2)+Math.pow(this.z2-this.z1, 2));
+        this.d12 = Math.sqrt(Math.pow(this.x3-this.x2, 2)+Math.pow(this.y3-this.y2, 2)+Math.pow(this.z3-this.z2, 2));
 
-        this.cosAlpha = (-Math.pow(this.distA, 2) + Math.pow(this.distB, 2) + Math.pow(this.distC, 2))/(2*this.distB*this.distC);
-        this.cosGama = (Math.pow(this.distA, 2) + Math.pow(this.distB, 2) - Math.pow(this.distC, 2))/(2*this.distA*this.distB);
-        this.cosBeta = (-Math.pow(this.distA, 2) - Math.pow(this.distB, 2) + Math.pow(this.distC, 2))/(2*this.distA*this.distC);
+        this.cosAlpha = (-Math.pow(this.d23, 2) + Math.pow(this.d13, 2) + Math.pow(this.d12, 2))/(2*this.d13*this.d12);
+        this.cosGama = (Math.pow(this.d23, 2) + Math.pow(this.d13, 2) - Math.pow(this.d12, 2))/(2*this.d23*this.d13);
+        this.cosBeta = (-Math.pow(this.d23, 2) - Math.pow(this.d13, 2) + Math.pow(this.d12, 2))/(2*this.d23*this.d12);
 
         this.beta = Math.acos(this.cosBeta);
 
-        this.p0Text = [this.distC - this.distA * this.cosBeta, this.maxT - this.distA * Math.sin(this.beta)];
+        this.p0Text = [this.d12 - this.d23 * this.cosBeta, this.maxT - this.d23 * Math.sin(this.beta)];
         this.p1Text = [this.minS, this.maxT];
-        this.p2Text = [this.distC, this.maxT];
+        this.p2Text = [this.d12, this.maxT];
 
         this.texCoords = [
             this.p0Text[0], this.p0Text[1],
@@ -81,4 +81,29 @@ class MyTriangle extends CGFobject{
         this.primitiveType = this.scene.gl.TRIANGLES;
         this.initGLBuffers();
     };
+
+    updateTexCoords(lengthS, lengthT) {
+
+    //d23: 2-3
+    //d13: 3-1
+    //d12: 1-2
+
+    var d23 = Math.sqrt(Math.pow(this.p2[0] - this.p3[0], 2) + Math.pow(this.p2[1] - this.p3[1], 2) + Math.pow(this.p2[2] - this.p3[2], 2));
+    var d13 = Math.sqrt(Math.pow(this.p1[0] - this.p3[0], 2) + Math.pow(this.p1[1] - this.p3[1], 2) + Math.pow(this.p1[2] - this.p3[2], 2));
+    var d12 = Math.sqrt(Math.pow(this.p2[0] - this.p1[0], 2) + Math.pow(this.p2[1] - this.p1[1], 2) + Math.pow(this.p2[2] - this.p1[2], 2));
+
+    var angBeta = Math.acos((Math.pow(d23, 2) - Math.pow(d13, 2) + Math.pow(d12, 2)) / (2 * d23 * d12));
+
+    var distD = d23 * Math.sin(angBeta);
+
+    this.texCoords = [
+      0, distD/lengthT,
+      d12/lengthS, distD/lengthT,
+      (d12-d23*Math.cos(angBeta))/lengthS,(distD-d23*Math.sin(angBeta))/lengthT
+    ];
+
+    this.updateTexCoordsGLBuffers();
+
+
+    }
 }
