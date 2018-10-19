@@ -37,16 +37,9 @@ class MyInterface extends CGFinterface {
         for (var key in lights) {
             if (lights.hasOwnProperty(key)) {
                 this.scene.lightValues[key] = lights[key][2];
-                group.add(this.scene.lightValues, key);
+                group.add(this.scene.lightValues, key).name(lights[key][1]);
             }
         }
-
-        /*
-        for (let i = 0; i < lights.length; i++) {
-            this.scene.lightValues[i] = lights[i][1];
-            group.add(this.scene.lightValues, i);
-        }
-        */
     }
 
     addViewsGroup(cameras) {
