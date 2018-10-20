@@ -105,8 +105,8 @@
         <material id="default" shininess = "30" >
             <emission r="0" g="0" b="0" a="1" /> 
             <ambient  r="0.1" g="0.1" b="0.1" a="1" /> 
-            <diffuse  r="0.50" g="0.50" b="0.50" a="1" /> 
-            <specular  r="0.50" g="0.50" b="0.50" a="1" /> 
+            <diffuse  r="0.80" g="0.80" b="0.80" a="1" /> 
+            <specular  r="0.80" g="0.80" b="0.80" a="1" /> 
         </material>
 
         <material id="velvet" shininess="30" >
