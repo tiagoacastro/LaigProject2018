@@ -84,21 +84,21 @@
     </lights>
 
     <textures>
-        <texture id="windows" file="windows.jpg"/>
-        <texture id="black_plastic" file="black_plastic.jpg"/>
-        <texture id="gray_wood" file="gray_wood.jpg"/>
-        <texture id="velvet" file="velvet.jpg"/>
-        <texture id="black_wood" file="black_wood.jpg"/>
-        <texture id="gray_wash" file="gray_wash.png"/>
-        <texture id="gray_stone" file="gray_stone.jpg"/>
-        <texture id="stainless_steel" file="stainless_steel.jpg"/>
-        <texture id="trash" file="trash.jpg"/>
-        <texture id="saturn" file="saturn.jpg"/>
-        <texture id="saturn_ring" file="saturn_ring.jpg"/>
-        <texture id="linen" file="linen.jpg"/>
-        <texture id="dolomite" file="dolomite.jpg"/>
-        <texture id="gold" file="gold.jpeg"/>
-        <texture id="vidal" file="vidal.jpg"/>
+        <texture id="windows" file="./scenes/images/windows.jpg"/>
+        <texture id="black_plastic" file="./scenes/images/black_plastic.jpg"/>
+        <texture id="gray_wood" file="./scenes/images/gray_wood.jpg"/>
+        <texture id="velvet" file="./scenes/images/velvet.jpg"/>
+        <texture id="black_wood" file="./scenes/images/black_wood.jpg"/>
+        <texture id="gray_wash" file="./scenes/images/gray_wash.png"/>
+        <texture id="gray_stone" file="./scenes/images/gray_stone.jpg"/>
+        <texture id="stainless_steel" file="./scenes/images/stainless_steel.jpg"/>
+        <texture id="trash" file="./scenes/images/trash.jpg"/>
+        <texture id="saturn" file="./scenes/images/saturn.jpg"/>
+        <texture id="saturn_ring" file="./scenes/images/saturn_ring.jpg"/>
+        <texture id="linen" file="./scenes/images/linen.jpg"/>
+        <texture id="dolomite" file="./scenes/images/dolomite.jpg"/>
+        <texture id="gold" file="./scenes/images/gold.jpeg"/>
+        <texture id="vidal" file="./scenes/images/vidal.jpg"/>
     </textures>
 
     <materials>

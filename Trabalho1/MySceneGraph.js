@@ -80,6 +80,7 @@ class MySceneGraph {
     /**
      * Parses the XML file, processing each block.
      * @param {XML root element} rootElement
+     * @returns string with error descriptor, null if none are present
      */
     parseXMLFile(rootElement) {
 
@@ -213,6 +214,7 @@ class MySceneGraph {
     /**
      * Parses the <scene> block.
      * @param {scene block element} sceneNode
+     * @returns string with error descriptor, null if none are present
      */
     parseScene(sceneNode) {
         this.root = this.reader.getString(sceneNode, 'root');
@@ -220,7 +222,7 @@ class MySceneGraph {
         
         if (this.root == null) {
             this.root = "unique_scene";
-            this.onXMLMinorError("unable to parse value for root plane; assuming 'root = 'unique_scene''");
+            return "no root defined";
         }
 
         if (!(this.axis_length != null && !isNaN(this.axis_length))) {
@@ -240,6 +242,7 @@ class MySceneGraph {
     /**
      * Parses the <ambient> block.
      * @param {ambient block element} ambientNode
+     * @returns string with error descriptor, null if none are present
      */
     parseAmbient(ambientNode) {
 
@@ -349,6 +352,11 @@ class MySceneGraph {
         return null;
     }
 
+    /**
+     * Parses the <lights> block.
+     * @param {lights block element} lightsNode
+     * @returns string with error descriptor, null if none are present
+     */
     parseLights(lightsNode) {
 
         this.lights = [];
@@ -397,8 +405,7 @@ class MySceneGraph {
         }
 
         if (numLights <= 0) {
-            this.onXMLError("there should be at least one light defined");
-            //define one default light and call function responsible for that here
+            return "there should be at least one light defined";
         }
 
         this.log("Parsed lights");
@@ -407,6 +414,11 @@ class MySceneGraph {
         
     }
 
+    /**
+     * Auxiliary function responsible for parsing omni lights
+     * @param {omni block element} omni
+     * @returns string with error descriptor, null if none are present
+     */
     parseOmniLight(omni) {
     
         var omniAux = [];
@@ -587,6 +599,11 @@ class MySceneGraph {
 
     }
 
+    /**
+     * Auxiliary function responsible for parsing spot lights
+     * @param {spot block element} spot
+     * @returns string with error descriptor, null if none are present
+     */
     parseSpotLight(spot) {
 
         var spotAux = [];
@@ -1074,10 +1091,12 @@ class MySceneGraph {
     /**
      * Parses the <primitives> block.
      * @param {primitives block element} primitivesNode
+     * @returns string with error descriptor, null if none are present
      */
     parsePrimitives(primitivesNode) {
 
         var children = primitivesNode.children
+        var numPrimitives = 0;
 
         var primitive = {};
 
@@ -1096,29 +1115,31 @@ class MySceneGraph {
                     return "repeated id in primitives";
             }
 
-            //primitive.push(id);
-
-
             switch(children[i].children[0].nodeName){
                 case "rectangle":
                     primitive["type"] = "rectangle";
-                    primitive["primitive"] = this.parseRectangle(children[i].children[0]); 
+                    primitive["primitive"] = this.parseRectangle(children[i].children[0]);
+                    numPrimitives++; 
                     break;
                 case "triangle":
                     primitive["type"] = "triangle";
                     primitive["primitive"] = this.parseTriangle(children[i].children[0]); 
+                    numPrimitives++;
                     break;
                 case "cylinder":
                     primitive["type"] = "cylinder";
                     primitive["primitive"] = this.parseCylinder(children[i].children[0]); 
+                    numPrimitives++;
                     break;
                 case "sphere":
                     primitive["type"] = "sphere";
                     primitive["primitive"] = this.parseSphere(children[i].children[0]); 
+                    numPrimitives++;
                     break;
                 case "torus":
                     primitive["type"] = "torus";
                     primitive["primitive"] = this.parseTorus(children[i].children[0]); 
+                    numPrimitives++;
                     break;
             }
 
@@ -1126,6 +1147,10 @@ class MySceneGraph {
             primitive = {};
             
         } 
+
+        if (numPrimitives <= 0) {
+            return "there should be at least one primitive defined";
+        }
 
         this.log("Parsed primitives");
 
@@ -1403,16 +1428,16 @@ class MySceneGraph {
         return ortho;
     }
 
-    //implementar no parser das camaras a criacao da camara e parse do ortho
-
     /**
      * Parses the <views> block.
      * @param {views block element} viewsNode
+     * @returns string with error descriptor, null if none are present
      */
     parseViews(viewsNode) {
         var children = viewsNode.children;
 
         this.cameras = {};
+        var numViews = 0;
 
         this.default = this.reader.getString(viewsNode, 'default');
         if (this.default == null) {
@@ -1442,6 +1467,7 @@ class MySceneGraph {
             }
 
             this.cameras[id] = camera;
+            numViews++;
 
             if(id == this.default){
                 this.scene.camera = camera;
@@ -1449,14 +1475,24 @@ class MySceneGraph {
             }
         }
 
+        if (numViews <= 0) {
+            return "there should be at least one view defined";
+        }
+
         this.log("Parsed views");
 
         return null;
     }
 
+    /**
+     * Parses the <textures> block 
+     * @param {textures block element} texturesNode
+     * @returns string with error descriptor, null if none are present
+     */
     parseTextures(texturesNode) {
 
         var children = texturesNode.children;
+        var numTextures = 0;
 
         for (let i = 0; i < children.length; i++) {
 
@@ -1471,6 +1507,12 @@ class MySceneGraph {
                 return textureAux;
             }
 
+            numTextures++;
+
+        }
+
+        if (numTextures <= 0) {
+            return "there should be at least one texture defined";
         }
 
         this.log("Parsed textures");
@@ -1478,6 +1520,11 @@ class MySceneGraph {
         return null;
     }
 
+    /**
+     * Auxiliary function responsible for texture parsing 
+     * @param {texture block element} texture
+     * @returns string with error descriptor, null if none are present
+     */
     parseTexturesAux(texture) {
 
         var textureAux = {};
@@ -1496,16 +1543,22 @@ class MySceneGraph {
             return "no file defined for texture";
         }
 
-        textureAux = new CGFtexture(this.scene, "./scenes/images/" + textureFile);
+        textureAux = new CGFtexture(this.scene, textureFile);
         this.textures[textureId] = textureAux;
 
         return null;  
         
     }
 
+    /**
+     * Parses the <materials> block 
+     * @param {materials block element} materialsNode
+     * @returns string with error descriptor, null if none are present
+     */
     parseMaterials(materialsNode) {
 
         var children = materialsNode.children;
+        var numMaterials = 0;
 
         for (let i = 0; i < children.length; i++) {
 
@@ -1519,7 +1572,13 @@ class MySceneGraph {
             if (materialAux != null) {
                 return materialAux;
             }
+
+            numMaterials++;
   
+        }
+
+        if (numMaterials <= 0) {
+            return "there should be at least one material defined";
         }
 
         this.log("Parsed materials");
@@ -1527,6 +1586,11 @@ class MySceneGraph {
         return null;
     }
 
+    /**
+     * Auxiliary function responsible for material parsing 
+     * @param {material block element} material
+     * @returns string with error descriptor, null if none are present
+     */
     parseMaterialsAux(material) {
 
         var appearanceAux = new CGFappearance(this.scene);
@@ -1709,9 +1773,16 @@ class MySceneGraph {
 
     }
 
+    
+    /**
+     * Parses the <transformations> block
+     * @param {transformation block element} transformationNode
+     * @returns string with error descriptor, null if none are present
+     */
     parseTransformations(transformationNode) {
 
         var children = transformationNode.children;
+        var numTransformations = 0;
 
         this.transformations = [];
 
@@ -1722,14 +1793,19 @@ class MySceneGraph {
                 continue;
             }
 
-            var transformationAux = this.parseTransformationAux(children[i]);
+            var transformationAux = this.parseTransformationAux(children[i],);
 
             if (typeof transformationAux === "string") {
                 return transformationAux;
             }
 
             this.transformations.push(transformationAux);
+            numTransformations++;
 
+        }
+
+        if (numTransformations <= 0) {
+            return "there sould be at least one transformation defined";
         }
 
         this.log("Parsed transformations");
@@ -1737,9 +1813,15 @@ class MySceneGraph {
         return null;
     }
 
+    /**
+     * Auxiliary function responsible for transformation parsing 
+     * @param {transformation block element} transformation
+     * @returns string with error descriptor, null if none are present
+     */
     parseTransformationAux(transformation) {
 
         var transformationAux = [];
+        var numTransformations = 0;
 
         var specs = transformation.children;
 
@@ -1787,6 +1869,7 @@ class MySceneGraph {
 
                     
                     transformationAux.push(scaleAux);
+                    numTransformations++;
                     break;
                 case "translate":
                     
@@ -1817,8 +1900,8 @@ class MySceneGraph {
                         translateAux.push(z);
                     }
 
-                    
                     transformationAux.push(translateAux);
+                    numTransformations++;
                     break;
                 case "rotate":
                    
@@ -1842,15 +1925,25 @@ class MySceneGraph {
                     }
 
                     transformationAux.push(rotateAux);
+                    numTransformations++;
                     break;
             }
 
         }
 
+        if (numTransformations <= 0) {
+            return "there should be at least one operation defined for transformation " + transformationId;
+        }        
+
         return transformationAux;
 
     }
 
+    /**
+     * Parses the <components> 
+     * @param {components block element} componentsNode
+     * @returns string with error descriptor, null if none are present
+     */
     parseComponents(componentsNode) {
 
         var children = componentsNode.children;
@@ -1902,10 +1995,10 @@ class MySceneGraph {
 
             //transformation(s ?) to be applied (only working with transformation references, not explicit transformation declarations)
             if (transformationIndex == -1) {
-                this.onXMLMinorError("transformation reference value missing for ID = " + componentId + "; assuming 'value = 1'");
+                return "the <transformation> block should be defined for component " + componentId;
             } else {
                 let transformationAux = grandChildren[transformationIndex].children;
-                transformations = this.parseComponentTransformations(transformationAux);
+                transformations = this.parseComponentTransformations(transformationAux, componentId);
 
                 if (typeof transformations === "string") {
                     return transformations;
@@ -1915,10 +2008,10 @@ class MySceneGraph {
 
             //materials
             if (materialsIndex == -1) {
-                this.onXMLMinorError("material reference value missing for ID = " + componentId + "; assuming 'value = 1'");
+                return "the <materials> block should be defined for component " + componentId;
             } else {
                 let materialsAux = grandChildren[materialsIndex].children;
-                materials = this.parseComponentMaterials(materialsAux);
+                materials = this.parseComponentMaterials(materialsAux, componentId);
 
                 if (typeof materials === "string") {
                     return materials;
@@ -1927,7 +2020,7 @@ class MySceneGraph {
 
             //texture
             if (textureIndex == -1) {
-                this.onXMLMinorError("texture value missing for ID = " + componentId);
+                return "texture value missing for ID = " + componentId ;
             } else {
 
                 let id = this.reader.getString(grandChildren[textureIndex], 'id');
@@ -1963,10 +2056,10 @@ class MySceneGraph {
 
             //children
             if (childrenIndex == -1) {
-                this.onXMLMinorError("children value missing for ID = " + componentId);
+               return "children value missing for ID = " + componentId;
             } else {
                 var childrenAux = grandChildren[childrenIndex].children;
-                var childrenTmp = this.parseComponentChildren(childrenAux);
+                var childrenTmp = this.parseComponentChildren(childrenAux, componentId);
 
                 if (typeof childrenTmp === "string") {
                     return childrenTmp;
@@ -1984,12 +2077,19 @@ class MySceneGraph {
 
         }
 
-        console.log(this.components);
+        if (numComponents <= 0) {
+            return "there should be at least one component defined";
+        }
 
         return null;
     }
 
-    parseComponentTransformations(transformations) {
+    /**
+     * Auxiliary function responsible for parsing the transformations in each component 
+     * @param {transformation block element} transformations
+     * @returns string with error descriptor, null if none are present
+     */
+    parseComponentTransformations(transformations, componentId) {
 
         let transformationsAux = [];
 
@@ -2022,7 +2122,7 @@ class MySceneGraph {
                     //y
                     var y = this.reader.getFloat(transformations[i], 'y');
                     if (!(y != null && !isNaN(y))) {
-                        return "unable to parse y-coordinate of the light position for ID = " + transformationId;
+                        return "unable to parse y-coordinate of the light position for ID = " + transformationId + " in component " + componentId;
                     }
                     else {
                         scaleAux.push(y);
@@ -2030,7 +2130,7 @@ class MySceneGraph {
                     //z
                     var z = this.reader.getFloat(transformations[i], 'z');
                     if (!(z != null && !isNaN(z))) {
-                        return "unable to parse z-coordinate of the light position for ID = " + transformationId;
+                        return "unable to parse z-coordinate of the light position for ID = " + transformationId + " in component " + componentId;
                     }
                     else {
                         scaleAux.push(z);
@@ -2041,7 +2141,7 @@ class MySceneGraph {
                     //x
                     var x = this.reader.getFloat(transformations[i], 'x');
                     if (!(x != null && !isNaN(x))) {
-                        return "unable to parse x-coordinate of the light position for ID = " + transformationId;
+                        return "unable to parse x-coordinate of the light position for ID = " + transformationId + " in component " + componentId;
                     }
                     else {
                         translateAux.push(x);
@@ -2049,7 +2149,7 @@ class MySceneGraph {
                     //y
                     var y = this.reader.getFloat(transformations[i], 'y');
                     if (!(y != null && !isNaN(y))) {
-                        return "unable to parse y-coordinate of the light position for ID = " + transformationId;
+                        return "unable to parse y-coordinate of the light position for ID = " + transformationId + " in component " + componentId;
                     }
                     else {
                         translateAux.push(y);
@@ -2057,7 +2157,7 @@ class MySceneGraph {
                     //z
                     var z = this.reader.getFloat(transformations[i], 'z');
                     if (!(z != null && !isNaN(z))) {
-                        return "unable to parse z-coordinate of the light position for ID = " + transformationId;
+                        return "unable to parse z-coordinate of the light position for ID = " + transformationId + " in component " + componentId;
                     }
                     else {
                         translateAux.push(z);
@@ -2069,7 +2169,7 @@ class MySceneGraph {
                     //axis
                     var axis = this.reader.getString(transformations[i], 'axis');
                     if (!(axis != null)) {
-                        return "unable to parse x-coordinate of the light position for ID = " + transformationId;
+                        return "unable to parse x-coordinate of the light position for ID = " + transformationId + " in component " + componentId;
                     }
                     else {
                         rotateAux.push(axis);
@@ -2077,7 +2177,7 @@ class MySceneGraph {
                     //angle
                     var angle = this.reader.getFloat(transformations[i], 'angle');
                     if (!(angle != null && !isNaN(angle))) {
-                        return "unable to parse y-coordinate of the light position for ID = " + transformationId;
+                        return "unable to parse y-coordinate of the light position for ID = " + transformationId + " in component " + componentId;
                     }
                     else {
                         rotateAux.push(angle);
@@ -2092,20 +2192,27 @@ class MySceneGraph {
         return transformationsAux;
     }
 
-    parseComponentMaterials(materials) {
+    /**
+     * Auxiliary function responsible for parsing the materials in each component 
+     * @param {materials block element} materials
+     * @returns string with error descriptor, null if none are present
+     */
+    parseComponentMaterials(materials, componentId) {
 
         var materialsAux = [];
+        var numMaterials = 0;
 
         for (var i = 0; i < materials.length; i++) {
             if (materials[i].nodeName == "material") {
 
                 var id = this.reader.getString(materials[i], 'id')
                 if (id == null) {
-                    return "no id defined for material in component";
+                    return "no id defined for material in component " + componentId;
                 }
 
                 if (this.materials[id] != null || id === "inherit") {
                     materialsAux.push(id); 
+                    numMaterials++;
                 } 
 
             } else {
@@ -2113,15 +2220,24 @@ class MySceneGraph {
             }
         }
 
+        if (numMaterials <= 0) {
+            return "there should be at least one material defined for component " + componentId; 
+        }
+
         return materialsAux;
 
     }
 
-    parseComponentChildren(children) {
+    /**
+     * Auxiliary function responsible for parsing the children in each component 
+     * @param {children block element} children
+     * @returns string with error descriptor, null if none are present
+     */
+    parseComponentChildren(children, componentId) {
         
         var childrenAux = [];
-
         var childAux = [];
+        var numChildren = 0;
 
         for (var i = 0; i < children.length; i++) {
 
@@ -2131,17 +2247,22 @@ class MySceneGraph {
                 childAux["ref"] = children[i].nodeName;
                 childAux["id"] = this.reader.getString(children[i], 'id');
                 childrenAux.push(childAux);
+                numChildren++;
             } else {
                 return "unrecognized token in children tag";
             }
             
         }
 
+        if (numChildren <= 0) {
+            return "there should be at least one child defined for component " + componentId;
+        }
+
         return childrenAux;
 
     }
 
-    /*
+    /**
      * Callback to be executed on any read error, showing an error on the console.
      * @param {string} message
      */
@@ -2171,9 +2292,17 @@ class MySceneGraph {
      */
     displayScene() {
         this.processComponents(this.root, this.components[this.root]["materials"][this.components[this.root]["activeMaterial"]], this.components[this.root]["texture"]["id"], this.components[this.root]["texture"]["lengthS"], this.components[this.root]["texture"]["lengthT"]);        
-        return null;
+        return;
     }
 
+    /**
+     * Recursively processes each component and its children
+     * @param {int} componentId 
+     * @param {int} parentMaterialId 
+     * @param {int} parentTextureId 
+     * @param {float} parentLengthS 
+     * @param {float} parentLengthT 
+     */
     processComponents(componentId, parentMaterialId, parentTextureId, parentLengthS, parentLengthT) {
 
         var component = this.components[componentId];
@@ -2236,6 +2365,10 @@ class MySceneGraph {
 
     }
 
+    /**
+     * Applies each transformation to the respective component
+     * @param {component} component
+     */
     applyTransformation(component) {
 
         for (var key in component["transformations"]) {
@@ -2243,6 +2376,10 @@ class MySceneGraph {
         }
     }
 
+    /**
+     * Auxiliary function
+     * @param {transformation} transformation
+     */
     applyTransformationAux(transformation) {
 
         switch(transformation[0]) {
@@ -2277,6 +2414,10 @@ class MySceneGraph {
 
     }
 
+    /**
+     * Auxiliary function to applyTransformations, responsible for applying transformations defined directly in the component, as opposed to implicitly through a transformation ID
+     * @param {transformation} transformation
+     */
     processTransformation(transformation) {
 
         for (let i = 1; i < transformation.length; i++) { 
