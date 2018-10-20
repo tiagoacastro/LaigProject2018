@@ -4,7 +4,7 @@
 class MyBaselessCylinder extends CGFobject
 {
     /**
-     * constructor
+     * @constructor
      * @param {XMLscene} scene 
      * @param {float} base 
      * @param {float} top 

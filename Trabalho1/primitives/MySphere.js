@@ -3,7 +3,7 @@
  */
 class MySphere extends CGFobject {
     /**
-     * Constructor
+     * @constructor
      * @param {XMLscene} scene 
      * @param {float} radius 
      * @param {int} slices 

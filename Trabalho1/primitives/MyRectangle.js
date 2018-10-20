@@ -3,7 +3,7 @@
  */
 class MyRectangle extends CGFobject{
     /**
-     * Constructor
+     * @constructor
      * @param {XMLscene} scene 
      * @param {float} x1 
      * @param {float} x2 

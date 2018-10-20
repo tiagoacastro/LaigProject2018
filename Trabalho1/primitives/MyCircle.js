@@ -4,7 +4,7 @@
 class MyCircle extends CGFobject
 {   
     /**
-     * Constructor
+     * @constructor
      * @param {XMLscene} scene 
      * @param {int} slices 
      */

@@ -8,7 +8,6 @@ class MyInterface extends CGFinterface {
     constructor() {
         super();
     }
-
     /**
      * Initializes the interface.
      * @param {CGFapplication} application
@@ -26,20 +25,17 @@ class MyInterface extends CGFinterface {
 
         return true;
     }
-
     /**
      * Adds a tickbox to toggle the axis.
      */
     addAxisCheckBox() {
         this.gui.add(this.scene, "axisDisplay").name('Axis');
     }
-
     /**
      * Adds a folder containing the IDs of the lights passed as parameter.
      * @param {array} lights
      */
     addLightsGroup(lights) {
-
         var group = this.gui.addFolder("Lights");
         group.open();
 
@@ -50,7 +46,6 @@ class MyInterface extends CGFinterface {
             }
         }
     }
-
     /**
      * Adds a folder containing the IDs of the views passed as parameter.
      * @param {array} cameras
@@ -70,29 +65,35 @@ class MyInterface extends CGFinterface {
             inter.setActiveCamera(cameras[val]);
         });
     }
-
+    /**
+     * initializes key data
+     */
     initKeys() {
 		this.scene.gui = this;
 		this.processKeyboard = function(){};
         this.activeKeys = {};
         this.releasedKeys = {};
 	};
-
+    /**
+     * when key is pressed, sets it as true in the activeKyes array
+     * @param {Event} event 
+     */
 	processKeyDown(event) {
 		this.activeKeys[event.code]=true;
 	};
-
+    /**
+     * when key is let go, sets it as false in the activeKyes array and true in the releasedKeys array
+     * @param {Event} event 
+     */
 	processKeyUp(event) {
         this.releasedKeys[event.code] = true;
         this.activeKeys[event.code]=false;
 	};
-
-	isKeyPressed(keyCode) {
-		return this.activeKeys[keyCode] || false;
-    };
-
+    /**
+     * Checks if key was released
+     * @param {Event} keyCode 
+     */
     wasKeyReleased(keyCode) {
         return this.releasedKeys[keyCode] || false;
     };
-    
 }

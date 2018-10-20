@@ -3,7 +3,7 @@
  */
 class MyTriangle extends CGFobject{
     /**
-     * Constructor with the 3 points belonging to the triangle
+     * @constructor with the 3 points belonging to the triangle
      * @param {XMLscene} scene 
      * @param {float} x1 
      * @param {float} x2 

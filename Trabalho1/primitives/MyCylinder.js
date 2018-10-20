@@ -4,7 +4,7 @@
 class MyCylinder extends CGFobject
 {   
     /**
-     * Constructor, base and top are the radius of the bases
+     * @constructor, base and top are the radius of the bases
      * @param {XMLscene} scene 
      * @param {float} base
      * @param {float} top 

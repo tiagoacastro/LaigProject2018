@@ -4,7 +4,7 @@
 class MyTorus extends CGFobject
 {
     /**
-     * Constructor
+     * @constructor
      * @param {XMLscene} scene 
      * @param {float} inner 
      * @param {float} outer 
