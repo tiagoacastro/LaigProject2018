@@ -1,5 +1,14 @@
+/**
+ * Sphere class
+ */
 class MySphere extends CGFobject {
-    
+    /**
+     * Constructor
+     * @param {XMLscene} scene 
+     * @param {float} radius 
+     * @param {int} slices 
+     * @param {int} stacks 
+     */
     constructor(scene, radius, slices, stacks){
         super(scene);
 
@@ -9,7 +18,9 @@ class MySphere extends CGFobject {
     
         this.initBuffers();
     }
-
+    /**
+     * Function where the vertexes, indexes, normals and texcoords are defined
+     */
     initBuffers()
     {
         this.vertices = [];
@@ -29,7 +40,6 @@ class MySphere extends CGFobject {
     
         for (var i = 0; i <= this.slices; i++) {
             for (var j = 0; j <= this.stacks; j++) {
-    
                 let x = Math.cos(theta * i) * Math.sin(phi * j);
                 let y = Math.sin(theta * i) * Math.sin(phi * j);
                 let z = Math.cos(phi * j);
@@ -44,7 +54,6 @@ class MySphere extends CGFobject {
                     this.indices.push(n - 1, n - 2, n - this.stacks - 2);
                 }
     
-    
                 yCoord += patchY;
 
                 this.texCoordsAux.push(xCoord, yCoord);
@@ -52,7 +61,6 @@ class MySphere extends CGFobject {
     
             yCoord = 0;
             xCoord += patchX;
-    
         }
     
         this.texCoords = this.texCoordsAux.slice();

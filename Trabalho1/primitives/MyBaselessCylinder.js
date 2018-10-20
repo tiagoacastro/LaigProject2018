@@ -1,5 +1,17 @@
+/**
+ * Baseless cylinder class, only the side
+ */
 class MyBaselessCylinder extends CGFobject
 {
+    /**
+     * constructor
+     * @param {XMLscene} scene 
+     * @param {float} base 
+     * @param {float} top 
+     * @param {float} height 
+     * @param {int} slices 
+     * @param {int} stacks 
+     */
 	constructor(scene, base, top, height, slices, stacks)
 	{
 		super(scene);
@@ -12,7 +24,9 @@ class MyBaselessCylinder extends CGFobject
 
 		this.initBuffers();
 	};
-
+    /**
+     * Function where the vertexes, indexes, normals and texcoords are defined
+     */
     initBuffers()
 	{
 

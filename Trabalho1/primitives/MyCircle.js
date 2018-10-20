@@ -1,45 +1,50 @@
 /**
- * MyCircle
- * @param gl {WebGLRenderingContext}
- * @constructor
+ * Circle class, used to give the cylinder the bases
  */
-
 class MyCircle extends CGFobject
-{
+{   
+    /**
+     * Constructor
+     * @param {XMLscene} scene 
+     * @param {int} slices 
+     */
 	constructor(scene, slices)
 	{
-		super(scene);
+        super(scene);
+        
+        this.slices = slices;
 
-    this.slices = slices;
-		this.initBuffers();
+        this.initBuffers();
 	};
-
+    /**
+     * Function where the vertexes, indexes, normals and texcoords are defined
+     */
   	initBuffers()
 	{
-    this.vertices = [];
-   this.normals = [];
-   this.indices = [];
-   this.texCoords = [];
+        this.vertices = [];
+        this.normals = [];
+        this.indices = [];
+        this.texCoords = [];
 
-   var ang = (2 * Math.PI) / this.slices;
+        var ang = (2 * Math.PI) / this.slices;
 
-   this.vertices.push(0, 0, 0);
-   this.texCoords.push(0.5, 0.5);
-   this.normals.push(0, 0, 1);
+        this.vertices.push(0, 0, 0);
+        this.texCoords.push(0.5, 0.5);
+        this.normals.push(0, 0, 1);
 
-   for (var i = 0; i < this.slices; i++) {
-       this.vertices.push(Math.cos(ang * i), Math.sin(ang * i), 0);
-       this.normals.push(0, 0, 1);
-       this.texCoords.push(0.5 + Math.cos(ang * i) / 2, 0.5 - Math.sin(ang * i) / 2);
-   }
+        for (var i = 0; i < this.slices; i++) {
+            this.vertices.push(Math.cos(ang * i), Math.sin(ang * i), 0);
+            this.normals.push(0, 0, 1);
+            this.texCoords.push(0.5 + Math.cos(ang * i) / 2, 0.5 - Math.sin(ang * i) / 2);
+        }
 
-   for (var i = 0; i < this.slices - 1; i++) {
-       this.indices.push(i + 1, i + 2, 0);
-   }
+        for (var i = 0; i < this.slices - 1; i++) {
+            this.indices.push(i + 1, i + 2, 0);
+        }
 
-   this.indices.push(this.slices, 1, 0);
+        this.indices.push(this.slices, 1, 0);
 
-   this.primitiveType = this.scene.gl.TRIANGLES;
-   this.initGLBuffers();
- };
+        this.primitiveType = this.scene.gl.TRIANGLES;
+        this.initGLBuffers();
+    };
 }

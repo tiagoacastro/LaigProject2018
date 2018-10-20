@@ -1,4 +1,20 @@
+/**
+ * Triangle class
+ */
 class MyTriangle extends CGFobject{
+    /**
+     * Constructor with the 3 points belonging to the triangle
+     * @param {XMLscene} scene 
+     * @param {float} x1 
+     * @param {float} x2 
+     * @param {float} x3 
+     * @param {float} y1 
+     * @param {float} y2 
+     * @param {float} y3 
+     * @param {float} z1 
+     * @param {float} z2 
+     * @param {float} z3 
+     */
     constructor(scene, x1, x2, x3, y1, y2, y3, z1, z2 , z3) {
         super(scene);
         this.x1 = x1;
@@ -18,7 +34,9 @@ class MyTriangle extends CGFobject{
         
         this.initBuffers();
     }
-
+    /**
+     * Function where the vertexes, indexes, normals and texcoords are defined
+     */
     initBuffers()
     {
         this.vertices = [
@@ -81,25 +99,26 @@ class MyTriangle extends CGFobject{
         this.primitiveType = this.scene.gl.TRIANGLES;
         this.initGLBuffers();
     };
-
+    /**
+     * TexCoords update for the lengthS and lengthT use
+     * @param {float} lengthS 
+     * @param {float} lengthT 
+     */
     updateTexCoords(lengthS, lengthT) {
+        var d23 = Math.sqrt(Math.pow(this.p1[0] - this.p2[0], 2) + Math.pow(this.p1[1] - this.p2[1], 2) + Math.pow(this.p1[2] - this.p2[2], 2));
+        var d13 = Math.sqrt(Math.pow(this.p0[0] - this.p2[0], 2) + Math.pow(this.p0[1] - this.p2[1], 2) + Math.pow(this.p0[2] - this.p2[2], 2));
+        var d12 = Math.sqrt(Math.pow(this.p1[0] - this.p0[0], 2) + Math.pow(this.p1[1] - this.p0[1], 2) + Math.pow(this.p1[2] - this.p0[2], 2));
 
-    var d23 = Math.sqrt(Math.pow(this.p1[0] - this.p2[0], 2) + Math.pow(this.p1[1] - this.p2[1], 2) + Math.pow(this.p1[2] - this.p2[2], 2));
-    var d13 = Math.sqrt(Math.pow(this.p0[0] - this.p2[0], 2) + Math.pow(this.p0[1] - this.p2[1], 2) + Math.pow(this.p0[2] - this.p2[2], 2));
-    var d12 = Math.sqrt(Math.pow(this.p1[0] - this.p0[0], 2) + Math.pow(this.p1[1] - this.p0[1], 2) + Math.pow(this.p1[2] - this.p0[2], 2));
+        var angBeta = Math.acos((Math.pow(d23, 2) - Math.pow(d13, 2) + Math.pow(d12, 2)) / (2 * d23 * d12));
 
-    var angBeta = Math.acos((Math.pow(d23, 2) - Math.pow(d13, 2) + Math.pow(d12, 2)) / (2 * d23 * d12));
+        var dist = d23 * Math.sin(angBeta);
 
-    var dist = d23 * Math.sin(angBeta);
+        this.texCoords = [
+            0, dist/lengthT,
+            d12/lengthS, dist/lengthT,
+            (d12-d23*Math.cos(angBeta))/lengthS,(dist-d23*Math.sin(angBeta))/lengthT
+        ];
 
-    this.texCoords = [
-      0, dist/lengthT,
-      d12/lengthS, dist/lengthT,
-      (d12-d23*Math.cos(angBeta))/lengthS,(dist-d23*Math.sin(angBeta))/lengthT
-    ];
-
-    this.updateTexCoordsGLBuffers();
-
-
+        this.updateTexCoordsGLBuffers();
     }
 }

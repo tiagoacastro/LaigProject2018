@@ -1,7 +1,18 @@
+/**
+ * Rectangle class
+ */
 class MyRectangle extends CGFobject{
- 
+    /**
+     * Constructor
+     * @param {XMLscene} scene 
+     * @param {float} x1 
+     * @param {float} x2 
+     * @param {float} y1 
+     * @param {float} y2 
+     */
     constructor(scene, x1, x2, y1, y2) {
         super(scene);
+        
         this.x1 = x1;
         this.x2 = x2;
         this.y1 = y1;
@@ -10,9 +21,12 @@ class MyRectangle extends CGFobject{
         this.minT =  0.0;
         this.maxS =  1.0;
         this.maxT =  1.0;
+
         this.initBuffers();
     }
- 
+    /**
+     * Function where the vertexes, indexes, normals and texcoords are defined
+     */
     initBuffers()
     {
         this.vertices = [
@@ -44,11 +58,12 @@ class MyRectangle extends CGFobject{
         this.primitiveType = this.scene.gl.TRIANGLES;
         this.initGLBuffers();
     }
-
+    /**
+     * TexCoords update for the lengthS and lengthT use
+     * @param {float} lengthS 
+     * @param {float} lengthT 
+     */
     updateTexCoords(lengthS, lengthT) {
-
-        //console.log("entered update tex coords with values " + lengthS + " and " + lengthT);
-
         this.minS = 0;
         this.minT = 0;
         this.maxS = (this.x2 - this.x1) / lengthS;

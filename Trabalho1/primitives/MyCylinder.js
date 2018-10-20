@@ -1,5 +1,17 @@
+/**
+ * Cylinder class that joins the baseless cylinder and 2 circles
+ */
 class MyCylinder extends CGFobject
-{
+{   
+    /**
+     * Constructor, base and top are the radius of the bases
+     * @param {XMLscene} scene 
+     * @param {float} base
+     * @param {float} top 
+     * @param {float} height 
+     * @param {int} slices 
+     * @param {int} stacks 
+     */
 	constructor(scene, base, top, height, slices, stacks)
 	{
 		super(scene);
@@ -12,14 +24,14 @@ class MyCylinder extends CGFobject
         this.rbase = base;
 
         this.baselessCylinder = new MyBaselessCylinder(scene, base, top, height, slices, stacks);
-
         this.top = new MyCircle(scene, slices);
-
         this.bottom = new MyCircle(scene, slices);
 
 		this.display();
 	};
-
+    /**
+     * function to draw the cylinder and its pieces i nthe correct way
+     */
     display()
 	{
         this.baselessCylinder.display();
