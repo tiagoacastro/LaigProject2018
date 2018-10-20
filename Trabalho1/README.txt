@@ -1,8 +1,4 @@
-LAIG Demo Parser
+Turma 1 Grupo 6
 
-Base code and demo scene provided by:
-- Rui Pedro Peixoto Cardoso - up201305469@fe.up.pt
-- Diogo da Silva Amaral - up201306082@fe.up.pt
-
-Adapted by:
-- Rui Rodrigues - rui.rodrigues@fe.up.pt
+Mariana Filipa da Costa - up201604414
+Tiago Araújo Castro - up201606186

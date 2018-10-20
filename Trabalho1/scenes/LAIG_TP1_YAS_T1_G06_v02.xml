@@ -89,7 +89,7 @@
         <texture id="gray_wood" file="gray_wood.jpg"/>
         <texture id="velvet" file="velvet.jpg"/>
         <texture id="black_wood" file="black_wood.jpg"/>
-        <texture id="grey_wash" file="grey_wash.png"/>
+        <texture id="gray_wash" file="gray_wash.png"/>
         <texture id="gray_stone" file="gray_stone.jpg"/>
         <texture id="stainless_steel" file="stainless_steel.jpg"/>
         <texture id="trash" file="trash.jpg"/>
@@ -999,10 +999,10 @@
                 <transformationref id="set_side_wall"/>
             </transformation>
             <materials>
-                <material id="grey"/>
+                <material id="gray"/>
                 <material id="inherit"/>
             </materials>
-            <texture id="grey_wash" length_s="1" length_t="1" />
+            <texture id="gray_wash" length_s="1" length_t="1" />
             <children>
                 <primitiveref id="rectangle"/>
             </children>
