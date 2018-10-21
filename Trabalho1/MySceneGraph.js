@@ -2317,12 +2317,8 @@ class MySceneGraph {
             materialId = component["materials"][component["activeMaterial"]];    
         }
 
-        if ((this.textures[component["texture"]["id"]] != null) && (component["texture"]["id"] !== "inherit")) {
-            if (component["texture"]["id"] == "none") {
-                textureId = null;
-            } else {
-                textureId = component["texture"]["id"];
-            }
+        if (/*(this.textures[component["texture"]["id"]] != null) && */ (component["texture"]["id"] !== "inherit")) {
+            textureId = component["texture"]["id"];
             lengthS = component["texture"]["lengthS"];
             lengthT = component["texture"]["lengthT"];
         } 
