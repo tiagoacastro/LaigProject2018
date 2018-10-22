@@ -99,6 +99,7 @@
         <texture id="dolomite" file="./scenes/images/dolomite.jpg"/>
         <texture id="gold" file="./scenes/images/gold.jpeg"/>
         <texture id="vidal" file="./scenes/images/vidal.jpg"/>
+        <texture id="picture" file="./scenes/images/picture.jpg"/>
     </textures>
 
     <materials>
@@ -107,6 +108,13 @@
             <ambient  r="0.1" g="0.1" b="0.1" a="1" /> 
             <diffuse  r="0.80" g="0.80" b="0.80" a="1" /> 
             <specular  r="0.80" g="0.80" b="0.80" a="1" /> 
+        </material>
+
+        <material id="vase" shininess="20">
+            <emission a="1" b="0" g="0" r="0"/>
+            <ambient a="1" b="0.0075" g="0.0271" r="0.0545"/>
+            <diffuse a="1" b="0.045" g="0.15" r="0.300"/>
+            <specular a="1" b="0.015" g="0.042" r="0.1"/>
         </material>
 
         <material id="velvet" shininess="30" >
@@ -164,11 +172,83 @@
             <diffuse r="0.6" g="0.6" b="0.6" a="1" />
             <specular r="0.6" g="0.6" b="0.6" a="1" />
         </material>
+
+        <material id="coffee" shininess="30" >
+            <emission a="1" b="0" g="0" r="0"/>
+            <ambient a="1" b="0.0075" g="0.0271" r="0.0545"/>
+            <diffuse a="1" b="0.045" g="0.15" r="0.300"/>
+            <specular a="1" b="0.015" g="0.042" r="0.1"/>
+        </material>
     </materials>
 
     <transformations>
         <transformation id="identity">
             <translate x="0" y="0" z="0"/>
+        </transformation>
+
+        <transformation id="set_hourglass">
+            <translate x="4.5" y="4.85" z="0.5"/>
+            <rotate axis="x" angle="90"/>
+            <scale x="0.75" y="0.75" z="1.75"/>
+        </transformation>
+
+        <transformation id="set_hourglass_top">
+            <rotate axis="x" angle="-180"/>
+            <scale x="0.45" y="0.45" z="0.25"/>
+        </transformation>
+
+        <transformation id="set_hourglass_bottom">
+            <scale x="0.45" y="0.45" z="0.25"/>
+        </transformation>
+
+        <transformation id="set_hourglass_rim_top">
+            <translate x="0" y="0" z="0.125"/>
+        </transformation>
+
+        <transformation id="set_hourglass_rim_bottom">
+            <translate x="0" y="0" z="-0.125"/>
+        </transformation>
+
+        <transformation id="set_hourglass_belt">
+            <scale x="0.45" y="0.45" z="0.25"/>
+        </transformation>
+
+        <transformation id="set_book_1">
+            <translate x="2.25" y="6" z="0.375"/>
+            <scale x="0.25" y="1" z="0.75"/>
+        </transformation>
+
+        <transformation id="set_book_2">
+            <translate x="2.5" y="6" z="0.375"/>
+            <scale x="0.25" y="1" z="0.75"/>
+        </transformation>
+
+        <transformation id="set_shelf_left">
+            <translate x="2.5" y="5.5" z="0.5"/>
+            <scale x="1.25" y="0.25" z="1"/>
+        </transformation>
+
+        <transformation id="set_shelf_right">
+            <translate x="4.5" y="4.5" z="0.5"/>
+            <scale x="1.25" y="0.25" z="1"/>
+        </transformation>
+
+        <transformation id="set_mug_handle">
+            <translate x="0.2" y="0" z="0.2"/>
+            <rotate axis="x" angle="-90"/>
+        </transformation>
+
+        <transformation id="set_mug_top">
+            <translate x="0" y="0" z="0.4"/>
+        </transformation>
+
+        <transformation id="set_mug_liquid">
+            <translate x="0" y="0" z="0.395"/>
+        </transformation>
+
+        <transformation id="set_mug">
+            <translate x="4.4" y="2.2" z="3.3"/>
+            <rotate axis="x" angle="-90"/>
         </transformation>
 
         <transformation id="set_stress_ball">
@@ -413,6 +493,35 @@
         <primitive id="torus_hoop">
             <torus inner="0.1" outer="1" slices="40" loops="40" />
         </primitive>
+
+        <primitive id="cylinder_mug">
+            <cylinder base="0.2" top="0.2" height="0.4" slices="40" stacks="40" />
+        </primitive>
+
+        <primitive id="torus_mug_handle">
+            <torus inner="0.025" outer="0.1" slices="40" loops="40" />
+        </primitive>
+
+        <primitive id="torus_mug_top">
+            <torus inner="0.015" outer="0.2" slices="40" loops="40" />
+        </primitive>
+
+        <primitive id="cylinder_mug_liquid">
+            <cylinder base="0.19" top="0.19" height="0.01" slices="40" stacks="40" />
+        </primitive>     
+
+        <primitive id="torus_hourglass_rim">
+            <torus inner="0.015" outer="0.225" slices="40" loops="40" />
+        </primitive>   
+
+        <primitive id="torus_hourglass_belt">
+            <torus inner="0.015" outer="0.175" slices="40" loops="40" />
+        </primitive>
+
+        <primitive id="cone_hourglass">
+            <cylinder base="0.175" top="0.5" height="0.5" slices="40" stacks="40" />
+        </primitive>
+
     </primitives>
 
     <components>
@@ -437,6 +546,214 @@
                 <componentref id="bin"/>
                 <componentref id="painting"/>
                 <componentref id="stress_ball"/>
+                <componentref id="mug"/>
+                <componentref id="shelf_left"/>
+                <componentref id="shelf_right"/>
+                <componentref id="book_1"/>
+                <componentref id="book_2"/>
+                <componentref id="hourglass"/>
+            </children>
+        </component>
+
+        <component id="hourglass">
+            <transformation>
+                <transformationref id="set_hourglass"/>
+            </transformation>
+            <materials>
+                <material id="vase"/>
+            </materials>
+            <texture id="none" length_s="1" length_t="1" />
+            <children>
+                <componentref id="hourglass_top"/>
+                <componentref id="hourglass_bottom"/>
+                <componentref id="hourglass_rim_bottom"/>
+                <componentref id="hourglass_rim_top"/>
+                <componentref id="hourglass_belt"/>
+            </children>
+        </component>
+
+        <component id="hourglass_top">
+            <transformation>
+                <transformationref id="set_hourglass_top"/>
+            </transformation>
+            <materials>
+                <material id="cream"/>
+            </materials>
+            <texture id="none" length_s="1" length_t="1" />
+            <children>
+                <primitiveref id="cone_hourglass"/>
+            </children>
+        </component>
+
+        <component id="hourglass_bottom">
+            <transformation>
+                <transformationref id="set_hourglass_bottom"/>
+            </transformation>
+            <materials>
+                <material id="cream"/>
+            </materials>
+            <texture id="none" length_s="1" length_t="1" />
+            <children>
+                <primitiveref id="cone_hourglass"/>
+            </children>
+        </component>
+
+        <component id="hourglass_rim_top">
+            <transformation>
+                <transformationref id="set_hourglass_rim_top"/>
+            </transformation>
+            <materials>
+                <material id="vase"/>
+            </materials>
+            <texture id="none" length_s="1" length_t="1" />
+            <children>
+                <primitiveref id="torus_hourglass_rim"/>
+            </children>
+        </component>
+
+        <component id="hourglass_rim_bottom">
+            <transformation>
+                <transformationref id="set_hourglass_rim_bottom"/>
+            </transformation>
+            <materials>
+                <material id="vase"/>
+            </materials>
+            <texture id="none" length_s="1" length_t="1" />
+            <children>
+                <primitiveref id="torus_hourglass_rim"/>
+            </children>
+        </component>
+
+        <component id="hourglass_belt">
+            <transformation>
+                <transformationref id="set_hourglass_belt"/>
+            </transformation>
+            <materials>
+                <material id="vase"/>
+            </materials>
+            <texture id="none" length_s="1" length_t="1" />
+            <children>
+                <primitiveref id="torus_hourglass_belt"/>
+            </children>
+        </component>
+
+        <component id="book_1">
+            <transformation>
+                <transformationref id="set_book_1"/>
+            </transformation>
+            <materials>
+                <material id="velvet"/>
+            </materials>
+            <texture id="none" length_s="1" length_t="1" />
+            <children>
+                <componentref id="cube"/>
+            </children>
+        </component>
+
+        <component id="book_2">
+            <transformation>
+                <transformationref id="set_book_2"/>
+            </transformation>
+            <materials>
+                <material id="cream"/>
+            </materials>
+            <texture id="none" length_s="1" length_t="1" />
+            <children>
+                <componentref id="cube"/>
+            </children>
+        </component>
+
+        <component id="shelf_left">
+            <transformation>
+                <transformationref id="set_shelf_left"/>
+            </transformation>
+            <materials>
+                <material id="dark"/>
+            </materials>
+            <texture id="gray_wood" length_s="1" length_t="1" />
+            <children>
+                <componentref id="cube"/>
+            </children>
+        </component>
+
+        <component id="shelf_right">
+            <transformation>
+                <transformationref id="set_shelf_right"/>
+            </transformation>
+            <materials>
+                <material id="dark"/>
+            </materials>
+            <texture id="gray_wood" length_s="1" length_t="1" />
+            <children>
+                <componentref id="cube"/>
+            </children>
+        </component>
+
+        <component id="mug">
+            <transformation>
+                <transformationref id="set_mug"/>
+            </transformation>
+            <materials>
+                <material id="cream"/>
+            </materials>
+            <texture id="none" length_s="1" length_t="1" />
+            <children>
+                <componentref id="mug_handle"/>
+                <componentref id="mug_body"/>
+                <componentref id="mug_top"/>
+                <componentref id="mug_liquid"/>
+            </children>
+        </component>
+
+        <component id="mug_handle">
+            <transformation>
+                <transformationref id="set_mug_handle"/>
+            </transformation>
+            <materials>
+                <material id="inherit"/>
+            </materials>
+            <texture id="inherit" length_s="1" length_t="1" />
+            <children>
+                <primitiveref id="torus_mug_handle"/>
+            </children>
+        </component>
+
+        <component id="mug_body">
+            <transformation>
+                <transformationref id="set_mug_body"/>
+            </transformation>
+            <materials>
+                <material id="inherit"/>
+            </materials>
+            <texture id="inherit" length_s="1" length_t="1" />
+            <children>
+                <primitiveref id="cylinder_mug"/>
+            </children>
+        </component>
+
+        <component id="mug_top">
+            <transformation>
+                <transformationref id="set_mug_top"/>
+            </transformation>
+            <materials>
+                <material id="inherit"/>
+            </materials>
+            <texture id="inherit" length_s="1" length_t="1" />
+            <children>
+                <primitiveref id="torus_mug_top"/>
+            </children>
+        </component>
+
+        <component id="mug_liquid">
+            <transformation>
+                <transformationref id="set_mug_liquid"/>
+            </transformation>
+            <materials>
+                <material id="coffee"/>
+            </materials>
+            <texture id="inherit" length_s="1" length_t="1" />
+            <children>
+                <primitiveref id="cylinder_mug_liquid"/>
             </children>
         </component>
 
