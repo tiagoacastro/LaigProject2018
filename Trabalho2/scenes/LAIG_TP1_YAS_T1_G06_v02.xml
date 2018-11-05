@@ -324,10 +324,6 @@
             <scale x="1.3" y="0.1" z="1"/>
         </transformation>
 
-        <transformation id="set_saturn">
-            <translate x="12" y="12" z="12"/>
-        </transformation>
-
         <transformation id="set_planet">
             <rotate axis="x" angle="60"/>
         </transformation>
@@ -462,6 +458,16 @@
             <scale x="7" y="1" z="7"/>
         </transformation>
     </transformations>
+
+    <animations>
+        <linear id="jump_stress_ball" span="1">
+            <controlpoint xx="0" yy="0" zz="0"/>
+            <controlpoint xx="0" yy="0" zz="0.5"/>
+            <controlpoint xx="0" yy="0" zz="0"/>
+        </linear>
+
+        <circular id="turn_saturn" span="60" center="0 0 12" radius="12" startang="45" rotang="360">
+    </animations>
 
     <primitives>
         <primitive id="rectangle">
@@ -761,6 +767,9 @@
             <transformation>
                 <transformationref id="set_stress_ball"/>
             </transformation>
+            <animations>
+                <animationref id="jump_stress_ball">
+            </animations>
             <materials>
                 <material id="velvet"/>
             </materials>
@@ -869,8 +878,11 @@
 
         <component id="saturn">
             <transformation>
-                <transformationref id="set_saturn"/>
+                <transformationref id="identity"/>
             </transformation>
+            <animations>
+                <animationref id="turn_saturn">
+            </animations>
             <materials>
                 <material id="source"/>
                 <material id="inherit"/>
