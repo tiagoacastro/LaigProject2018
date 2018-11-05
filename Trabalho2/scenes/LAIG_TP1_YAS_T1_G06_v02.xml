@@ -527,7 +527,40 @@
         <primitive id="cone_hourglass">
             <cylinder base="0.175" top="0.5" height="0.5" slices="40" stacks="40" />
         </primitive>
+        
+        <primitive id="plane">
+            <plane npartsU="8" npartsV="8" />
+        </primitive>
 
+        <primitive id="patch">
+            <patch npointsU="3" npointsV="3" npartsU="2" npartsV="2"> 
+                <controlpoint xx="0" yy="0" zz="0" />
+                <controlpoint xx="1" yy="0" zz="0" />
+                <controlpoint xx="2" yy="0" zz="0" />
+                <controlpoint xx="0" yy="0" zz="1" />
+                <controlpoint xx="1" yy="0" zz="1" />
+                <controlpoint xx="2" yy="0" zz="1" />
+                <controlpoint xx="0" yy="0" zz="2" />
+                <controlpoint xx="1" yy="0" zz="2" />
+                <controlpoint xx="2" yy="0" zz="2" />
+            </patch>
+        </primitive>
+
+        <primitive id="vehicle">
+            <vehicle />
+        </primitive>
+
+        <primitive id="cylinder_NURBS">
+            <cylinder2 base="1" top="1" height="1" slices="40" stacks="40" />
+        </primitive>
+
+        <primitive id="terrain">
+            <terrain idtexture="black_plastic" idheightmap="black_plastic" parts="10" heightscale="1"/>
+        </primitive>
+
+        <primitive id="water">
+            <water idtexture="black_plastic" idwavemap="black_plastic" parts="10" heightscale="1" texscale="1" />
+        </primitive>
     </primitives>
 
     <components>
