@@ -100,6 +100,7 @@
         <texture id="gold" file="./scenes/images/gold.jpeg"/>
         <texture id="vidal" file="./scenes/images/vidal.jpg"/>
         <texture id="picture" file="./scenes/images/picture.jpg"/>
+        <texture id="height_map" file="./scenes/images/height_map.jpg"/>
     </textures>
 
     <materials>
@@ -555,11 +556,11 @@
         </primitive>
 
         <primitive id="terrain">
-            <terrain idtexture="black_plastic" idheightmap="black_plastic" parts="10" heightscale="1"/>
+            <terrain idtexture="black_plastic" idheightmap="height_map" parts="10" heightscale="1"/>
         </primitive>
 
         <primitive id="water">
-            <water idtexture="black_plastic" idwavemap="black_plastic" parts="10" heightscale="1" texscale="1" />
+            <water idtexture="black_plastic" idwavemap="height_map" parts="10" heightscale="1" texscale="1" />
         </primitive>
     </primitives>
 
