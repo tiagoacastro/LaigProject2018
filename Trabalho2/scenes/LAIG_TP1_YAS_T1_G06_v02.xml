@@ -1,0 +1,1370 @@
+<yas>
+    <scene root="root" axis_length="5"/>
+    
+    <views default="overview"> 
+        <perspective id="overview" near="0.1" far="30" angle="45">
+            <from x="10" y="10" z="10" />
+            <to x="0" y="0" z="0" />
+        </perspective>
+
+        <perspective id="saturn" near="0.1" far="30" angle="45">
+            <from x="16" y="14" z="14" />
+            <to x="0" y="0" z="0" />
+        </perspective>
+
+        <perspective id="behind_desk" near="0.1" far="30" angle="45">
+            <from x="3" y="3" z="0.9" />
+            <to x="3" y="3" z="7" />
+        </perspective>
+
+        <perspective id="room_corner" near="0.1" far="30" angle="45">
+            <from x="0.1" y="0.1" z="0.1" />
+            <to x="7" y="7" z="7" />
+        </perspective>
+
+        <ortho id="room" near="0.1" far="20" left="-7" right="7" top="3.5" bottom="-3.5">
+            <from x="3.5" y="3.5" z="7" />
+            <to x="3.5" y="3.5" z="0" />
+        </ortho>
+
+        <ortho id="painting" near="0.1" far="20" left="-3.5" right="3.5" top="1.75" bottom="-1.75">
+            <from x="1" y="4" z="3.5" />
+            <to x="0" y="4" z="3.5" />
+        </ortho>
+    </views>
+
+    <ambient>
+        <ambient r="0.6" g="0.6" b="0.6" a="1" />
+        <background r="0.07" g="0.07" b="0.07" a="1" />
+    </ambient>
+
+    <lights>
+        <omni id="lamp" enabled="1">
+            <location x="3" y="5.6" z="2.7" w="1"/>
+            <ambient r="0" g="0" b="0" a="1"/>
+            <diffuse r="0.6" g="0.6" b="0.6" a="1"/>
+            <specular r="0.6" g="0.6" b="0.6" a="1"/>
+        </omni>
+
+        <omni id="corner" enabled="0">
+            <location x="0.3" y="6.7" z="0.3" w="1"/>
+            <ambient r="0" g="0" b="0" a="1"/>
+            <diffuse r="1" g="1" b="1" a="1"/>
+            <specular r="1" g="1" b="1" a="1"/>
+        </omni>
+
+        <spot angle="1" id="painting" enabled="0" exponent="6">
+   	        <location x="0.6" y="6.5" z="3.5" w="1"/>
+	        <target x="0" y="4.5" z="3.5"/>
+     	    <ambient r="0" g="0" b="0" a="1"/>
+	        <diffuse r="1" g="1" b="1" a="1"/>
+     	    <specular r="1" g="1" b="1" a="1"/>
+        </spot>
+
+        <omni id="red_led" enabled="0">
+            <location x="2.7" y="2.5" z="4.3" w="1"/>
+            <ambient r="0" g="0" b="0" a="1"/>
+            <diffuse r="0.4" g="0" b="0" a="1"/>
+            <specular r="0.4" g="0" b="0" a="1"/>
+        </omni>
+
+        <omni id="green_led" enabled="0">
+            <location x="3" y="2.5" z="4.3" w="1"/>
+            <ambient r="0" g="0" b="0" a="1"/>
+            <diffuse r="0" g="0.4" b="0" a="1"/>
+            <specular r="0" g="0.4" b="0" a="1"/>
+        </omni>
+
+        <omni id="blue_led" enabled="0">
+            <location x="3.3" y="2.5" z="4.3" w="1"/>
+            <ambient r="0" g="0" b="0" a="1"/>
+            <diffuse r="0" g="0" b="0.4" a="1"/>
+            <specular r="0" g="0" b="0.4" a="1"/>
+        </omni>
+    </lights>
+
+    <textures>
+        <texture id="windows" file="./scenes/images/windows.jpg"/>
+        <texture id="black_plastic" file="./scenes/images/black_plastic.jpg"/>
+        <texture id="gray_wood" file="./scenes/images/gray_wood.jpg"/>
+        <texture id="velvet" file="./scenes/images/velvet.jpg"/>
+        <texture id="black_wood" file="./scenes/images/black_wood.jpg"/>
+        <texture id="gray_wash" file="./scenes/images/gray_wash.png"/>
+        <texture id="gray_stone" file="./scenes/images/gray_stone.jpg"/>
+        <texture id="stainless_steel" file="./scenes/images/stainless_steel.jpg"/>
+        <texture id="trash" file="./scenes/images/trash.jpg"/>
+        <texture id="saturn" file="./scenes/images/saturn.jpg"/>
+        <texture id="saturn_ring" file="./scenes/images/saturn_ring.jpg"/>
+        <texture id="linen" file="./scenes/images/linen.jpg"/>
+        <texture id="dolomite" file="./scenes/images/dolomite.jpg"/>
+        <texture id="gold" file="./scenes/images/gold.jpeg"/>
+        <texture id="vidal" file="./scenes/images/vidal.jpg"/>
+        <texture id="picture" file="./scenes/images/picture.jpg"/>
+    </textures>
+
+    <materials>
+        <material id="default" shininess = "30" >
+            <emission r="0" g="0" b="0" a="1" /> 
+            <ambient  r="0.1" g="0.1" b="0.1" a="1" /> 
+            <diffuse  r="0.80" g="0.80" b="0.80" a="1" /> 
+            <specular  r="0.80" g="0.80" b="0.80" a="1" /> 
+        </material>
+
+        <material id="vase" shininess="20">
+            <emission a="1" b="0" g="0" r="0"/>
+            <ambient a="1" b="0.0075" g="0.0271" r="0.0545"/>
+            <diffuse a="1" b="0.045" g="0.15" r="0.300"/>
+            <specular a="1" b="0.015" g="0.042" r="0.1"/>
+        </material>
+
+        <material id="velvet" shininess="30" >
+            <emission r="0" g="0" b="0" a="1" />
+            <ambient  r="0.1" g="0.1" b="0.1" a="1" />  
+            <diffuse r="0.80" g="0.30" b="0.30" a="1" />
+            <specular r="0.80" g="0.30" b="0.30" a="1" />
+        </material>
+
+        <material id="dark" shininess = "20" >
+            <emission r="0" g="0" b="0" a="1" /> 
+            <ambient  r="0.1" g="0.1" b="0.1" a="1" />   
+            <diffuse  r="0.40" g="0.40" b="0.40" a="1" /> 
+            <specular  r="0.40" g="0.40" b="0.40" a="1" /> 
+        </material>
+
+        <material id="source" shininess="100" >
+            <emission r="1" g="1" b="1" a="1" />
+            <ambient  r="0.1" g="0.1" b="0.1" a="1" />  
+            <diffuse r="1" g="1" b="1" a="1" />
+            <specular r="1" g="1" b="1" a="1" />
+        </material>
+
+        <material id="metal" shininess="80" >
+            <emission r="0" g="0" b="0" a="1" />
+            <ambient  r="0.1" g="0.1" b="0.1" a="1" /> 
+            <diffuse r="0.75" g="0.75" b="0.75" a="1" />
+            <specular r="0.75" g="0.75" b="0.75" a="1" />
+        </material>
+
+        <material id="gold" shininess="40" >
+            <emission r="0" g="0" b="0" a="1" />
+            <ambient  r="0.1" g="0.1" b="0.1" a="1" /> 
+            <diffuse r="0.9" g="0.6" b="0.1" a="1" />
+            <specular r="0.9" g="0.6" b="0.1" a="1" />
+        </material>
+
+        <material id="cream" shininess="30" >
+            <emission r="0" g="0" b="0" a="1" />
+            <ambient  r="0.1" g="0.1" b="0.1" a="1" /> 
+            <diffuse r="0.6" g="0.5" b="0.3" a="1" />
+            <specular r="0.6" g="0.5" b="0.1" a="1" />
+        </material>
+
+        <material id="white" shininess="40" >
+            <emission r="0" g="0" b="0" a="1" />
+            <ambient  r="0.1" g="0.1" b="0.1" a="1" /> 
+            <diffuse r="1" g="1" b="1" a="1" />
+            <specular r="1" g="1" b="1" a="1" />
+        </material>
+
+        <material id="gray" shininess="20" >
+            <emission r="0" g="0" b="0" a="1" />
+            <ambient  r="0.1" g="0.1" b="0.1" a="1" /> 
+            <diffuse r="0.6" g="0.6" b="0.6" a="1" />
+            <specular r="0.6" g="0.6" b="0.6" a="1" />
+        </material>
+
+        <material id="coffee" shininess="30" >
+            <emission a="1" b="0" g="0" r="0"/>
+            <ambient a="1" b="0.0075" g="0.0271" r="0.0545"/>
+            <diffuse a="1" b="0.045" g="0.15" r="0.300"/>
+            <specular a="1" b="0.015" g="0.042" r="0.1"/>
+        </material>
+    </materials>
+
+    <transformations>
+        <transformation id="identity">
+            <translate x="0" y="0" z="0"/>
+        </transformation>
+
+        <transformation id="set_hourglass">
+            <translate x="4.5" y="4.85" z="0.5"/>
+            <rotate axis="x" angle="90"/>
+            <scale x="0.75" y="0.75" z="1.75"/>
+        </transformation>
+
+        <transformation id="set_hourglass_top">
+            <rotate axis="x" angle="-180"/>
+            <scale x="0.45" y="0.45" z="0.25"/>
+        </transformation>
+
+        <transformation id="set_hourglass_bottom">
+            <scale x="0.45" y="0.45" z="0.25"/>
+        </transformation>
+
+        <transformation id="set_hourglass_rim_top">
+            <translate x="0" y="0" z="0.125"/>
+        </transformation>
+
+        <transformation id="set_hourglass_rim_bottom">
+            <translate x="0" y="0" z="-0.125"/>
+        </transformation>
+
+        <transformation id="set_hourglass_belt">
+            <scale x="0.45" y="0.45" z="0.25"/>
+        </transformation>
+
+        <transformation id="set_book_1">
+            <translate x="2.25" y="6" z="0.375"/>
+            <scale x="0.25" y="1" z="0.75"/>
+        </transformation>
+
+        <transformation id="set_book_2">
+            <translate x="2.5" y="6" z="0.375"/>
+            <scale x="0.25" y="1" z="0.75"/>
+        </transformation>
+
+        <transformation id="set_shelf_left">
+            <translate x="2.5" y="5.5" z="0.5"/>
+            <scale x="1.25" y="0.25" z="1"/>
+        </transformation>
+
+        <transformation id="set_shelf_right">
+            <translate x="4.5" y="4.5" z="0.5"/>
+            <scale x="1.25" y="0.25" z="1"/>
+        </transformation>
+
+        <transformation id="set_mug_handle">
+            <translate x="0.2" y="0" z="0.2"/>
+            <rotate axis="x" angle="-90"/>
+        </transformation>
+
+        <transformation id="set_mug_top">
+            <translate x="0" y="0" z="0.4"/>
+        </transformation>
+
+        <transformation id="set_mug_liquid">
+            <translate x="0" y="0" z="0.395"/>
+        </transformation>
+
+        <transformation id="set_mug">
+            <translate x="4.4" y="2.2" z="3.3"/>
+            <rotate axis="x" angle="-90"/>
+        </transformation>
+
+        <transformation id="set_stress_ball">
+            <translate x="2.2" y="2.3" z="3"/>
+            <scale x="0.2" y="0.2" z="0.2"/>
+        </transformation>
+
+        <transformation id="set_painting">
+            <translate x="0" y="4" z="3.5"/>
+            <rotate axis="y" angle="90"/>
+        </transformation>
+
+        <transformation id="set_painting_interior">
+            <translate x="0" y="0" z="0.11"/>
+            <scale x="2" y="2.5" z="1"/>
+        </transformation>
+
+        <transformation id="set_painting_frame">
+            <translate x="0" y="0" z="0.05"/>
+            <scale x="2.5" y="3" z="0.1"/>
+        </transformation>
+
+        <transformation id="set_bin">
+            <translate x="6" y="0" z="1"/>
+            <rotate axis="y" angle="90"/>
+            <rotate axis="x" angle="-90"/>
+        </transformation>
+
+        <transformation id="set_bin_hoop">
+            <translate x="0" y="0" z="1.4"/>
+            <scale x="0.5" y="0.5" z="0.5"/>
+        </transformation>
+
+        <transformation id="set_bin_body">
+            <scale x="0.5" y="0.5" z="0.7"/>
+        </transformation>
+
+        <transformation id="set_bin_top">
+            <translate x="0" y="0" z="1.4"/>
+            <scale x="0.5" y="0.5" z="0.01"/>
+        </transformation>
+
+        <transformation id="set_cushion_upper">
+            <translate x="0.725" y="2.1" z="0.4"/>
+            <scale x="0.75" y="0.3" z="0.6"/>
+            <translate x="2.9" y="2.2" z="0.8"/>
+            <scale x="1" y="2" z="1"/>
+            <rotate axis="x" angle="90"/>
+            <scale x="1.3" y="0.1" z="1"/>
+        </transformation>
+
+        <transformation id="set_cushion_lower">
+            <translate x="0.725" y="0.56" z="0.35"/>
+            <scale x="0.75" y="0.6" z="0.75"/>
+            <translate x="2.9" y="1.2" z="1.25"/>
+            <scale x="1.3" y="0.1" z="1"/>
+        </transformation>
+
+        <transformation id="set_chair_legs">
+            <translate x="2" y="0" z="0"/>
+            <scale x="0.3" y="0.6" z="0.5"/>
+        </transformation>
+
+        <transformation id="set_chair_back">
+            <translate x="2.9" y="2.2" z="0.8"/>
+            <scale x="1" y="2" z="1"/>
+            <rotate axis="x" angle="90"/>
+            <scale x="1.3" y="0.1" z="1"/>
+        </transformation>
+
+        <transformation id="set_chair_top">
+            <translate x="2.9" y="1.2" z="1.25"/>
+            <scale x="1.3" y="0.1" z="1"/>
+        </transformation>
+
+        <transformation id="set_saturn">
+            <translate x="12" y="12" z="12"/>
+        </transformation>
+
+        <transformation id="set_planet">
+            <rotate axis="x" angle="60"/>
+        </transformation>
+
+        <transformation id="set_hoop">
+            <rotate axis="x" angle="60"/>
+            <scale x="1" y="1" z="0.1"/>
+        </transformation>
+
+        <transformation id="set_leg0">
+            <translate x="1.11" y="1" z="1.61"/>
+            <scale x="0.2" y="2" z="0.2"/>
+        </transformation>
+
+        <transformation id="set_leg1">
+            <translate x="4.89" y="1" z="1.61"/>
+            <scale x="0.2" y="2" z="0.2"/>
+        </transformation>
+
+        <transformation id="set_leg2">
+            <translate x="1.11" y="1" z="3.39"/>
+            <scale x="0.2" y="2" z="0.2"/>
+        </transformation>
+
+        <transformation id="set_leg3">
+            <translate x="4.89" y="1" z="3.39"/>
+            <scale x="0.2" y="2" z="0.2"/>
+        </transformation>
+
+        <transformation id="set_table_top">
+            <translate x="3" y="2" z="2.5"/>
+            <scale x="4" y="0.4" z="2"/>
+        </transformation>
+
+        <transformation id="set_table">
+            <translate x="0" y="0" z="1"/>
+        </transformation>
+
+        <transformation id="set_tv">
+            <translate x="3" y="3.1" z="4"/>
+        </transformation>
+
+        <transformation id="set_tv_screen">
+            <scale x="2.5" y="1.5" z="0.1"/>
+        </transformation>
+
+        <transformation id="set_tv_screen_screen">
+            <translate x="0" y="0" z="-0.051"/>
+            <scale x="2" y="1.25" z="1"/>
+            <rotate axis="y" angle="180"/>
+        </transformation>
+
+        <transformation id="set_tv_stand_arm">
+            <translate x="0" y="-0.75" z="0"/>
+            <scale x="0.25" y="0.25" z="0.05"/>
+        </transformation>
+
+        <transformation id="set_tv_stand_base">
+            <translate x="0" y="-0.9" z="0"/>
+            <scale x="1.5" y="0.1" z="0.75"/>
+        </transformation>
+
+        <transformation id="set_ceiling_lamp">
+            <translate x="3" y="5.89" z="2.7"/>
+        </transformation>
+
+        <transformation id="set_ceiling_lamp_shade">
+            <scale x="0.5" y="0.5" z="0.5"/>
+            <rotate axis="x" angle="-90"/>
+        </transformation>
+
+        <transformation id="set_ceiling_lamp_wire">
+            <translate x="0" y="0.5" z="0"/>
+            <scale x="0.05" y="0.5" z="0.05"/>
+            <rotate axis="x" angle="-90"/>
+        </transformation>
+
+        <transformation id="set_ceiling_lamp_base">
+            <translate x="0" y="1" z="0"/>
+            <scale x="0.25" y="0.1" z="0.25"/>
+            <rotate axis="x" angle="-90"/>
+        </transformation>
+
+        <transformation id="set_cube_face0">
+            <translate x="0" y="0" z="0.5"/>
+        </transformation>
+
+        <transformation id="set_cube_face1">
+            <translate x="0" y="-0.5" z="0"/>
+            <rotate axis="x" angle="90"/>
+        </transformation>
+
+        <transformation id="set_cube_face2">
+            <translate x="0" y="0" z="-0.5"/>
+            <rotate axis="x" angle="180"/>
+        </transformation>
+
+        <transformation id="set_cube_face3">
+            <translate x="0" y="0.5" z="0"/>
+            <rotate axis="x" angle="-90"/>
+        </transformation>
+
+        <transformation id="set_cube_face4">
+            <translate x="0.5" y="0" z="0"/>
+            <rotate axis="y" angle="90"/>
+        </transformation>
+
+        <transformation id="set_cube_face5">
+            <translate x="-0.5" y="0" z="0"/>
+            <rotate axis="y" angle="-90"/>
+        </transformation>
+
+        <transformation id="set_side_wall">
+            <translate x="3.5" y="3.5" z="0"/>
+            <scale x="7" y="7" z="1"/>
+        </transformation>
+
+        <transformation id="set_back_wall">
+            <translate x="0" y="3.5" z="3.5"/>
+            <rotate axis="y" angle="90"/>
+            <scale x="7" y="7" z="1"/>
+        </transformation>
+        
+        <transformation id="set_ground">
+            <translate x="3.5" y="0" z="3.5"/>
+            <rotate axis="x" angle="-90"/>
+            <scale x="7" y="7" z="1"/>
+        </transformation>
+
+        <transformation id="set_ceiling">
+            <translate x="0" y="7" z="0"/>
+            <scale x="7" y="1" z="7"/>
+        </transformation>
+    </transformations>
+
+    <primitives>
+        <primitive id="rectangle">
+            <rectangle x1="-0.5" y1="-0.5" x2="0.5" y2="0.5"/>
+        </primitive>
+
+        <primitive id="triangle">
+            <triangle x1="0" y1="0" z1="0"
+                      x2="1" y2="0" z2="0"
+                      x3="0" y3="0" z3="1" />
+        </primitive>
+
+        <primitive id="cylinder">
+            <cylinder base="1" top="1" height="1" slices="40" stacks="40" />
+        </primitive>
+
+        <primitive id="cone">
+            <cylinder base="0.75" top="1" height="2" slices="40" stacks="40" />
+        </primitive>
+
+        <primitive id="sphere">
+            <sphere radius="0.5" slices="40" stacks="40" />
+        </primitive>
+
+        <primitive id="torus_saturn">
+            <torus inner="0.2" outer="0.8" slices="40" loops="40" />
+        </primitive>
+
+        <primitive id="torus_hoop">
+            <torus inner="0.1" outer="1" slices="40" loops="40" />
+        </primitive>
+
+        <primitive id="cylinder_mug">
+            <cylinder base="0.2" top="0.2" height="0.4" slices="40" stacks="40" />
+        </primitive>
+
+        <primitive id="torus_mug_handle">
+            <torus inner="0.025" outer="0.1" slices="40" loops="40" />
+        </primitive>
+
+        <primitive id="torus_mug_top">
+            <torus inner="0.015" outer="0.2" slices="40" loops="40" />
+        </primitive>
+
+        <primitive id="cylinder_mug_liquid">
+            <cylinder base="0.19" top="0.19" height="0.01" slices="40" stacks="40" />
+        </primitive>     
+
+        <primitive id="torus_hourglass_rim">
+            <torus inner="0.015" outer="0.225" slices="40" loops="40" />
+        </primitive>   
+
+        <primitive id="torus_hourglass_belt">
+            <torus inner="0.015" outer="0.175" slices="40" loops="40" />
+        </primitive>
+
+        <primitive id="cone_hourglass">
+            <cylinder base="0.175" top="0.5" height="0.5" slices="40" stacks="40" />
+        </primitive>
+
+    </primitives>
+
+    <components>
+        <component id="root">
+            <transformation>
+                <transformationref id="identity"/>
+            </transformation>
+            <materials>
+                <material id="default"/>
+            </materials>
+            <texture id="none" length_s="1" length_t="1" />
+            <children>
+                <componentref id="side_wall"/>
+                <componentref id="back_wall"/>
+                <componentref id="ground"/>
+                <componentref id="ceiling"/>
+                <componentref id="tv"/>
+                <componentref id="table"/>
+                <componentref id="saturn"/>
+                <componentref id="ceiling_lamp"/>
+                <componentref id="chair"/>
+                <componentref id="bin"/>
+                <componentref id="painting"/>
+                <componentref id="stress_ball"/>
+                <componentref id="mug"/>
+                <componentref id="shelf_left"/>
+                <componentref id="shelf_right"/>
+                <componentref id="book_1"/>
+                <componentref id="book_2"/>
+                <componentref id="hourglass"/>
+            </children>
+        </component>
+
+        <component id="hourglass">
+            <transformation>
+                <transformationref id="set_hourglass"/>
+            </transformation>
+            <materials>
+                <material id="vase"/>
+            </materials>
+            <texture id="none" length_s="1" length_t="1" />
+            <children>
+                <componentref id="hourglass_top"/>
+                <componentref id="hourglass_bottom"/>
+                <componentref id="hourglass_rim_bottom"/>
+                <componentref id="hourglass_rim_top"/>
+                <componentref id="hourglass_belt"/>
+            </children>
+        </component>
+
+        <component id="hourglass_top">
+            <transformation>
+                <transformationref id="set_hourglass_top"/>
+            </transformation>
+            <materials>
+                <material id="cream"/>
+            </materials>
+            <texture id="none" length_s="1" length_t="1" />
+            <children>
+                <primitiveref id="cone_hourglass"/>
+            </children>
+        </component>
+
+        <component id="hourglass_bottom">
+            <transformation>
+                <transformationref id="set_hourglass_bottom"/>
+            </transformation>
+            <materials>
+                <material id="cream"/>
+            </materials>
+            <texture id="none" length_s="1" length_t="1" />
+            <children>
+                <primitiveref id="cone_hourglass"/>
+            </children>
+        </component>
+
+        <component id="hourglass_rim_top">
+            <transformation>
+                <transformationref id="set_hourglass_rim_top"/>
+            </transformation>
+            <materials>
+                <material id="vase"/>
+            </materials>
+            <texture id="none" length_s="1" length_t="1" />
+            <children>
+                <primitiveref id="torus_hourglass_rim"/>
+            </children>
+        </component>
+
+        <component id="hourglass_rim_bottom">
+            <transformation>
+                <transformationref id="set_hourglass_rim_bottom"/>
+            </transformation>
+            <materials>
+                <material id="vase"/>
+            </materials>
+            <texture id="none" length_s="1" length_t="1" />
+            <children>
+                <primitiveref id="torus_hourglass_rim"/>
+            </children>
+        </component>
+
+        <component id="hourglass_belt">
+            <transformation>
+                <transformationref id="set_hourglass_belt"/>
+            </transformation>
+            <materials>
+                <material id="vase"/>
+            </materials>
+            <texture id="none" length_s="1" length_t="1" />
+            <children>
+                <primitiveref id="torus_hourglass_belt"/>
+            </children>
+        </component>
+
+        <component id="book_1">
+            <transformation>
+                <transformationref id="set_book_1"/>
+            </transformation>
+            <materials>
+                <material id="velvet"/>
+            </materials>
+            <texture id="none" length_s="1" length_t="1" />
+            <children>
+                <componentref id="cube"/>
+            </children>
+        </component>
+
+        <component id="book_2">
+            <transformation>
+                <transformationref id="set_book_2"/>
+            </transformation>
+            <materials>
+                <material id="cream"/>
+            </materials>
+            <texture id="none" length_s="1" length_t="1" />
+            <children>
+                <componentref id="cube"/>
+            </children>
+        </component>
+
+        <component id="shelf_left">
+            <transformation>
+                <transformationref id="set_shelf_left"/>
+            </transformation>
+            <materials>
+                <material id="dark"/>
+            </materials>
+            <texture id="gray_wood" length_s="1" length_t="1" />
+            <children>
+                <componentref id="cube"/>
+            </children>
+        </component>
+
+        <component id="shelf_right">
+            <transformation>
+                <transformationref id="set_shelf_right"/>
+            </transformation>
+            <materials>
+                <material id="dark"/>
+            </materials>
+            <texture id="gray_wood" length_s="1" length_t="1" />
+            <children>
+                <componentref id="cube"/>
+            </children>
+        </component>
+
+        <component id="mug">
+            <transformation>
+                <transformationref id="set_mug"/>
+            </transformation>
+            <materials>
+                <material id="cream"/>
+            </materials>
+            <texture id="none" length_s="1" length_t="1" />
+            <children>
+                <componentref id="mug_handle"/>
+                <componentref id="mug_body"/>
+                <componentref id="mug_top"/>
+                <componentref id="mug_liquid"/>
+            </children>
+        </component>
+
+        <component id="mug_handle">
+            <transformation>
+                <transformationref id="set_mug_handle"/>
+            </transformation>
+            <materials>
+                <material id="inherit"/>
+            </materials>
+            <texture id="inherit" length_s="1" length_t="1" />
+            <children>
+                <primitiveref id="torus_mug_handle"/>
+            </children>
+        </component>
+
+        <component id="mug_body">
+            <transformation>
+                <transformationref id="set_mug_body"/>
+            </transformation>
+            <materials>
+                <material id="inherit"/>
+            </materials>
+            <texture id="inherit" length_s="1" length_t="1" />
+            <children>
+                <primitiveref id="cylinder_mug"/>
+            </children>
+        </component>
+
+        <component id="mug_top">
+            <transformation>
+                <transformationref id="set_mug_top"/>
+            </transformation>
+            <materials>
+                <material id="inherit"/>
+            </materials>
+            <texture id="inherit" length_s="1" length_t="1" />
+            <children>
+                <primitiveref id="torus_mug_top"/>
+            </children>
+        </component>
+
+        <component id="mug_liquid">
+            <transformation>
+                <transformationref id="set_mug_liquid"/>
+            </transformation>
+            <materials>
+                <material id="coffee"/>
+            </materials>
+            <texture id="inherit" length_s="1" length_t="1" />
+            <children>
+                <primitiveref id="cylinder_mug_liquid"/>
+            </children>
+        </component>
+
+        <component id="stress_ball">
+            <transformation>
+                <transformationref id="set_stress_ball"/>
+            </transformation>
+            <materials>
+                <material id="velvet"/>
+            </materials>
+            <texture id="velvet" length_s="1" length_t="1" />
+            <children>
+                <primitiveref id="sphere"/>
+            </children>
+        </component>
+
+        <component id="painting">
+            <transformation>
+                <transformationref id="set_painting"/>
+            </transformation>
+            <materials>
+                <material id="inherit"/>
+            </materials>
+            <texture id="inherit" length_s="1" length_t="1" />
+            <children>
+                <componentref id="painting_interior"/>
+                <componentref id="painting_frame"/>
+            </children>
+        </component>
+
+        <component id="painting_frame">
+            <transformation>
+                <transformationref id="set_painting_frame"/>
+            </transformation>
+            <materials>
+                <material id="gold"/>
+                <material id="inherit"/>
+            </materials>
+            <texture id="gold" length_s="1" length_t="1" />
+            <children>
+                <componentref id="cube"/>
+            </children>
+        </component>
+
+        <component id="painting_interior">
+            <transformation>
+                <transformationref id="set_painting_interior"/>
+            </transformation>
+            <materials>
+                <material id="inherit"/>
+            </materials>
+            <texture id="vidal" length_s="1" length_t="1" />
+            <children>
+                <primitiveref id="rectangle"/>
+            </children>
+        </component>
+
+        <component id="bin">
+            <transformation>
+                <transformationref id="set_bin"/>
+            </transformation>
+            <materials>
+                <material id="metal"/>
+                <material id="inherit"/>
+            </materials>
+            <texture id="stainless_steel" length_s="1" length_t="1" />
+            <children>
+                <componentref id="bin_body"/>
+                <componentref id="bin_top"/>
+                <componentref id="bin_hoop"/>
+            </children>
+        </component>
+
+        <component id="bin_hoop">
+            <transformation>
+                <transformationref id="set_bin_hoop"/>
+            </transformation>
+            <materials>
+                <material id="inherit"/>
+            </materials>
+            <texture id="inherit" length_s="1" length_t="1" />
+            <children>
+                <primitiveref id="torus_hoop"/>
+            </children>
+        </component>
+
+        <component id="bin_body">
+            <transformation>
+                <transformationref id="set_bin_body"/>
+            </transformation>
+            <materials>
+                <material id="inherit"/>
+            </materials>
+            <texture id="inherit" length_s="1" length_t="1" />
+            <children>
+                <primitiveref id="cone"/>
+            </children>
+        </component>
+
+        <component id="bin_top">
+            <transformation>
+                <transformationref id="set_bin_top"/>
+            </transformation>
+            <materials>
+                <material id="default"/>
+                <material id="inherit"/>
+            </materials>
+            <texture id="trash" length_s="1" length_t="1" />
+            <children>
+                <primitiveref id="cylinder"/>
+            </children>
+        </component>
+
+        <component id="saturn">
+            <transformation>
+                <transformationref id="set_saturn"/>
+            </transformation>
+            <materials>
+                <material id="source"/>
+                <material id="inherit"/>
+            </materials>
+            <texture id="inherit" length_s="1" length_t="1" />
+            <children>
+                <componentref id="planet"/>
+                <componentref id="hoop"/>
+            </children>
+        </component>
+
+        <component id="planet">
+            <transformation>
+                <transformationref id="set_planet"/>
+            </transformation>
+           <materials>
+                <material id="inherit"/>
+            </materials>
+            <texture id="saturn" length_s="1" length_t="1" />
+            <children>
+                <primitiveref id="sphere"/>
+            </children>
+        </component>
+
+        <component id="hoop">
+            <transformation>
+                <transformationref id="set_hoop"/>
+            </transformation>
+            <materials>
+                <material id="inherit"/>
+            </materials>
+            <texture id="saturn_ring" length_s="1" length_t="1" />
+            <children>
+                <primitiveref id="torus_saturn"/>
+            </children>
+        </component>
+
+        <component id="table">
+            <transformation>
+                <transformationref id="set_table"/>
+            </transformation>
+            <materials>
+                <material id="dark"/>
+                <material id="inherit"/>
+            </materials>
+            <texture id="gray_wood" length_s="2" length_t="1" />
+            <children>
+                <componentref id="table_top"/>
+                <componentref id="legs"/>
+            </children>
+        </component>
+
+        <component id="chair">
+            <transformation>
+                <transformationref id="identity"/>
+            </transformation>
+            <materials>
+                <material id="dark"/>
+                <material id="inherit"/>
+            </materials>
+            <texture id="black_wood" length_s="1" length_t="1" />
+            <children>
+                <componentref id="chair_top"/>
+                <componentref id="chair_legs"/>
+                <componentref id="chair_back"/>
+                <componentref id="cushion_upper"/>
+                <componentref id="cushion_lower"/>
+            </children>
+        </component>
+
+        <component id="cushion_upper">
+            <transformation>
+                <transformationref id="set_cushion_upper"/>
+            </transformation>
+            <materials>
+                <material id="velvet"/>
+                <material id="inherit"/>
+            </materials>
+            <texture id="velvet" length_s="1" length_t="1" />
+            <children>
+                <componentref id="cube"/>
+            </children>
+        </component>
+
+        <component id="cushion_lower">
+            <transformation>
+                <transformationref id="set_cushion_lower"/>
+            </transformation>
+            <materials>
+                <material id="velvet"/>
+                <material id="inherit"/>
+            </materials>
+            <texture id="velvet" length_s="1" length_t="1" />
+            <children>
+                <componentref id="cube"/>
+            </children>
+        </component>
+
+        <component id="chair_back">
+            <transformation>
+                <transformationref id="set_chair_back"/>
+            </transformation>
+            <materials>
+                <material id="inherit"/>
+            </materials>
+            <texture id="inherit" length_s="1" length_t="1" />
+            <children>
+                <componentref id="cube"/>
+            </children>
+        </component>
+
+        <component id="chair_top">
+            <transformation>
+                <transformationref id="set_chair_top"/>
+            </transformation>
+            <materials>
+                <material id="inherit"/>
+            </materials>
+            <texture id="inherit" length_s="1" length_t="1" />
+            <children>
+                <componentref id="cube"/>
+            </children>
+        </component>
+
+        <component id="table_top">
+            <transformation>
+                <transformationref id="set_table_top"/>
+            </transformation>
+            <materials>
+                <material id="inherit"/>
+            </materials>
+            <texture id="inherit" length_s="1" length_t="1" />
+            <children>
+                <componentref id="cube"/>
+            </children>
+        </component>
+
+        <component id="chair_legs">
+            <transformation>
+                <transformationref id="set_chair_legs"/>
+            </transformation>
+            <materials>
+                <material id="inherit"/>
+            </materials>
+            <texture id="inherit" length_s="1" length_t="1" />
+            <children>
+                <componentref id="legs"/>
+            </children>
+        </component>
+
+        <component id="legs">
+            <transformation>
+                <transformationref id="identity"/>
+            </transformation>
+            <materials>
+                <material id="inherit"/>
+            </materials>
+            <texture id="inherit" length_s="1" length_t="1" />
+            <children>
+                <componentref id="leg0"/>
+                <componentref id="leg1"/>
+                <componentref id="leg2"/>
+                <componentref id="leg3"/>
+            </children>
+        </component>
+
+        <component id="leg0">
+            <transformation>
+                <transformationref id="set_leg0"/>
+            </transformation>
+            <materials>
+                <material id="inherit"/>
+            </materials>
+            <texture id="inherit" length_s="1" length_t="1" />
+            <children>
+                <componentref id="cube"/>
+            </children>
+        </component>
+
+        <component id="leg1">
+            <transformation>
+                <transformationref id="set_leg1"/>
+            </transformation>
+            <materials>
+                <material id="inherit"/>
+            </materials>
+            <texture id="inherit" length_s="1" length_t="1" />
+            <children>
+                <componentref id="cube"/>
+            </children>
+        </component>
+
+        <component id="leg2">
+            <transformation>
+                <transformationref id="set_leg2"/>
+            </transformation>
+            <materials>
+                <material id="inherit"/>
+            </materials>
+            <texture id="inherit" length_s="1" length_t="1" />
+            <children>
+                <componentref id="cube"/>
+            </children>
+        </component>
+
+        <component id="leg3">
+            <transformation>
+                <transformationref id="set_leg3"/>
+            </transformation>
+            <materials>
+                <material id="inherit"/>
+            </materials>
+            <texture id="inherit" length_s="1" length_t="1" />
+            <children>
+                <componentref id="cube"/>
+            </children>
+        </component>
+
+        <component id="tv">
+            <transformation>
+                <transformationref id="set_tv"/>
+            </transformation>
+            <materials>
+                <material id="dark"/>
+                <material id="inherit"/>
+            </materials>
+            <texture id="black_plastic" length_s="1" length_t="1" />
+            <children>
+                <componentref id="tv_screen"/>
+                <componentref id="tv_screen_screen"/>
+                <componentref id="tv_stand_arm"/>
+                <componentref id="tv_stand_base"/>
+            </children>
+        </component>
+
+        <component id="ceiling_lamp">
+            <transformation>
+                <transformationref id="set_ceiling_lamp"/>
+            </transformation>
+            <materials>
+                <material id="metal"/>
+                <material id="inherit"/>
+            </materials>
+            <texture id="stainless_steel" length_s="1" length_t="1" />
+            <children>
+                <componentref id="ceiling_lamp_base"/>
+                <componentref id="ceiling_lamp_wire"/>
+                <componentref id="ceiling_lamp_shade"/>
+            </children>
+        </component>
+
+        <component id="ceiling_lamp_base">
+            <transformation>
+                <transformationref id="set_ceiling_lamp_base"/>
+            </transformation>
+            <materials>
+                <material id="inherit"/>
+            </materials>
+            <texture id="inherit" length_s="1" length_t="1" />
+            <children>
+                <primitiveref id="cylinder"/>
+            </children>
+        </component>
+
+        <component id="ceiling_lamp_wire">
+            <transformation>
+                <transformationref id="set_ceiling_lamp_wire"/>
+            </transformation>
+            <materials>
+                <material id="inherit"/>
+            </materials>
+            <texture id="inherit" length_s="1" length_t="1" />
+            <children>
+                <primitiveref id="cylinder"/>
+            </children>
+        </component>
+
+        <component id="ceiling_lamp_shade">
+            <transformation>
+                <transformationref id="set_ceiling_lamp_shade"/>
+            </transformation>
+            <materials>
+                <material id="velvet"/>
+                <material id="inherit"/>
+            </materials>
+            <texture id="velvet" length_s="1" length_t="1" />
+            <children>
+                <primitiveref id="cylinder"/>
+            </children>
+        </component>
+
+        <component id="tv_screen">
+            <transformation>
+                <transformationref id="set_tv_screen"/>
+            </transformation>
+            <materials>
+                <material id="inherit"/>
+            </materials>
+            <texture id="inherit" length_s="1" length_t="1" />
+            <children>
+                <componentref id="cube"/>
+            </children>
+        </component>
+
+        <component id="tv_screen_screen">
+            <transformation>
+                <transformationref id="set_tv_screen_screen"/>
+            </transformation>
+            <materials>
+                <material id="source"/>
+                <material id="inherit"/>
+            </materials>
+            <texture id="windows" length_s="1" length_t="1" />
+            <children>
+                <primitiveref id="rectangle"/>
+            </children>
+        </component>
+
+        <component id="tv_stand_arm">
+            <transformation>
+                <transformationref id="set_tv_stand_arm"/>
+            </transformation>
+            <materials>
+                <material id="inherit"/>
+            </materials>
+            <texture id="inherit" length_s="1" length_t="1" />
+            <children>
+                <componentref id="cube"/>
+            </children>
+        </component>
+
+        <component id="tv_stand_base">
+            <transformation>
+                <transformationref id="set_tv_stand_base"/>
+            </transformation>
+            <materials>
+                <material id="inherit"/>
+            </materials>
+            <texture id="inherit" length_s="1" length_t="1" />
+            <children>
+                <componentref id="cube"/>
+            </children>
+        </component>
+
+        <component id="cube">
+            <transformation>
+                <transformationref id="identity"/>
+            </transformation>
+            <materials>
+                <material id="inherit"/>
+            </materials>
+            <texture id="inherit" length_s="1" length_t="1" />
+            <children>
+                <componentref id="cube_face0"/>
+                <componentref id="cube_face1"/>
+                <componentref id="cube_face2"/>
+                <componentref id="cube_face3"/>
+                <componentref id="cube_face4"/>
+                <componentref id="cube_face5"/>
+            </children>
+        </component>
+
+        <component id="cube_face0">
+            <transformation>
+                <transformationref id="set_cube_face0"/>
+            </transformation>
+            <materials>
+                <material id="inherit"/>
+            </materials>
+            <texture id="inherit" length_s="1" length_t="1" />
+            <children>
+                <primitiveref id="rectangle"/>
+            </children>
+        </component>
+
+        <component id="cube_face1">
+            <transformation>
+                <transformationref id="set_cube_face1"/>
+            </transformation>
+            <materials>
+                <material id="inherit"/>
+            </materials>
+            <texture id="inherit" length_s="1" length_t="1" />
+            <children>
+                <primitiveref id="rectangle"/>
+            </children>
+        </component>
+
+        <component id="cube_face2">
+            <transformation>
+                <transformationref id="set_cube_face2"/>
+            </transformation>
+            <materials>
+                <material id="inherit"/>
+            </materials>
+            <texture id="inherit" length_s="1" length_t="1" />
+            <children>
+                <primitiveref id="rectangle"/>
+            </children>
+        </component>
+
+        <component id="cube_face3">
+            <transformation>
+                <transformationref id="set_cube_face3"/>
+            </transformation>
+            <materials>
+                <material id="inherit"/>
+            </materials>
+            <texture id="inherit" length_s="1" length_t="1" />
+            <children>
+                <primitiveref id="rectangle"/>
+            </children>
+        </component>
+
+        <component id="cube_face4">
+            <transformation>
+                <transformationref id="set_cube_face4"/>
+            </transformation>
+            <materials>
+                <material id="inherit"/>
+            </materials>
+            <texture id="inherit" length_s="1" length_t="1" />
+            <children>
+                <primitiveref id="rectangle"/>
+            </children>
+        </component>
+
+        <component id="cube_face5">
+            <transformation>
+                <transformationref id="set_cube_face5"/>
+            </transformation>
+            <materials>
+                <material id="inherit"/>
+            </materials>
+            <texture id="inherit" length_s="1" length_t="1" />
+            <children>
+                <primitiveref id="rectangle"/>
+            </children>
+        </component>
+
+        <component id="side_wall">
+            <transformation>
+                <transformationref id="set_side_wall"/>
+            </transformation>
+            <materials>
+                <material id="gray"/>
+                <material id="inherit"/>
+            </materials>
+            <texture id="gray_wash" length_s="1" length_t="1" />
+            <children>
+                <primitiveref id="rectangle"/>
+            </children>
+        </component>
+
+        <component id="back_wall">
+            <transformation>
+                <transformationref id="set_back_wall"/>
+            </transformation>
+            <materials>
+                <material id="dark"/>
+                <material id="inherit"/>
+            </materials>
+            <texture id="gray_stone" length_s="1" length_t="1" />
+            <children>
+                <primitiveref id="rectangle"/>
+            </children>
+        </component>
+
+        <component id="ground">
+            <transformation>
+                <transformationref id="set_ground"/>
+            </transformation>
+            <materials>
+                <material id="cream"/>
+                <material id="inherit"/>
+            </materials>
+            <texture id="linen" length_s="1" length_t="1" />
+            <children>
+                <primitiveref id="rectangle"/>
+            </children>
+        </component>
+
+        <component id="ceiling">
+            <transformation>
+                <transformationref id="set_ceiling"/>
+            </transformation>
+            <materials>
+                <material id="white"/>
+                <material id="inherit"/>
+            </materials>
+            <texture id="dolomite" length_s="1" length_t="1" />
+            <children>
+                <primitiveref id="triangle"/>
+            </children>
+        </component>
+    </components>
+</yas>
