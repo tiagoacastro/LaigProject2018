@@ -109,6 +109,7 @@ class XMLscene extends CGFscene {
      * Checks if M was pressed to cycle materials
      */
     checkKeys() {
+        
         var text="Keys pressed: ";
         var keysPressed=false;
 
@@ -135,10 +136,10 @@ class XMLscene extends CGFscene {
      */
     updateMaterials() {
         for (var key in this.graph.components) {
-            console.log(this.graph.components[key]["activeMaterial"]);
+            //console.log(this.graph.components[key]["activeMaterial"]);
 
             if((this.graph.components[key]["activeMaterial"] >= 0) && (this.graph.components[key]["activeMaterial"] < this.graph.components[key]["materials"].length - 1)) {
-                console.log("changing material");
+                //console.log("changing material");
                 this.graph.components[key]["activeMaterial"] = this.graph.components[key]["activeMaterial"] + 1;
             } else {
                 this.graph.components[key]["activeMaterial"] = 0;

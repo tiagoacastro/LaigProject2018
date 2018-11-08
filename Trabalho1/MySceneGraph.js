@@ -1834,7 +1834,7 @@ class MySceneGraph {
             return "ID must be unique for each transformation (conflict: ID = " + transformationId + ")";
         }
 
-        transformationAux.push(transformationId);
+        transformationAux.push(transformationId);   
 
         for (var i = 0; i < specs.length; i++) {
 
