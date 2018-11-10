@@ -1,0 +1,158 @@
+<yas>
+  <scene root="root" axis_length="5"/>
+  
+  <views default="overview"> 
+    <perspective id="overview" near="0.1" far="30" angle="45">
+      <from x="10" y="10" z="10" />
+      <to x="0" y="0" z="0" />
+    </perspective>
+  </views>
+
+  <ambient>
+    <ambient r="0.6" g="0.6" b="0.6" a="1" />
+    <background r="0.07" g="0.07" b="0.07" a="1" />
+  </ambient>
+
+  <lights>
+    <omni id="lamp" enabled="1">
+      <location x="3" y="5.6" z="2.7" w="1"/>
+      <ambient r="0" g="0" b="0" a="1"/>
+      <diffuse r="0.6" g="0.6" b="0.6" a="1"/>
+      <specular r="0.6" g="0.6" b="0.6" a="1"/>
+    </omni>
+  </lights>
+
+  <textures>
+    <texture id="windows" file="./scenes/images/windows.jpg"/>
+    <texture id="black_plastic" file="./scenes/images/black_plastic.jpg"/>
+    <texture id="gray_wood" file="./scenes/images/gray_wood.jpg"/>
+    <texture id="velvet" file="./scenes/images/velvet.jpg"/>
+    <texture id="black_wood" file="./scenes/images/black_wood.jpg"/>
+    <texture id="gray_wash" file="./scenes/images/gray_wash.png"/>
+    <texture id="gray_stone" file="./scenes/images/gray_stone.jpg"/>
+    <texture id="stainless_steel" file="./scenes/images/stainless_steel.jpg"/>
+    <texture id="trash" file="./scenes/images/trash.jpg"/>
+    <texture id="saturn" file="./scenes/images/saturn.jpg"/>
+    <texture id="saturn_ring" file="./scenes/images/saturn_ring.jpg"/>
+    <texture id="linen" file="./scenes/images/linen.jpg"/>
+    <texture id="dolomite" file="./scenes/images/dolomite.jpg"/>
+    <texture id="gold" file="./scenes/images/gold.jpeg"/>
+    <texture id="vidal" file="./scenes/images/vidal.jpg"/>
+    <texture id="picture" file="./scenes/images/picture.jpg"/>
+    <texture id="height_map" file="./scenes/images/height_map.jpg"/>
+  </textures>
+
+  <materials>
+    <material id="default" shininess="30" >
+      <emission r="0" g="0" b="0" a="1" /> 
+      <ambient  r="0.1" g="0.1" b="0.1" a="1" /> 
+      <diffuse  r="0.80" g="0.80" b="0.80" a="1" /> 
+      <specular  r="0.80" g="0.80" b="0.80" a="1" /> 
+    </material>
+  </materials>
+
+  <transformations>
+    <transformation id="identity">
+      <translate x="0" y="0" z="0"/>
+    </transformation>
+  </transformations>
+
+  <animations>
+    <linear id="jump_stress_ball" span="1">
+      <controlpoint xx="0" yy="0" zz="0"/>
+      <controlpoint xx="0" yy="0" zz="0.5"/>
+      <controlpoint xx="0" yy="0" zz="0"/>
+    </linear>
+
+    <circular id="turn_saturn" span="60" center="0 0 12" radius="12" startang="45" rotang="360"/>
+  </animations>
+
+  <primitives>
+    <primitive id="rectangle">
+      <rectangle x1="-0.5" y1="-0.5" x2="0.5" y2="0.5"/>  
+    </primitive>
+
+    <primitive id="triangle">
+      <triangle x1="0" y1="0" z1="0"
+                x2="1" y2="0" z2="0"
+                x3="0" y3="0" z3="1" />
+    </primitive>
+
+    <primitive id="cylinder">
+      <cylinder base="1" top="1" height="1" slices="40" stacks="40" />
+    </primitive>
+
+    <primitive id="cone">
+      <cylinder base="0.75" top="1" height="2" slices="40" stacks="40" />
+    </primitive>
+
+    <primitive id="sphere">
+      <sphere radius="0.5" slices="40" stacks="40" />
+    </primitive>
+
+    <primitive id="plane">
+      <plane npartsU="8" npartsV="8" /> 
+    </primitive>
+
+    <primitive id="patch">
+      <patch npointsU="3" npointsV="3" npartsU="2" npartsV="2"> 
+        <controlpoint xx="0" yy="0" zz="0" />
+        <controlpoint xx="1" yy="0" zz="0" />
+        <controlpoint xx="2" yy="0" zz="0" />
+        <controlpoint xx="0" yy="0" zz="1" />
+        <controlpoint xx="1" yy="0" zz="1" />
+        <controlpoint xx="2" yy="0" zz="1" />
+        <controlpoint xx="0" yy="0" zz="2" />
+        <controlpoint xx="1" yy="0" zz="2" />
+        <controlpoint xx="2" yy="0" zz="2" />
+      </patch>
+    </primitive>
+
+    <primitive id="vehicle">
+      <vehicle /> 
+    </primitive>
+
+    <primitive id="cylinder_NURBS">
+      <cylinder2 base="1" top="1" height="1" slices="40" stacks="40" /> 
+    </primitive>
+
+    <primitive id="terrain">
+      <terrain idtexture="black_plastic" idheightmap="height_map" parts="10" heightscale="1"/>
+    </primitive>
+
+    <primitive id="water">
+      <water idtexture="black_plastic" idwavemap="height_map" parts="10" heightscale="1" texscale="1" />
+    </primitive>
+  </primitives>
+
+  <components>
+    <component id="root">
+      <transformation>
+        <transformationref id="identity"/>
+      </transformation>
+      <materials>
+        <material id="default"/>
+      </materials>
+      <texture id="none" length_s="1" length_t="1" />
+      <children>
+        <componentref id="stress_ball"/>  
+      </children>
+    </component>
+
+    <component id="stress_ball">
+      <transformation>
+        <transformationref id="identity"/>
+      </transformation>
+      <animations>
+        <animationref id="jump_stress_ball"/>
+      </animations>
+      <materials>
+        <material id="default"/>
+      </materials>
+      <texture id="none" length_s="1" length_t="1" />
+      <children>
+        <primitiveref id="sphere"/> 
+      </children>
+    </component>
+  </components>
+</yas>

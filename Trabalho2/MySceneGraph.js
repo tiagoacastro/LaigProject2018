@@ -8,8 +8,9 @@ var LIGHTS_INDEX = 3;
 var TEXTURES_INDEX = 4;
 var MATERIALS_INDEX = 5;
 var TRANSFORMATIONS_INDEX = 6;
-var PRIMITIVES_INDEX = 7;
-var COMPONENTS_INDEX = 8;
+var ANIMATIONS_INDEX = 7;
+var PRIMITIVES_INDEX = 8;
+var COMPONENTS_INDEX = 9;
 
 /**
  * MySceneGraph class, representing the scene graph.
@@ -100,6 +101,8 @@ class MySceneGraph {
 
         // Processes each node, verifying errors.
 
+        console.log("first index = " + nodeNames[0]);
+
         // <scene>
         var index;
         if ((index = nodeNames.indexOf("scene")) == -1)
@@ -182,6 +185,18 @@ class MySceneGraph {
 
             //Parse transformations block
             if ((error = this.parseTransformations(nodes[index])) != null)
+                return error;
+        }
+
+        // <animations>
+        if ((index = nodeNames.indexOf("animations")) == -1)
+            return "tag <animations> missing";
+        else {
+            if (index != ANIMATIONS_INDEX)
+                this.onXMLMinorError("tag <animations> out of order");
+
+            //Parse animations block
+            if ((error = this.parseAnimations(nodes[index])) != null)
                 return error;
         }
 
@@ -829,6 +844,193 @@ class MySceneGraph {
         return spotAux;
 
     }
+
+    /**
+    * Function responsible for parsing animations 
+    * @param {animations block element} animations
+    * @returns string with error descriptor, null if none are present
+    */
+    parseAnimations(animationsNode) {
+
+      this.animations = {};
+      var id;
+
+      var children = animationsNode.children;
+
+      for (var i = 0; i < children.length; i++) {
+
+        if (children[i].nodeName != "circular" && children[i].nodeName != "linear") {
+          this.onXMLMinorError("unknown tag <" + children.nodeName + ">");
+          continue;
+        }
+        
+        id = this.reader.getString(children[i], 'id');
+        if (id == null) {
+            return "no ID defined for animation";
+        }
+
+        if (this.animations[id] != null) {
+            return "ID must be unique for each animation (conflict: ID = " + id + ")";
+        }
+
+        //linear
+        if (children[i].nodeName == "linear") {
+
+            var linearAnimation = [];
+
+            linearAnimation = this.parseLinearAnimation(children[i]);
+
+            if (typeof linearAnimation === "string") {
+                return linearAnimation;
+            }
+            
+            this.animations[id] = linearAnimation;
+        }
+
+        //circular
+        if (children[i].nodeName == "circular") {
+
+            var circularAnimation = [];
+            
+            circularAnimation = this.parseCircularAnimation(children[i]);
+
+            if (typeof circularAnimation === "string") {
+                return circularAnimation;
+            }
+
+            this.animations[id] = circularAnimation;
+        }
+
+      }
+
+      this.log("Parsed animations");
+
+      return null;
+    
+    }
+
+    /**
+     * Auxiliary function responsible for parsing linear animations
+     * @param {linear block element} linear
+     * @returns string with error descriptor, null if none are present
+     */
+    parseLinearAnimation(linear) {
+
+      var linearAux = {};
+      var numControlPoints = 0;
+
+      var linearId = this.reader.getString(linear, 'id');
+      if (linearId == null) {
+          return "no ID defined for linear animation";
+      }
+
+      if (this.animations[linearId] != null) {
+          return "ID must be unique for each animation (conflict: ID = " + linearId + ")";
+      }
+
+      linearAux["id"] = linearId;
+
+      var span = this.reader.getFloat(linear, 'span');
+      if (!(span != null && !isNaN(span))) {
+          return "unable to parse value component of the 'span' field for ID = " + linearId;
+      }
+
+      linearAux["span"] = span;
+      linearAux["controlPoints"] = [];
+
+      var controlPoints = linear.children;
+      var auxControlPoint = [];
+      var x, y, z;
+
+      for (var i = 0; i < controlPoints.length; i++) {
+
+        if (controlPoints[i].nodeName !== "controlpoint") {
+          return "undefined token in animation " + linearId;
+        }
+
+        x = this.reader.getFloat(controlPoints[i], 'xx');
+        if (!(x != null && !isNaN(x))) {
+          return "unable to parse value component of the 'x' field for control point " + i + " of animation " + linearId;
+        }
+
+        y = this.reader.getFloat(controlPoints[i], 'yy');
+        if (!(y != null && !isNaN(y))) {
+          return "unable to parse value component of the 'y' field for control point " + i + " of animation " + linearId;
+        }
+
+        z = this.reader.getFloat(controlPoints[i], 'zz');
+        if (!(z != null && !isNaN(z))) {
+          return "unable to parse value component of the 'z' field for control point " + i + " of animation " + linearId;
+        }
+
+        auxControlPoint = [x, y, z];
+        linearAux["controlPoints"].push(auxControlPoint);
+        numControlPoints++;
+        auxControlPoint = [];
+        x = 0; y = 0; z = 0;
+      }
+
+      if (numControlPoints <= 0) {
+        return "there should be at least one control point defined for animation " + linearId;
+      }
+
+      return linearAux;
+  }
+
+  /**
+     * Auxiliary function responsible for parsing circular animations
+     * @param {circular block element} circular
+     * @returns string with error descriptor, null if none are present
+     */
+    parseCircularAnimation(circular) {
+
+      var circularAux = {};
+
+      var circularId = this.reader.getString(circular, 'id');
+      if (circularId == null) {
+          return "no ID defined for linear animation";
+      }
+
+      if (this.animations[circularId] != null) {
+          return "ID must be unique for each animation (conflict: ID = " + circularId + ")";
+      }
+
+      var span = this.reader.getFloat(circular, 'span');
+      if (!(span != null && !isNaN(span))) {
+          return "unable to parse value component of the 'span' field for ID = " + circularId;
+      }
+
+      var center = this.reader.getFloat(circular, 'center');
+      if (!(center != null && !isNaN(center))) {
+          return "unable to parse value component of the 'center' field for ID = " + circularId;
+      }
+
+      var radius = this.reader.getFloat(circular, 'radius');
+      if (!(radius != null && !isNaN(radius))) {
+          return "unable to parse value component of the 'radius' field for ID = " + circularId;
+      }
+
+      var startang = this.reader.getFloat(circular, 'startang');
+      if (!(startang != null && !isNaN(startang))) {
+          return "unable to parse value component of the 'startang' field for ID = " + circularId;
+      }
+
+      var rotang = this.reader.getFloat(circular, 'startang');
+      if (!(rotang != null && !isNaN(rotang))) {
+          return "unable to parse value component of the 'rotang' field for ID = " + circularId;
+      }
+
+      circularAux["id"] = circularId;
+      circularAux["span"] = span;
+      circularAux["center"] = center;
+      circularAux["radius"] = radius;
+      circularAux["startang"] = startang;
+      circularAux["rotang"] = rotang;
+
+      return circularAux;
+  }
+
+
 
     /**
      * Parses the <rectangle> block.
@@ -1956,6 +2158,7 @@ class MySceneGraph {
 
         var transformations= [];
         var materials = [];
+        var animations = [];
 
         //there should be at least one component
         for (var i = 0; i < children.length; i++) {
@@ -1992,8 +2195,9 @@ class MySceneGraph {
             var materialsIndex = nodeNames.indexOf("materials");
             var textureIndex = nodeNames.indexOf("texture");
             var childrenIndex = nodeNames.indexOf("children");
+            var animationsIndex = nodeNames.indexOf("animations");
 
-            //transformation(s ?) to be applied (only working with transformation references, not explicit transformation declarations)
+            //transformations
             if (transformationIndex == -1) {
                 return "the <transformation> block should be defined for component " + componentId;
             } else {
@@ -2004,6 +2208,15 @@ class MySceneGraph {
                     return transformations;
                 }
 
+            }
+
+            //animations
+            if (animationsIndex !== -1) {
+                let animationsAux = grandChildren[animationsIndex].children;
+                animations = this.parseComponentAnimations(animationsAux, componentId)
+                if (typeof animations === "string") {
+                    return animations;
+                }
             }
 
             //materials
@@ -2048,9 +2261,7 @@ class MySceneGraph {
                 }
                 textureAux["id"] = id;
                 textureAux["lengthS"] = lengthS;
-                textureAux["lengthT"] = lengthT;
-
-                console.log(textureAux["lengthS"]);
+                textureAux["lengthT"] = lengthT;    
 
             }
 
@@ -2074,6 +2285,8 @@ class MySceneGraph {
 
             this.components[componentId] = component;
             numComponents++;
+
+            nodeNames = [];
 
         }
 
@@ -2193,6 +2406,39 @@ class MySceneGraph {
     }
 
     /**
+     * Auxiliary function responsible for parsing the animations in each component 
+     * @param {animations block element} animations
+     * @returns string with error descriptor, null if none are present
+     */
+    parseComponentAnimations(animations, componentId) {
+
+        var animationsAux = [];
+
+        console.log(animations);
+
+        for (var i = 0; i < animations.length; i++) {
+
+            if (animations[i].nodeName == "animationref") {
+
+                var id = this.reader.getString(animations[i], 'id')
+                if (id == null) {
+                    return "no id defined for animation in component " + componentId;
+                }
+
+                if (this.animations[id] != null) {
+                    animationsAux.push(id); 
+                } 
+
+            } else {
+                return "unrecognized token in animations tag";
+            }
+
+        }
+
+
+    }
+
+    /**
      * Auxiliary function responsible for parsing the materials in each component 
      * @param {materials block element} materials
      * @returns string with error descriptor, null if none are present
@@ -2203,6 +2449,9 @@ class MySceneGraph {
         var numMaterials = 0;
 
         for (var i = 0; i < materials.length; i++) {
+
+            console.log(materials[i]);
+
             if (materials[i].nodeName == "material") {
 
                 var id = this.reader.getString(materials[i], 'id')
