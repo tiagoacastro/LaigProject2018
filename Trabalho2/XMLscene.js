@@ -160,9 +160,9 @@ class XMLscene extends CGFscene {
     /**
      * function to update animations
      */
-    updateAnimations() {
+    updateAnimations(deltaTime) {
         for (var key in this.graph.animations) {
-           this.graph.animations[key].update();
+           this.graph.animations[key].update(deltaTime);
         }
     }
 

@@ -930,7 +930,7 @@ class MySceneGraph {
       var tmp = [];
       var x = 0, y = 0, z = 0;
 
-      console.log(controlPoints.length);
+      //console.log(controlPoints.length);
 
       for (let i = 0; i < controlPoints.length; i++) {
 
@@ -955,7 +955,7 @@ class MySceneGraph {
 
         tmp[0] = x; tmp[1] = y; tmp[2] = z;
         auxControlPoints[i] = tmp;
-        console.log(x, y, z, auxControlPoints[i]);
+        //console.log(x, y, z, auxControlPoints[i]);
         numControlPoints++;
         tmp = [];
         x = 0; y = 0; z = 0;
@@ -966,7 +966,7 @@ class MySceneGraph {
       }
 
       var linearAux = new LinearAnimation(this.scene, span, auxControlPoints);
-      console.log(auxControlPoints[0][0], auxControlPoints.length);
+      //console.log(auxControlPoints[0][0], auxControlPoints.length);
 
       return linearAux;
   }
@@ -1004,7 +1004,7 @@ class MySceneGraph {
           return "unable to parse value component of the 'rotang' field for ID = " + circularId;
       }
 
-      console.log(span, center, radius, startang, rotang);
+      //console.log(span, center, radius, startang, rotang);
       var circularAux = new CircularAnimation(this.scene, span, center, radius, startang, rotang);
 
       return circularAux;
@@ -2259,6 +2259,7 @@ class MySceneGraph {
             component["materials"] = materials;
             component["texture"] = textureAux;
             component["children"] = childrenTmp;
+            component["animations"] = animations;
             component["activeMaterial"] = 0;
 
             this.components[componentId] = component;
@@ -2392,8 +2393,6 @@ class MySceneGraph {
 
         var animationsAux = [];
 
-        //console.log(animations);
-
         for (var i = 0; i < animations.length; i++) {
 
             if (animations[i].nodeName == "animationref") {
@@ -2413,6 +2412,9 @@ class MySceneGraph {
 
         }
 
+        //console.log(animationsAux);
+
+        return animationsAux;
 
     }
 
@@ -2605,10 +2607,12 @@ class MySceneGraph {
      * @param {component} component
      */
     applyAnimations(component) {
+
+        console.log(this.animations);
         
-        for (var key in component["animations"]) {
-            console.log(key);
-            this.animations[key].apply();
+        for (let i = 0; i < component["animations"].length; i++) {
+            console.log(component["animations"][i]);
+            this.animations[component["animations"][i]].apply();
         }
         
     }
