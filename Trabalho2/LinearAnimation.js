@@ -1,7 +1,7 @@
 class LinearAnimation extends Animation {
 
-    constructor(scene, object, deltaTime, controlPoints) {
-        super(scene, object, deltaTime);
+    constructor(scene, deltaTime, controlPoints) {
+        super(scene, deltaTime);
         this.controlPoints = controlPoints;
         this.velocity = [];
         this.lineSegments = [];
@@ -9,9 +9,9 @@ class LinearAnimation extends Animation {
         this.currLineSegment = 0;
         this.isPointInSegment = function(x, y, z) {
           if (
-            Math.abs(x) <= Math.abs(max(this.lineSegments[this.currLineSegment][0], this.lineSegments[this.currLineSegment][3])) && Math.abs(x) >= Math.abs(min(this.lineSegments[this.currLineSegment][0], this.lineSegments[this.currLineSegment][3])) &&
-            Math.abs(y) <= Math.abs(max(this.lineSegments[this.currLineSegment][1], this.lineSegments[this.currLineSegment][4])) && Math.abs(x) >= Math.abs(min(this.lineSegments[this.currLineSegment][1], this.lineSegments[this.currLineSegment][4])) &&
-            Math.abs(z) <= Math.abs(max(this.lineSegments[this.currLineSegment][2], this.lineSegments[this.currLineSegment][5])) && Math.abs(x) >= Math.abs(min(this.lineSegments[this.currLineSegment][2], this.lineSegments[this.currLineSegment][5]))
+            Math.abs(x) <= Math.abs(Math.max(this.lineSegments[this.currLineSegment][0], this.lineSegments[this.currLineSegment][3])) && Math.abs(x) >= Math.abs(Math.min(this.lineSegments[this.currLineSegment][0], this.lineSegments[this.currLineSegment][3])) &&
+            Math.abs(y) <= Math.abs(Math.max(this.lineSegments[this.currLineSegment][1], this.lineSegments[this.currLineSegment][4])) && Math.abs(x) >= Math.abs(Math.min(this.lineSegments[this.currLineSegment][1], this.lineSegments[this.currLineSegment][4])) &&
+            Math.abs(z) <= Math.abs(Math.max(this.lineSegments[this.currLineSegment][2], this.lineSegments[this.currLineSegment][5])) && Math.abs(x) >= Math.abs(Math.min(this.lineSegments[this.currLineSegment][2], this.lineSegments[this.currLineSegment][5]))
           ) {   
             return true;
           } 
@@ -20,7 +20,8 @@ class LinearAnimation extends Animation {
           }
         };
         this.originPoint = controlPoints[0];
-        this.currPoint = originPoint;
+        this.currPoint = this.originPoint;
+        this.initLinearAnimation();
     }
 
     initLinearAnimation() {
@@ -32,13 +33,13 @@ class LinearAnimation extends Animation {
       for (var i = 0; i < this.controlPoints.length - 1; i++) {
 
         this.lineSegments[i] = [ 
-          controlPoints[i][0], controlPoints[i][1], controlPoints[i][2], // xi, yi, zi
-          controlPoints[i+1][0], controlPoints[i+1][1], controlPoints[i+1][2] // xf, yf, zf
+          this.controlPoints[i][0], this.controlPoints[i][1], this.controlPoints[i][2], // xi, yi, zi
+          this.controlPoints[i+1][0], this.controlPoints[i+1][1], this.controlPoints[i+1][2] // xf, yf, zf
         ] 
 
-        totalDistX += (controlPoints[i][0] - controlPoints[i+1][0]);
-        totalDistY += (controlPoints[i][1] - controlPoints[i+1][1]);
-        totalDistZ += (controlPoints[i][2] - controlPoints[i+1][2]);
+        totalDistX += (this.controlPoints[i][0] - this.controlPoints[i+1][0]);
+        totalDistY += (this.controlPoints[i][1] - this.controlPoints[i+1][1]);
+        totalDistZ += (this.controlPoints[i][2] - this.controlPoints[i+1][2]);
       }
 
       //calculate scalar velocity
@@ -62,6 +63,14 @@ class LinearAnimation extends Animation {
 
     apply() {
 
+      //translate the origin point to (velX*deltaTime, velY*deltaTime, velZ*deltaTime)
+
+      this.scene.translate(
+        this.currPoint[0],
+        this.currPoint[1],
+        this.currPoint[2]
+      );
+
     }
 
     update(deltaTime) {
@@ -84,13 +93,7 @@ class LinearAnimation extends Animation {
         }
       }
 
-      //translate the origin point to (velX*deltaTime, velY*deltaTime, velZ*deltaTime)
-
-      this.scene.translate(
-        this.currPoint[0],
-        this.currPoint[1],
-        this.currPoint[2]
-      );
+      //console.log(this.currPoint);
 
     }
 

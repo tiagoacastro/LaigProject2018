@@ -101,7 +101,7 @@ class MySceneGraph {
 
         // Processes each node, verifying errors.
 
-        console.log("first index = " + nodeNames[0]);
+        //console.log("first index = " + nodeNames[0]);
 
         // <scene>
         var index;
@@ -903,6 +903,8 @@ class MySceneGraph {
 
       }
 
+      console.log(this.animations);
+
       this.log("Parsed animations");
 
       return null;
@@ -916,33 +918,21 @@ class MySceneGraph {
      */
     parseLinearAnimation(linear) {
 
-      var linearAux = {};
       var numControlPoints = 0;
-
-      var linearId = this.reader.getString(linear, 'id');
-      if (linearId == null) {
-          return "no ID defined for linear animation";
-      }
-
-      if (this.animations[linearId] != null) {
-          return "ID must be unique for each animation (conflict: ID = " + linearId + ")";
-      }
-
-      linearAux["id"] = linearId;
 
       var span = this.reader.getFloat(linear, 'span');
       if (!(span != null && !isNaN(span))) {
           return "unable to parse value component of the 'span' field for ID = " + linearId;
       }
 
-      linearAux["span"] = span;
-      linearAux["controlPoints"] = [];
-
       var controlPoints = linear.children;
-      var auxControlPoint = [];
-      var x, y, z;
+      var auxControlPoints = [];
+      var tmp = [];
+      var x = 0, y = 0, z = 0;
 
-      for (var i = 0; i < controlPoints.length; i++) {
+      console.log(controlPoints.length);
+
+      for (let i = 0; i < controlPoints.length; i++) {
 
         if (controlPoints[i].nodeName !== "controlpoint") {
           return "undefined token in animation " + linearId;
@@ -963,16 +953,20 @@ class MySceneGraph {
           return "unable to parse value component of the 'z' field for control point " + i + " of animation " + linearId;
         }
 
-        auxControlPoint = [x, y, z];
-        linearAux["controlPoints"].push(auxControlPoint);
+        tmp[0] = x; tmp[1] = y; tmp[2] = z;
+        auxControlPoints[i] = tmp;
+        console.log(x, y, z, auxControlPoints[i]);
         numControlPoints++;
-        auxControlPoint = [];
+        tmp = [];
         x = 0; y = 0; z = 0;
       }
 
       if (numControlPoints <= 0) {
         return "there should be at least one control point defined for animation " + linearId;
       }
+
+      var linearAux = new LinearAnimation(this.scene, span, auxControlPoints);
+      console.log(auxControlPoints[0][0], auxControlPoints.length);
 
       return linearAux;
   }
@@ -984,26 +978,16 @@ class MySceneGraph {
      */
     parseCircularAnimation(circular) {
 
-      var circularAux = {};
-
-      var circularId = this.reader.getString(circular, 'id');
-      if (circularId == null) {
-          return "no ID defined for linear animation";
-      }
-
-      if (this.animations[circularId] != null) {
-          return "ID must be unique for each animation (conflict: ID = " + circularId + ")";
-      }
-
       var span = this.reader.getFloat(circular, 'span');
       if (!(span != null && !isNaN(span))) {
           return "unable to parse value component of the 'span' field for ID = " + circularId;
       }
 
-      var center = this.reader.getFloat(circular, 'center');
-      if (!(center != null && !isNaN(center))) {
+      var auxCenter = this.reader.getString(circular, 'center');
+      if (!(auxCenter != null)) {
           return "unable to parse value component of the 'center' field for ID = " + circularId;
       }
+      var center = auxCenter.split(' ').map(Number);
 
       var radius = this.reader.getFloat(circular, 'radius');
       if (!(radius != null && !isNaN(radius))) {
@@ -1015,22 +999,16 @@ class MySceneGraph {
           return "unable to parse value component of the 'startang' field for ID = " + circularId;
       }
 
-      var rotang = this.reader.getFloat(circular, 'startang');
+      var rotang = this.reader.getFloat(circular, 'rotang');
       if (!(rotang != null && !isNaN(rotang))) {
           return "unable to parse value component of the 'rotang' field for ID = " + circularId;
       }
 
-      circularAux["id"] = circularId;
-      circularAux["span"] = span;
-      circularAux["center"] = center;
-      circularAux["radius"] = radius;
-      circularAux["startang"] = startang;
-      circularAux["rotang"] = rotang;
+      console.log(span, center, radius, startang, rotang);
+      var circularAux = new CircularAnimation(this.scene, span, center, radius, startang, rotang);
 
       return circularAux;
-  }
-
-
+    }
 
     /**
      * Parses the <rectangle> block.
@@ -2414,7 +2392,7 @@ class MySceneGraph {
 
         var animationsAux = [];
 
-        console.log(animations);
+        //console.log(animations);
 
         for (var i = 0; i < animations.length; i++) {
 
@@ -2450,7 +2428,7 @@ class MySceneGraph {
 
         for (var i = 0; i < materials.length; i++) {
 
-            console.log(materials[i]);
+            //console.log(materials[i]);
 
             if (materials[i].nodeName == "material") {
 
@@ -2561,6 +2539,7 @@ class MySceneGraph {
         var lengthT = parentLengthT;
 
         this.applyTransformation(component);
+        this.applyAnimations(component);
 
         if ((this.materials[component["materials"][component["activeMaterial"]]] != null) && component["materials"][component["activeMaterial"]] !== "inherit") {
             materialId = component["materials"][component["activeMaterial"]];    
@@ -2619,6 +2598,19 @@ class MySceneGraph {
         for (var key in component["transformations"]) {
             this.applyTransformationAux(component["transformations"][key]);
         }
+    }
+
+     /**
+     * Applies each animation to the respective component
+     * @param {component} component
+     */
+    applyAnimations(component) {
+        
+        for (var key in component["animations"]) {
+            console.log(key);
+            this.animations[key].apply();
+        }
+        
     }
 
     /**

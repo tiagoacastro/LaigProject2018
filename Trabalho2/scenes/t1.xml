@@ -64,7 +64,7 @@
       <controlpoint xx="0" yy="0" zz="0"/>
     </linear>
 
-    <circular id="turn_saturn" span="60" center="0 0 12" radius="12" startang="45" rotang="360"/>
+    <circular id="turn_stress_ball" span="5" center="0 0 12" radius="12" startang="45" rotang="360"/>
   </animations>
 
   <primitives>

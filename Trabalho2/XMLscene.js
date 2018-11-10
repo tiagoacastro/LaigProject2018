@@ -39,6 +39,8 @@ class XMLscene extends CGFscene {
             this.axisOn = !(this.axisOn);
         };
 
+        this.prevTime = -1;
+        this.deltaTime = 0;
         this.setUpdatePeriod(1000 * (1/FPS));
     }
     /**
@@ -126,10 +128,19 @@ class XMLscene extends CGFscene {
     /**
      * update function
      */
-    update() {
+    update(currTime) {
 
+        if (this.lastTime === -1) {
+            this.lastTime = currTime;
+        } else {
+            this.deltaTime = currTime - this.lastTime;
+            this.lastTime = currTime;
+        }
+
+        this.updateAnimations(this.deltaTime);
         this.checkKeys();
     }
+
     /**
      * function to cycle the materials of the components
      */
@@ -145,6 +156,16 @@ class XMLscene extends CGFscene {
             }
         }
     }
+
+    /**
+     * function to update animations
+     */
+    updateAnimations() {
+        for (var key in this.graph.animations) {
+           this.graph.animations[key].update();
+        }
+    }
+
     /**
      * Displays the scene.
      */
