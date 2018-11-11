@@ -58,13 +58,14 @@
   </transformations>
 
   <animations>
-    <linear id="jump_stress_ball" span="1">
+    <linear id="jump_stress_ball" span="20">
       <controlpoint xx="0" yy="0" zz="0"/>
-      <controlpoint xx="0" yy="0" zz="0.5"/>
+      <controlpoint xx="5" yy="0" zz="5"/>
+      <controlpoint xx="5" yy="0" zz="0"/>
       <controlpoint xx="0" yy="0" zz="0"/>
     </linear>
 
-    <circular id="turn_stress_ball" span="5" center="0 0 12" radius="12" startang="45" rotang="360"/>
+    <circular id="turn_stress_ball" span="5" center="0 0 0" radius="2" startang="45" rotang="360"/>
   </animations>
 
   <primitives>
@@ -145,7 +146,6 @@
       </transformation>
       <animations>
         <animationref id="jump_stress_ball"/>
-        <animationref id="turn_stress_ball"/>
       </animations>
       <materials>
         <material id="default"/>

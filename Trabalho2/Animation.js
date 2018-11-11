@@ -1,7 +1,7 @@
 class Animation {
 
-    constructor(scene, deltaTime) {
+    constructor(scene, span) {
       this.scene = scene;
-      this.deltaTime = deltaTime;
+      this.span = span;
     }
 }

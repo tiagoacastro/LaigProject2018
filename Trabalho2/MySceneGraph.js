@@ -927,7 +927,6 @@ class MySceneGraph {
 
       var controlPoints = linear.children;
       var auxControlPoints = [];
-      var tmp = [];
       var x = 0, y = 0, z = 0;
 
       //console.log(controlPoints.length);
@@ -938,26 +937,29 @@ class MySceneGraph {
           return "undefined token in animation " + linearId;
         }
 
+        var tmp = [];
+
         x = this.reader.getFloat(controlPoints[i], 'xx');
         if (!(x != null && !isNaN(x))) {
           return "unable to parse value component of the 'x' field for control point " + i + " of animation " + linearId;
         }
+        tmp.push(x);
 
         y = this.reader.getFloat(controlPoints[i], 'yy');
         if (!(y != null && !isNaN(y))) {
           return "unable to parse value component of the 'y' field for control point " + i + " of animation " + linearId;
         }
+        tmp.push(y);
 
         z = this.reader.getFloat(controlPoints[i], 'zz');
         if (!(z != null && !isNaN(z))) {
           return "unable to parse value component of the 'z' field for control point " + i + " of animation " + linearId;
         }
+        tmp.push(z);
 
-        tmp[0] = x; tmp[1] = y; tmp[2] = z;
-        auxControlPoints[i] = tmp;
-        //console.log(x, y, z, auxControlPoints[i]);
+        auxControlPoints.push(tmp);
+        console.log(tmp.toString(), tmp[2], tmp.length);
         numControlPoints++;
-        tmp = [];
         x = 0; y = 0; z = 0;
       }
 
@@ -966,7 +968,9 @@ class MySceneGraph {
       }
 
       var linearAux = new LinearAnimation(this.scene, span, auxControlPoints);
-      //console.log(auxControlPoints[0][0], auxControlPoints.length);
+      console.log(auxControlPoints);
+      console.log(auxControlPoints[0]);
+      console.log(auxControlPoints[0][2]);
 
       return linearAux;
   }
@@ -2608,10 +2612,10 @@ class MySceneGraph {
      */
     applyAnimations(component) {
 
-        console.log(this.animations);
+        //console.log(this.animations);
         
         for (let i = 0; i < component["animations"].length; i++) {
-            console.log(component["animations"][i]);
+            //console.log(component["animations"][i]);
             this.animations[component["animations"][i]].apply();
         }
         
