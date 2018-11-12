@@ -1301,6 +1301,62 @@ class MySceneGraph {
     }
 
     /**
+     * Parses the <patch> block.
+     * @param {patch element} patchNode
+     * @return patch object
+     */
+    parsePatch(patchNode){
+        let children = patchNode.children;
+
+        let nPointsU = this.reader.getFloat(patchNode, 'npointsU');
+        if (!(nPointsU != null && !isNaN(nPointsU))) {
+            this.onXMLError("unable to parse value for nPointsU plane");
+        }
+        if(nPointsU <= 1 || nPointsU % 1 != 0) {
+            this.onXMLError("nPointsU can't be 0 or floats");
+        }
+
+        let nPointsV = this.reader.getFloat(patchNode, 'npointsV');
+        if (!(nPointsV != null && !isNaN(nPointsV))) {
+            this.onXMLError("unable to parse value for nPointsV plane");
+        }
+        if(nPointsV <= 1 || nPointsV % 1 != 0) {
+            this.onXMLError("nPointsV can't be 0 or floats");
+        }
+
+        let nPartsU = this.reader.getFloat(patchNode, 'npartsU');
+        if (!(nPartsU != null && !isNaN(nPartsU))) {
+            nPartsU = 10;
+            this.onXMLMinorError("unable to parse value for nPartsU plane; assuming 'nPartsU = 10'");
+        }
+        if(nPartsU <= 1 || nPartsU % 1 != 0) {
+            nPartsU = 10;
+            this.onXMLMinorError("nPartsU can't be 0 or floats, assuming 'nPartsU = 10'");
+        }
+
+        let nPartsV = this.reader.getFloat(patchNode, 'npartsV');
+        if (!(nPartsV != null && !isNaN(nPartsV))) {
+            nPartsV = 10;
+            this.onXMLMinorError("unable to parse value for nPartsV plane; assuming 'nPartsV = 10'");
+        }
+        if(nPartsV <= 1 || nPartsV % 1 != 0) {
+            nPartsV = 10;
+            this.onXMLMinorError("nPartsV can't be 0 or floats, assuming 'nPartsV = 10'");
+        }
+
+        for(let i = 0; i < children.length; i++){
+            //let controlpoints e meter num vetor
+        }
+
+        //criar patch
+        var patch = null; //new MyPatch();
+
+        this.log("Parsed patch");
+
+        return patch;
+    }
+
+    /**
      * Parses the <primitives> block.
      * @param {primitives block element} primitivesNode
      * @returns string with error descriptor, null if none are present
@@ -1356,6 +1412,11 @@ class MySceneGraph {
                 case "plane":
                     primitive["type"] = "plane";
                     primitive["primitive"] = this.parsePlane(children[i].children[0]); 
+                    numPrimitives++;
+                    break;
+                case "patch":
+                    primitive["type"] = "patch";
+                    primitive["primitive"] = this.parsePatch(children[i].children[0]); 
                     numPrimitives++;
                     break;
             }

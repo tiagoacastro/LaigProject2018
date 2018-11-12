@@ -134,16 +134,15 @@
     </primitive>
 
     <primitive id="patch">
-      <patch npointsU="3" npointsV="3" npartsU="2" npartsV="2"> 
-        <controlpoint xx="0" yy="0" zz="0" />
-        <controlpoint xx="1" yy="0" zz="0" />
-        <controlpoint xx="2" yy="0" zz="0" />
-        <controlpoint xx="0" yy="0" zz="1" />
-        <controlpoint xx="1" yy="0" zz="1" />
-        <controlpoint xx="2" yy="0" zz="1" />
-        <controlpoint xx="0" yy="0" zz="2" />
-        <controlpoint xx="1" yy="0" zz="2" />
-        <controlpoint xx="2" yy="0" zz="2" />
+      <patch npointsU="3" npointsV="2" npartsU="2" npartsV="2"> 
+        <controlpoint xx="-0.5" yy="0" zz="0.5" />
+        <controlpoint xx="-0.5" yy="0" zz="-0.5" />
+
+        <controlpoint xx="0" yy="1" zz="0.5" />
+        <controlpoint xx="0" yy="1" zz="-0.5" />
+
+        <controlpoint xx="0.5" yy="0" zz="0.5" />
+        <controlpoint xx="0.5" yy="0" zz="-0.5" />
       </patch>
     </primitive>
 
