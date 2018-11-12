@@ -1266,7 +1266,39 @@ class MySceneGraph {
         return torus;
     }
 
-    //implementar nos parsers das primitivas a sua criação com os valores
+    /**
+     * Parses the <plane> block.
+     * @param {plane element} planeNode
+     * @return plane object
+     */
+    parsePlane(planeNode){
+        let nPartsU = this.reader.getFloat(planeNode, 'npartsU');
+        if (!(nPartsU != null && !isNaN(nPartsU))) {
+            nPartsU = 10;
+            this.onXMLMinorError("unable to parse value for nPartsU plane; assuming 'nPartsU = 10'");
+        }
+        if(nPartsU <= 1 || nPartsU % 1 != 0) {
+            nPartsU = 10;
+            this.onXMLMinorError("nPartsU can't be 0 or floats, assuming 'nPartsU = 10'");
+        }
+
+        let nPartsV = this.reader.getFloat(planeNode, 'npartsV');
+        if (!(nPartsV != null && !isNaN(nPartsV))) {
+            nPartsV = 10;
+            this.onXMLMinorError("unable to parse value for nPartsV plane; assuming 'nPartsV = 10'");
+        }
+        if(nPartsV <= 1 || nPartsV % 1 != 0) {
+            nPartsV = 10;
+            this.onXMLMinorError("nPartsV can't be 0 or floats, assuming 'nPartsV = 10'");
+        }
+
+        //criar plane
+        var plane = new MyPlane(this.scene, nPartsU, nPartsV);
+
+        this.log("Parsed plane");
+
+        return plane;
+    }
 
     /**
      * Parses the <primitives> block.
@@ -1319,6 +1351,11 @@ class MySceneGraph {
                 case "torus":
                     primitive["type"] = "torus";
                     primitive["primitive"] = this.parseTorus(children[i].children[0]); 
+                    numPrimitives++;
+                    break;
+                case "plane":
+                    primitive["type"] = "plane";
+                    primitive["primitive"] = this.parsePlane(children[i].children[0]); 
                     numPrimitives++;
                     break;
             }

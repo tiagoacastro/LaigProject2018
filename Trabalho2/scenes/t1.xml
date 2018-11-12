@@ -38,7 +38,6 @@
     <texture id="dolomite" file="./scenes/images/dolomite.jpg"/>
     <texture id="gold" file="./scenes/images/gold.jpeg"/>
     <texture id="vidal" file="./scenes/images/vidal.jpg"/>
-    <texture id="picture" file="./scenes/images/picture.jpg"/>
     <texture id="height_map" file="./scenes/images/height_map.jpg"/>
   </textures>
 
@@ -131,7 +130,7 @@
     </primitive>
 
     <primitive id="plane">
-      <plane npartsU="8" npartsV="8" /> 
+      <plane npartsU="20" npartsV="20" /> 
     </primitive>
 
     <primitive id="patch">
@@ -192,7 +191,20 @@
       </materials>
       <texture id="none" length_s="1" length_t="1" />
       <children>
-        <componentref id="mug"/> 
+        <componentref id="plane"/> 
+      </children>
+    </component>
+
+    <component id="plane">
+      <transformation>
+        <transformationref id="identity"/>
+      </transformation>
+      <materials>
+        <material id="inherit"/>
+      </materials>
+      <texture id="none" length_s="1" length_t="1" />
+      <children>
+        <primitiveref id="plane"/> 
       </children>
     </component>
 
