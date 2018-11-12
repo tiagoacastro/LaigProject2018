@@ -49,12 +49,44 @@
       <diffuse  r="0.80" g="0.80" b="0.80" a="1" /> 
       <specular  r="0.80" g="0.80" b="0.80" a="1" /> 
     </material>
+
+    <material id="coffee" shininess="30" >
+      <emission a="1" b="0" g="0" r="0"/>
+      <ambient a="1" b="0.0075" g="0.0271" r="0.0545"/>
+      <diffuse a="1" b="0.045" g="0.15" r="0.300"/>
+      <specular a="1" b="0.015" g="0.042" r="0.1"/>
+    </material>
+
+    <material id="cream" shininess="30" >
+      <emission r="0" g="0" b="0" a="1" />
+      <ambient  r="0.1" g="0.1" b="0.1" a="1" /> 
+      <diffuse r="0.6" g="0.5" b="0.3" a="1" />
+      <specular r="0.6" g="0.5" b="0.1" a="1" />
+    </material>
   </materials>
 
   <transformations>
     <transformation id="identity">
       <translate x="0" y="0" z="0"/>
     </transformation>
+
+    <transformation id="set_mug_handle">
+      <translate x="0.2" y="0" z="0.2"/>
+        <rotate axis="x" angle="-90"/>
+      </transformation>
+
+      <transformation id="set_mug_top">
+        <translate x="0" y="0" z="0.4"/>
+      </transformation>
+
+      <transformation id="set_mug_liquid">
+        <translate x="0" y="0" z="0.395"/>
+      </transformation>
+
+      <transformation id="set_mug">
+        <translate x="4.4" y="2.2" z="3.3"/>
+        <rotate axis="x" angle="-90"/>
+      </transformation>
   </transformations>
 
   <animations>
@@ -131,6 +163,23 @@
     <primitive id="water">
       <water idtexture="black_plastic" idwavemap="height_map" parts="10" heightscale="1" texscale="1" />
     </primitive>
+
+    <primitive id="cylinder_mug">
+      <cylinder base="0.2" top="0.2" height="0.4" slices="40" stacks="40" />
+    </primitive>
+
+    <primitive id="torus_mug_handle">
+      <torus inner="0.025" outer="0.1" slices="40" loops="40" />
+    </primitive>
+
+    <primitive id="torus_mug_top">
+      <torus inner="0.015" outer="0.2" slices="40" loops="40" />
+    </primitive>
+
+    <primitive id="cylinder_mug_liquid">
+      <cylinder base="0.19" top="0.19" height="0.01" slices="40" stacks="40" />
+    </primitive>
+
   </primitives>
 
   <components>
@@ -143,7 +192,7 @@
       </materials>
       <texture id="none" length_s="1" length_t="1" />
       <children>
-        <componentref id="stress_ball"/>  
+        <componentref id="mug"/> 
       </children>
     </component>
 
@@ -177,7 +226,78 @@
       <children>
         <primitiveref id="triangle"/> 
       </children>
-   </component>
+    </component>
+
+    <component id="mug">
+      <transformation>
+        <transformationref id="set_mug"/>
+      </transformation>
+      <animations>
+        <animationref id="move_triangle"/>
+      </animations>
+      <materials>
+        <material id="cream"/>
+      </materials>
+      <texture id="none" length_s="1" length_t="1" />
+      <children>
+        <componentref id="mug_handle"/>
+        <componentref id="mug_body"/>
+        <componentref id="mug_top"/>
+        <componentref id="mug_liquid"/>
+      </children>
+    </component>
+
+    <component id="mug_handle">
+      <transformation>
+        <transformationref id="set_mug_handle"/>
+      </transformation>
+      <materials>
+        <material id="inherit"/>
+      </materials>
+      <texture id="inherit" length_s="1" length_t="1" />
+      <children>
+        <primitiveref id="torus_mug_handle"/>
+      </children>
+    </component>
+
+    <component id="mug_body">
+      <transformation>
+        <transformationref id="set_mug_body"/>
+      </transformation>
+      <materials>
+        <material id="inherit"/>
+      </materials>
+      <texture id="inherit" length_s="1" length_t="1" />
+      <children>
+        <primitiveref id="cylinder_mug"/>
+      </children>
+    </component>
+
+    <component id="mug_top">
+      <transformation>
+        <transformationref id="set_mug_top"/>
+      </transformation>
+      <materials>
+        <material id="inherit"/>
+      </materials>
+      <texture id="inherit" length_s="1" length_t="1" />
+      <children>
+        <primitiveref id="torus_mug_top"/>
+      </children>
+    </component>
+
+    <component id="mug_liquid">
+      <transformation>
+        <transformationref id="set_mug_liquid"/>
+      </transformation>
+      <materials>
+        <material id="coffee"/>
+      </materials>
+      <texture id="inherit" length_s="1" length_t="1" />
+      <children>
+        <primitiveref id="cylinder_mug_liquid"/>
+      </children>
+    </component>
 
   </components>
 
