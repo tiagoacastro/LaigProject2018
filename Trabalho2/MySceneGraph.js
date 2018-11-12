@@ -2269,6 +2269,8 @@ class MySceneGraph {
 
         }
 
+        console.log(this.components);
+
         if (numComponents <= 0) {
             return "there should be at least one component defined";
         }

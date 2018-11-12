@@ -33,6 +33,8 @@ class LinearAnimation extends Animation {
         this.currPoint.push(this.originPoint[1]);
         this.currPoint.push(this.originPoint[2]);
 
+        this.orientation = 0;
+
         this.initLinearAnimation();
     }
 
@@ -75,9 +77,9 @@ class LinearAnimation extends Animation {
         ];
       }
 
-      console.log(this.lineSegmentsVel);
-      console.log(this.lineSegments);
-  
+      //set object orientation
+
+      this.orientation = Math.atan2(this.lineSegments[this.currLineSegment][5] - this.lineSegments[this.currLineSegment][2], this.lineSegments[this.currLineSegment][3] - this.lineSegments[this.currLineSegment][0]);
     }
 
     apply() {
@@ -96,14 +98,15 @@ class LinearAnimation extends Animation {
         this.originPoint[1],
         this.originPoint[2]
       );
+      this.scene.rotate(this.orientation, 0, 1, 0);
 
     }
 
     update(deltaTime) {
 
-      this.currPoint[0] +=(this.lineSegmentsVel[this.currLineSegment][0]*(deltaTime/1000));
-      this.currPoint[1] +=(this.lineSegmentsVel[this.currLineSegment][1]*(deltaTime/1000));
-      this.currPoint[2] +=(this.lineSegmentsVel[this.currLineSegment][2]*(deltaTime/1000));
+      this.currPoint[0] += (this.lineSegmentsVel[this.currLineSegment][0]*(deltaTime/1000));
+      this.currPoint[1] += (this.lineSegmentsVel[this.currLineSegment][1]*(deltaTime/1000));
+      this.currPoint[2] += (this.lineSegmentsVel[this.currLineSegment][2]*(deltaTime/1000));
 
       //check if point is within the current line segment, if not, increment the currLineSegment value
       //the values reset after finishing the last line segment is traversed, so we're assuming the animation should be looping
@@ -122,6 +125,7 @@ class LinearAnimation extends Animation {
         }
       }
 
+      this.orientation = Math.atan2(this.lineSegments[this.currLineSegment][5] - this.lineSegments[this.currLineSegment][2], this.lineSegments[this.currLineSegment][3] - this.lineSegments[this.currLineSegment][0]);
     }
 
 }

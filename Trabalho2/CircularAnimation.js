@@ -32,7 +32,6 @@ class CircularAnimation extends Animation {
         if (this.currAngle >= (this.initAngle+this.rotAngle)) {
             this.currAngle = this.initAngle;
         }
-        console.log(this.currAngle);
     }
 
 }
