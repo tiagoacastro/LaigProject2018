@@ -65,7 +65,7 @@
       <controlpoint xx="0" yy="0" zz="0"/>
     </linear>
 
-    <circular id="turn_stress_ball" span="5" center="0 0 0" radius="2" startang="45" rotang="360"/>
+    <circular id="turn_stress_ball" span="5" center="0 0 0" radius="2" startang="45" rotang="180"/>
   </animations>
 
   <primitives>
@@ -145,6 +145,7 @@
         <transformationref id="identity"/>
       </transformation>
       <animations>
+        <animationref id="turn_stress_ball"/>
         <animationref id="jump_stress_ball"/>
       </animations>
       <materials>

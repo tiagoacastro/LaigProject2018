@@ -958,7 +958,6 @@ class MySceneGraph {
         tmp.push(z);
 
         auxControlPoints.push(tmp);
-        console.log(tmp.toString(), tmp[2], tmp.length);
         numControlPoints++;
         x = 0; y = 0; z = 0;
       }
@@ -968,9 +967,6 @@ class MySceneGraph {
       }
 
       var linearAux = new LinearAnimation(this.scene, span, auxControlPoints);
-      console.log(auxControlPoints);
-      console.log(auxControlPoints[0]);
-      console.log(auxControlPoints[0][2]);
 
       return linearAux;
   }

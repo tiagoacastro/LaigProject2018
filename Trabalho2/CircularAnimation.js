@@ -2,8 +2,8 @@ var DEGREE_TO_RAD = Math.PI / 180;
 
 class CircularAnimation extends Animation {
 
-    constructor(scene, deltaTime, centre, radius, initAngle, rotAngle) {
-        super(scene, deltaTime);
+    constructor(scene, span, centre, radius, initAngle, rotAngle) {
+        super(scene, span);
         this.centre = centre;
         this.radius = radius;
         this.initAngle = initAngle * DEGREE_TO_RAD;
@@ -17,7 +17,7 @@ class CircularAnimation extends Animation {
     initCircularAnimation() {
         this.currAngle = this.initAngle * DEGREE_TO_RAD;
         let arcLength = this.radius * this.rotAngle;
-        this.velocity = arcLength / this.deltaTime;
+        this.velocity = arcLength / this.span;
         this.angularVelocity = this.velocity / this.radius;
     }
 
@@ -29,6 +29,10 @@ class CircularAnimation extends Animation {
 
     update(deltaTime) {
         this.currAngle += this.angularVelocity * (deltaTime/1000);
+        if (this.currAngle >= (this.initAngle+this.rotAngle)) {
+            this.currAngle = this.initAngle;
+        }
+        console.log(this.currAngle);
     }
 
 }

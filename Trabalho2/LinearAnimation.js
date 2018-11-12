@@ -122,10 +122,6 @@ class LinearAnimation extends Animation {
         }
       }
 
-      if (this.currLineSegment == 1 || this.currLineSegment == 2) {
-        console.log(this.currPoint);
-      }
-
     }
 
 }
