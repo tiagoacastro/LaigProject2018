@@ -467,7 +467,7 @@
             <controlpoint xx="0" yy="0" zz="0"/>
         </linear>
 
-        <circular id="turn_saturn" span="60" center="0 0 12" radius="12" startang="45" rotang="360">
+        <circular id="turn_saturn" span="60" center="0 0 12" radius="12" startang="45" rotang="360" />
     </animations>
 
     <primitives>
@@ -556,7 +556,7 @@
         </primitive>
 
         <primitive id="terrain">
-            <terrain idtexture="black_plastic" idheightmap="height_map" parts="10" heightscale="1"/>
+            <terrain idtexture="black_plastic" idheightmap="height_map" parts="10" heightscale="1" />
         </primitive>
 
         <primitive id="water">
@@ -802,7 +802,7 @@
                 <transformationref id="set_stress_ball"/>
             </transformation>
             <animations>
-                <animationref id="jump_stress_ball">
+                <animationref id="jump_stress_ball"/>
             </animations>
             <materials>
                 <material id="velvet"/>
@@ -915,7 +915,7 @@
                 <transformationref id="identity"/>
             </transformation>
             <animations>
-                <animationref id="turn_saturn">
+                <animationref id="turn_saturn"/>
             </animations>
             <materials>
                 <material id="source"/>
