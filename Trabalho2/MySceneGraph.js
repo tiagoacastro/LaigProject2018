@@ -1376,6 +1376,70 @@ class MySceneGraph {
     }
 
     /**
+     * Parses the <cylinder2> block.
+     * @param {cylinder2 element} cylinder2Node
+     * @return cylinder2 object
+     */
+    parseCylinder2(cylinder2Node){
+        let base = this.reader.getFloat(cylinder2Node, 'base');
+        if (!(base != null && !isNaN(base))) {
+            base = 1;
+            this.onXMLMinorError("unable to parse value for base plane; assuming 'base = 1'");
+        }
+        if(base <= 0) {
+            base = 1;
+            this.onXMLMinorError("base can't be equal or lower than 0, assuming 'base = 1'");
+        }
+
+        let top = this.reader.getFloat(cylinder2Node, 'top');
+        if (!(top != null && !isNaN(top))) {
+            top = 1;
+            this.onXMLMinorError("unable to parse value for top plane; assuming 'top = 1'");
+        }
+        if(top <= 0) {
+            top = 1;
+            this.onXMLMinorError("top can't be equal or lower than 0, assuming 'top = 1'");
+        }
+
+        let height = this.reader.getFloat(cylinder2Node, 'height');
+        if (!(height != null && !isNaN(height))) {
+            height = 1;
+            this.onXMLMinorError("unable to parse value for height plane; assuming 'height = 1'");
+        }
+        if(height <= 0) {
+            height = 1;
+            this.onXMLMinorError("height can't be equal or lower than 0, assuming 'height = 1'");
+        }
+
+        let slices = this.reader.getFloat(cylinder2Node, 'slices');
+        if (!(slices != null && !isNaN(slices))) {
+            slices = 1;
+            this.onXMLMinorError("unable to parse value for slices plane; assuming 'slices = 1'");
+        }
+        if(slices <= 1 || slices % 1 != 0) {
+            slices = 1;
+            this.onXMLMinorError("slices can't be 0 or floats, assuming 'slices = 1'");
+        }
+
+        let stacks = this.reader.getFloat(cylinder2Node, 'stacks');
+        if (!(stacks != null && !isNaN(stacks))) {
+            stacks = 1;
+            this.onXMLMinorError("unable to parse value for stacks plane; assuming 'stacks = 1'");
+        }
+        if(stacks <= 1 || stacks % 1 != 0) {
+            stacks = 1;
+            this.onXMLMinorError("stacks can't be 0 or floats, assuming 'stacks = 1'");
+        }
+
+        //criar cilindro
+        var cylinder2 = new MyCylinder2(this.scene, base, top, height, slices, stacks);
+
+        this.log("Parsed cylinder2");
+
+        return cylinder2;
+    }
+
+    /**
      * Parses the <primitives> block.
      * @param {primitives block element} primitivesNode
      * @returns string with error descriptor, null if none are present
@@ -1436,6 +1500,11 @@ class MySceneGraph {
                 case "patch":
                     primitive["type"] = "patch";
                     primitive["primitive"] = this.parsePatch(children[i].children[0]); 
+                    numPrimitives++;
+                    break;
+                case "cylinder2":
+                    primitive["type"] = "cylinder2";
+                    primitive["primitive"] = this.parseCylinder2(children[i].children[0]); 
                     numPrimitives++;
                     break;
             }

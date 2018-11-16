@@ -17,18 +17,20 @@ class MyPlane extends CGFobject {
         this.initBuffers();
     };
 
+    /**
+     * Nurbs setup
+     */
     initBuffers()
 	{
         this.controlPoints = [	// U = 0
             [ // V = 0..1;
-                 [-0.5, 0.0, 0.5, 1 ],
-                 [-0.5, 0.0, -0.5, 1 ]
-                
+                 [-0.5, 0.0, 0.5, 1],
+                 [-0.5, 0.0, -0.5, 1]
             ],
             // U = 1
             [ // V = 0..1
-                [0.5, 0.0, 0.5, 1 ],
-                [0.5, 0.0, -0.5, 1 ]						 
+                [0.5, 0.0, 0.5, 1],
+                [0.5, 0.0, -0.5, 1]						 
             ]
         ];
 
@@ -37,6 +39,9 @@ class MyPlane extends CGFobject {
         this.obj = new CGFnurbsObject(this.scene, this.nPartsU, this.nPartsV, this.surface);
     };
 
+    /**
+     * Object display
+     */
     display(){
         this.scene.pushMatrix();
             this.scene.rotate(Math.PI, 0, 1, 0);

@@ -16,7 +16,6 @@ class MyCylinder extends CGFobject
 	{
 		super(scene);
         
-        this.scene = scene;
         this.slices = slices;
         this.stacks = stacks;
         this.height = height;
@@ -30,7 +29,7 @@ class MyCylinder extends CGFobject
 		this.display();
 	};
     /**
-     * function to draw the cylinder and its pieces i nthe correct way
+     * function to draw the cylinder and its pieces in the correct way
      */
     display()
 	{

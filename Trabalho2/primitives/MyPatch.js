@@ -23,6 +23,9 @@ class MyPatch extends CGFobject {
         this.initBuffers();
     };
 
+    /**
+     * Nurbs setup
+     */
     initBuffers()
 	{
         this.actualControlPoints = [];
@@ -40,6 +43,9 @@ class MyPatch extends CGFobject {
         this.obj = new CGFnurbsObject(this.scene, this.nPartsU, this.nPartsV, this.surface);
     };
 
+    /**
+     * Object display
+     */
     display(){
         this.scene.pushMatrix();
             this.scene.rotate(Math.PI, 0, 1, 0);
