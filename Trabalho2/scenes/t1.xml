@@ -134,7 +134,7 @@
     </primitive>
 
     <primitive id="patch">
-      <patch npointsU="3" npointsV="2" npartsU="2" npartsV="2"> 
+      <patch npointsU="3" npointsV="2" npartsU="20" npartsV="20"> 
         <controlpoint xx="-0.5" yy="0" zz="0.5" />
         <controlpoint xx="-0.5" yy="0" zz="-0.5" />
 
@@ -190,7 +190,20 @@
       </materials>
       <texture id="none" length_s="1" length_t="1" />
       <children>
-        <componentref id="plane"/> 
+        <componentref id="patch"/> 
+      </children>
+    </component>
+
+    <component id="patch">
+      <transformation>
+        <transformationref id="identity"/>
+      </transformation>
+      <materials>
+        <material id="inherit"/>
+      </materials>
+      <texture id="none" length_s="1" length_t="1" />
+      <children>
+        <primitiveref id="patch"/> 
       </children>
     </component>
 

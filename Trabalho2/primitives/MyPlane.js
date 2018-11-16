@@ -35,25 +35,6 @@ class MyPlane extends CGFobject {
         this.surface = new CGFnurbsSurface(1, 1, this.controlPoints);
 
         this.obj = new CGFnurbsObject(this.scene, this.nPartsU, this.nPartsV, this.surface);
-
-        /*
-        let x = -0.5;
-        let z = -0.5;
-        let intX = 1/this.nPartsU;
-        let intZ = 1/this.nPartsV;
-
-        for(let u = 0; u < this.nPartsU; u++){
-            z = -0.5;
-            for(let v = 0; v < this.nPartsV - 1; v++){
-                this.controlPoints.push([
-                    [x + u*intX, 0, z + v*intZ],
-                    [x + u*intX, 0, z + (v+1)*intZ]
-                ])
-                z += intZ;
-            }
-            x += intX;
-        }
-        */
     };
 
     display(){

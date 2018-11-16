@@ -1309,20 +1309,19 @@ class MySceneGraph {
         let children = patchNode.children;
 
         let nPointsU = this.reader.getFloat(patchNode, 'npointsU');
-        if (!(nPointsU != null && !isNaN(nPointsU))) {
+        if (!(nPointsU != null && !isNaN(nPointsU))) 
             this.onXMLError("unable to parse value for nPointsU plane");
-        }
-        if(nPointsU <= 1 || nPointsU % 1 != 0) {
+        if(nPointsU <= 1 || nPointsU % 1 != 0)
             this.onXMLError("nPointsU can't be 0 or floats");
-        }
 
         let nPointsV = this.reader.getFloat(patchNode, 'npointsV');
-        if (!(nPointsV != null && !isNaN(nPointsV))) {
+        if (!(nPointsV != null && !isNaN(nPointsV)))
             this.onXMLError("unable to parse value for nPointsV plane");
-        }
-        if(nPointsV <= 1 || nPointsV % 1 != 0) {
+        if(nPointsV <= 1 || nPointsV % 1 != 0)
             this.onXMLError("nPointsV can't be 0 or floats");
-        }
+
+        if(children.length != nPointsU*nPointsV)
+            this.onXMLError("nPointsV can't be 0 or floats");
 
         let nPartsU = this.reader.getFloat(patchNode, 'npartsU');
         if (!(nPartsU != null && !isNaN(nPartsU))) {
@@ -1344,12 +1343,32 @@ class MySceneGraph {
             this.onXMLMinorError("nPartsV can't be 0 or floats, assuming 'nPartsV = 10'");
         }
 
-        for(let i = 0; i < children.length; i++){
-            //let controlpoints e meter num vetor
+        let controlPoints = [];
+
+        for (var i = 0; i < children.length; i++) {
+            let xx = this.reader.getFloat(children[i], 'xx');
+            if (!(xx != null && !isNaN(xx))) {
+                xx = 10;
+                this.onXMLMinorError("unable to parse value for xx plane; assuming 'xx = 10'");
+            }
+            
+            let yy = this.reader.getFloat(children[i], 'yy');
+            if (!(yy != null && !isNaN(yy))) {
+                yy = 10;
+                this.onXMLMinorError("unable to parse value for yy plane; assuming 'yy = 10'");
+            }
+
+            let zz = this.reader.getFloat(children[i], 'zz');
+            if (!(zz != null && !isNaN(zz))) {
+                zz = 10;
+                this.onXMLMinorError("unable to parse value for zz plane; assuming 'zz = 10'");
+            }
+
+            controlPoints.push([xx, yy, zz]);
         }
 
         //criar patch
-        var patch = null; //new MyPatch();
+        var patch = new MyPatch(this.scene, nPointsU, nPointsV, nPartsU, nPartsV, controlPoints);
 
         this.log("Parsed patch");
 
