@@ -21,6 +21,10 @@ class MyCylinder extends CGFobject
         this.height = height;
         this.rtop = top;
         this.rbase = base;
+        if(this.rtop = 0)
+            this.rtop = 0.0001;
+        if(this.rbase = 0)
+            this.rbase = 0.0001
 
         this.baselessCylinder = new MyBaselessCylinder(scene, base, top, height, slices, stacks);
         this.top = new MyCircle(scene, slices);
