@@ -3,24 +3,30 @@ class LinearAnimation extends Animation {
     constructor(scene, span, controlPoints) {
         super(scene, span);
         this.controlPoints = controlPoints;
-
-        console.log(this.controlPoints.toString());
-
+        this.timeCounter = 0;
         this.velocity = [];
         this.lineSegments = [];
         this.lineSegmentsVel = [];
+        this.lineSegmentsTimes = [];
+        this.lineSegmentsDist = [];
         this.currLineSegment = 0;
-        this.isPointInSegment = function(x, y, z) {
-          if (
-            (x) <= (Math.max(this.lineSegments[this.currLineSegment][0], this.lineSegments[this.currLineSegment][3])) && (x) >= (Math.min(this.lineSegments[this.currLineSegment][0], this.lineSegments[this.currLineSegment][3])) &&
-            (y) <= (Math.max(this.lineSegments[this.currLineSegment][1], this.lineSegments[this.currLineSegment][4])) && (y) >= (Math.min(this.lineSegments[this.currLineSegment][1], this.lineSegments[this.currLineSegment][4])) &&
-            (z) <= (Math.max(this.lineSegments[this.currLineSegment][2], this.lineSegments[this.currLineSegment][5])) && (z) >= (Math.min(this.lineSegments[this.currLineSegment][2], this.lineSegments[this.currLineSegment][5]))
-          ) {   
-            return true;
-          } 
-          else {
-            return false;
+        this.getCurrSegment = function(timestamp) {
+          var currSegment = -1;
+
+          for (let i = 0; i < this.lineSegmentsTimes.length; i++) {
+            if (timestamp >= this.lineSegmentsTimes[i][0] && timestamp < this.lineSegmentsTimes[i][1]) {
+              currSegment = i;
+              break;
+            }
           }
+
+          if (currSegment == -1) {
+            //assuming that the timestamp cant be negative and the only reason for currSegment to still be -1 once it gets here is because the animation time was surpassed
+            this.timeCounter = timestamp % this.lineSegmentsTimes[this.lineSegmentsTimes.length-1][1]; // timestamp % animationLength
+          }
+
+          return currSegment;
+
         };
 
         this.originPoint = [];
@@ -40,7 +46,7 @@ class LinearAnimation extends Animation {
 
     initLinearAnimation() {
 
-      let totalDistX = 0, totalDistY = 0, totalDistZ = 0;
+      let totalDist = 0, totalDistSeg = 0;
 
       //determine line segments
 
@@ -49,32 +55,47 @@ class LinearAnimation extends Animation {
         this.lineSegments[i] = [ 
           this.controlPoints[i][0], this.controlPoints[i][1], this.controlPoints[i][2], // xi, yi, zi
           this.controlPoints[i+1][0], this.controlPoints[i+1][1], this.controlPoints[i+1][2] // xf, yf, zf
-        ] 
+        ]
 
-        totalDistX += Math.abs(this.controlPoints[i][0] - this.controlPoints[i+1][0]);
-        totalDistY += Math.abs(this.controlPoints[i][1] - this.controlPoints[i+1][1]);
-        totalDistZ += Math.abs(this.controlPoints[i][2] - this.controlPoints[i+1][2]);
+        totalDistSeg = 
+          Math.sqrt(
+            Math.pow(Math.abs(this.controlPoints[i][0] - this.controlPoints[i+1][0]), 2) +
+            Math.pow(Math.abs(this.controlPoints[i][1] - this.controlPoints[i+1][1]), 2) +
+            Math.pow(Math.abs(this.controlPoints[i][2] - this.controlPoints[i+1][2]), 2)
+          );
+        this.lineSegmentsDist[i] = totalDistSeg;
+        totalDist += totalDistSeg;
       }
 
-      console.log(totalDistX, totalDistY, totalDistZ);
-
-      //calculate scalar velocity
-
-      this.velocity[0] = totalDistX / this.span;
-      this.velocity[1] = totalDistY / this.span;
-      this.velocity[2] = totalDistZ / this.span;
-
-      console.log(this.velocity);
+      this.speed = totalDist/this.span;
 
       //calculate vectorial velocity
 
       for (var i = 0; i < this.lineSegments.length; i++) {
 
         this.lineSegmentsVel[i] = [ 
-          (this.lineSegments[i][3] - this.lineSegments[i][0]) * this.velocity[0], // x
-          (this.lineSegments[i][4] - this.lineSegments[i][1]) * this.velocity[1], // y
-          (this.lineSegments[i][5] - this.lineSegments[i][2]) * this.velocity[2],  // z
+          ((this.lineSegments[i][3] - this.lineSegments[i][0]) / this.lineSegmentsDist[i]) * this.speed, // x
+          ((this.lineSegments[i][4] - this.lineSegments[i][1]) / this.lineSegmentsDist[i]) * this.speed, // y
+          ((this.lineSegments[i][5] - this.lineSegments[i][2]) / this.lineSegmentsDist[i]) * this.speed,  // z
         ];
+      }
+
+      //determine timestamps for each segment [ti, tf]
+
+      let beginTime = 0, endTime = 0;
+
+      for (var i = 0; i < this.lineSegments.length; i++) {
+
+        endTime =  
+          (Math.sqrt(
+            Math.pow(this.lineSegments[i][3] - this.lineSegments[i][0], 2) +
+            Math.pow(this.lineSegments[i][4] - this.lineSegments[i][1], 2) +
+            Math.pow(this.lineSegments[i][5] - this.lineSegments[i][2], 2) 
+          ) / this.speed) + beginTime;
+
+        this.lineSegmentsTimes[i] = [beginTime, endTime];
+
+        beginTime = endTime;
       }
 
       //set object orientation
@@ -83,10 +104,6 @@ class LinearAnimation extends Animation {
     }
 
     apply() {
-
-      //translate the origin point to (velX*deltaTime, velY*deltaTime, velZ*deltaTime)
-
-      //console.log(this.currPoint);
 
       this.scene.translate(
         this.currPoint[0],
@@ -99,32 +116,24 @@ class LinearAnimation extends Animation {
         this.originPoint[2]
       );
       this.scene.rotate(this.orientation, 0, 1, 0);
-
     }
 
     update(deltaTime) {
 
-      this.currPoint[0] += (this.lineSegmentsVel[this.currLineSegment][0]*(deltaTime/1000));
-      this.currPoint[1] += (this.lineSegmentsVel[this.currLineSegment][1]*(deltaTime/1000));
-      this.currPoint[2] += (this.lineSegmentsVel[this.currLineSegment][2]*(deltaTime/1000));
+      this.timeCounter += (deltaTime/1000);
+      this.currLineSegment = this.getCurrSegment(this.timeCounter);
 
-      //check if point is within the current line segment, if not, increment the currLineSegment value
-      //the values reset after finishing the last line segment is traversed, so we're assuming the animation should be looping
-
-      if (!this.isPointInSegment(this.currPoint[0], this.currPoint[1], this.currPoint[2])) {
-        if (this.currLineSegment == this.lineSegments.length-1) {
-          this.currLineSegment = 0;
-          this.currPoint[0] = this.originPoint[0];
-          this.currPoint[1] = this.originPoint[1];
-          this.currPoint[2] = this.originPoint[2];
-        } else {
-          this.currLineSegment++;
-          this.currPoint[0] = this.lineSegments[this.currLineSegment][0];
-          this.currPoint[1] = this.lineSegments[this.currLineSegment][1];
-          this.currPoint[2] = this.lineSegments[this.currLineSegment][2];
-        }
+      //reset animation
+      if (this.currLineSegment == -1) {
+        this.currLineSegment = this.getCurrSegment(this.timeCounter);
       }
 
+      var timeElapsedInSegment = this.timeCounter - this.lineSegmentsTimes[this.currLineSegment][0];
+      
+      this.currPoint[0] = this.lineSegments[this.currLineSegment][0] + (this.lineSegmentsVel[this.currLineSegment][0]*timeElapsedInSegment);
+      this.currPoint[1] = this.lineSegments[this.currLineSegment][1] + (this.lineSegmentsVel[this.currLineSegment][1]*timeElapsedInSegment);
+      this.currPoint[2] = this.lineSegments[this.currLineSegment][2] + (this.lineSegmentsVel[this.currLineSegment][2]*timeElapsedInSegment);
+      
       this.orientation = Math.atan2(this.lineSegments[this.currLineSegment][5] - this.lineSegments[this.currLineSegment][2], this.lineSegments[this.currLineSegment][3] - this.lineSegments[this.currLineSegment][0]);
     }
 
