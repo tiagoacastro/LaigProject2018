@@ -11,8 +11,6 @@ class MyVehicle extends CGFobject {
 
         this.plane = new MyPlane(scene, 20, 20);
         this.cone = new MyCylinder2(scene, 0.75, 1, 1, 60, 60);
-    
-        this.display();
     };
 
     /**
@@ -65,8 +63,8 @@ class MyVehicle extends CGFobject {
         this.scene.popMatrix();
 
         this.scene.pushMatrix();
-            this.scene.translate(4.3, 1.5, 0);
-            this.scene.scale(2.6, 2.6, 4);
+            this.scene.translate(4.3, 1, 0);
+            this.scene.scale(1.3, 1.3, 4);
             this.cone.display();
         this.scene.popMatrix();
     };

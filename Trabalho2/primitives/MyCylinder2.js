@@ -20,10 +20,10 @@ class MyCylinder2 extends CGFobject
         this.stacks = stacks;
         this.height = height;
         this.top = top;
-        if(this.top = 0)
+        if(this.top == 0)
             this.top = 0.0001;
         this.base = base;
-        if(this.base = 0)
+        if(this.base == 0)
             this.base = 0.0001
 
         this.initBuffers();
