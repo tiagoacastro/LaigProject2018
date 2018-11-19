@@ -1440,6 +1440,104 @@ class MySceneGraph {
     }
 
     /**
+     * Parses the <terrain> block.
+     * @param {terrain element} terrainNode
+     * @return terrain object
+     */
+    parseTerrain(terrainNode){
+        let idTexture = this.reader.getFloat(terrainNode, 'idtexture');
+        if (idTexture == null) {
+            this.onXMLError("unable to parse value for idtexture plane");
+        }
+
+        let idHeightMap = this.reader.getFloat(terrainNode, 'idheightmap');
+        if (idHeightMap == null) {
+            this.onXMLError("unable to parse value for idheightmap plane");
+        }
+
+        let parts = this.reader.getFloat(terrainNode, 'parts');
+        if (!(parts != null && !isNaN(parts))) {
+            parts = 10;
+            this.onXMLMinorError("unable to parse value for parts plane; assuming 'parts = 10'");
+        }
+        if(parts <= 0) {
+            parts = 10;
+            this.onXMLMinorError("parts can't be equal or lower than 0, assuming 'parts = 10'");
+        }
+
+        let heightScale = this.reader.getFloat(terrainNode, 'heightscale');
+        if (!(heightScale != null && !isNaN(heightScale))) {
+            heightScale = 1;
+            this.onXMLMinorError("unable to parse value for heightscale plane; assuming 'heightscale = 1'");
+        }
+        if(heightScale <= 0) {
+            heightScale = 1;
+            this.onXMLMinorError("heightscale can't be equal or lower than 0, assuming 'heightscale = 1'");
+        }
+
+        //criar terrain
+        var terrain = null; //new MyTerrain(---);
+
+        this.log("Parsed terrain");
+
+        return terrain;
+    }
+
+    /**
+     * Parses the <water> block.
+     * @param {water element} waterNode
+     * @return water object
+     */
+    parseWater(waterNode){
+        let idTexture = this.reader.getFloat(waterNode, 'idtexture');
+        if (idTexture == null) {
+            this.onXMLError("unable to parse value for idtexture plane");
+        }
+
+        let idWaveMap = this.reader.getFloat(waterNode, 'idwavemap');
+        if (idWaveMap == null) {
+            this.onXMLError("unable to parse value for idwavemap plane");
+        }
+
+        let parts = this.reader.getFloat(waterNode, 'parts');
+        if (!(parts != null && !isNaN(parts))) {
+            parts = 10;
+            this.onXMLMinorError("unable to parse value for parts plane; assuming 'parts = 10'");
+        }
+        if(parts <= 0) {
+            parts = 10;
+            this.onXMLMinorError("parts can't be equal or lower than 0, assuming 'parts = 10'");
+        }
+
+        let heightScale = this.reader.getFloat(waterNode, 'heightscale');
+        if (!(heightScale != null && !isNaN(heightScale))) {
+            heightScale = 1;
+            this.onXMLMinorError("unable to parse value for heightscale plane; assuming 'heightscale = 1'");
+        }
+        if(heightScale <= 0) {
+            heightScale = 1;
+            this.onXMLMinorError("heightscale can't be equal or lower than 0, assuming 'heightscale = 1'");
+        }
+
+        let texScale = this.reader.getFloat(waterNode, 'texscale');
+        if (!(texScale != null && !isNaN(texScale))) {
+            texScale = 1;
+            this.onXMLMinorError("unable to parse value for texscale plane; assuming 'texscale = 1'");
+        }
+        if(texScale <= 0) {
+            texScale = 1;
+            this.onXMLMinorError("texscale can't be equal or lower than 0, assuming 'texscale = 1'");
+        }
+
+        //criar water
+        var water = null; //new MyWater(---);
+
+        this.log("Parsed water");
+
+        return water;
+    }
+
+    /**
      * Parses the <primitives> block.
      * @param {primitives block element} primitivesNode
      * @returns string with error descriptor, null if none are present
@@ -1502,9 +1600,24 @@ class MySceneGraph {
                     primitive["primitive"] = this.parsePatch(children[i].children[0]); 
                     numPrimitives++;
                     break;
+                case "vehicle":
+                    primitive["type"] = "vehicle";
+                    primitive["primitive"] = new MyVehicle(this.scene); 
+                    numPrimitives++;
+                    break;
                 case "cylinder2":
                     primitive["type"] = "cylinder2";
                     primitive["primitive"] = this.parseCylinder2(children[i].children[0]); 
+                    numPrimitives++;
+                    break;
+                case "terrain":
+                    primitive["type"] = "terrain";
+                    primitive["primitive"] = this.parseTerrain(children[i].children[0]); 
+                    numPrimitives++;
+                    break;
+                case "water":
+                    primitive["type"] = "water";
+                    primitive["primitive"] = this.parseWater(children[i].children[0]); 
                     numPrimitives++;
                     break;
             }
