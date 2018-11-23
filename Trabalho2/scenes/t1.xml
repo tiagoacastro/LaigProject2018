@@ -159,7 +159,7 @@
     </primitive>
 
     <primitive id="water">
-      <water idtexture="hola" idwavemap="hello" parts="10" heightscale="1" texscale="1" />
+      <water idtexture="vidal" idwavemap="height_map" parts="10" heightscale="1" texscale="1" />
     </primitive>
 
     <primitive id="cylinder_mug">

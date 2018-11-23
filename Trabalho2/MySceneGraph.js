@@ -1494,12 +1494,12 @@ class MySceneGraph {
      * @return water object
      */
     parseWater(waterNode){
-        let idTexture = this.reader.getFloat(waterNode, 'idtexture');
+        let idTexture = this.reader.getString(waterNode, 'idtexture');
         if (idTexture == null) {
             this.onXMLError("unable to parse value for idtexture plane");
         }
 
-        let idWaveMap = this.reader.getFloat(waterNode, 'idwavemap');
+        let idWaveMap = this.reader.getString(waterNode, 'idwavemap');
         if (idWaveMap == null) {
             this.onXMLError("unable to parse value for idwavemap plane");
         }
