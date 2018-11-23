@@ -10,6 +10,8 @@ class LinearAnimation extends Animation {
         this.lineSegmentsTimes = [];
         this.lineSegmentsDist = [];
         this.currLineSegment = 0;
+        this.isDone = 0;
+        this.isActive = 0;
         this.getCurrSegment = function(timestamp) {
           var currSegment = -1;
 
@@ -120,21 +122,38 @@ class LinearAnimation extends Animation {
 
     update(deltaTime) {
 
-      this.timeCounter += (deltaTime/1000);
-      this.currLineSegment = this.getCurrSegment(this.timeCounter);
+      //console.log(this.isActive);
 
-      //reset animation
-      if (this.currLineSegment == -1) {
+      if(this.isActive) {
+
+        this.timeCounter += (deltaTime/1000);
         this.currLineSegment = this.getCurrSegment(this.timeCounter);
-      }
 
-      var timeElapsedInSegment = this.timeCounter - this.lineSegmentsTimes[this.currLineSegment][0];
-      
-      this.currPoint[0] = this.lineSegments[this.currLineSegment][0] + (this.lineSegmentsVel[this.currLineSegment][0]*timeElapsedInSegment);
-      this.currPoint[1] = this.lineSegments[this.currLineSegment][1] + (this.lineSegmentsVel[this.currLineSegment][1]*timeElapsedInSegment);
-      this.currPoint[2] = this.lineSegments[this.currLineSegment][2] + (this.lineSegmentsVel[this.currLineSegment][2]*timeElapsedInSegment);
-      
-      this.orientation = Math.atan2(this.lineSegments[this.currLineSegment][5] - this.lineSegments[this.currLineSegment][2], this.lineSegments[this.currLineSegment][3] - this.lineSegments[this.currLineSegment][0]);
+        //reset animation
+        if (this.currLineSegment == -1) {
+          //this.currLineSegment = this.getCurrSegment(this.timeCounter);
+          this.reset();
+          return;
+        }
+
+        var timeElapsedInSegment = this.timeCounter - this.lineSegmentsTimes[this.currLineSegment][0];
+        
+        this.currPoint[0] = this.lineSegments[this.currLineSegment][0] + (this.lineSegmentsVel[this.currLineSegment][0]*timeElapsedInSegment);
+        this.currPoint[1] = this.lineSegments[this.currLineSegment][1] + (this.lineSegmentsVel[this.currLineSegment][1]*timeElapsedInSegment);
+        this.currPoint[2] = this.lineSegments[this.currLineSegment][2] + (this.lineSegmentsVel[this.currLineSegment][2]*timeElapsedInSegment);
+
+        this.orientation = Math.atan2(this.lineSegments[this.currLineSegment][5] - this.lineSegments[this.currLineSegment][2], this.lineSegments[this.currLineSegment][3] - this.lineSegments[this.currLineSegment][0]);
+      }
+    }
+
+    reset() {
+      this.isDone = 1;
+      this.currLineSegment = 0;
+      this.timeCounter = 0;
+      this.currPoint[0] = this.originPoint[0];
+      this.currPoint[1] = this.originPoint[1];
+      this.currPoint[2] = this.originPoint[2];
+      this.orientation = 0;
     }
 
 }

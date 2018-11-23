@@ -146,10 +146,8 @@ class XMLscene extends CGFscene {
      */
     updateMaterials() {
         for (var key in this.graph.components) {
-            console.log(this.graph.components[key]["activeMaterial"]);
 
             if((this.graph.components[key]["activeMaterial"] >= 0) && (this.graph.components[key]["activeMaterial"] < this.graph.components[key]["materials"].length - 1)) {
-                console.log("changing material");
                 this.graph.components[key]["activeMaterial"] = this.graph.components[key]["activeMaterial"] + 1;
             } else {
                 this.graph.components[key]["activeMaterial"] = 0;
@@ -161,8 +159,27 @@ class XMLscene extends CGFscene {
      * function to update animations
      */
     updateAnimations(deltaTime) {
-        for (var key in this.graph.animations) {
-           this.graph.animations[key].update(deltaTime);
+        for (var key in this.graph.components) {
+            
+            /*
+            for (let i = 0; i < this.graph.components[key]["animations"].length; i++) {
+                //console.log(this.graph.components[key]["animations"][this.graph.components[key]["activeAnimation"]]);
+                console.log("updating animation " )
+                this.graph.components[key]["animations"][i].update(deltaTime);
+            }
+            */
+           
+            
+           
+           if(this.graph.components[key]["animations"].length > 0) {
+            //console.log(this.graph.components[key]["animations"][this.graph.components[key]["activeAnimation"]]);
+            console.log("updating animation " + this.graph.components[key]["activeAnimation"] + " from component " + key);
+            this.graph.components[key]["animations"][this.graph.components[key]["activeAnimation"]].update(deltaTime);
+
+            //NAO SEI TRABALHAR COM OBJETOS EM JS AHHHHHHHHHHHHHHHHHHHHHHHHHHHHH
+           }
+           
+           //console.log(this.graph.animations);
         }
     }
 

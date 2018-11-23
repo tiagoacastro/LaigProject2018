@@ -903,7 +903,9 @@ class MySceneGraph {
 
       }
 
-      console.log(this.animations);
+      for(var key in this.animations) {
+        console.log(Object.keys(this.animations[key]));
+      }
 
       this.log("Parsed animations");
 
@@ -1445,12 +1447,12 @@ class MySceneGraph {
      * @return terrain object
      */
     parseTerrain(terrainNode){
-        let idTexture = this.reader.getFloat(terrainNode, 'idtexture');
+        let idTexture = this.reader.getString(terrainNode, 'idtexture');
         if (idTexture == null) {
             this.onXMLError("unable to parse value for idtexture plane");
         }
 
-        let idHeightMap = this.reader.getFloat(terrainNode, 'idheightmap');
+        let idHeightMap = this.reader.getString(terrainNode, 'idheightmap');
         if (idHeightMap == null) {
             this.onXMLError("unable to parse value for idheightmap plane");
         }
@@ -1476,8 +1478,11 @@ class MySceneGraph {
         }
 
         //criar terrain
-        var terrain = null; //new MyTerrain(---);
 
+        console.log(idHeightMap);
+        console.log(this.textures[idHeightMap]);
+
+        var terrain = new MyTerrain(this.scene, this.textures[idHeightMap], this.textures[idTexture], parts, heightScale); 
         this.log("Parsed terrain");
 
         return terrain;
@@ -2558,8 +2563,15 @@ class MySceneGraph {
             component["materials"] = materials;
             component["texture"] = textureAux;
             component["children"] = childrenTmp;
-            component["animations"] = animations;
             component["activeMaterial"] = 0;
+            component["activeAnimation"] = 0;
+
+            if (animationsIndex != -1) {
+                component["animations"] = animations;
+                component["animations"][component["activeAnimation"]].isActive = 1;
+            } else {
+                component["animations"] = [];
+            }
 
             this.components[componentId] = component;
             numComponents++;
@@ -2567,8 +2579,6 @@ class MySceneGraph {
             nodeNames = [];
 
         }
-
-        console.log(this.components);
 
         if (numComponents <= 0) {
             return "there should be at least one component defined";
@@ -2704,7 +2714,8 @@ class MySceneGraph {
                 }
 
                 if (this.animations[id] != null) {
-                    animationsAux.push(id); 
+                    var newAnim = Object.assign( Object.create( Object.getPrototypeOf(this.animations[id])), this.animations[id]);
+                    animationsAux.push(newAnim); 
                 } 
 
             } else {
@@ -2712,8 +2723,6 @@ class MySceneGraph {
             }
 
         }
-
-        //console.log(animationsAux);
 
         return animationsAux;
 
@@ -2909,11 +2918,33 @@ class MySceneGraph {
      */
     applyAnimations(component) {
 
-        //console.log(this.animations);
-        
-        for (let i = 0; i < component["animations"].length; i++) {
-            //console.log(component["animations"][i]);
-            this.animations[component["animations"][i]].apply();
+        if(component["animations"].length != 0) {
+
+            //console.log(Object.keys(component["animations"][component["activeAnimation"]]));
+
+            //Check if current animation is done
+            if(component["animations"][component["activeAnimation"]].isDone == 1) {
+
+                component["animations"][component["activeAnimation"]].isActive = 0; //deactivating current animation
+               // console.log(component["animations"][component["activeAnimation"]]);
+
+               console.log("deactivating animation " + component["activeAnimation"]);
+
+                if (component["activeAnimation"] == (component["animations"].length - 1)) { //choosing next animation
+                    component["activeAnimation"] = 0;
+                } else {
+                    component["activeAnimation"]++;
+                }
+
+                component["animations"][component["activeAnimation"]].isDone = 0; //activating new animation
+                component["animations"][component["activeAnimation"]].isActive = 1;
+
+                console.log("activating animation " + component["activeAnimation"]);
+            }
+    
+            //console.log(component["animations"][component["activeAnimation"]]);
+            component["animations"][component["activeAnimation"]].apply();
+
         }
         
     }
