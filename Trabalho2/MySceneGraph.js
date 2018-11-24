@@ -2931,7 +2931,7 @@ class MySceneGraph {
                 component["animations"][component["activeAnimation"]].isActive = 0; //deactivating current animation
                // console.log(component["animations"][component["activeAnimation"]]);
 
-               console.log("deactivating animation " + component["activeAnimation"]);
+               //console.log("deactivating animation " + component["activeAnimation"]);
 
                 if (component["activeAnimation"] == (component["animations"].length - 1)) { //choosing next animation
                     component["activeAnimation"] = 0;
@@ -2942,7 +2942,7 @@ class MySceneGraph {
                 component["animations"][component["activeAnimation"]].isDone = 0; //activating new animation
                 component["animations"][component["activeAnimation"]].isActive = 1;
 
-                console.log("activating animation " + component["activeAnimation"]);
+                //console.log("activating animation " + component["activeAnimation"]);
             }
     
             //console.log(component["animations"][component["activeAnimation"]]);
