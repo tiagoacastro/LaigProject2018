@@ -763,7 +763,7 @@ class MySceneGraph {
                 ambientValues.push(b);
             }
 
-            var a = this.reader.getFloat(specs[ambientIndex], 'r');
+            var a = this.reader.getFloat(specs[ambientIndex], 'a');
             if (a == null || isNaN(a)) {
                 return "unable to parse a value (ambient) of light ID = " + lightId;
             } else {
@@ -797,9 +797,9 @@ class MySceneGraph {
                 diffuseValues.push(b);
             }
 
-            var a = this.reader.getFloat(specs[diffuseIndex], 'r');
+            var a = this.reader.getFloat(specs[diffuseIndex], 'a');
             if (a == null || isNaN(a)) {
-                return "unable to parse r value (diffuse) of light ID = " + lightId;
+                return "unable to parse a value (diffuse) of light ID = " + lightId;
             } else {
                 diffuseValues.push(a);
             }
@@ -831,9 +831,9 @@ class MySceneGraph {
                 specularValues.push(b);
             }
 
-            var a = this.reader.getFloat(specs[specularIndex], 'r');
+            var a = this.reader.getFloat(specs[specularIndex], 'a');
             if (a == null || isNaN(a)) {
-                return "unable to parse r value (specular) of light ID = " + lightId;
+                return "unable to parse a value (specular) of light ID = " + lightId;
             } else {
                 specularValues.push(a);
             }

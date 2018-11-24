@@ -53,8 +53,8 @@
             <specular r="1" g="1" b="1" a="1"/>
         </omni>
 
-        <spot angle="1" id="painting" enabled="0" exponent="6">
-   	        <location x="0.6" y="6.5" z="3.5" w="1"/>
+        <spot angle="5" id="painting" enabled="0" exponent="6">
+   	        <location x="3.5" y="4.5" z="3.5" w="1"/>
 	        <target x="0" y="4.5" z="3.5"/>
      	    <ambient r="0" g="0" b="0" a="1"/>
 	        <diffuse r="1" g="1" b="1" a="1"/>
@@ -463,11 +463,11 @@
     <animations>
         <linear id="jump_stress_ball" span="1">
             <controlpoint xx="0" yy="0" zz="0"/>
-            <controlpoint xx="0" yy="0" zz="0.5"/>
+            <controlpoint xx="0" yy="1" zz="0"/>
             <controlpoint xx="0" yy="0" zz="0"/>
         </linear>
 
-        <circular id="turn_saturn" span="60" center="0 0 12" radius="12" startang="45" rotang="360" />
+        <circular id="turn_saturn" span="60" center="6 12 6" radius="12" startang="45" rotang="360" />
     </animations>
 
     <primitives>
