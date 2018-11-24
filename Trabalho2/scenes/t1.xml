@@ -15,7 +15,7 @@
 
   <lights>
     <omni id="lamp" enabled="1">
-      <location x="3" y="5.6" z="2.7" w="1"/>
+      <location x="0" y="40" z="0" w="1"/>
       <ambient r="0" g="0" b="0" a="1"/>
       <diffuse r="0.6" g="0.6" b="0.6" a="1"/>
       <specular r="0.6" g="0.6" b="0.6" a="1"/>
@@ -38,9 +38,10 @@
     <texture id="dolomite" file="./scenes/images/dolomite.jpg"/>
     <texture id="gold" file="./scenes/images/gold.jpeg"/>
     <texture id="vidal" file="./scenes/images/vidal.jpg"/>
-    <texture id="height_map" file="./scenes/images/height_map.jpg"/>
+    <texture id="height_map" file="./scenes/images/height_map2.png"/>
     <texture id="water" file="./scenes/images/water.jpg"/>
     <texture id="water_color" file="./scenes/images/water_color.jpg"/>
+    <texture id="rocks" file="./scenes/images/rocks.jpg"/>
   </textures>
 
   <materials>
@@ -90,24 +91,49 @@
       </transformation>
 
       <transformation id="scale_plane">
-        <scale x="5" y="5" z="5"/>
-    </transformation>
+        <scale x="40" y="20" z="40"/>
+      </transformation>
+
+      <transformation id="center_vehicle">
+        <translate x="-1.5" y="0" z="0"/>
+      </transformation>
+
+      <transformation id="place_water">
+        <scale x="60" y="20" z="60"/>
+      </transformation>
+
   </transformations>
 
   <animations>
     <linear id="jump_stress_ball" span="4">
-      <controlpoint xx="0" yy="0" zz="0"/>
-      <controlpoint xx="5" yy="0" zz="5"/>
-      <controlpoint xx="5" yy="0" zz="0"/>
-      <controlpoint xx="0" yy="0" zz="0"/>
+      <controlpoint xx="1" yy="0" zz="0"/>
+      <controlpoint xx="6" yy="0" zz="6"/>
+      <controlpoint xx="6" yy="0" zz="0"/>
+      <controlpoint xx="1" yy="0" zz="0"/>
     </linear>
 
-    <circular id="turn_stress_ball" span="3" center="0 0 2" radius="2" startang="180" rotang="360"/>
+    <circular id="turn_stress_ball" span="10" center="0 0 0" radius="5" startang="45" rotang="180"/>
+
+    <linear id="move_vehicle_1" span="4">
+      <controlpoint xx="0" yy="10" zz="0"/>
+      <controlpoint xx="0" yy="10" zz="6"/>
+      <controlpoint xx="0" yy="10" zz="-6"/>
+      <controlpoint xx="0" yy="10" zz="0"/>
+    </linear>
+
+    <circular id="turn_vehicle_1" span="5" center="0 20 -10" radius="15" startang="0" rotang="360"/>
+
+    <linear id="move_vehicle_2" span="4">
+      <controlpoint xx="0" yy="5" zz="-5"/>
+      <controlpoint xx="-5" yy="5" zz="-5"/>
+    </linear>
+
+    <circular id="turn_vehicle_2" span="5" center="0 0 5" radius="5" startang="90" rotang="180"/>
 
     <linear id="move_triangle" span="4">
       <controlpoint xx="0" yy="0" zz="0"/>
-      <controlpoint xx="5" yy="0" zz="5"/>
-      <controlpoint xx="5" yy="5" zz="0"/>
+      <controlpoint xx="10" yy="0" zz="10"/>
+      <controlpoint xx="10" yy="0" zz="0"/>
       <controlpoint xx="0" yy="0" zz="0"/>
     </linear>
   </animations>
@@ -153,7 +179,7 @@
     </primitive>
 
     <primitive id="vehicle">
-      <vehicle /> 
+      <vehicle/> 
     </primitive>
 
     <primitive id="cylinder2">
@@ -161,11 +187,11 @@
     </primitive>
 
     <primitive id="terrain">
-      <terrain idtexture="vidal" idheightmap="height_map" parts="15" heightscale="1"/>
+      <terrain idtexture="rocks" idheightmap="height_map" parts="15" heightscale="1.5"/>
     </primitive>
 
     <primitive id="water">
-      <water idtexture="water" idwavemap="water" parts="5" heightscale="0.05" texscale="1" />
+      <water idtexture="water_color" idwavemap="water" parts="5" heightscale="0.1" texscale="1" />
     </primitive>
 
     <primitive id="cylinder_mug">
@@ -196,6 +222,8 @@
       </materials>
       <texture id="none" length_s="1" length_t="1" />
       <children>
+        <componentref id="vehicle"/> 
+        <componentref id="terrain"/>
         <componentref id="water"/> 
       </children>
     </component>
@@ -204,6 +232,10 @@
       <transformation>
         <transformationref id="identity"/>
       </transformation>
+      <animations>
+        <animationref id="move_vehicle_1"/>
+        <animationref id="turn_vehicle_1"/>
+      </animations>
       <materials>
         <material id="inherit"/>
       </materials>
@@ -256,10 +288,6 @@
       <transformation>
         <transformationref id="identity"/>
       </transformation>
-      <animations>
-        <animationref id="move_triangle"/>
-        <animationref id="turn_stress_ball"/>
-      </animations>
       <materials>
         <material id="default"/>
       </materials>
@@ -353,7 +381,7 @@
 
     <component id="terrain">
       <transformation>
-        <transformationref id="identity"/>
+        <transformationref id="scale_plane"/>
       </transformation>
       <materials>
         <material id="default"/>
@@ -366,7 +394,7 @@
 
     <component id="water">
       <transformation>
-        <transformationref id="scale_plane"/>
+        <transformationref id="place_water"/>
       </transformation>
       <materials>
         <material id="default"/>

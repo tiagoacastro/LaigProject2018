@@ -117,7 +117,7 @@ class LinearAnimation extends Animation {
         this.originPoint[1],
         this.originPoint[2]
       );
-      this.scene.rotate(this.orientation, 0, 1, 0);
+      this.scene.rotate( Math.PI / 2 - this.orientation, 0, 1, 0);
     }
 
     update(deltaTime) {
@@ -143,6 +143,7 @@ class LinearAnimation extends Animation {
         this.currPoint[2] = this.lineSegments[this.currLineSegment][2] + (this.lineSegmentsVel[this.currLineSegment][2]*timeElapsedInSegment);
 
         this.orientation = Math.atan2(this.lineSegments[this.currLineSegment][5] - this.lineSegments[this.currLineSegment][2], this.lineSegments[this.currLineSegment][3] - this.lineSegments[this.currLineSegment][0]);
+        console.log((this.orientation*180)/Math.PI);
       }
     }
 
@@ -153,7 +154,7 @@ class LinearAnimation extends Animation {
       this.currPoint[0] = this.originPoint[0];
       this.currPoint[1] = this.originPoint[1];
       this.currPoint[2] = this.originPoint[2];
-      this.orientation = 0;
+      this.orientation = Math.atan2(this.lineSegments[0][5] - this.lineSegments[0][2], this.lineSegments[0][3] - this.lineSegments[0][0]);
     }
 
 }

@@ -19,9 +19,9 @@ uniform float offset;
 
 void main() {
 
-    vTextureCoord = aTextureCoord * texScale + offset;
+    vTextureCoord = aTextureCoord;
 
-    vec4 newVertex = vec4(aVertexPosition.x, aVertexPosition.y + texture2D(wavemap, aTextureCoord * texScale + offset).g * heightScale, aVertexPosition.z,
+    vec4 newVertex = vec4(aVertexPosition.x, aVertexPosition.y + texture2D(wavemap, aTextureCoord * texScale + offset).r * heightScale, aVertexPosition.z,
     1.0); 
     //texture2D(wavemap, aTextureCoord).r was choosen arbitrarily, we could have picked the g or b values as well, since it's a grayscale map
     
