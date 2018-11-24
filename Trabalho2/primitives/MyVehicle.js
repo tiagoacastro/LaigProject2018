@@ -45,6 +45,10 @@ class MyVehicle extends CGFobject {
      */
     display(){
 
+        this.scene.pushMatrix();
+
+        this.scene.translate(-1.5, 0, -2.5);
+
         //  body
 
         this.scene.pushMatrix();
@@ -145,5 +149,7 @@ class MyVehicle extends CGFobject {
             this.scene.scale(1, 1, 1.5);
             this.cylinder.display();
         this.scene.popMatrix(); 
+
+        this.scene.popMatrix();
     };
 };

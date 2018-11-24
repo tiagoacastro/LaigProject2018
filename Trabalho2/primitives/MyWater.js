@@ -8,7 +8,7 @@ class MyWater extends MyPlane {
     this.heightScale = heightScale;
     this.texScale = texScale;
     this.offset = 0;
-    this.speed = 0.05;
+    this.speed = 0.01;
 
     this.shader = new CGFshader(this.scene.gl, "shaders/water.vert", "shaders/water.frag");
     this.shader.setUniformsValues({wavemap: 1});
