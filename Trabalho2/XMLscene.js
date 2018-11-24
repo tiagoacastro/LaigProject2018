@@ -138,6 +138,7 @@ class XMLscene extends CGFscene {
         }
 
         this.updateAnimations(this.deltaTime);
+        this.updateWater(this.deltaTime);
         this.checkKeys();
     }
 
@@ -173,13 +174,22 @@ class XMLscene extends CGFscene {
            
            if(this.graph.components[key]["animations"].length > 0) {
             //console.log(this.graph.components[key]["animations"][this.graph.components[key]["activeAnimation"]]);
-            console.log("updating animation " + this.graph.components[key]["activeAnimation"] + " from component " + key);
+            //console.log("updating animation " + this.graph.components[key]["activeAnimation"] + " from component " + key);
             this.graph.components[key]["animations"][this.graph.components[key]["activeAnimation"]].update(deltaTime);
 
             //NAO SEI TRABALHAR COM OBJETOS EM JS AHHHHHHHHHHHHHHHHHHHHHHHHHHHHH
            }
            
            //console.log(this.graph.animations);
+        }
+    }
+
+    updateWater(deltaTime) {
+        for (var key in this.graph.primitives) {
+            if (this.graph.primitives[key]["type"] == "water") {
+                //console.log("updating water");
+                this.graph.primitives[key]["primitive"].update(deltaTime);
+            }
         }
     }
 

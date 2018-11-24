@@ -39,6 +39,8 @@
     <texture id="gold" file="./scenes/images/gold.jpeg"/>
     <texture id="vidal" file="./scenes/images/vidal.jpg"/>
     <texture id="height_map" file="./scenes/images/height_map.jpg"/>
+    <texture id="water" file="./scenes/images/water.jpg"/>
+    <texture id="water_color" file="./scenes/images/water_color.jpg"/>
   </textures>
 
   <materials>
@@ -86,6 +88,10 @@
         <translate x="4.4" y="2.2" z="3.3"/>
         <rotate axis="x" angle="-90"/>
       </transformation>
+
+      <transformation id="scale_plane">
+        <scale x="5" y="5" z="5"/>
+    </transformation>
   </transformations>
 
   <animations>
@@ -155,11 +161,11 @@
     </primitive>
 
     <primitive id="terrain">
-      <terrain idtexture="vidal" idheightmap="height_map" parts="10" heightscale="1"/>
+      <terrain idtexture="vidal" idheightmap="height_map" parts="15" heightscale="1"/>
     </primitive>
 
     <primitive id="water">
-      <water idtexture="vidal" idwavemap="height_map" parts="10" heightscale="1" texscale="1" />
+      <water idtexture="water" idwavemap="water" parts="5" heightscale="0.05" texscale="1" />
     </primitive>
 
     <primitive id="cylinder_mug">
@@ -190,7 +196,7 @@
       </materials>
       <texture id="none" length_s="1" length_t="1" />
       <children>
-        <componentref id="vehicle"/> 
+        <componentref id="water"/> 
       </children>
     </component>
 
@@ -355,6 +361,19 @@
       <texture id="none" length_s="1" length_t="1" />
       <children>
         <primitiveref id="terrain"/>
+      </children>
+    </component>
+
+    <component id="water">
+      <transformation>
+        <transformationref id="scale_plane"/>
+      </transformation>
+      <materials>
+        <material id="default"/>
+      </materials>
+      <texture id="none" length_s="1" length_t="1" />
+      <children>
+        <primitiveref id="water"/>
       </children>
     </component>
 

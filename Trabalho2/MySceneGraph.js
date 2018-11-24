@@ -1479,8 +1479,8 @@ class MySceneGraph {
 
         //criar terrain
 
-        console.log(idHeightMap);
-        console.log(this.textures[idHeightMap]);
+        //console.log(idHeightMap);
+        //console.log(this.textures[idHeightMap]);
 
         var terrain = new MyTerrain(this.scene, this.textures[idHeightMap], this.textures[idTexture], parts, heightScale); 
         this.log("Parsed terrain");
@@ -1535,7 +1535,10 @@ class MySceneGraph {
         }
 
         //criar water
-        var water = null; //new MyWater(---);
+
+        console.log(this.textures[idTexture]);
+
+        var water = new MyWater(this.scene, this.textures[idWaveMap], this.textures[idTexture], parts, heightScale, texScale);
 
         this.log("Parsed water");
 

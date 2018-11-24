@@ -10,8 +10,6 @@ class MyTerrain extends MyPlane {
     this.shader.setUniformsValues({heightmap: 1});
     this.shader.setUniformsValues({texture: 0});
     this.shader.setUniformsValues({scale: this.scale});
-
-    this.initBuffers();
   };
 
   display(){
