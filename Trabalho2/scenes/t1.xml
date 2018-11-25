@@ -2,8 +2,8 @@
   <scene root="root" axis_length="5"/>
   
   <views default="overview"> 
-    <perspective id="overview" near="0.1" far="30" angle="45">
-      <from x="10" y="10" z="10" />
+    <perspective id="overview" near="0.1" far="500" angle="45">
+      <from x="99" y="99" z="99" />
       <to x="0" y="0" z="0" />
     </perspective>
   </views>
