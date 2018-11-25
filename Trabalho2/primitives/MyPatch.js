@@ -33,7 +33,7 @@ class MyPatch extends CGFobject {
         for(let i = 0; i < this.nPointsU; i ++){
             let aux = [];
             for(let j = 0; j < this.nPointsV; j ++){
-                aux.push([this.controlPoints[i*this.nPointsV+j][0], this.controlPoints[i*this.nPointsV+j][1], this.controlPoints[i*this.nPointsV+j][2], 1]);
+                aux.push([this.controlPoints[i*this.nPointsV+j][0], this.controlPoints[i*this.nPointsV+j][1], this.controlPoints[i*this.nPointsV+j][2], this.nPointsV-1]);
             }
             this.actualControlPoints.push(aux);
         }
@@ -48,7 +48,7 @@ class MyPatch extends CGFobject {
      */
     display(){
         this.scene.pushMatrix();
-            this.scene.rotate(Math.PI, 0, 1, 0);
+            //this.scene.rotate(Math.PI, 0, 1, 0);
             this.obj.display();
         this.scene.popMatrix();
     };

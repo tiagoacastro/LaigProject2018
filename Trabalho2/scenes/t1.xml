@@ -38,10 +38,11 @@
     <texture id="dolomite" file="./scenes/images/dolomite.jpg"/>
     <texture id="gold" file="./scenes/images/gold.jpeg"/>
     <texture id="vidal" file="./scenes/images/vidal.jpg"/>
-    <texture id="height_map" file="./scenes/images/height_map2.png"/>
-    <texture id="water" file="./scenes/images/water.jpg"/>
+    <texture id="height_map" file="./scenes/images/height_map3.jpg"/>
+    <texture id="water" file="./scenes/images/height_map3.png"/>
     <texture id="water_color" file="./scenes/images/water_color.jpg"/>
-    <texture id="rocks" file="./scenes/images/rocks.jpg"/>
+    <texture id="terrain" file="./scenes/images/better_terrain.jpg"/>
+    <texture id="space" file="./scenes/images/space.jpg"/>
   </textures>
 
   <materials>
@@ -72,24 +73,6 @@
       <translate x="0" y="0" z="0"/>
     </transformation>
 
-    <transformation id="set_mug_handle">
-      <translate x="0.2" y="0" z="0.2"/>
-        <rotate axis="x" angle="-90"/>
-      </transformation>
-
-      <transformation id="set_mug_top">
-        <translate x="0" y="0" z="0.4"/>
-      </transformation>
-
-      <transformation id="set_mug_liquid">
-        <translate x="0" y="0" z="0.395"/>
-      </transformation>
-
-      <transformation id="set_mug">
-        <translate x="4.4" y="2.2" z="3.3"/>
-        <rotate axis="x" angle="-90"/>
-      </transformation>
-
       <transformation id="scale_plane">
         <scale x="40" y="20" z="40"/>
       </transformation>
@@ -99,29 +82,61 @@
       </transformation>
 
       <transformation id="place_water">
+      <translate x="0" y="8" z="0"/>
         <scale x="60" y="20" z="60"/>
+      </transformation>
+
+      <transformation id="set_skybox_face0">
+          <translate x="0" y="0" z="-0.5"/>
+      </transformation>
+
+      <transformation id="set_skybox_face1">
+          <translate x="0" y="0.5" z="0"/>
+          <rotate axis="x" angle="90"/>
+      </transformation>
+
+      <transformation id="set_skybox_face2">
+          <translate x="0" y="0" z="0.5"/>
+          <rotate axis="x" angle="180"/>
+      </transformation>
+
+      <transformation id="set_skybox_face3">
+          <translate x="0" y="-0.5" z="0"/>
+          <rotate axis="x" angle="-90"/>
+      </transformation>
+
+      <transformation id="set_skybox_face4">
+          <translate x="-0.5" y="0" z="0"/>
+          <rotate axis="y" angle="90"/>
+      </transformation>
+
+      <transformation id="set_skybox_face5">
+          <translate x="0.5" y="0" z="0"/>
+          <rotate axis="y" angle="-90"/>
+      </transformation>
+
+      <transformation id="scale_skybox">
+          <scale x="200" y="200" z="200"/>
       </transformation>
 
   </transformations>
 
   <animations>
-    <linear id="jump_stress_ball" span="4">
-      <controlpoint xx="1" yy="0" zz="0"/>
-      <controlpoint xx="6" yy="0" zz="6"/>
-      <controlpoint xx="6" yy="0" zz="0"/>
-      <controlpoint xx="1" yy="0" zz="0"/>
-    </linear>
 
     <circular id="turn_stress_ball" span="10" center="0 0 0" radius="5" startang="45" rotang="180"/>
 
-    <linear id="move_vehicle_1" span="4">
+    <linear id="move_vehicle_1" span="20">
       <controlpoint xx="0" yy="10" zz="0"/>
-      <controlpoint xx="0" yy="10" zz="6"/>
-      <controlpoint xx="0" yy="10" zz="-6"/>
+      <controlpoint xx="4" yy="10" zz="6"/>
+      <controlpoint xx="4" yy="10" zz="10"/>
+      <controlpoint xx="0" yy="10" zz="14"/>
+      <controlpoint xx="-8" yy="10" zz="10"/>
+      <controlpoint xx="-8" yy="10" zz="6"/>
+      <controlpoint xx="-4" yy="10" zz="0"/>
       <controlpoint xx="0" yy="10" zz="0"/>
     </linear>
 
-    <circular id="turn_vehicle_1" span="5" center="0 20 -15" radius="15" startang="0" rotang="360"/>
+    <circular id="turn_vehicle_1" span="10" center="0 20 -10" radius="10" startang="0" rotang="360"/>
 
     <linear id="move_vehicle_2" span="4">
       <controlpoint xx="0" yy="5" zz="-5"/>
@@ -130,12 +145,6 @@
 
     <circular id="turn_vehicle_2" span="5" center="0 0 5" radius="5" startang="90" rotang="180"/>
 
-    <linear id="move_triangle" span="4">
-      <controlpoint xx="0" yy="0" zz="0"/>
-      <controlpoint xx="10" yy="0" zz="10"/>
-      <controlpoint xx="10" yy="0" zz="0"/>
-      <controlpoint xx="0" yy="0" zz="0"/>
-    </linear>
   </animations>
 
   <primitives>
@@ -187,27 +196,11 @@
     </primitive>
 
     <primitive id="terrain">
-      <terrain idtexture="rocks" idheightmap="height_map" parts="15" heightscale="1.5"/>
+      <terrain idtexture="terrain" idheightmap="height_map" parts="15" heightscale="1.5"/>
     </primitive>
 
     <primitive id="water">
       <water idtexture="water_color" idwavemap="water" parts="5" heightscale="0.1" texscale="1" />
-    </primitive>
-
-    <primitive id="cylinder_mug">
-      <cylinder base="0.2" top="0.2" height="0.4" slices="40" stacks="40" />
-    </primitive>
-
-    <primitive id="torus_mug_handle">
-      <torus inner="0.025" outer="0.1" slices="40" loops="40" />
-    </primitive>
-
-    <primitive id="torus_mug_top">
-      <torus inner="0.015" outer="0.2" slices="40" loops="40" />
-    </primitive>
-
-    <primitive id="cylinder_mug_liquid">
-      <cylinder base="0.19" top="0.19" height="0.01" slices="40" stacks="40" />
     </primitive>
 
   </primitives>
@@ -225,6 +218,7 @@
         <componentref id="vehicle"/> 
         <componentref id="terrain"/>
         <componentref id="water"/> 
+        <componentref id="skybox"/> 
       </children>
     </component>
 
@@ -239,143 +233,9 @@
       <materials>
         <material id="inherit"/>
       </materials>
-      <texture id="none" length_s="1" length_t="1" />
+      <texture id="stainless_steel" length_s="1" length_t="1" />
       <children>
         <primitiveref id="vehicle"/> 
-      </children>
-    </component>
-
-    <component id="cylinder2">
-      <transformation>
-        <transformationref id="identity"/>
-      </transformation>
-      <materials>
-        <material id="inherit"/>
-      </materials>
-      <texture id="none" length_s="1" length_t="1" />
-      <children>
-        <primitiveref id="cylinder2"/> 
-      </children>
-    </component>
-
-    <component id="patch">
-      <transformation>
-        <transformationref id="identity"/>
-      </transformation>
-      <materials>
-        <material id="inherit"/>
-      </materials>
-      <texture id="none" length_s="1" length_t="1" />
-      <children>
-        <primitiveref id="patch"/> 
-      </children>
-    </component>
-
-    <component id="plane">
-      <transformation>
-        <transformationref id="identity"/>
-      </transformation>
-      <materials>
-        <material id="inherit"/>
-      </materials>
-      <texture id="none" length_s="1" length_t="1" />
-      <children>
-        <primitiveref id="plane"/> 
-      </children>
-    </component>
-
-    <component id="stress_ball">
-      <transformation>
-        <transformationref id="identity"/>
-      </transformation>
-      <materials>
-        <material id="default"/>
-      </materials>
-      <texture id="none" length_s="1" length_t="1" />
-      <children>
-        <primitiveref id="sphere"/> 
-      </children>
-    </component>
-
-    <component id="test_triangle">
-      <transformation>
-        <transformationref id="identity"/>
-      </transformation>
-      <materials>
-        <material id="default"/>
-      </materials>
-      <texture id="none" length_s="1" length_t="1" />
-      <children>
-        <primitiveref id="triangle"/> 
-      </children>
-    </component>
-
-    <component id="mug">
-      <transformation>
-        <transformationref id="set_mug"/>
-      </transformation>
-      
-      <materials>
-        <material id="cream"/>
-      </materials>
-      <texture id="none" length_s="1" length_t="1" />
-      <children>
-        <componentref id="mug_handle"/>
-        <componentref id="mug_body"/>
-        <componentref id="mug_top"/>
-        <componentref id="mug_liquid"/>
-      </children>
-    </component>
-
-    <component id="mug_handle">
-      <transformation>
-        <transformationref id="set_mug_handle"/>
-      </transformation>
-      <materials>
-        <material id="inherit"/>
-      </materials>
-      <texture id="inherit" length_s="1" length_t="1" />
-      <children>
-        <primitiveref id="torus_mug_handle"/>
-      </children>
-    </component>
-
-    <component id="mug_body">
-      <transformation>
-        <transformationref id="set_mug_body"/>
-      </transformation>
-      <materials>
-        <material id="inherit"/>
-      </materials>
-      <texture id="inherit" length_s="1" length_t="1" />
-      <children>
-        <primitiveref id="cylinder_mug"/>
-      </children>
-    </component>
-
-    <component id="mug_top">
-      <transformation>
-        <transformationref id="set_mug_top"/>
-      </transformation>
-      <materials>
-        <material id="inherit"/>
-      </materials>
-      <texture id="inherit" length_s="1" length_t="1" />
-      <children>
-        <primitiveref id="torus_mug_top"/>
-      </children>
-    </component>
-
-    <component id="mug_liquid">
-      <transformation>
-        <transformationref id="set_mug_liquid"/>
-      </transformation>
-      <materials>
-        <material id="coffee"/>
-      </materials>
-      <texture id="inherit" length_s="1" length_t="1" />
-      <children>
-        <primitiveref id="cylinder_mug_liquid"/>
       </children>
     </component>
 
@@ -403,6 +263,102 @@
       <children>
         <primitiveref id="water"/>
       </children>
+    </component>
+
+    <component id="skybox">
+      <transformation>
+            <transformationref id="scale_skybox"/>
+        </transformation>
+        <materials>
+            <material id="inherit"/>
+        </materials>
+        <texture id="space" length_s="1" length_t="1" />
+        <children>
+            <componentref id="skybox_face0"/>
+            <componentref id="skybox_face1"/>
+            <componentref id="skybox_face2"/>
+            <componentref id="skybox_face3"/>
+            <componentref id="skybox_face4"/>
+            <componentref id="skybox_face5"/>
+        </children>
+    </component>
+
+    <component id="skybox_face0">
+        <transformation>
+            <transformationref id="set_skybox_face0"/>
+        </transformation>
+        <materials>
+            <material id="inherit"/>
+        </materials>
+        <texture id="inherit" length_s="1" length_t="1" />
+        <children>
+            <primitiveref id="rectangle"/>
+        </children>
+    </component>
+
+    <component id="skybox_face1">
+        <transformation>
+            <transformationref id="set_skybox_face1"/>
+        </transformation>
+        <materials>
+            <material id="inherit"/>
+        </materials>
+        <texture id="inherit" length_s="1" length_t="1" />
+        <children>
+            <primitiveref id="rectangle"/>
+        </children>
+    </component>
+
+    <component id="skybox_face2">
+        <transformation>
+            <transformationref id="set_skybox_face2"/>
+        </transformation>
+        <materials>
+            <material id="inherit"/>
+        </materials>
+        <texture id="inherit" length_s="1" length_t="1" />
+        <children>
+            <primitiveref id="rectangle"/>
+        </children>
+    </component>
+
+    <component id="skybox_face3">
+        <transformation>
+            <transformationref id="set_skybox_face3"/>
+        </transformation>
+        <materials>
+            <material id="inherit"/>
+        </materials>
+        <texture id="inherit" length_s="1" length_t="1" />
+        <children>
+            <primitiveref id="rectangle"/>
+        </children>
+    </component>
+
+    <component id="skybox_face4">
+        <transformation>
+            <transformationref id="set_skybox_face4"/>
+        </transformation>
+        <materials>
+            <material id="inherit"/>
+        </materials>
+        <texture id="inherit" length_s="1" length_t="1" />
+        <children>
+            <primitiveref id="rectangle"/>
+        </children>
+    </component>
+
+    <component id="skybox_face5">
+        <transformation>
+            <transformationref id="set_skybox_face5"/>
+        </transformation>
+        <materials>
+            <material id="inherit"/>
+        </materials>
+        <texture id="inherit" length_s="1" length_t="1" />
+        <children>
+            <primitiveref id="rectangle"/>
+        </children>
     </component>
 
   </components>

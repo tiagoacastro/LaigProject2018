@@ -6,8 +6,8 @@ class CircularAnimation extends Animation {
         super(scene, span);
         this.centre = centre;
         this.radius = radius;
-        this.initAngle = initAngle * DEGREE_TO_RAD;
-        this.rotAngle = rotAngle * DEGREE_TO_RAD;
+        this.initAngle = initAngle;
+        this.rotAngle = rotAngle;
         
         if (this.rotAngle > 0) {
             this.initOrientation = Math.PI/2;
@@ -16,7 +16,7 @@ class CircularAnimation extends Animation {
         }
 
         this.angularspeed = 0;
-        this.currAngle = this.initAngle;
+        this.currAngle = this.initAngle * DEGREE_TO_RAD;
         this.isDone = 0;
         this.isActive = 0;
         this.initCircularAnimation();
@@ -25,9 +25,9 @@ class CircularAnimation extends Animation {
     initCircularAnimation() {
         this.currAngle = this.initAngle * DEGREE_TO_RAD;
         if (this.rotAngle >= 0) {
-            this.angularspeed = this.rotAngle / this.span;
+            this.angularspeed = (this.rotAngle * DEGREE_TO_RAD) / this.span;
         } else {
-            this.angularspeed = -this.rotAngle / this.span;
+            this.angularspeed = -(this.rotAngle * DEGREE_TO_RAD) / this.span;
         }
     }
 
@@ -51,14 +51,15 @@ class CircularAnimation extends Animation {
 
         if (this.isActive) {
             this.currAngle += this.angularspeed * (deltaTime/1000);
-            if (this.currAngle >= (this.initAngle+this.rotAngle)) {
+            //console.log((this.currAngle*180)/Math.PI,);
+            if (this.currAngle >= (this.initAngle * DEGREE_TO_RAD + this.rotAngle * DEGREE_TO_RAD)) {
                 this.reset();
             }
         }
     }
 
     reset() {
-        this.currAngle = this.initAngle;
+        this.currAngle = this.initAngle * DEGREE_TO_RAD;
         this.isDone = 1;
     }
 

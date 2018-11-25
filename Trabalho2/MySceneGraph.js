@@ -1,5 +1,15 @@
 var DEGREE_TO_RAD = Math.PI / 180;
 
+function cloneAnimation(obj) {
+    if (null == obj || "object" != typeof obj) return obj;
+    console.log("cloning ", obj);
+    var copy = {};
+    for (var attr in obj) {
+        if (obj.hasOwnProperty(attr)) copy[attr] = obj[attr];
+    }
+    return copy;
+}
+
 // Order of the groups in the XML document.
 var SCENE_INDEX = 0
 var VIEWS_INDEX = 1;
@@ -904,7 +914,7 @@ class MySceneGraph {
       }
 
       for(var key in this.animations) {
-        console.log(Object.keys(this.animations[key]));
+        console.log(this.animations[key]);
       }
 
       this.log("Parsed animations");
@@ -2717,7 +2727,23 @@ class MySceneGraph {
                 }
 
                 if (this.animations[id] != null) {
-                    var newAnim = Object.assign( Object.create( Object.getPrototypeOf(this.animations[id])), this.animations[id]);
+                    if (this.animations[id] instanceof LinearAnimation){
+                        var newAnim = new LinearAnimation(
+                            this.animations[id].scene, 
+                            this.animations[id].span, 
+                            this.animations[id].controlPoints
+                        );
+                    } else {
+                        var newAnim = new CircularAnimation(
+                            this.animations[id].scene, 
+                            this.animations[id].span, 
+                            this.animations[id].centre, 
+                            this.animations[id].radius, 
+                            this.animations[id].initAngle, 
+                            this.animations[id].rotAngle
+                        );
+
+                    }
                     animationsAux.push(newAnim); 
                 } 
 
@@ -2931,7 +2957,7 @@ class MySceneGraph {
                 component["animations"][component["activeAnimation"]].isActive = 0; //deactivating current animation
                // console.log(component["animations"][component["activeAnimation"]]);
 
-               //console.log("deactivating animation " + component["activeAnimation"]);
+               console.log("deactivating animation " + component["activeAnimation"]);
 
                 if (component["activeAnimation"] == (component["animations"].length - 1)) { //choosing next animation
                     component["activeAnimation"] = 0;
@@ -2942,7 +2968,7 @@ class MySceneGraph {
                 component["animations"][component["activeAnimation"]].isDone = 0; //activating new animation
                 component["animations"][component["activeAnimation"]].isActive = 1;
 
-                //console.log("activating animation " + component["activeAnimation"]);
+                console.log("activating animation " + component["activeAnimation"]);
             }
     
             //console.log(component["animations"][component["activeAnimation"]]);
