@@ -81,20 +81,18 @@ class MyTriangle extends CGFobject{
         this.d01 = Math.sqrt(Math.pow(this.x2-this.x1, 2)+Math.pow(this.y2-this.y1, 2)+Math.pow(this.z2-this.z1, 2));
         this.d12 = Math.sqrt(Math.pow(this.x3-this.x2, 2)+Math.pow(this.y3-this.y2, 2)+Math.pow(this.z3-this.z2, 2));
 
-        this.cosAlpha = (-Math.pow(this.d12, 2) + Math.pow(this.d02, 2) + Math.pow(this.d02, 2))/(2*this.d02*this.d01);
-        this.cosGama = (Math.pow(this.d12, 2) + Math.pow(this.d02, 2) - Math.pow(this.d02, 2))/(2*this.d12*this.d02);
         this.cosBeta = (-Math.pow(this.d12, 2) - Math.pow(this.d02, 2) + Math.pow(this.d02, 2))/(2*this.d12*this.d01);
 
         this.beta = Math.acos(this.cosBeta);
 
         this.p0Text = [this.d01 - this.d12 * this.cosBeta, this.maxT - this.d12 * Math.sin(this.beta)];
         this.p1Text = [this.minS, this.maxT];
-        this.p2Text = [this.d01, this.maxT];
+        this.p2Text = [this.maxS, this.maxT];
 
         this.texCoords = [
-            this.p0Text[0], this.p0Text[1],
             this.p1Text[0], this.p1Text[1],
-            this.p2Text[0], this.p2Text[1]
+            this.p2Text[0], this.p2Text[1],
+            this.p0Text[0], this.p0Text[1]
         ];
 
         this.primitiveType = this.scene.gl.TRIANGLES;
@@ -105,21 +103,15 @@ class MyTriangle extends CGFobject{
      * @param {float} lengthS 
      * @param {float} lengthT 
      */
+    
     updateTexCoords(lengthS, lengthT) {
-        var d23 = Math.sqrt(Math.pow(this.p1[0] - this.p2[0], 2) + Math.pow(this.p1[1] - this.p2[1], 2) + Math.pow(this.p1[2] - this.p2[2], 2));
-        var d13 = Math.sqrt(Math.pow(this.p0[0] - this.p2[0], 2) + Math.pow(this.p0[1] - this.p2[1], 2) + Math.pow(this.p0[2] - this.p2[2], 2));
-        var d12 = Math.sqrt(Math.pow(this.p1[0] - this.p0[0], 2) + Math.pow(this.p1[1] - this.p0[1], 2) + Math.pow(this.p1[2] - this.p0[2], 2));
-
-        var angBeta = Math.acos((Math.pow(d23, 2) - Math.pow(d13, 2) + Math.pow(d12, 2)) / (2 * d23 * d12));
-
-        var dist = d23 * Math.sin(angBeta);
-
+        var angBeta = Math.acos((Math.pow(this.d12, 2) - Math.pow(this.d02, 2) + Math.pow(this.d01, 2)) / (2 * this.d12 * this.d01));
+        var dist = this.d12 * Math.sin(angBeta);
         this.texCoords = [
             0, dist/lengthT,
-            d12/lengthS, dist/lengthT,
-            (d12-d23*Math.cos(angBeta))/lengthS,(dist-d23*Math.sin(angBeta))/lengthT
+            this.d01/lengthS, dist/lengthT,
+            (this.d01-this.d12*Math.cos(angBeta))/lengthS,(dist-this.d12*Math.sin(angBeta))/lengthT
         ];
-
         this.updateTexCoordsGLBuffers();
     }
 }

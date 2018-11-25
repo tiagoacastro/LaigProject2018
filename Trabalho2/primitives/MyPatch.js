@@ -48,7 +48,6 @@ class MyPatch extends CGFobject {
      */
     display(){
         this.scene.pushMatrix();
-            //this.scene.rotate(Math.PI, 0, 1, 0);
             this.obj.display();
         this.scene.popMatrix();
     };

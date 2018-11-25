@@ -37,6 +37,8 @@ class MyWater extends MyPlane {
       this.obj.display();
     this.scene.popMatrix();
 
+    this.scene.gl.blendFunc(this.scene.gl.GL_SRC_ALPHA, this.scene.gl.GL_ONE_MINUS_SRC_ALPHA);
+    this.scene.gl.enable(this.scene.gl.GL_BLEND);
     this.scene.setActiveShader(this.cloudShader);
 
     this.scene.pushMatrix();
@@ -46,6 +48,7 @@ class MyWater extends MyPlane {
       this.obj.display();
     this.scene.popMatrix();
 
+    this.scene.gl.disable(this.scene.gl.GL_BLEND);
     this.scene.setActiveShader(this.scene.defaultShader);
   };
 

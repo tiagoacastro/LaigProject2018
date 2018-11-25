@@ -2886,7 +2886,7 @@ class MySceneGraph {
             materialId = component["materials"][component["activeMaterial"]];    
         }
 
-        if (/*(this.textures[component["texture"]["id"]] != null) && */ (component["texture"]["id"] !== "inherit")) {
+        if ((component["texture"]["id"] !== "inherit")) {
             textureId = component["texture"]["id"];
             lengthS = component["texture"]["lengthS"];
             lengthT = component["texture"]["lengthT"];
@@ -2949,15 +2949,10 @@ class MySceneGraph {
 
         if(component["animations"].length != 0) {
 
-            //console.log(Object.keys(component["animations"][component["activeAnimation"]]));
-
             //Check if current animation is done
             if(component["animations"][component["activeAnimation"]].isDone == 1) {
 
                 component["animations"][component["activeAnimation"]].isActive = 0; //deactivating current animation
-               // console.log(component["animations"][component["activeAnimation"]]);
-
-               console.log("deactivating animation " + component["activeAnimation"]);
 
                 if (component["activeAnimation"] == (component["animations"].length - 1)) { //choosing next animation
                     component["activeAnimation"] = 0;
@@ -2968,10 +2963,8 @@ class MySceneGraph {
                 component["animations"][component["activeAnimation"]].isDone = 0; //activating new animation
                 component["animations"][component["activeAnimation"]].isActive = 1;
 
-                console.log("activating animation " + component["activeAnimation"]);
             }
     
-            //console.log(component["animations"][component["activeAnimation"]]);
             component["animations"][component["activeAnimation"]].apply();
 
         }

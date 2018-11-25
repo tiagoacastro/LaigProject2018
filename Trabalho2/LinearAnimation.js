@@ -117,16 +117,13 @@ class LinearAnimation extends Animation {
 
     update(deltaTime) {
 
-      //console.log(this.isActive);
-
-      if(this.isActive) {
+      if (this.isActive) {
 
         this.timeCounter += (deltaTime/1000);
         this.currLineSegment = this.getCurrSegment(this.timeCounter);
 
         //reset animation
         if (this.currLineSegment == -1) {
-          //this.currLineSegment = this.getCurrSegment(this.timeCounter);
           this.reset();
           return;
         }
@@ -138,7 +135,6 @@ class LinearAnimation extends Animation {
         this.currPoint[2] = this.lineSegments[this.currLineSegment][2] + (this.lineSegmentsVel[this.currLineSegment][2]*timeElapsedInSegment);
 
         this.orientation = Math.atan2(this.lineSegments[this.currLineSegment][5] - this.lineSegments[this.currLineSegment][2], this.lineSegments[this.currLineSegment][3] - this.lineSegments[this.currLineSegment][0]);
-        //console.log((this.orientation*180)/Math.PI);
       }
     }
 

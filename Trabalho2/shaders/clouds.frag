@@ -10,12 +10,12 @@ uniform float offset;
 
 void main() {
 
-  vec4 color = texture2D(cloudmap, vTextureCoord + offset);
-  //color.a = 0.3;
+  vec4 color = texture2D(texture, vTextureCoord + offset);
+  color.a = 0.8;
 
-  gl_FragColor = color;
+  gl_FragColor = color * color.a;
 
-    if (color.r < 0.7) {
+    if (texture2D(cloudmap, vTextureCoord + offset).r < 0.7) {
       discard;
     }
 

@@ -269,59 +269,44 @@ class MyVehicle extends CGFobject {
             this.scene.translate(0, 0, 1);
             this.scene.scale(0.5, 0.5, 0.5);
             this.scene.translate(0,0,-2.5);
-            //this.scene.rotate(Math.PI, 0, 1, 0);
-            //this.scene.rotate(Math.PI, 0, 0, 1);
             this.viewport.display();
         this.scene.popMatrix();
 
         this.engineAppearance.apply();
 
         this.scene.pushMatrix();
-        this.scene.translate(0,0,2.5);
-        this.scene.rotate(Math.PI, 0, 1, 0);
+            this.scene.translate(0,0,2.5);
+            this.scene.rotate(Math.PI, 0, 1, 0);
             this.scene.translate(0, 0, 0.75);
-            //this.scene.rotate(Math.PI, 0, 0, 1);
             this.scene.scale(0.75, 0.75, 0.75);
-            //this.scene.translate(0.5, 0, 0.5);
             this.quarters.display();
         this.scene.popMatrix();
 
         this.metalAppearance.apply();
 
         this.scene.pushMatrix();
-        this.scene.translate(0,0,2.5);
+            this.scene.translate(0,0,2.5);
             this.scene.rotate(Math.PI, 0, 1, 0);
             this.scene.rotate(Math.PI, 0, 0, 1);
             this.hull.display();
         this.scene.popMatrix();
 
         this.scene.pushMatrix();
-        this.scene.translate(0,0,2.5);
-        this.scene.rotate(Math.PI, 0, 1, 0);
-            //this.scene.translate(4.5, 0, 0.5);
-            //this.scene.rotate(Math.PI, 0, 0, 1);
-            //this.scene.scale(1, 1, 5);
-            //this.scene.translate(0.5, 0, 0.5);
+            this.scene.translate(0,0,2.5);
+            this.scene.rotate(Math.PI, 0, 1, 0);    
             this.deck.display();
         this.scene.popMatrix();
 
         this.scene.pushMatrix();
-        this.scene.translate(0,0,2.5);
-        this.scene.rotate(Math.PI, 0, 1, 0);
-            //this.scene.translate(4.5, 0, 0.5);
+            this.scene.translate(0,0,2.5);
+            this.scene.rotate(Math.PI, 0, 1, 0);
             this.scene.rotate(Math.PI, 0, 0, 1);
-            //this.scene.scale(1, 1, 5);
-            //this.scene.translate(0.5, 0, 0.5);
             this.bow.display();
         this.scene.popMatrix();
 
         this.scene.pushMatrix();
-        this.scene.translate(0,0,2.5);
-        this.scene.rotate(Math.PI, 0, 1, 0);
-            //this.scene.translate(4.5, 0, 0.5);
-            //this.scene.rotate(Math.PI, 0, 0, 1);
-            //this.scene.scale(1, 1, 5);
-            //this.scene.translate(0.5, 0, 0.5);
+            this.scene.translate(0,0,2.5);
+            this.scene.rotate(Math.PI, 0, 1, 0);
             this.topBow.display();
         this.scene.popMatrix();
 
@@ -332,7 +317,6 @@ class MyVehicle extends CGFobject {
             this.scene.rotate(Math.PI/2, 1, 0, 0);
             this.scene.rotate(-Math.PI/2, 0, 0, 1);
             this.scene.scale(0.25, 0.25, 0.25);
-            //this.scene.translate(0.5, 0, 0.5);
             this.wing.display();
         this.scene.popMatrix();
         
@@ -344,8 +328,6 @@ class MyVehicle extends CGFobject {
             this.scene.scale(0.25, 0.25, 0.25);
             this.wing.display();
         this.scene.popMatrix();
-
-        //engine
 
         //conectors
         
@@ -373,7 +355,7 @@ class MyVehicle extends CGFobject {
 
         this.engineAppearance.apply();
 
-        //thrusters
+        //engines
 
         this.scene.pushMatrix();
             this.scene.translate(0,0,2.5);
@@ -396,7 +378,6 @@ class MyVehicle extends CGFobject {
             this.scene.translate(0,0,2.5);
             this.scene.rotate(Math.PI, 0, 1, 0);
             this.scene.translate(2.75, 0.25, 2);
-            //this.scene.translate(0, 0, -0.50);
             this.scene.scale(0.5, 0.5, 1);
             this.scene.rotate(Math.PI, 1, 0, 0);
             this.circle.display();
@@ -405,7 +386,6 @@ class MyVehicle extends CGFobject {
         this.scene.pushMatrix();
             this.scene.translate(0,0,2.5);
             this.scene.rotate(Math.PI, 0, 1, 0);
-      
             this.scene.translate(-2.75, 0.25, 3.5);
             this.scene.scale(0.5, 0.5, 1.5);
             this.scene.rotate(Math.PI, 0, 1, 0);
@@ -415,7 +395,6 @@ class MyVehicle extends CGFobject {
         this.scene.pushMatrix();
             this.scene.translate(0,0,2.5);
             this.scene.rotate(Math.PI, 0, 1, 0);
-            
             this.scene.translate(-2.75, 0.25, 3.5);
             this.scene.scale(0.25, 0.25, 1);
             this.circle.display();
@@ -424,9 +403,7 @@ class MyVehicle extends CGFobject {
         this.scene.pushMatrix();
             this.scene.translate(0,0,2.5);
             this.scene.rotate(Math.PI, 0, 1, 0);
-         
             this.scene.translate(-2.75, 0.25, 2);
-            //this.scene.translate(0, 0, -0.50);
             this.scene.scale(0.5, 0.5, 1);
             this.scene.rotate(Math.PI, 1, 0, 0);
             this.circle.display();

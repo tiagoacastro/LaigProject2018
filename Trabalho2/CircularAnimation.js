@@ -37,8 +37,6 @@ class CircularAnimation extends Animation {
         this.scene.translate(0, 0, this.radius);
         this.scene.rotate(this.initOrientation, 0, 1, 0);
 
-        //console.log((((Math.PI/2) - this.currAngle) * 180)/Math.PI);
-        
         if (this.rotang > 0) {
             this.scene.rotate(Math.PI, 0, 1, 0);
         }
@@ -47,11 +45,8 @@ class CircularAnimation extends Animation {
 
     update(deltaTime) {
 
-        //console.log(this.isActive);
-
         if (this.isActive) {
             this.currAngle += this.angularspeed * (deltaTime/1000);
-            //console.log((this.currAngle*180)/Math.PI,);
             if (this.currAngle >= (this.initAngle * DEGREE_TO_RAD + this.rotAngle * DEGREE_TO_RAD)) {
                 this.reset();
             }
