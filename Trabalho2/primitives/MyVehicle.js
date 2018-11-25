@@ -9,10 +9,37 @@ class MyVehicle extends CGFobject {
     constructor(scene){
         super(scene);
 
-        this.metalTexture = new CGFtexture(this.scene, "./scenes/images/quarters.jpg");
-        this.glassTexture = new CGFtexture(this.scene, "./scenes/images/glass.png");
-        this.quartersTexture = new CGFtexture(this.scene, "./scenes/images/quarters.jpg");
-        this.engineTexture = new CGFtexture(this.scene, "./scenes/images/white_metal.jpg");
+        this.metalAppearance = new CGFappearance(this.scene);
+        this.metalAppearance.loadTexture("./scenes/images/quarters.jpg");
+        this.metalAppearance.setShininess(80);
+        this.metalAppearance.setEmission(0,0,0,1);
+        this.metalAppearance.setAmbient(0.1,0.1,0.1,1);
+        this.metalAppearance.setDiffuse(0.75,0.75,0.75,1);
+        this.metalAppearance.setSpecular(0.75,0.75,0.75,1);
+
+        this.glassAppearance = new CGFappearance(this.scene);
+        this.glassAppearance.loadTexture("./scenes/images/glass.png");
+        this.glassAppearance.setShininess(80);
+        this.glassAppearance.setEmission(0,0,0,1);
+        this.glassAppearance.setAmbient(0.1,0.1,0.1,1);
+        this.glassAppearance.setDiffuse(0.75,0.75,0.75,1);
+        this.glassAppearance.setSpecular(0.75,0.75,0.75,1);
+
+        this.quartersAppearance = new CGFappearance(this.scene);
+        this.quartersAppearance.loadTexture("./scenes/images/quarters.jpg");
+        this.quartersAppearance.setShininess(80);
+        this.quartersAppearance.setEmission(0,0,0,1);
+        this.quartersAppearance.setAmbient(0.1,0.1,0.1,1);
+        this.quartersAppearance.setDiffuse(0.75,0.75,0.75,1);
+        this.quartersAppearance.setSpecular(0.75,0.75,0.75,1);
+
+        this.engineAppearance = new CGFappearance(this.scene);
+        this.engineAppearance.loadTexture("./scenes/images/white_metal.jpg");
+        this.engineAppearance.setShininess(80);
+        this.engineAppearance.setEmission(0,0,0,1);
+        this.engineAppearance.setAmbient(0.1,0.1,0.1,1);
+        this.engineAppearance.setDiffuse(0.75,0.75,0.75,1);
+        this.engineAppearance.setSpecular(0.75,0.75,0.75,1);
 
         this.plane = new MyPlane(scene, 20, 20);
         this.cone = new MyCylinder2(scene, 0.5, 1, 1, 60, 60);
@@ -236,7 +263,7 @@ class MyVehicle extends CGFobject {
 
         //  body
 
-        this.glassTexture.bind();
+        this.glassAppearance.apply();
 
         this.scene.pushMatrix();
             this.scene.translate(0, 0, 1);
@@ -247,9 +274,7 @@ class MyVehicle extends CGFobject {
             this.viewport.display();
         this.scene.popMatrix();
 
-        this.glassTexture.unbind();
-
-        this.engineTexture.bind();
+        this.engineAppearance.apply();
 
         this.scene.pushMatrix();
         this.scene.translate(0,0,2.5);
@@ -261,9 +286,7 @@ class MyVehicle extends CGFobject {
             this.quarters.display();
         this.scene.popMatrix();
 
-        this.engineTexture.unbind();
-
-        this.metalTexture.bind();
+        this.metalAppearance.apply();
 
         this.scene.pushMatrix();
         this.scene.translate(0,0,2.5);
@@ -348,9 +371,7 @@ class MyVehicle extends CGFobject {
             this.cylinder.display();
         this.scene.popMatrix(); 
 
-        this.metalTexture.unbind();
-
-        this.engineTexture.bind();
+        this.engineAppearance.apply();
 
         //thrusters
 
@@ -410,8 +431,6 @@ class MyVehicle extends CGFobject {
             this.scene.rotate(Math.PI, 1, 0, 0);
             this.circle.display();
         this.scene.popMatrix();
-
-        this.engineTexture.unbind();
 
     };
 
