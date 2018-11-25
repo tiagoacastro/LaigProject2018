@@ -24,6 +24,8 @@
 
   <textures>
     <texture id="stainless_steel" file="./scenes/images/stainless_steel.jpg"/>
+    <texture id="saturn" file="./scenes/images/saturn.jpg"/>
+    <texture id="saturn_ring" file="./scenes/images/saturn_ring.jpg"/>
     <texture id="height_map" file="./scenes/images/height_map3.jpg"/>
     <texture id="water" file="./scenes/images/height_map3.png"/>
     <texture id="water_color" file="./scenes/images/water_color.jpg"/>
@@ -38,6 +40,13 @@
       <diffuse  r="0.80" g="0.80" b="0.80" a="1" /> 
       <specular  r="0.80" g="0.80" b="0.80" a="1" /> 
     </material>
+
+    <material id="source" shininess="100" >
+            <emission r="1" g="1" b="1" a="1" />
+            <ambient  r="0.1" g="0.1" b="0.1" a="1" />  
+            <diffuse r="1" g="1" b="1" a="1" />
+            <specular r="1" g="1" b="1" a="1" />
+        </material>
   </materials>
 
   <transformations>
@@ -90,6 +99,17 @@
     <transformation id="scale_skybox">
       <scale x="200" y="200" z="200"/>
     </transformation>
+
+    <transformation id="set_planet">
+            <scale x="10" y="10" z="10"/>
+            <rotate axis="x" angle="60"/>
+        </transformation>
+
+        <transformation id="set_hoop">
+            <scale x="10" y="10" z="10"/>
+            <rotate axis="x" angle="60"/>
+            <scale x="1" y="1" z="0.1"/>
+        </transformation>
   </transformations>
 
   <animations>
@@ -106,6 +126,8 @@
     </linear>
 
     <circular id="turn_vehicle_1" span="10" center="0 20 -10" radius="10" startang="0" rotang="360"/>
+
+    <circular id="turn_saturn" span="240" center="0 75 0" radius="75" startang="0" rotang="360" />
 
   </animations>
 
@@ -129,8 +151,12 @@
     </primitive>
 
     <primitive id="sphere">
-      <sphere radius="0.5" slices="40" stacks="40" />
+      <sphere radius="0.5" slices="100" stacks="100" />
     </primitive>
+
+    <primitive id="torus_saturn">
+            <torus inner="0.2" outer="0.8" slices="100" loops="100" />
+        </primitive>
 
     <primitive id="plane">
       <plane npartsU="20" npartsV="20" /> 
@@ -181,6 +207,7 @@
         <componentref id="terrain"/>
         <componentref id="water"/> 
         <componentref id="skybox"/> 
+        <componentref id="saturn"/>
       </children>
     </component>
 
@@ -323,6 +350,49 @@
         </children>
     </component>
 
+    <component id="saturn">
+            <transformation>
+                <transformationref id="identity"/>
+            </transformation>
+            <animations>
+                <animationref id="turn_saturn"/>
+            </animations>
+            <materials>
+                <material id="source"/>
+                <material id="inherit"/>
+            </materials>
+            <texture id="inherit" length_s="1" length_t="1" />
+            <children>
+                <componentref id="planet"/>
+                <componentref id="hoop"/>
+            </children>
+        </component>
+
+        <component id="planet">
+            <transformation>
+                <transformationref id="set_planet"/>
+            </transformation>
+           <materials>
+                <material id="inherit"/>
+            </materials>
+            <texture id="saturn" length_s="1" length_t="1" />
+            <children>
+                <primitiveref id="sphere"/>
+            </children>
+        </component>
+
+        <component id="hoop">
+            <transformation>
+                <transformationref id="set_hoop"/>
+            </transformation>
+            <materials>
+                <material id="inherit"/>
+            </materials>
+            <texture id="saturn_ring" length_s="1" length_t="1" />
+            <children>
+                <primitiveref id="torus_saturn"/>
+            </children>
+        </component>
   </components>
 
 </yas>
