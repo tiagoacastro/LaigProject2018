@@ -23,21 +23,7 @@
   </lights>
 
   <textures>
-    <texture id="windows" file="./scenes/images/windows.jpg"/>
-    <texture id="black_plastic" file="./scenes/images/black_plastic.jpg"/>
-    <texture id="gray_wood" file="./scenes/images/gray_wood.jpg"/>
-    <texture id="velvet" file="./scenes/images/velvet.jpg"/>
-    <texture id="black_wood" file="./scenes/images/black_wood.jpg"/>
-    <texture id="gray_wash" file="./scenes/images/gray_wash.png"/>
-    <texture id="gray_stone" file="./scenes/images/gray_stone.jpg"/>
     <texture id="stainless_steel" file="./scenes/images/stainless_steel.jpg"/>
-    <texture id="trash" file="./scenes/images/trash.jpg"/>
-    <texture id="saturn" file="./scenes/images/saturn.jpg"/>
-    <texture id="saturn_ring" file="./scenes/images/saturn_ring.jpg"/>
-    <texture id="linen" file="./scenes/images/linen.jpg"/>
-    <texture id="dolomite" file="./scenes/images/dolomite.jpg"/>
-    <texture id="gold" file="./scenes/images/gold.jpeg"/>
-    <texture id="vidal" file="./scenes/images/vidal.jpg"/>
     <texture id="height_map" file="./scenes/images/height_map3.jpg"/>
     <texture id="water" file="./scenes/images/height_map3.png"/>
     <texture id="water_color" file="./scenes/images/water_color.jpg"/>
@@ -52,20 +38,6 @@
       <diffuse  r="0.80" g="0.80" b="0.80" a="1" /> 
       <specular  r="0.80" g="0.80" b="0.80" a="1" /> 
     </material>
-
-    <material id="coffee" shininess="30" >
-      <emission a="1" b="0" g="0" r="0"/>
-      <ambient a="1" b="0.0075" g="0.0271" r="0.0545"/>
-      <diffuse a="1" b="0.045" g="0.15" r="0.300"/>
-      <specular a="1" b="0.015" g="0.042" r="0.1"/>
-    </material>
-
-    <material id="cream" shininess="30" >
-      <emission r="0" g="0" b="0" a="1" />
-      <ambient  r="0.1" g="0.1" b="0.1" a="1" /> 
-      <diffuse r="0.6" g="0.5" b="0.3" a="1" />
-      <specular r="0.6" g="0.5" b="0.1" a="1" />
-    </material>
   </materials>
 
   <transformations>
@@ -73,57 +45,54 @@
       <translate x="0" y="0" z="0"/>
     </transformation>
 
-      <transformation id="scale_plane">
-        <scale x="40" y="20" z="40"/>
-      </transformation>
+    <transformation id="scale_plane">
+      <scale x="40" y="20" z="40"/>
+    </transformation>
 
-      <transformation id="center_vehicle">
-        <translate x="-1.5" y="0" z="0"/>
-      </transformation>
+    <transformation id="center_vehicle">
+      <translate x="-1.5" y="0" z="0"/>
+    </transformation>
 
-      <transformation id="place_water">
+    <transformation id="place_water">
       <translate x="0" y="8" z="0"/>
-        <scale x="60" y="20" z="60"/>
-      </transformation>
+      <scale x="60" y="20" z="60"/>
+    </transformation>
 
-      <transformation id="set_skybox_face0">
-          <translate x="0" y="0" z="-0.5"/>
-      </transformation>
+    <transformation id="set_skybox_face0">
+      <translate x="0" y="0" z="-0.5"/>
+    </transformation>
 
-      <transformation id="set_skybox_face1">
-          <translate x="0" y="0.5" z="0"/>
-          <rotate axis="x" angle="90"/>
-      </transformation>
+    <transformation id="set_skybox_face1">
+      <translate x="0" y="0.5" z="0"/>
+      <rotate axis="x" angle="90"/>
+    </transformation>
 
-      <transformation id="set_skybox_face2">
-          <translate x="0" y="0" z="0.5"/>
-          <rotate axis="x" angle="180"/>
-      </transformation>
+    <transformation id="set_skybox_face2">
+      <translate x="0" y="0" z="0.5"/>
+      <rotate axis="x" angle="180"/>
+    </transformation>
 
-      <transformation id="set_skybox_face3">
-          <translate x="0" y="-0.5" z="0"/>
-          <rotate axis="x" angle="-90"/>
-      </transformation>
+    <transformation id="set_skybox_face3">
+      <translate x="0" y="-0.5" z="0"/>
+      <rotate axis="x" angle="-90"/>
+    </transformation>
 
-      <transformation id="set_skybox_face4">
-          <translate x="-0.5" y="0" z="0"/>
-          <rotate axis="y" angle="90"/>
-      </transformation>
+    <transformation id="set_skybox_face4">
+      <translate x="-0.5" y="0" z="0"/>
+      <rotate axis="y" angle="90"/>
+    </transformation>
 
-      <transformation id="set_skybox_face5">
-          <translate x="0.5" y="0" z="0"/>
-          <rotate axis="y" angle="-90"/>
-      </transformation>
+    <transformation id="set_skybox_face5">
+      <translate x="0.5" y="0" z="0"/>
+      <rotate axis="y" angle="-90"/>
+    </transformation>
 
-      <transformation id="scale_skybox">
-          <scale x="200" y="200" z="200"/>
-      </transformation>
-
+    <transformation id="scale_skybox">
+      <scale x="200" y="200" z="200"/>
+    </transformation>
   </transformations>
 
   <animations>
-
-    <circular id="turn_stress_ball" span="10" center="0 0 0" radius="5" startang="45" rotang="180"/>
 
     <linear id="move_vehicle_1" span="20">
       <controlpoint xx="0" yy="10" zz="0"/>
@@ -137,13 +106,6 @@
     </linear>
 
     <circular id="turn_vehicle_1" span="10" center="0 20 -10" radius="10" startang="0" rotang="360"/>
-
-    <linear id="move_vehicle_2" span="4">
-      <controlpoint xx="0" yy="5" zz="-5"/>
-      <controlpoint xx="-5" yy="5" zz="-5"/>
-    </linear>
-
-    <circular id="turn_vehicle_2" span="5" center="0 0 5" radius="5" startang="90" rotang="180"/>
 
   </animations>
 
