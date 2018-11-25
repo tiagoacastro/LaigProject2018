@@ -121,7 +121,7 @@
       <controlpoint xx="0" yy="10" zz="0"/>
     </linear>
 
-    <circular id="turn_vehicle_1" span="5" center="0 20 -10" radius="15" startang="0" rotang="360"/>
+    <circular id="turn_vehicle_1" span="5" center="0 20 -15" radius="15" startang="0" rotang="360"/>
 
     <linear id="move_vehicle_2" span="4">
       <controlpoint xx="0" yy="5" zz="-5"/>
@@ -239,7 +239,7 @@
       <materials>
         <material id="inherit"/>
       </materials>
-      <texture id="velvet" length_s="1" length_t="1" />
+      <texture id="none" length_s="1" length_t="1" />
       <children>
         <primitiveref id="vehicle"/> 
       </children>
