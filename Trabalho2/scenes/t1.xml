@@ -6,6 +6,16 @@
       <from x="99" y="99" z="99" />
       <to x="0" y="0" z="0" />
     </perspective>
+
+    <perspective id="close" near="0.1" far="500" angle="45">
+      <from x="30" y="50" z="30" />
+      <to x="0" y="0" z="0" />
+    </perspective>
+
+    <perspective id="island" near="0.1" far="500" angle="45">
+      <from x="-25" y="20" z="25" />
+      <to x="0" y="5" z="0" />
+    </perspective>
   </views>
 
   <ambient>
