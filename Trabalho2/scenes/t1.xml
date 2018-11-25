@@ -131,15 +131,15 @@
 
   <animations>
 
-    <linear id="move_vehicle_1" span="20">
-      <controlpoint xx="0" yy="10" zz="0"/>
-      <controlpoint xx="4" yy="10" zz="6"/>
-      <controlpoint xx="4" yy="10" zz="10"/>
-      <controlpoint xx="0" yy="10" zz="14"/>
-      <controlpoint xx="-8" yy="10" zz="10"/>
-      <controlpoint xx="-8" yy="10" zz="6"/>
-      <controlpoint xx="-4" yy="10" zz="0"/>
-      <controlpoint xx="0" yy="10" zz="0"/>
+    <linear id="move_vehicle_1" span="10">
+      <controlpoint xx="0" yy="20" zz="0"/>
+      <controlpoint xx="4" yy="20" zz="6"/>
+      <controlpoint xx="4" yy="20" zz="10"/>
+      <controlpoint xx="0" yy="20" zz="14"/>
+      <controlpoint xx="-8" yy="20" zz="10"/>
+      <controlpoint xx="-8" yy="20" zz="6"/>
+      <controlpoint xx="-4" yy="20" zz="0"/>
+      <controlpoint xx="0" yy="20" zz="0"/>
     </linear>
 
     <circular id="turn_vehicle_1" span="10" center="0 20 -10" radius="10" startang="0" rotang="360"/>

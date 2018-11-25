@@ -112,11 +112,6 @@ class LinearAnimation extends Animation {
         this.currPoint[1],
         this.currPoint[2]
       );
-      this.scene.translate(
-        this.originPoint[0],
-        this.originPoint[1],
-        this.originPoint[2]
-      );
       this.scene.rotate( Math.PI / 2 - this.orientation, 0, 1, 0);
     }
 
