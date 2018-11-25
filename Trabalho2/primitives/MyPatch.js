@@ -33,7 +33,7 @@ class MyPatch extends CGFobject {
         for(let i = 0; i < this.nPointsU; i ++){
             let aux = [];
             for(let j = 0; j < this.nPointsV; j ++){
-                aux.push([this.controlPoints[i*this.nPointsV+j][0], this.controlPoints[i*this.nPointsV+j][1], this.controlPoints[i*this.nPointsV+j][2], this.nPointsV-1]);
+                aux.push([this.controlPoints[i*this.nPointsV+j][0], this.controlPoints[i*this.nPointsV+j][1], this.controlPoints[i*this.nPointsV+j][2], this.controlPoints[i*this.nPointsV+j][3]]);
             }
             this.actualControlPoints.push(aux);
         }

@@ -1376,7 +1376,7 @@ class MySceneGraph {
                 this.onXMLMinorError("unable to parse value for zz plane; assuming 'zz = 10'");
             }
 
-            controlPoints.push([xx, yy, zz]);
+            controlPoints.push([xx, yy, zz, 1]);
         }
 
         //criar patch
