@@ -61,6 +61,7 @@ class CircularAnimation extends Animation {
 
     reset() {
         this.currAngle = this.initAngle * DEGREE_TO_RAD;
+        this.incAngle = 0;
         this.isDone = 1;
     }
 
