@@ -29,6 +29,7 @@
     <texture id="floor" file="./scenes/images/wooden_floor_fixed.jpg"/>
     <texture id="red_velvet" file="./scenes/images/red_velvet_fixed.jpg"/>
     <texture id="dark_wood" file="./scenes/images/dark_wood_fixed.jpg"/>
+    <texture id="mint_green" file="./scenes/images/mint_green_fixed.jpg"/>
   </textures>
 
   <materials>
@@ -94,33 +95,86 @@
       <scale x="20" y="20" z="20"/>
     </transformation>
 
-    <transformation id="set_leg0">
+    <transformation id="set_game_table_leg0">
         <translate x="-1.875" y="0.5" z="-1.875"/>
         <scale x="0.25" y="1" z="0.25"/>
     </transformation>
 
-    <transformation id="set_leg1">
+    <transformation id="set_game_table_leg1">
         <translate x="-1.875" y="0.5" z="1.875"/>
         <scale x="0.25" y="1" z="0.25"/>
     </transformation>
 
-    <transformation id="set_leg2">
+    <transformation id="set_game_table_leg2">
         <translate x="1.875" y="0.5" z="1.875"/>
         <scale x="0.25" y="1" z="0.25"/>
     </transformation>
 
-    <transformation id="set_leg3">
+    <transformation id="set_game_table_leg3">
         <translate x="1.875" y="0.5" z="-1.875"/>
         <scale x="0.25" y="1" z="0.25"/>
     </transformation>
 
-    <transformation id="set_table_top">
+    <transformation id="set_game_table_top">
         <translate x="0" y="1.125" z="0"/>
         <scale x="4" y="0.25" z="4"/>
     </transformation>
 
-    <transformation id="set_table">
+    <transformation id="set_game_table">
         <translate x="0" y="0" z="1"/>
+    </transformation>
+
+    <transformation id="set_tea_table_leg">
+        <translate x="0" y="0.125" z="0"/>
+        <scale x="0.375" y="0.875" z="0.375"/>
+        <rotate axis="x" angle="-90"/>
+    </transformation>
+
+    <transformation id="set_tea_table_top">
+        <translate x="0" y="1" z="0"/>
+        <scale x="1" y="0.25" z="1"/>
+        <rotate axis="x" angle="-90"/>
+    </transformation>
+
+    <transformation id="set_tea_table_base">
+        <scale x="0.75" y="0.125" z="0.75"/>
+        <rotate axis="x" angle="-90"/>
+    </transformation>
+
+    <transformation id="set_tea_table1">
+        <translate x="3" y="0" z="-2.75"/>
+    </transformation>
+
+    <transformation id="set_tea_table2">
+        <translate x="-3" y="0" z="2.75"/>
+    </transformation>
+
+    <transformation id="set_cup">
+      <translate x="0" y="1.125" z="0"/>
+    </transformation>
+
+    <transformation id="set_saucer">
+      <translate x="0" y="0.25" z="0"/>
+    </transformation>
+
+    <transformation id="set_cup_outside">
+      <rotate axis="x" angle="180"/>
+    </transformation>
+
+    <transformation id="set_saucer_outside">
+      <rotate axis="x" angle="180"/>
+    </transformation>
+
+    <transformation id="set_cup_and_saucer1">
+      <translate x="2.90" y="1.26" z="-2.65"/>
+      <rotate axis="y" angle="25"/>
+      <scale x="0.25" y="0.25" z="0.25"/>
+    </transformation>
+
+    <transformation id="set_cup_and_saucer2">
+      <translate x="-2.80" y="1.26" z="2.35"/>
+      <rotate axis="y" angle="25"/>
+      <scale x="0.25" y="0.25" z="0.25"/>
     </transformation>
 
     <transformation id="set_chair1">
@@ -243,6 +297,102 @@
       <water idtexture="water_color" idwavemap="water" parts="5" heightscale="0.1" texscale="1" />
     </primitive>
 
+    <primitive id="patch_cup_inside">
+      <patch npointsU="4" npointsV="4" npartsU="20" npartsV="20"> 
+        <controlpoint xx="-0.75" yy="0" zz="0.75" />
+        <controlpoint xx="-1" yy="0" zz="0.5" />
+        <controlpoint xx="-1" yy="0" zz="-0.5" />
+        <controlpoint xx="-0.75" yy="0" zz="-0.75" />
+
+        <controlpoint xx="-0.5" yy="0" zz="1" />
+        <controlpoint xx="-0.5" yy="-2" zz="0.5" />
+        <controlpoint xx="-0.5" yy="-2" zz="-0.5" />
+        <controlpoint xx="-0.5" yy="0" zz="-1" />
+
+        <controlpoint xx="0.5" yy="0" zz="1" />
+        <controlpoint xx="0.5" yy="-2" zz="0.5" />
+        <controlpoint xx="0.5" yy="-2" zz="-0.5" />
+        <controlpoint xx="0.5" yy="0" zz="-1" />
+
+        <controlpoint xx="0.75" yy="0" zz="0.75" />
+        <controlpoint xx="1" yy="0" zz="0.5" />
+        <controlpoint xx="1" yy="0" zz="-0.5" />
+        <controlpoint xx="0.75" yy="0" zz="-0.75" />
+      </patch>
+    </primitive>
+
+    <primitive id="patch_cup_outside">
+      <patch npointsU="4" npointsV="4" npartsU="20" npartsV="20"> 
+        <controlpoint xx="-0.75" yy="0" zz="0.75" />
+        <controlpoint xx="-1" yy="0" zz="0.5" />
+        <controlpoint xx="-1" yy="0" zz="-0.5" />
+        <controlpoint xx="-0.75" yy="0" zz="-0.75" />
+
+        <controlpoint xx="-0.5" yy="0" zz="1" />
+        <controlpoint xx="-0.875" yy="2" zz="0.875" />
+        <controlpoint xx="-0.875" yy="2" zz="-0.875" />
+        <controlpoint xx="-0.5" yy="0" zz="-1" />
+
+        <controlpoint xx="0.5" yy="0" zz="1" />
+        <controlpoint xx="0.875" yy="2" zz="0.875" />
+        <controlpoint xx="0.875" yy="2" zz="-0.875" />
+        <controlpoint xx="0.5" yy="0" zz="-1" />
+
+        <controlpoint xx="0.75" yy="0" zz="0.75" />
+        <controlpoint xx="1" yy="0" zz="0.5" />
+        <controlpoint xx="1" yy="0" zz="-0.5" />
+        <controlpoint xx="0.75" yy="0" zz="-0.75" />
+      </patch>
+    </primitive>
+
+    <primitive id="patch_saucer_inside">
+      <patch npointsU="4" npointsV="4" npartsU="20" npartsV="20"> 
+        <controlpoint xx="-1" yy="0" zz="1" />
+        <controlpoint xx="-1.25" yy="0" zz="0.75" />
+        <controlpoint xx="-1.25" yy="0" zz="-0.75" />
+        <controlpoint xx="-1" yy="0" zz="-1" />
+
+        <controlpoint xx="-0.75" yy="0" zz="1.25" />
+        <controlpoint xx="-0.5" yy="-0.5" zz="0.5" />
+        <controlpoint xx="-0.5" yy="-0.5" zz="-0.5" />
+        <controlpoint xx="-0.75" yy="0" zz="-1.25" />
+
+        <controlpoint xx="0.75" yy="0" zz="1.25" />
+        <controlpoint xx="0.5" yy="-0.5" zz="0.5" />
+        <controlpoint xx="0.5" yy="-0.5" zz="-0.5" />
+        <controlpoint xx="0.75" yy="0" zz="-1.25" />
+
+        <controlpoint xx="1" yy="0" zz="1" />
+        <controlpoint xx="1.25" yy="0" zz="0.75" />
+        <controlpoint xx="1.25" yy="0" zz="-0.75" />
+        <controlpoint xx="1" yy="0" zz="-1" />
+      </patch>
+    </primitive>
+
+    <primitive id="patch_saucer_outside">
+      <patch npointsU="4" npointsV="4" npartsU="20" npartsV="20"> 
+        <controlpoint xx="-1" yy="0" zz="1" />
+        <controlpoint xx="-1.25" yy="0" zz="0.75" />
+        <controlpoint xx="-1.25" yy="0" zz="-0.75" />
+        <controlpoint xx="-1" yy="0" zz="-1" />
+
+        <controlpoint xx="-0.75" yy="0" zz="1.25" />
+        <controlpoint xx="-0.5" yy="0.5" zz="0.5" />
+        <controlpoint xx="-0.5" yy="0.5" zz="-0.5" />
+        <controlpoint xx="-0.75" yy="0" zz="-1.25" />
+
+        <controlpoint xx="0.75" yy="0" zz="1.25" />
+        <controlpoint xx="0.5" yy="0.5" zz="0.5" />
+        <controlpoint xx="0.5" yy="0.5" zz="-0.5" />
+        <controlpoint xx="0.75" yy="0" zz="-1.25" />
+
+        <controlpoint xx="1" yy="0" zz="1" />
+        <controlpoint xx="1.25" yy="0" zz="0.75" />
+        <controlpoint xx="1.25" yy="0" zz="-0.75" />
+        <controlpoint xx="1" yy="0" zz="-1" />
+      </patch>
+    </primitive>
+
   </primitives>
 
   <components>
@@ -256,7 +406,11 @@
       <texture id="none" length_s="1" length_t="1" />
       <children>
         <componentref id="room"/> 
-        <componentref id="table"/> 
+        <componentref id="game_table"/>
+        <componentref id="tea_table1"/>
+        <componentref id="tea_table2"/>
+        <componentref id="cup_and_saucer1"/>
+        <componentref id="cup_and_saucer2"/> 
         <componentref id="chair1"/> 
         <componentref id="chair2"/> 
       </children>
@@ -480,7 +634,7 @@
         </children>
     </component>
 
-    <component id="table">
+    <component id="game_table">
         <transformation>
             <transformationref id="identity"/>
         </transformation>
@@ -489,14 +643,14 @@
         </materials>
         <texture id="dark_wood" length_s="1" length_t="1" />
         <children>
-            <componentref id="table_top"/>
-            <componentref id="legs"/>
+            <componentref id="game_table_top"/>
+            <componentref id="game_table_legs"/>
         </children>
     </component>
 
-    <component id="table_top">
+    <component id="game_table_top">
       <transformation>
-        <transformationref id="set_table_top"/>
+        <transformationref id="set_game_table_top"/>
       </transformation>
       <materials>
         <material id="inherit"/>
@@ -507,7 +661,7 @@
       </children>
     </component>
 
-    <component id="legs">
+    <component id="game_table_legs">
       <transformation>
           <transformationref id="identity"/>
       </transformation>
@@ -516,16 +670,16 @@
       </materials>
       <texture id="inherit" length_s="1" length_t="1" />
       <children>
-          <componentref id="leg0"/>
-          <componentref id="leg1"/>
-          <componentref id="leg2"/>
-          <componentref id="leg3"/>
+          <componentref id="game_table_leg0"/>
+          <componentref id="game_table_leg1"/>
+          <componentref id="game_table_leg2"/>
+          <componentref id="game_table_leg3"/>
       </children>
     </component>
 
-    <component id="leg0">
+    <component id="game_table_leg0">
       <transformation>
-          <transformationref id="set_leg0"/>
+          <transformationref id="set_game_table_leg0"/>
       </transformation>
       <materials>
           <material id="inherit"/>
@@ -536,9 +690,9 @@
       </children>
     </component>
 
-    <component id="leg1">
+    <component id="game_table_leg1">
       <transformation>
-          <transformationref id="set_leg1"/>
+          <transformationref id="set_game_table_leg1"/>
       </transformation>
       <materials>
           <material id="inherit"/>
@@ -549,9 +703,9 @@
       </children>
     </component>
 
-    <component id="leg2">
+    <component id="game_table_leg2">
       <transformation>
-          <transformationref id="set_leg2"/>
+          <transformationref id="set_game_table_leg2"/>
       </transformation>
       <materials>
           <material id="inherit"/>
@@ -562,9 +716,9 @@
       </children>
     </component>
 
-    <component id="leg3">
+    <component id="game_table_leg3">
       <transformation>
-          <transformationref id="set_leg3"/>
+          <transformationref id="set_game_table_leg3"/>
       </transformation>
       <materials>
           <material id="inherit"/>
@@ -572,6 +726,183 @@
       <texture id="inherit" length_s="1" length_t="1" />
       <children>
           <componentref id="cube"/>
+      </children>
+    </component>
+
+    <component id="tea_table1">
+        <transformation>
+            <transformationref id="set_tea_table1"/>
+        </transformation>
+        <materials>
+            <material id="inherit"/>
+        </materials>
+        <texture id="dark_wood" length_s="1" length_t="1" />
+        <children>
+            <componentref id="tea_table_top"/>
+            <componentref id="tea_table_leg"/>
+            <componentref id="tea_table_base"/>
+        </children>
+    </component>
+
+    <component id="tea_table2">
+        <transformation>
+            <transformationref id="set_tea_table2"/>
+        </transformation>
+        <materials>
+            <material id="inherit"/>
+        </materials>
+        <texture id="dark_wood" length_s="1" length_t="1" />
+        <children>
+            <componentref id="tea_table_top"/>
+            <componentref id="tea_table_leg"/>
+            <componentref id="tea_table_base"/>
+        </children>
+    </component>
+
+    <component id="tea_table_top">
+      <transformation>
+        <transformationref id="set_tea_table_top"/>
+      </transformation>
+      <materials>
+        <material id="inherit"/>
+      </materials>
+      <texture id="inherit" length_s="1" length_t="1" />
+      <children>
+        <primitiveref id="cylinder"/>
+      </children>
+    </component>
+
+    <component id="tea_table_base">
+      <transformation>
+        <transformationref id="set_tea_table_base"/>
+      </transformation>
+      <materials>
+        <material id="inherit"/>
+      </materials>
+      <texture id="inherit" length_s="1" length_t="1" />
+      <children>
+        <primitiveref id="cylinder"/>
+      </children>
+    </component>
+
+    <component id="tea_table_leg">
+      <transformation>
+          <transformationref id="set_tea_table_leg"/>
+      </transformation>
+      <materials>
+          <material id="inherit"/>
+      </materials>
+      <texture id="inherit" length_s="1" length_t="1" />
+      <children>
+          <primitiveref id="cylinder"/>
+      </children>
+    </component>
+
+    <component id="cup_and_saucer1">
+      <transformation>
+        <transformationref id="set_cup_and_saucer1"/>
+      </transformation>
+      <materials>
+        <material id="inherit"/>
+      </materials>
+      <texture id="mint_green" length_s="1" length_t="1" />
+      <children>
+        <componentref id="cup"/>
+        <componentref id="saucer"/>
+      </children>
+    </component>
+
+    <component id="cup_and_saucer2">
+      <transformation>
+        <transformationref id="set_cup_and_saucer2"/>
+      </transformation>
+      <materials>
+        <material id="inherit"/>
+      </materials>
+      <texture id="mint_green" length_s="1" length_t="1" />
+      <children>
+        <componentref id="cup"/>
+        <componentref id="saucer"/>
+      </children>
+    </component>
+
+    <component id="cup">
+      <transformation>
+        <transformationref id="set_cup"/>
+      </transformation>
+      <materials>
+        <material id="inherit"/>
+      </materials>
+      <texture id="inherit" length_s="1" length_t="1" />
+      <children>
+        <componentref id="cup_inside"/>
+        <componentref id="cup_outside"/>
+      </children>
+    </component>
+
+    <component id="cup_inside">
+      <transformation>
+        <transformationref id="identity"/>
+      </transformation>
+      <materials>
+        <material id="inherit"/>
+      </materials>
+      <texture id="inherit" length_s="1" length_t="1" />
+      <children>
+        <primitiveref id="patch_cup_inside"/>
+      </children>
+    </component>
+
+    <component id="cup_outside">
+      <transformation>
+        <transformationref id="set_cup_outside"/>
+      </transformation>
+      <materials>
+        <material id="inherit"/>
+      </materials>
+      <texture id="inherit" length_s="1" length_t="1" />
+      <children>
+        <primitiveref id="patch_cup_outside"/>
+      </children>
+    </component>
+
+    <component id="saucer">
+      <transformation>
+        <transformationref id="set_saucer"/>
+      </transformation>
+      <materials>
+        <material id="inherit"/>
+      </materials>
+      <texture id="inherit" length_s="1" length_t="1" />
+      <children>
+        <componentref id="saucer_inside"/>
+        <componentref id="saucer_outside"/>
+      </children>
+    </component>
+
+    <component id="saucer_inside">
+      <transformation>
+        <transformationref id="identity"/>
+      </transformation>
+      <materials>
+        <material id="inherit"/>
+      </materials>
+      <texture id="inherit" length_s="1" length_t="1" />
+      <children>
+        <primitiveref id="patch_saucer_inside"/>
+      </children>
+    </component>
+
+    <component id="saucer_outside">
+      <transformation>
+        <transformationref id="set_saucer_outside"/>
+      </transformation>
+      <materials>
+        <material id="inherit"/>
+      </materials>
+      <texture id="inherit" length_s="1" length_t="1" />
+      <children>
+        <primitiveref id="patch_saucer_outside"/>
       </children>
     </component>
       
