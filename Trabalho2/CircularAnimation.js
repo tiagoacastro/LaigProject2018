@@ -8,6 +8,7 @@ class CircularAnimation extends Animation {
         this.radius = radius;
         this.initAngle = initAngle;
         this.rotAngle = rotAngle;
+        this.incAngle = 0;
         
         if (this.rotAngle > 0) {
             this.initOrientation = Math.PI/2;
@@ -29,6 +30,8 @@ class CircularAnimation extends Animation {
         } else {
             this.angularspeed = -(this.rotAngle * DEGREE_TO_RAD) / this.span;
         }
+
+        this.inc = 2*Math.PI / this.span;
     }
 
     apply() {
@@ -36,6 +39,7 @@ class CircularAnimation extends Animation {
         this.scene.rotate(this.currAngle, 0, 1, 0);
         this.scene.translate(0, 0, this.radius);
         this.scene.rotate(this.initOrientation, 0, 1, 0);
+        this.scene.rotate(this.incAngle, 0, 0, 1);
 
         if (this.rotang > 0) {
             this.scene.rotate(Math.PI, 0, 1, 0);
@@ -50,6 +54,8 @@ class CircularAnimation extends Animation {
             if (this.currAngle >= (this.initAngle * DEGREE_TO_RAD + this.rotAngle * DEGREE_TO_RAD)) {
                 this.reset();
             }
+
+            this.incAngle += this.inc * (deltaTime/1000);
         }
     }
 
