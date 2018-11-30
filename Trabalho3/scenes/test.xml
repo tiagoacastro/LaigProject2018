@@ -142,73 +142,40 @@
       <water idtexture="water_color" idwavemap="water" parts="5" heightscale="0.1" texscale="1" />
     </primitive>
 
-    <primitive id="patch_ashtray_in">
+    <primitive id="patch_cushion">
       <patch npointsU="5" npointsV="5" npartsU="20" npartsV="20"> 
-        <controlpoint xx="-1" yy="0.25" zz="1" />
-        <controlpoint xx="-1" yy="0.5" zz="-0.375" />
-        <controlpoint xx="-1" yy="-0.5" zz="0" />
-        <controlpoint xx="-1" yy="0.5" zz="0.375" />
-        <controlpoint xx="-1" yy="0.25" zz="-1" />
+        <controlpoint xx="-1" yy="0" zz="1" />
+        <controlpoint xx="-1" yy="0" zz="0.5" />
+        <controlpoint xx="-1" yy="0" zz="0" />
+        <controlpoint xx="-1" yy="0" zz="-0.5" />
+        <controlpoint xx="-1" yy="0" zz="-1" />
 
-        <controlpoint xx="0.375" yy="0" zz="1" />
-        <controlpoint xx="-0.75" yy="-0.5" zz="0.75" />
-        <controlpoint xx="-0.75" yy="-0.5" zz="0" />
-        <controlpoint xx="-0.75" yy="-0.5" zz="-0.75" />
-        <controlpoint xx="0.375" yy="0" zz="-1" />
+        <controlpoint xx="-0.5" yy="0" zz="1" />
+        <controlpoint xx="-0.5" yy="0.5" zz="0.5" />
+        <controlpoint xx="-0.5" yy="0.5" zz="0" />
+        <controlpoint xx="-0.5" yy="0.5" zz="-0.5" />
+        <controlpoint xx="-0.5" yy="0" zz="-1" />
 
-        <controlpoint xx="0" yy="-0.5" zz="1" />
-        <controlpoint xx="0" yy="-0.5" zz="0.75" />
-        <controlpoint xx="0" yy="-0.5" zz="0" />
-        <controlpoint xx="0" yy="-0.5" zz="-0.75" />
-        <controlpoint xx="0" yy="-0.5" zz="-1" />
+        <controlpoint xx="0" yy="0" zz="1" />
+        <controlpoint xx="0" yy="0.5" zz="0.5" />
+        <controlpoint xx="0" yy="-1.5" zz="0" />
+        <controlpoint xx="0" yy="0.5" zz="-0.5" />
+        <controlpoint xx="0" yy="0" zz="-1" />
 
-        <controlpoint xx="-0.375" yy="0" zz="1" />
-        <controlpoint xx="0.75" yy="-0.5" zz="0.75" />
-        <controlpoint xx="0.75" yy="-0.5" zz="0" />
-        <controlpoint xx="0.75" yy="-0.5" zz="-0.75" />
-        <controlpoint xx="-0.375" yy="0" zz="-1" />
+        <controlpoint xx="0.5" yy="0" zz="1" />
+        <controlpoint xx="0.5" yy="0.5" zz="0.5" />
+        <controlpoint xx="0.5" yy="0.5" zz="0" />
+        <controlpoint xx="0.5" yy="0.5" zz="-0.5" />
+        <controlpoint xx="0.5" yy="0" zz="-1" />
 
-        <controlpoint xx="1" yy="0.25" zz="1" />
-        <controlpoint xx="1" yy="0.5" zz="-0.375" />
-        <controlpoint xx="1" yy="-0.5" zz="0" />
-        <controlpoint xx="1" yy="0.5" zz="0.375" />
-        <controlpoint xx="1" yy="0.25" zz="-1" />
+        <controlpoint xx="1" yy="0" zz="1" />
+        <controlpoint xx="1" yy="0" zz="-0.5" />
+        <controlpoint xx="1" yy="0" zz="0" />
+        <controlpoint xx="1" yy="0" zz="-0.5" />
+        <controlpoint xx="1" yy="0" zz="-1" />
       </patch>
     </primitive>
 
-    <primitive id="patch_ashtray_out">
-      <patch npointsU="5" npointsV="5" npartsU="20" npartsV="20"> 
-        <controlpoint xx="-1" yy="-0.25" zz="1" />
-        <controlpoint xx="-1" yy="-0.5" zz="-0.375" />
-        <controlpoint xx="-1" yy="0.5" zz="0" />
-        <controlpoint xx="-1" yy="-0.5" zz="0.375" />
-        <controlpoint xx="-1" yy="-0.25" zz="-1" />
-
-        <controlpoint xx="0.375" yy="0" zz="1" />
-        <controlpoint xx="-1" yy="0.5" zz="1" />
-        <controlpoint xx="-1" yy="0.5" zz="0" />
-        <controlpoint xx="-1" yy="0.5" zz="-1" />
-        <controlpoint xx="0.375" yy="0" zz="-1" />
-
-        <controlpoint xx="0" yy="0.5" zz="1" />
-        <controlpoint xx="0" yy="0.5" zz="1" />
-        <controlpoint xx="0" yy="0.5" zz="0" />
-        <controlpoint xx="0" yy="0.5" zz="-1" />
-        <controlpoint xx="0" yy="0.5" zz="-1" />
-
-        <controlpoint xx="-0.375" yy="0" zz="1" />
-        <controlpoint xx="1" yy="0.5" zz="1" />
-        <controlpoint xx="1" yy="0.5" zz="0" />
-        <controlpoint xx="1" yy="0.5" zz="-1" />
-        <controlpoint xx="-0.375" yy="0" zz="-1" />
-
-        <controlpoint xx="1" yy="-0.25" zz="1" />
-        <controlpoint xx="1" yy="-0.5" zz="-0.375" />
-        <controlpoint xx="1" yy="0.5" zz="0" />
-        <controlpoint xx="1" yy="-0.5" zz="0.375" />
-        <controlpoint xx="1" yy="-0.25" zz="-1" />
-      </patch>
-    </primitive>
   </primitives>
 
   <components>
@@ -221,11 +188,11 @@
       </materials>
       <texture id="none" length_s="1" length_t="1" />
       <children>
-        <componentref id="ashtray"/> 
+        <componentref id="cushion"/> 
       </children>
     </component>
 
-    <component id="ashtray">
+    <component id="cushion">
       <transformation>
         <transformationref id="identity"/>
       </transformation>
@@ -234,34 +201,7 @@
       </materials>
       <texture id="inherit" length_s="1" length_t="1" />
       <children>
-        <componentref id="ashtray_out"/>
-        <componentref id="ashtray_in"/>
-      </children>
-    </component>
-
-    <component id="ashtray_out">
-      <transformation>
-        <transformationref id="set_ashtray_out"/>
-      </transformation>
-      <materials>
-        <material id="inherit"/>
-      </materials>
-      <texture id="inherit" length_s="1" length_t="1" />
-      <children>
-        <primitiveref id="patch_ashtray_out"/>
-      </children>
-    </component>
-
-    <component id="ashtray_in">
-      <transformation>
-        <transformationref id="identity"/>
-      </transformation>
-      <materials>
-        <material id="inherit"/>
-      </materials>
-      <texture id="inherit" length_s="1" length_t="1" />
-      <children>
-        <primitiveref id="patch_ashtray_in"/>
+        <primitiveref id="patch_cushion"/>
       </children>
     </component>
       

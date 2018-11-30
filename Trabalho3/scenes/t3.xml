@@ -32,6 +32,7 @@
     <texture id="mint_green" file="./scenes/images/mint_green_fixed.jpg"/>
     <texture id="black_stone" file="./scenes/images/black_stone_fixed.jpg"/>
     <texture id="cigarette" file="./scenes/images/cigarette_fixed.jpg"/>
+    <texture id="ash" file="./scenes/images/ash_fixed.jpg"/>
   </textures>
 
   <materials>
@@ -96,6 +97,10 @@
       <translate x="0" y="10" z="0"/>
       <scale x="20" y="20" z="20"/>
     </transformation>
+    
+    <transformation id="set_game_station">
+      <translate x="0" y="0" z="0"/>
+    </transformation>
 
     <transformation id="set_game_table_leg0">
         <translate x="-1.875" y="0.5" z="-1.875"/>
@@ -143,6 +148,13 @@
       <scale x="0.01" y="0.01" z="0.2"/>
     </transformation>
 
+    <transformation id="set_smoke">
+      <translate x="3.55" y="1.28" z="-2.80"/>
+      <rotate axis="x" angle="-45"/>
+      <rotate axis="y" angle="90"/>
+      <scale x="1" y="1" z="1"/>
+    </transformation>
+
     <transformation id="set_tea_table_leg">
         <translate x="0" y="0.125" z="0"/>
         <scale x="0.375" y="0.875" z="0.35"/>
@@ -156,7 +168,7 @@
     </transformation>
 
     <transformation id="set_tea_table_base">
-        <scale x="0.75" y="0.125" z="0.75"/>
+        <scale x="0.5" y="0.125" z="0.5"/>
         <rotate axis="x" angle="-90"/>
     </transformation>
 
@@ -197,13 +209,26 @@
     </transformation>
 
     <transformation id="set_chair1">
-        <translate x="3" y="0.125" z="0"/>
-        <scale x="1.5" y="0.25" z="1.5"/>
+        <translate x="3" y="0.25" z="0"/>
     </transformation>
 
     <transformation id="set_chair2">
-        <translate x="-3" y="0.125" z="0"/>
+        <translate x="-3" y="0.25" z="0"/>
+    </transformation>
+
+    <transformation id="set_cushion_top">
+        <translate x="0" y="0.125" z="0"/>
+        <scale x="0.75" y="1" z="0.75"/>
+    </transformation>
+
+    <transformation id="set_cushion_middle">
         <scale x="1.5" y="0.25" z="1.5"/>
+    </transformation>
+
+    <transformation id="set_cushion_bottom">
+        <translate x="0" y="-0.125" z="0"/>
+        <rotate axis="x" angle="180"/>
+        <scale x="0.75" y="1" z="0.75"/>
     </transformation>
 
     <transformation id="set_cube_face0">
@@ -480,6 +505,66 @@
       </patch>
     </primitive>
 
+    <primitive id="patch_ash">
+      <patch npointsU="3" npointsV="3" npartsU="20" npartsV="20"> 
+        <controlpoint xx="-0.2" yy="-0.375" zz="0.2" />
+        <controlpoint xx="-0.25" yy="-0.375" zz="0" />
+        <controlpoint xx="-0.2" yy="-0.375" zz="-0.2" />
+
+        <controlpoint xx="0" yy="-0.375" zz="0.25" />
+        <controlpoint xx="0" yy="-0.375" zz="0" />
+        <controlpoint xx="0" yy="-0.375" zz="-0.25" />
+        
+        <controlpoint xx="0.2" yy="-0.375" zz="0.2" />
+        <controlpoint xx="0.25" yy="-0.375" zz="0" />
+        <controlpoint xx="0.2" yy="-0.375" zz="-0.2" />
+      </patch>
+    </primitive>
+
+    <primitive id="patch_smoke">
+      <patch npointsU="2" npointsV="2" npartsU="20" npartsV="20"> 
+        <controlpoint xx="-1" yy="0" zz="1" />
+        <controlpoint xx="-1" yy="0" zz="-1" />
+
+        <controlpoint xx="1" yy="0" zz="1" />
+        <controlpoint xx="1" yy="0" zz="-1" />
+      </patch>
+    </primitive>
+
+    <primitive id="patch_cushion">
+      <patch npointsU="5" npointsV="5" npartsU="20" npartsV="20"> 
+        <controlpoint xx="-1" yy="0" zz="1" />
+        <controlpoint xx="-1" yy="0" zz="0.5" />
+        <controlpoint xx="-1" yy="0" zz="0" />
+        <controlpoint xx="-1" yy="0" zz="-0.5" />
+        <controlpoint xx="-1" yy="0" zz="-1" />
+
+        <controlpoint xx="-0.5" yy="0" zz="1" />
+        <controlpoint xx="-0.5" yy="0.5" zz="0.5" />
+        <controlpoint xx="-0.5" yy="0.5" zz="0" />
+        <controlpoint xx="-0.5" yy="0.5" zz="-0.5" />
+        <controlpoint xx="-0.5" yy="0" zz="-1" />
+
+        <controlpoint xx="0" yy="0" zz="1" />
+        <controlpoint xx="0" yy="0.5" zz="0.5" />
+        <controlpoint xx="0" yy="-1.5" zz="0" />
+        <controlpoint xx="0" yy="0.5" zz="-0.5" />
+        <controlpoint xx="0" yy="0" zz="-1" />
+
+        <controlpoint xx="0.5" yy="0" zz="1" />
+        <controlpoint xx="0.5" yy="0.5" zz="0.5" />
+        <controlpoint xx="0.5" yy="0.5" zz="0" />
+        <controlpoint xx="0.5" yy="0.5" zz="-0.5" />
+        <controlpoint xx="0.5" yy="0" zz="-1" />
+
+        <controlpoint xx="1" yy="0" zz="1" />
+        <controlpoint xx="1" yy="0" zz="-0.5" />
+        <controlpoint xx="1" yy="0" zz="0" />
+        <controlpoint xx="1" yy="0" zz="-0.5" />
+        <controlpoint xx="1" yy="0" zz="-1" />
+      </patch>
+    </primitive>
+
   </primitives>
 
   <components>
@@ -493,6 +578,19 @@
       <texture id="none" length_s="1" length_t="1" />
       <children>
         <componentref id="room"/> 
+        <componentref id="game_station"/> 
+      </children>
+    </component>
+
+    <component id="game_station">
+      <transformation>
+        <transformationref id="set_game_station"/>
+      </transformation>
+      <materials>
+        <material id="inherit"/>
+      </materials>
+      <texture id="inherit" length_s="1" length_t="1" />
+      <children>
         <componentref id="game_table"/>
         <componentref id="tea_table1"/>
         <componentref id="tea_table2"/>
@@ -706,7 +804,9 @@
         </materials>
         <texture id="red_velvet" length_s="2" length_t="1" />
         <children>
-            <componentref id="cube"/>
+            <componentref id="cushion_middle"/>
+            <componentref id="cushion_top"/>
+            <componentref id="cushion_bottom"/>
         </children>
     </component>
 
@@ -718,6 +818,47 @@
             <material id="inherit"/>
         </materials>
         <texture id="red_velvet" length_s="1" length_t="1" />
+        <children>
+            <componentref id="cushion_middle"/>
+            <componentref id="cushion_top"/>
+            <componentref id="cushion_bottom"/>
+        </children>
+    </component>
+
+    <component id="cushion_top">
+        <transformation>
+            <transformationref id="set_cushion_top"/>
+        </transformation>
+        <materials>
+            <material id="inherit"/>
+        </materials>
+        <texture id="inherit" length_s="2" length_t="1" />
+        <children>
+            <primitiveref id="patch_cushion"/>
+        </children>
+    </component>
+
+    <component id="cushion_bottom">
+        <transformation>
+            <transformationref id="set_cushion_bottom"/>
+        </transformation>
+        <materials>
+            <material id="inherit"/>
+        </materials>
+        <texture id="inherit" length_s="2" length_t="1" />
+        <children>
+            <primitiveref id="patch_cushion"/>
+        </children>
+    </component>
+
+    <component id="cushion_middle">
+        <transformation>
+            <transformationref id="set_cushion_middle"/>
+        </transformation>
+        <materials>
+            <material id="inherit"/>
+        </materials>
+        <texture id="inherit" length_s="2" length_t="1" />
         <children>
             <componentref id="cube"/>
         </children>
@@ -1006,6 +1147,7 @@
       <children>
         <componentref id="ashtray_out"/>
         <componentref id="ashtray_in"/>
+        <componentref id="ash"/>
       </children>
     </component>
 
@@ -1035,6 +1177,19 @@
       </children>
     </component>
 
+    <component id="ash">
+      <transformation>
+        <transformationref id="identity"/>
+      </transformation>
+      <materials>
+        <material id="inherit"/>
+      </materials>
+      <texture id="ash" length_s="1" length_t="1" />
+      <children>
+        <primitiveref id="patch_ash"/>
+      </children>
+    </component>
+
     <component id="cigarette">
       <transformation>
         <transformationref id="set_cigarette"/>
@@ -1045,6 +1200,19 @@
       <texture id="cigarette" length_s="1" length_t="1" />
       <children>
         <primitiveref id="cylinder"/>
+      </children>
+    </component>
+
+    <component id="smoke">
+      <transformation>
+        <transformationref id="set_smoke"/>
+      </transformation>
+      <materials>
+        <material id="inherit"/>
+      </materials>
+      <texture id="inherit" length_s="1" length_t="1" />
+      <children>
+        <primitiveref id="patch_smoke"/>
       </children>
     </component>
       
