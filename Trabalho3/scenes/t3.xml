@@ -35,6 +35,9 @@
     <texture id="ash" file="./scenes/images/ash_fixed.jpg"/>
     <texture id="red_book_cover" file="./scenes/images/red_book_cover_fixed.jpg"/>
     <texture id="book_pages" file="./scenes/images/book_pages_fixed.jpg"/>
+    <texture id="notepad_pages" file="./scenes/images/notepad_pages_fixed.jpg"/>
+    <texture id="notepad_front" file="./scenes/images/notepad_front_fixed.jpg"/>
+    <texture id="notepad_ring" file="./scenes/images/stainless_steel.jpg"/>
   </textures>
 
   <materials>
@@ -133,6 +136,41 @@
         <translate x="0" y="0" z="1"/>
     </transformation>
 
+    <transformation id="set_notepad">
+        <translate x="3.05" y="1.325" z="-2.3"/>
+        <rotate axis="y" angle="-30"/>
+        <scale x="0.5" y="0.5" z="0.5"/>
+    </transformation>
+
+    <transformation id="set_notepad_pages">
+        <scale x="1" y="0.1" z="1"/>
+    </transformation>
+
+    <transformation id="set_notepad_ring1">
+        <translate x="-0.5" y="0" z="0.45"/>
+        <scale x="0.05" y="0.05" z="0.05"/>
+    </transformation>
+
+    <transformation id="set_notepad_ring2">
+        <translate x="-0.5" y="0" z="0.25"/>
+        <scale x="0.05" y="0.05" z="0.05"/>
+    </transformation>
+
+    <transformation id="set_notepad_ring3">
+        <translate x="-0.5" y="0" z="0"/>
+        <scale x="0.05" y="0.05" z="0.05"/>
+    </transformation>
+
+    <transformation id="set_notepad_ring4">
+        <translate x="-0.5" y="0" z="-0.25"/>
+        <scale x="0.05" y="0.05" z="0.05"/>
+    </transformation>
+
+    <transformation id="set_notepad_ring5">
+        <translate x="-0.5" y="0" z="-0.45"/>
+        <scale x="0.05" y="0.05" z="0.05"/>
+    </transformation>
+
     <transformation id="set_book1">
         <translate x="-3.15" y="1.325" z="3.1"/>
         <rotate axis="y" angle="65"/>
@@ -141,7 +179,7 @@
 
     <transformation id="set_book2">
         <translate x="-3.15" y="1.471" z="3.1"/>
-        <rotate axis="y" angle="115"/>
+        <rotate axis="y" angle="95"/>
         <scale x="0.6" y="0.125" z="0.85"/>
     </transformation>
 
@@ -599,6 +637,10 @@
       </patch>
     </primitive>
 
+    <primitive id="torus_notepad">
+      <torus inner="0.2" outer="1.2" slices="20" loops="20" />
+    </primitive>
+
   </primitives>
 
   <components>
@@ -633,7 +675,8 @@
         <componentref id="ashtray"/>
         <componentref id="cigarette"/> 
         <componentref id="book1"/>
-        <componentref id="book2"/> 
+        <componentref id="book2"/>
+        <componentref id="notepad"/> 
         <componentref id="chair1"/> 
         <componentref id="chair2"/> 
       </children>
@@ -1249,6 +1292,102 @@
       <texture id="inherit" length_s="1" length_t="1" />
       <children>
         <primitiveref id="patch_smoke"/>
+      </children>
+    </component>
+
+    <component id="notepad">
+      <transformation>
+        <transformationref id="set_notepad"/>
+      </transformation>
+      <materials>
+        <material id="default"/>
+      </materials>
+      <texture id="none" length_s="1" length_t="1" />
+      <children>
+        <componentref id="notepad_pages"/> 
+        <componentref id="notepad_ring1"/> 
+        <componentref id="notepad_ring2"/> 
+        <componentref id="notepad_ring3"/> 
+        <componentref id="notepad_ring4"/>
+        <componentref id="notepad_ring5"/> 
+      </children>
+    </component>
+
+    <component id="notepad_pages">
+      <transformation>
+        <transformationref id="set_notepad_pages"/>
+      </transformation>
+      <materials>
+        <material id="default"/>
+      </materials>
+      <texture id="notepad_front" length_s="1" length_t="1" />
+      <children>
+        <componentref id="cube"/> 
+      </children>
+    </component>
+
+    <component id="notepad_ring1">
+      <transformation>
+        <transformationref id="set_notepad_ring1"/>
+      </transformation>
+      <materials>
+        <material id="default"/>
+      </materials>
+      <texture id="notepad_ring" length_s="1" length_t="1" />
+      <children>
+        <primitiveref id="torus_notepad"/> 
+      </children>
+    </component>
+
+    <component id="notepad_ring2">
+      <transformation>
+        <transformationref id="set_notepad_ring2"/>
+      </transformation>
+      <materials>
+        <material id="default"/>
+      </materials>
+      <texture id="notepad_ring" length_s="1" length_t="1" />
+      <children>
+        <primitiveref id="torus_notepad"/> 
+      </children>
+    </component>
+
+    <component id="notepad_ring3">
+      <transformation>
+        <transformationref id="set_notepad_ring3"/>
+      </transformation>
+      <materials>
+        <material id="default"/>
+      </materials>
+      <texture id="notepad_ring" length_s="1" length_t="1" />
+      <children>
+        <primitiveref id="torus_notepad"/> 
+      </children>
+    </component>
+
+    <component id="notepad_ring4">
+      <transformation>
+        <transformationref id="set_notepad_ring4"/>
+      </transformation>
+      <materials>
+        <material id="default"/>
+      </materials>
+      <texture id="notepad_ring" length_s="1" length_t="1" />
+      <children>
+        <primitiveref id="torus_notepad"/> 
+      </children>
+    </component>
+
+    <component id="notepad_ring5">
+      <transformation>
+        <transformationref id="set_notepad_ring5"/>
+      </transformation>
+      <materials>
+        <material id="default"/>
+      </materials>
+      <texture id="notepad_ring" length_s="1" length_t="1" />
+      <children>
+        <primitiveref id="torus_notepad"/> 
       </children>
     </component>
 
