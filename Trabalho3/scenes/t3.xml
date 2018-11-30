@@ -33,6 +33,8 @@
     <texture id="black_stone" file="./scenes/images/black_stone_fixed.jpg"/>
     <texture id="cigarette" file="./scenes/images/cigarette_fixed.jpg"/>
     <texture id="ash" file="./scenes/images/ash_fixed.jpg"/>
+    <texture id="red_book_cover" file="./scenes/images/red_book_cover_fixed.jpg"/>
+    <texture id="book_pages" file="./scenes/images/book_pages_fixed.jpg"/>
   </textures>
 
   <materials>
@@ -129,6 +131,38 @@
 
     <transformation id="set_game_table">
         <translate x="0" y="0" z="1"/>
+    </transformation>
+
+    <transformation id="set_book1">
+        <translate x="-3.15" y="1.325" z="3.1"/>
+        <rotate axis="y" angle="65"/>
+        <scale x="0.6" y="0.125" z="0.85"/>
+    </transformation>
+
+    <transformation id="set_book2">
+        <translate x="-3.15" y="1.471" z="3.1"/>
+        <rotate axis="y" angle="115"/>
+        <scale x="0.6" y="0.125" z="0.85"/>
+    </transformation>
+
+    <transformation id="set_book_inside">
+        <translate x="0" y="0" z="0"/>
+        <scale x="0.95" y="1" z="0.9"/>
+    </transformation>
+
+    <transformation id="set_book_cover_top">
+        <translate x="0" y="0.525" z="0"/>
+        <scale x="1" y="0.05" z="1"/>
+    </transformation>
+
+    <transformation id="set_book_cover_bottom">
+        <translate x="0" y="-0.525" z="0"/>
+        <scale x="1" y="0.05" z="1"/>
+    </transformation>
+
+    <transformation id="set_book_cover_spine">
+        <translate x="-0.475" y="0" z="0"/>
+        <scale x="0.05" y="1" z="1"/>
     </transformation>
 
     <transformation id="set_ashtray_out">
@@ -598,6 +632,8 @@
         <componentref id="cup_and_saucer2"/>
         <componentref id="ashtray"/>
         <componentref id="cigarette"/> 
+        <componentref id="book1"/>
+        <componentref id="book2"/> 
         <componentref id="chair1"/> 
         <componentref id="chair2"/> 
       </children>
@@ -1213,6 +1249,90 @@
       <texture id="inherit" length_s="1" length_t="1" />
       <children>
         <primitiveref id="patch_smoke"/>
+      </children>
+    </component>
+
+    <component id="book1">
+      <transformation>
+        <transformationref id="set_book1"/>
+      </transformation>
+      <materials>
+        <material id="default"/>
+      </materials>
+      <texture id="none" length_s="1" length_t="1" />
+      <children>
+        <componentref id="book_cover_top"/> 
+        <componentref id="book_cover_bottom"/> 
+        <componentref id="book_cover_spine"/> 
+        <componentref id="book_inside"/>
+      </children>
+    </component>
+
+    <component id="book2">
+      <transformation>
+        <transformationref id="set_book2"/>
+      </transformation>
+      <materials>
+        <material id="default"/>
+      </materials>
+      <texture id="none" length_s="1" length_t="1" />
+      <children>
+        <componentref id="book_cover_top"/> 
+        <componentref id="book_cover_bottom"/> 
+        <componentref id="book_cover_spine"/> 
+        <componentref id="book_inside"/>
+      </children>
+    </component>
+
+    <component id="book_inside">
+      <transformation>
+        <transformationref id="set_book_inside"/>
+      </transformation>
+      <materials>
+        <material id="default"/>
+      </materials>
+      <texture id="book_pages" length_s="1" length_t="1" />
+      <children>
+        <componentref id="cube"/>
+      </children>
+    </component>
+
+    <component id="book_cover_top">
+      <transformation>
+        <transformationref id="set_book_cover_top"/>
+      </transformation>
+      <materials>
+        <material id="default"/>
+      </materials>
+      <texture id="red_book_cover" length_s="1" length_t="1" />
+      <children>
+        <componentref id="cube"/> 
+      </children>
+    </component>
+
+    <component id="book_cover_bottom">
+      <transformation>
+        <transformationref id="set_book_cover_bottom"/>
+      </transformation>
+      <materials>
+        <material id="default"/>
+      </materials>
+      <texture id="red_book_cover" length_s="1" length_t="1" />
+      <children>
+        <componentref id="cube"/> 
+      </children>
+    </component>
+
+    <component id="book_cover_spine">
+      <transformation>
+        <transformationref id="set_book_cover_spine"/>
+      </transformation>
+      <materials>
+        <material id="default"/>
+      </materials>
+      <texture id="red_book_cover" length_s="1" length_t="1" />
+      <children>
+        <componentref id="cube"/> 
       </children>
     </component>
       
