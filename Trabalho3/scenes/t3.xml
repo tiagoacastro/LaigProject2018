@@ -30,6 +30,8 @@
     <texture id="red_velvet" file="./scenes/images/red_velvet_fixed.jpg"/>
     <texture id="dark_wood" file="./scenes/images/dark_wood_fixed.jpg"/>
     <texture id="mint_green" file="./scenes/images/mint_green_fixed.jpg"/>
+    <texture id="black_stone" file="./scenes/images/black_stone_fixed.jpg"/>
+    <texture id="cigarette" file="./scenes/images/cigarette_fixed.jpg"/>
   </textures>
 
   <materials>
@@ -124,9 +126,26 @@
         <translate x="0" y="0" z="1"/>
     </transformation>
 
+    <transformation id="set_ashtray_out">
+      <rotate axis="x" angle="180"/>
+    </transformation>
+
+    <transformation id="set_ashtray">
+      <translate x="3.5" y="1.35" z="-2.85"/>
+      <scale x="0.25" y="0.25" z="0.25"/>
+      <rotate axis="y" angle="65"/>
+    </transformation>
+
+    <transformation id="set_cigarette">
+      <translate x="3.55" y="1.28" z="-2.80"/>
+      <rotate axis="x" angle="-45"/>
+      <rotate axis="y" angle="65"/>
+      <scale x="0.01" y="0.01" z="0.2"/>
+    </transformation>
+
     <transformation id="set_tea_table_leg">
         <translate x="0" y="0.125" z="0"/>
-        <scale x="0.375" y="0.875" z="0.375"/>
+        <scale x="0.375" y="0.875" z="0.35"/>
         <rotate axis="x" angle="-90"/>
     </transformation>
 
@@ -166,7 +185,7 @@
     </transformation>
 
     <transformation id="set_cup_and_saucer1">
-      <translate x="2.90" y="1.26" z="-2.65"/>
+      <translate x="2.6" y="1.26" z="-3"/>
       <rotate axis="y" angle="25"/>
       <scale x="0.25" y="0.25" z="0.25"/>
     </transformation>
@@ -393,6 +412,74 @@
       </patch>
     </primitive>
 
+    <primitive id="patch_ashtray_in">
+      <patch npointsU="5" npointsV="5" npartsU="20" npartsV="20"> 
+        <controlpoint xx="-1" yy="0.25" zz="1" />
+        <controlpoint xx="-1" yy="0.5" zz="-0.375" />
+        <controlpoint xx="-1" yy="-0.5" zz="0" />
+        <controlpoint xx="-1" yy="0.5" zz="0.375" />
+        <controlpoint xx="-1" yy="0.25" zz="-1" />
+
+        <controlpoint xx="0.375" yy="0" zz="1" />
+        <controlpoint xx="-0.75" yy="-0.5" zz="0.75" />
+        <controlpoint xx="-0.75" yy="-0.5" zz="0" />
+        <controlpoint xx="-0.75" yy="-0.5" zz="-0.75" />
+        <controlpoint xx="0.375" yy="0" zz="-1" />
+
+        <controlpoint xx="0" yy="-0.5" zz="1" />
+        <controlpoint xx="0" yy="-0.5" zz="0.75" />
+        <controlpoint xx="0" yy="-0.5" zz="0" />
+        <controlpoint xx="0" yy="-0.5" zz="-0.75" />
+        <controlpoint xx="0" yy="-0.5" zz="-1" />
+
+        <controlpoint xx="-0.375" yy="0" zz="1" />
+        <controlpoint xx="0.75" yy="-0.5" zz="0.75" />
+        <controlpoint xx="0.75" yy="-0.5" zz="0" />
+        <controlpoint xx="0.75" yy="-0.5" zz="-0.75" />
+        <controlpoint xx="-0.375" yy="0" zz="-1" />
+
+        <controlpoint xx="1" yy="0.25" zz="1" />
+        <controlpoint xx="1" yy="0.5" zz="-0.375" />
+        <controlpoint xx="1" yy="-0.5" zz="0" />
+        <controlpoint xx="1" yy="0.5" zz="0.375" />
+        <controlpoint xx="1" yy="0.25" zz="-1" />
+      </patch>
+    </primitive>
+
+    <primitive id="patch_ashtray_out">
+      <patch npointsU="5" npointsV="5" npartsU="20" npartsV="20"> 
+        <controlpoint xx="-1" yy="-0.25" zz="1" />
+        <controlpoint xx="-1" yy="-0.5" zz="-0.375" />
+        <controlpoint xx="-1" yy="0.5" zz="0" />
+        <controlpoint xx="-1" yy="-0.5" zz="0.375" />
+        <controlpoint xx="-1" yy="-0.25" zz="-1" />
+
+        <controlpoint xx="0.375" yy="0" zz="1" />
+        <controlpoint xx="-1" yy="0.5" zz="1" />
+        <controlpoint xx="-1" yy="0.5" zz="0" />
+        <controlpoint xx="-1" yy="0.5" zz="-1" />
+        <controlpoint xx="0.375" yy="0" zz="-1" />
+
+        <controlpoint xx="0" yy="0.5" zz="1" />
+        <controlpoint xx="0" yy="0.5" zz="1" />
+        <controlpoint xx="0" yy="0.5" zz="0" />
+        <controlpoint xx="0" yy="0.5" zz="-1" />
+        <controlpoint xx="0" yy="0.5" zz="-1" />
+
+        <controlpoint xx="-0.375" yy="0" zz="1" />
+        <controlpoint xx="1" yy="0.5" zz="1" />
+        <controlpoint xx="1" yy="0.5" zz="0" />
+        <controlpoint xx="1" yy="0.5" zz="-1" />
+        <controlpoint xx="-0.375" yy="0" zz="-1" />
+
+        <controlpoint xx="1" yy="-0.25" zz="1" />
+        <controlpoint xx="1" yy="-0.5" zz="-0.375" />
+        <controlpoint xx="1" yy="0.5" zz="0" />
+        <controlpoint xx="1" yy="-0.5" zz="0.375" />
+        <controlpoint xx="1" yy="-0.25" zz="-1" />
+      </patch>
+    </primitive>
+
   </primitives>
 
   <components>
@@ -410,7 +497,9 @@
         <componentref id="tea_table1"/>
         <componentref id="tea_table2"/>
         <componentref id="cup_and_saucer1"/>
-        <componentref id="cup_and_saucer2"/> 
+        <componentref id="cup_and_saucer2"/>
+        <componentref id="ashtray"/>
+        <componentref id="cigarette"/> 
         <componentref id="chair1"/> 
         <componentref id="chair2"/> 
       </children>
@@ -903,6 +992,59 @@
       <texture id="inherit" length_s="1" length_t="1" />
       <children>
         <primitiveref id="patch_saucer_outside"/>
+      </children>
+    </component>
+
+    <component id="ashtray">
+      <transformation>
+        <transformationref id="set_ashtray"/>
+      </transformation>
+      <materials>
+        <material id="inherit"/>
+      </materials>
+      <texture id="black_stone" length_s="1" length_t="1" />
+      <children>
+        <componentref id="ashtray_out"/>
+        <componentref id="ashtray_in"/>
+      </children>
+    </component>
+
+    <component id="ashtray_out">
+      <transformation>
+        <transformationref id="set_ashtray_out"/>
+      </transformation>
+      <materials>
+        <material id="inherit"/>
+      </materials>
+      <texture id="inherit" length_s="1" length_t="1" />
+      <children>
+        <primitiveref id="patch_ashtray_out"/>
+      </children>
+    </component>
+
+    <component id="ashtray_in">
+      <transformation>
+        <transformationref id="identity"/>
+      </transformation>
+      <materials>
+        <material id="inherit"/>
+      </materials>
+      <texture id="inherit" length_s="1" length_t="1" />
+      <children>
+        <primitiveref id="patch_ashtray_in"/>
+      </children>
+    </component>
+
+    <component id="cigarette">
+      <transformation>
+        <transformationref id="set_cigarette"/>
+      </transformation>
+      <materials>
+        <material id="inherit"/>
+      </materials>
+      <texture id="cigarette" length_s="1" length_t="1" />
+      <children>
+        <primitiveref id="cylinder"/>
       </children>
     </component>
       
