@@ -40,6 +40,7 @@
     <texture id="notepad_front" file="./scenes/images/notepad_front_fixed.jpg"/>
     <texture id="notepad_ring" file="./scenes/images/stainless_steel.jpg"/>
     <texture id="red_wallpaper" file="./scenes/images/red_wallpaper_fixed.jpg"/>
+    <texture id="gold" file="./scenes/images/gold_fixed.jpg"/>
   </textures>
 
   <materials>
@@ -100,26 +101,64 @@
       <rotate axis="y" angle="-90"/>
     </transformation>
 
+    <transformation id="set_door_frame">
+      <translate x="0" y="3.75" z="-25"/>
+      <scale x="2" y="2" z="1"/>
+    </transformation>
+
+    <transformation id="set_doors">
+      <translate x="0" y="3.75" z="-25"/>
+      <scale x="2" y="2" z="0.15"/>
+    </transformation>
+
+    <transformation id="set_doors_div">
+      <translate x="0" y="5" z="-24.85"/>
+      <scale x="0.1" y="7.5" z="0.1"/>
+    </transformation>
+
+    <transformation id="set_door_handle1">
+      <translate x="-0.5" y="5" z="-24.85"/>
+    </transformation>
+
+    <transformation id="set_door_handle2">
+      <translate x="0.5" y="5" z="-24.85"/>
+    </transformation>
+
+    <transformation id="set_step1">
+      <translate x="0" y="2.5" z="-24.5"/>
+      <scale x="7.5" y="1" z="1"/>
+    </transformation>
+
+    <transformation id="set_step2">
+      <translate x="0" y="1" z="-22"/>
+      <scale x="10" y="2.01" z="6"/>
+    </transformation>
+
+    <transformation id="set_step3">
+      <translate x="0" y="0.5" z="-18.875"/>
+      <scale x="12.5" y="1" z="2"/>
+    </transformation>
+
     <transformation id="set_barrier1">
-      <translate x="0" y="0" z="-20"/>
-      <scale x="45" y="3" z="0.25"/>
+      <translate x="0" y="1" z="-20"/>
+      <scale x="45" y="2" z="0.25"/>
     </transformation>
 
     <transformation id="set_barrier2">
-      <translate x="-20" y="0" z="0"/>
+      <translate x="-20" y="1" z="0"/>
       <rotate axis="y" angle="90"/>
-      <scale x="45" y="3" z="0.25"/>
+      <scale x="45" y="2" z="0.25"/>
     </transformation>
 
     <transformation id="set_barrier3">
-      <translate x="0" y="0" z="20"/>
-      <scale x="45" y="3" z="0.25"/>
+      <translate x="0" y="1" z="20"/>
+      <scale x="45" y="2" z="0.25"/>
     </transformation>
 
     <transformation id="set_barrier4">
-      <translate x="20" y="0" z="0"/>
+      <translate x="20" y="1" z="0"/>
       <rotate axis="y" angle="90"/>
-      <scale x="45" y="3" z="0.25"/>
+      <scale x="45" y="2" z="0.25"/>
     </transformation>
 
     <transformation id="set_pillar1">
@@ -726,6 +765,18 @@
       <torus inner="0.2" outer="1.2" slices="20" loops="20" />
     </primitive>
 
+    <primitive id="torus_door_frame">
+      <torus inner="0.1" outer="2.5" slices="50" loops="50" />
+    </primitive>
+
+    <primitive id="cylinder_doors">
+      <cylinder base="2.5" top="2.5" height="1" slices="20" stacks="20" /> 
+    </primitive>
+
+    <primitive id="cylinder_door_handle">
+      <cylinder base="0.1" top="0.1" height="0.05" slices="10" stacks="10" /> 
+    </primitive>
+
   </primitives>
 
   <components>
@@ -741,7 +792,12 @@
         <componentref id="room"/>
         <componentref id="room_pillars"/>
         <componentref id="room_barriers"/>
-        <componentref id="game_station"/>  
+        <componentref id="room_stairs"/>
+        <componentref id="game_station"/>
+        <componentref id="door_frame"/>
+        <componentref id="doors"/>
+        <componentref id="doors_div"/>
+        <componentref id="door_handles"/>
       </children>
     </component>
 
@@ -854,7 +910,7 @@
       <materials>
           <material id="inherit"/>
       </materials>
-      <texture id="floor" length_s="0.1" length_t="0.1" />
+      <texture id="dark_wood" length_s="0.1" length_t="0.1" />
       <children>
           <primitiveref id="rectangle"/>
       </children>
@@ -1723,7 +1779,7 @@
       <materials>
         <material id="default"/>
       </materials>
-      <texture id="black_wood" length_s="1" length_t="1" />
+      <texture id="dark_wood" length_s="1" length_t="1" />
       <children>
         <componentref id="pillar_base_comp1"/>
         <componentref id="pillar_base_comp2"/>
@@ -1738,7 +1794,7 @@
       <materials>
         <material id="default"/>
       </materials>
-      <texture id="black_wood" length_s="1" length_t="1" />
+      <texture id="dark_wood" length_s="1" length_t="1" />
       <children>
         <componentref id="pillar_base_comp1"/>
         <componentref id="pillar_base_comp2"/>
@@ -1792,7 +1848,7 @@
       <materials>
         <material id="default"/>
       </materials>
-      <texture id="black_stone" length_s="0.1" length_t="0.1" />
+      <texture id="dark_wood" length_s="0.1" length_t="1" />
       <children>
         <componentref id="barrier1"/>
         <componentref id="barrier2"/>
@@ -1850,6 +1906,139 @@
       <texture id="inherit" length_s="1" length_t="1" />
       <children>
         <componentref id="cube"/> 
+      </children>
+    </component>
+
+    <component id="room_stairs">
+      <transformation>
+        <transformationref id="identity"/>
+      </transformation>
+      <materials>
+        <material id="default"/>
+      </materials>
+      <texture id="dark_wood" length_s="1" length_t="1" />
+      <children>
+       
+        <componentref id="step2"/> 
+        <componentref id="step3"/> 
+      </children>
+    </component>
+
+    <component id="step1">
+      <transformation>
+        <transformationref id="set_step1"/>
+      </transformation>
+      <materials>
+        <material id="default"/>
+      </materials>
+      <texture id="inherit" length_s="1" length_t="1" />
+      <children>
+        <componentref id="cube"/> 
+      </children>
+    </component>
+
+    <component id="step2">
+      <transformation>
+        <transformationref id="set_step2"/>
+      </transformation>
+      <materials>
+        <material id="default"/>
+      </materials>
+      <texture id="inherit" length_s="1" length_t="1" />
+      <children>
+        <componentref id="cube"/> 
+      </children>
+    </component>
+
+    <component id="step3">
+      <transformation>
+        <transformationref id="set_step3"/>
+      </transformation>
+      <materials>
+        <material id="default"/>
+      </materials>
+      <texture id="inherit" length_s="1" length_t="1" />
+      <children>
+        <componentref id="cube"/> 
+      </children>
+    </component>
+
+    <component id="door_frame">
+      <transformation>
+        <transformationref id="set_door_frame"/>
+      </transformation>
+      <materials>
+        <material id="default"/>
+      </materials>
+      <texture id="dark_wood" length_s="1" length_t="1" />
+      <children>
+        <primitiveref id="torus_door_frame"/> 
+      </children>
+    </component>
+
+    <component id="doors">
+      <transformation>
+        <transformationref id="set_doors"/>
+      </transformation>
+      <materials>
+        <material id="default"/>
+      </materials>
+      <texture id="dark_wood" length_s="1" length_t="1" />
+      <children>
+        <primitiveref id="cylinder_doors"/> 
+      </children>
+    </component>
+
+    <component id="doors_div">
+      <transformation>
+        <transformationref id="set_doors_div"/>
+      </transformation>
+      <materials>
+        <material id="default"/>
+      </materials>
+      <texture id="dark_wood" length_s="1" length_t="1" />
+      <children>
+        <componentref id="cube"/> 
+      </children>
+    </component>
+
+    <component id="door_handles">
+      <transformation>
+        <transformationref id="identity"/>
+      </transformation>
+      <materials>
+        <material id="default"/>
+      </materials>
+      <texture id="gold" length_s="1" length_t="1" />
+      <children>
+        <componentref id="door_handle1"/>
+        <componentref id="door_handle2"/> 
+      </children>
+    </component>
+
+    <component id="door_handle1">
+      <transformation>
+        <transformationref id="set_door_handle1"/>
+      </transformation>
+      <materials>
+        <material id="default"/>
+      </materials>
+      <texture id="inherit" length_s="1" length_t="1" />
+      <children>
+        <primitiveref id="cylinder_door_handle"/> 
+      </children>
+    </component>
+
+    <component id="door_handle2">
+      <transformation>
+        <transformationref id="set_door_handle2"/>
+      </transformation>
+      <materials>
+        <material id="default"/>
+      </materials>
+      <texture id="inherit" length_s="1" length_t="1" />
+      <children>
+        <primitiveref id="cylinder_door_handle"/> 
       </children>
     </component>
       
