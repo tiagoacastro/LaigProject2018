@@ -1638,6 +1638,11 @@ class MySceneGraph {
                     primitive["primitive"] = this.parseWater(children[i].children[0]); 
                     numPrimitives++;
                     break;
+                case "board":
+                    primitive["type"] = "board";
+                    primitive["primitive"] = new Board(this.scene); 
+                    numPrimitives++;
+                    break;
             }
 
             this.primitives[id] = primitive;
@@ -1648,6 +1653,8 @@ class MySceneGraph {
         if (numPrimitives <= 0) {
             return "there should be at least one primitive defined";
         }
+
+        console.log(this.primitives);
 
         this.log("Parsed primitives");
 
