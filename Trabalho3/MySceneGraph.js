@@ -1136,9 +1136,9 @@ class MySceneGraph {
             base = 1;
             this.onXMLMinorError("unable to parse value for base plane; assuming 'base = 1'");
         }
-        if(base <= 0) {
+        if(base < 0) {
             base = 1;
-            this.onXMLMinorError("base can't be equal or lower than 0, assuming 'base = 1'");
+            this.onXMLMinorError("base can't be lower than 0, assuming 'base = 1'");
         }
 
         let top = this.reader.getFloat(cylinderNode, 'top');
@@ -1146,9 +1146,9 @@ class MySceneGraph {
             top = 1;
             this.onXMLMinorError("unable to parse value for top plane; assuming 'top = 1'");
         }
-        if(top <= 0) {
+        if(top < 0) {
             top = 1;
-            this.onXMLMinorError("top can't be equal or lower than 0, assuming 'top = 1'");
+            this.onXMLMinorError("top can't be lower than 0, assuming 'top = 1'");
         }
 
         let height = this.reader.getFloat(cylinderNode, 'height');
@@ -1398,9 +1398,9 @@ class MySceneGraph {
             base = 1;
             this.onXMLMinorError("unable to parse value for base plane; assuming 'base = 1'");
         }
-        if(base <= 0) {
+        if(base < 0) {
             base = 1;
-            this.onXMLMinorError("base can't be equal or lower than 0, assuming 'base = 1'");
+            this.onXMLMinorError("base can't be lower than 0, assuming 'base = 1'");
         }
 
         let top = this.reader.getFloat(cylinder2Node, 'top');
@@ -1408,9 +1408,9 @@ class MySceneGraph {
             top = 1;
             this.onXMLMinorError("unable to parse value for top plane; assuming 'top = 1'");
         }
-        if(top <= 0) {
+        if(top < 0) {
             top = 1;
-            this.onXMLMinorError("top can't be equal or lower than 0, assuming 'top = 1'");
+            this.onXMLMinorError("top can't be lower than 0, assuming 'top = 1'");
         }
 
         let height = this.reader.getFloat(cylinder2Node, 'height');
