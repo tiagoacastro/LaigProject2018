@@ -1,10 +1,20 @@
 <yas>
   <scene root="root" axis_length="5"/>
   
-  <views default="overview"> 
+  <views default="default"> 
   
     <perspective id="default" near="0.1" far="500" angle="45">
       <from x="10" y="20" z="10" />
+      <to x="0" y="0" z="0" />
+    </perspective>
+
+    <perspective id="player1" near="0.1" far="500" angle="60">
+      <from x="-3" y="5" z="0" />
+      <to x="0" y="0" z="0" />
+    </perspective>
+
+    <perspective id="player2" near="0.1" far="500" angle="60">
+      <from x="-3" y="5" z="0" />
       <to x="0" y="0" z="0" />
     </perspective>
 
@@ -790,7 +800,7 @@
       <texture id="none" length_s="1" length_t="1" />
       <children>
         <componentref id="room"/>
-        <componentref id="room_pillars"/>
+        
         <componentref id="room_barriers"/>
         <componentref id="room_stairs"/>
         <componentref id="game_station"/>
