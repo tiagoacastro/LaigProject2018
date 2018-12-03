@@ -1166,7 +1166,7 @@ class MySceneGraph {
             slices = 1;
             this.onXMLMinorError("unable to parse value for slices plane; assuming 'slices = 1'");
         }
-        if(slices <= 1 || slices % 1 != 0) {
+        if(slices < 1 || slices % 1 != 0) {
             slices = 1;
             this.onXMLMinorError("slices can't be 0 or floats, assuming 'slices = 1'");
         }
@@ -1176,7 +1176,7 @@ class MySceneGraph {
             stacks = 1;
             this.onXMLMinorError("unable to parse value for stacks plane; assuming 'stacks = 1'");
         }
-        if(stacks <= 1 || stacks % 1 != 0) {
+        if(stacks < 1 || stacks % 1 != 0) {
             stacks = 1;
             this.onXMLMinorError("stacks can't be 0 or floats, assuming 'stacks = 1'");
         }
@@ -1210,7 +1210,7 @@ class MySceneGraph {
             slices = 1;
             this.onXMLMinorError("unable to parse value for slices plane; assuming 'slices = 1'");
         }
-        if(slices <= 1 || slices % 1 != 0) {
+        if(slices < 1 || slices % 1 != 0) {
             slices = 1;
             this.onXMLMinorError("slices can't be 0 or floats, assuming 'slices = 1'");
         }
@@ -1220,7 +1220,7 @@ class MySceneGraph {
             stacks = 1;
             this.onXMLMinorError("unable to parse value for stacks plane; assuming 'stacks = 1'");
         }
-        if(stacks <= 1 || stacks % 1 != 0) {
+        if(stacks < 1 || stacks % 1 != 0) {
             stacks = 1;
             this.onXMLMinorError("stacks can't be 0 or floats, assuming 'stacks = 1'");
         }
@@ -1255,7 +1255,7 @@ class MySceneGraph {
             slices = 1;
             this.onXMLMinorError("unable to parse value for slices plane; assuming 'slices = 1'");
         }
-        if(slices <= 1 || slices % 1 != 0) {
+        if(slices < 1 || slices % 1 != 0) {
             slices = 1;
             this.onXMLMinorError("slices can't be 0 or floats, assuming 'slices = 1'");
         }
@@ -1265,7 +1265,7 @@ class MySceneGraph {
             loops = 1;
             this.onXMLMinorError("unable to parse value for loops plane; assuming 'loops = 1'");
         }
-        if(loops <= 1 || loops % 1 != 0) {
+        if(loops < 1 || loops % 1 != 0) {
             loops = 1;
             this.onXMLMinorError("loops can't be 0 or floats, assuming 'loops = 1'");
         }
@@ -1289,7 +1289,7 @@ class MySceneGraph {
             nPartsU = 10;
             this.onXMLMinorError("unable to parse value for nPartsU plane; assuming 'nPartsU = 10'");
         }
-        if(nPartsU <= 1 || nPartsU % 1 != 0) {
+        if(nPartsU < 1 || nPartsU % 1 != 0) {
             nPartsU = 10;
             this.onXMLMinorError("nPartsU can't be 0 or floats, assuming 'nPartsU = 10'");
         }
@@ -1299,7 +1299,7 @@ class MySceneGraph {
             nPartsV = 10;
             this.onXMLMinorError("unable to parse value for nPartsV plane; assuming 'nPartsV = 10'");
         }
-        if(nPartsV <= 1 || nPartsV % 1 != 0) {
+        if(nPartsV < 1 || nPartsV % 1 != 0) {
             nPartsV = 10;
             this.onXMLMinorError("nPartsV can't be 0 or floats, assuming 'nPartsV = 10'");
         }
@@ -1323,13 +1323,13 @@ class MySceneGraph {
         let nPointsU = this.reader.getFloat(patchNode, 'npointsU');
         if (!(nPointsU != null && !isNaN(nPointsU))) 
             this.onXMLError("unable to parse value for nPointsU plane");
-        if(nPointsU <= 1 || nPointsU % 1 != 0)
+        if(nPointsU < 1 || nPointsU % 1 != 0)
             this.onXMLError("nPointsU can't be 0 or floats");
 
         let nPointsV = this.reader.getFloat(patchNode, 'npointsV');
         if (!(nPointsV != null && !isNaN(nPointsV)))
             this.onXMLError("unable to parse value for nPointsV plane");
-        if(nPointsV <= 1 || nPointsV % 1 != 0)
+        if(nPointsV < 1 || nPointsV % 1 != 0)
             this.onXMLError("nPointsV can't be 0 or floats");
 
         if(children.length != nPointsU*nPointsV)
@@ -1340,7 +1340,7 @@ class MySceneGraph {
             nPartsU = 10;
             this.onXMLMinorError("unable to parse value for nPartsU plane; assuming 'nPartsU = 10'");
         }
-        if(nPartsU <= 1 || nPartsU % 1 != 0) {
+        if(nPartsU < 1 || nPartsU % 1 != 0) {
             nPartsU = 10;
             this.onXMLMinorError("nPartsU can't be 0 or floats, assuming 'nPartsU = 10'");
         }
@@ -1350,7 +1350,7 @@ class MySceneGraph {
             nPartsV = 10;
             this.onXMLMinorError("unable to parse value for nPartsV plane; assuming 'nPartsV = 10'");
         }
-        if(nPartsV <= 1 || nPartsV % 1 != 0) {
+        if(nPartsV < 1 || nPartsV % 1 != 0) {
             nPartsV = 10;
             this.onXMLMinorError("nPartsV can't be 0 or floats, assuming 'nPartsV = 10'");
         }
@@ -1428,7 +1428,7 @@ class MySceneGraph {
             slices = 1;
             this.onXMLMinorError("unable to parse value for slices plane; assuming 'slices = 1'");
         }
-        if(slices <= 1 || slices % 1 != 0) {
+        if(slices < 1 || slices % 1 != 0) {
             slices = 1;
             this.onXMLMinorError("slices can't be 0 or floats, assuming 'slices = 1'");
         }
@@ -1438,7 +1438,7 @@ class MySceneGraph {
             stacks = 1;
             this.onXMLMinorError("unable to parse value for stacks plane; assuming 'stacks = 1'");
         }
-        if(stacks <= 1 || stacks % 1 != 0) {
+        if(stacks < 1 || stacks % 1 != 0) {
             stacks = 1;
             this.onXMLMinorError("stacks can't be 0 or floats, assuming 'stacks = 1'");
         }
