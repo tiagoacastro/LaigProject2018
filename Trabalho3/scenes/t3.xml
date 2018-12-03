@@ -98,7 +98,6 @@
 
     <transformation id="set_room_floor">
       <translate x="0" y="-0.5" z="0"/>
-      <rotate axis="x" angle="-90"/>
     </transformation>
 
     <transformation id="set_room_wall4">
@@ -497,7 +496,7 @@
     </primitive>
 
     <primitive id="plane">
-      <plane npartsU="100" npartsV="100" /> 
+      <plane npartsU="50" npartsV="50" /> 
     </primitive>
 
     <primitive id="patch_cup_inside">
@@ -871,9 +870,9 @@
       <materials>
           <material id="inherit"/>
       </materials>
-      <texture id="dark_wood" length_s="0.1" length_t="0.1" />
+      <texture id="floor" length_s="0.1" length_t="0.1" />
       <children>
-          <primitiveref id="rectangle"/>
+          <primitiveref id="plane"/>
       </children>
     </component>
 
