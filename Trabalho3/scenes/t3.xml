@@ -14,7 +14,7 @@
     </perspective>
 
     <perspective id="player2" near="0.1" far="500" angle="60">
-      <from x="-3" y="5" z="0" />
+      <from x="3" y="5" z="0" />
       <to x="0" y="0" z="0" />
     </perspective>
 
