@@ -189,25 +189,9 @@
         <controlpoint xx="0.5" yy="0" zz="-0.5" />
       </patch>
     </primitive>
-
-    <primitive id="vehicle">
-      <vehicle/> 
-    </primitive>
-
+    
     <primitive id="cylinder2">
       <cylinder2 base="1" top="2" height="3" slices="60" stacks="60" /> 
-    </primitive>
-
-    <primitive id="terrain">
-      <terrain idtexture="terrain" idheightmap="height_map" parts="15" heightscale="1.5"/>
-    </primitive>
-
-    <primitive id="water">
-      <water idtexture="water_color" idwavemap="water" parts="5" heightscale="0.1" texscale="1" />
-    </primitive>
-
-    <primitive id="torus_notepad">
-      <torus inner="0.2" outer="1.2" slices="20" loops="20" />
     </primitive>
 
     <primitive id="board">
@@ -227,88 +211,6 @@
       <texture id="none" length_s="1" length_t="1" />
       <children>
         <primitiveref id="board"/> 
-      </children>
-    </component>
-
-    <component id="pillar_body">
-      <transformation>
-        <transformationref id="set_pillar_body"/>
-      </transformation>
-      <materials>
-        <material id="default"/>
-      </materials>
-      <texture id="none" length_s="1" length_t="1" />
-      <children>
-        <componentref id="cube"/> 
-      </children>
-    </component>
-
-    <component id="pillar_base">
-      <transformation>
-        <transformationref id="set_pillar"/>
-      </transformation>
-      <materials>
-        <material id="default"/>
-      </materials>
-      <texture id="none" length_s="1" length_t="1" />
-      <children>
-        <componentref id="pillar_base_comp1"/>
-        <componentref id="pillar_base_comp2"/>
-        <componentref id="pillar_base_comp3"/> 
-      </children>
-    </component>
-
-    <component id="pillar_top">
-      <transformation>
-        <transformationref id="set_pillar_top"/>
-      </transformation>
-      <materials>
-        <material id="default"/>
-      </materials>
-      <texture id="none" length_s="1" length_t="1" />
-      <children>
-        <componentref id="pillar_base_comp1"/>
-        <componentref id="pillar_base_comp2"/>
-        <componentref id="pillar_base_comp3"/> 
-      </children>
-    </component>
-
-    <component id="pillar_base_comp1">
-      <transformation>
-        <transformationref id="set_pillar_base_comp1"/>
-      </transformation>
-      <materials>
-        <material id="default"/>
-      </materials>
-      <texture id="none" length_s="1" length_t="1" />
-      <children>
-        <componentref id="cube"/> 
-      </children>
-    </component>
-
-    <component id="pillar_base_comp2">
-      <transformation>
-        <transformationref id="set_pillar_base_comp2"/>
-      </transformation>
-      <materials>
-        <material id="default"/>
-      </materials>
-      <texture id="none" length_s="1" length_t="1" />
-      <children>
-        <componentref id="cube"/> 
-      </children>
-    </component>
-
-    <component id="pillar_base_comp3">
-      <transformation>
-        <transformationref id="set_pillar_base_comp3"/>
-      </transformation>
-      <materials>
-        <material id="default"/>
-      </materials>
-      <texture id="none" length_s="1" length_t="1" />
-      <children>
-        <componentref id="cube"/> 
       </children>
     </component>
 

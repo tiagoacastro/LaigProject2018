@@ -25,7 +25,7 @@ class MyRectangle extends CGFobject{
         this.initBuffers();
     }
     /**
-     * Function where the vertexes, indexes, normals and texcoords are defined
+     * Function where the vertices, indices, normals and texcoords are defined
      */
     initBuffers()
     {
