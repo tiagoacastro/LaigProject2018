@@ -222,6 +222,12 @@ move(Direction, InBoard, Player, OutBoard) :-
     changePiece(InBoard, Column, Row, 'x', IntBoard),
     changePiece(IntBoard, OutColumn, OutRow, Player, OutBoard).
 
+%Finds the piece's new position and updates board
+player_move(InBoard, Color, Row, Column, Direction, OutBoard) :-
+    findNewPosition(Direction, InBoard, Row, Column, OutRow, OutColumn),
+    changePiece(InBoard, Column, Row, 'x', IntBoard),
+    changePiece(IntBoard, OutColumn, OutRow, Color, OutBoard).
+
 %When a findNewPosition predicate is prematurely ended because a piece was found before reaching the border
 findNewPosition('end', Board, Row, Column, OutRow, OutColumn) :-
     OutRow is Row,
@@ -307,7 +313,7 @@ isMoveValid(Board, Row, Column) :-
     getPiece(Row, Column, Board, Piece),
     Piece = 'x'.
 
-%If the movement in a certain direction is valid, that direction is added to the list fo valid moves
+%If the movement in a certain direction is valid, that direction is added to the list for valid moves
 isMoveValid(Board, Row, Column, Dir, InList, OutList) :-
     (getPiece(Row, Column, Board, Piece),
     Piece = 'x', append(InList, [Dir], OutList));
@@ -355,6 +361,15 @@ game_over(Board, Player) :-
     (checkDiagonalNWSE(Board, Player), display_game(Board),  clean_previousBoards, printVictory(Player));
     (checkDiagonalNESW(Board, Player), display_game(Board),  clean_previousBoards, printVictory(Player));
     (Player = 'w', checkDraw(Board), display_game(Board), clean_previousBoards, printDraw).
+
+% Checks all conditions that end game without printing
+check_game_over(Board, Player, W) :-
+    (checkRow(Board, Player), W is 1);
+    (checkColumn(Board, Player), W is 1);
+    (checkDiagonalNWSE(Board, Player), W is 1);
+    (checkDiagonalNESW(Board, Player), W is 1);
+    W is 0.
+
 
 % Checks all victory conditions without displaying anything
 checkWin(Board, Player) :-

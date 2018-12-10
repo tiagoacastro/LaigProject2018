@@ -103,6 +103,33 @@ print_header_line(_).
 
 % Require your Prolog Files here
 
+:-include('src/main.pl').
+:-include(json.pl).
+
+% My Calls
+
+parse_input(getBoard, Board):-
+	startBoard(Temp),
+	matrix_to_json(Temp,Board).
+
+parse_input(valid_moves(Board, Row, Column), ValidMoves):-
+	valid_moves(Board, Row, Column, Temp),
+	list_to_json(Temp, ValidMoves).
+
+parse_input(move_player(Board, Color, Row, Column, Direction), NewBoard):-
+	player_move(Board, Color, Row, Column, Direction, Temp),
+	matrix_to_json(Temp, NewBoard).
+
+parse_input(move_bot(Board, Color, Difficulty), NewBoard):-
+	choose_move(Board, Temp, Difficulty, Color),
+	matrix_to_json(Temp, NewBoard).
+
+parse_input(isGameOver(Board, Color), Over):-
+	check_game_over(Board, Color, Temp), 
+	json(Temp, Over).
+
+% Other Calls
+
 parse_input(handshake, handshake).
 parse_input(test(C,N), Res) :- test(C,Res,N).
 parse_input(quit, goodbye).
