@@ -1628,6 +1628,11 @@ class MySceneGraph {
                     primitive["primitive"] = this.parseCylinder2(children[i].children[0]); 
                     numPrimitives++;
                     break;
+                case "cube":
+                    primitive["type"] = "cube";
+                    primitive["primitive"] = new MyCube(this.scene); 
+                    numPrimitives++;
+                    break;
                 case "terrain":
                     primitive["type"] = "terrain";
                     primitive["primitive"] = this.parseTerrain(children[i].children[0]); 
@@ -1640,7 +1645,7 @@ class MySceneGraph {
                     break;
                 case "board":
                     primitive["type"] = "board";
-                    primitive["primitive"] = new Board(this.scene); 
+                    primitive["primitive"] = new Board(this.scene, 5, 5); 
                     numPrimitives++;
                     break;
             }
