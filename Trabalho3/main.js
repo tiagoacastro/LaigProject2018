@@ -17,8 +17,8 @@ serialInclude(['../lib/CGF.js', 'XMLscene.js', 'MySceneGraph.js',
 './primitives/MyCircle.js', './primitives/MyBaselessCylinder.js', './animations/Animation.js',
 './animations/LinearAnimation.js', './animations/CircularAnimation.js', './primitives/MyPlane.js', 
 './primitives/MyPatch.js', './primitives/MyCylinder2.js', './primitives/MyVehicle.js',
-'./primitives/MyTerrain.js', './primitives/MyWater.js', './primitives/Board.js', './primitives/MyCube.js',
-'MyPrologInterface.js', './primitives/Piece.js',
+'./primitives/MyTerrain.js', './primitives/MyWater.js', './game/Board.js', './primitives/MyCube.js',
+'MyPrologInterface.js', './game/Piece.js',
 
     main=function()
     {
