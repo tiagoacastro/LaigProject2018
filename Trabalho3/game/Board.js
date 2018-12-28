@@ -35,6 +35,8 @@ class Board extends CGFobject{
 				currY1 = -0.5,
 				currX2 = -0.5+colLen,
 				currY2 = -0.5+rowLen;
+
+		let posColor = 0; // 0 - black, 1 - white - tbc
 			
 		for(let i = 0; i < this.cols; i++) {
 			for(let j = 0; j < this.rows; j++) {

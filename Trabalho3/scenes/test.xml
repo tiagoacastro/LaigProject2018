@@ -3,8 +3,8 @@
   
   <views default="overview"> 
   
-    <perspective id="default" near="0.1" far="500" angle="45">
-      <from x="10" y="20" z="10" />
+    <perspective id="default" near="0.1" far="500" angle="60">
+      <from x="1" y="1" z="1" />
       <to x="0" y="0" z="0" />
     </perspective>
 
