@@ -6,8 +6,24 @@ class Board extends CGFobject{
 		this.rows = rows; 
 		this.cols = cols;
 		this.board = [];
+		this.pieces = [];
 
+		this.initPieces();
 		this.initBoard();
+	}
+
+	initPieces() {
+		
+		for (let i = 0; i < 6; i++) {
+			if (i < 3) {
+				this.pieces.push(new Piece(this.scene, 'black', i));
+			} else {
+				this.pieces.push(new Piece(this.scene, 'white', i));
+			}
+			this.pieces[i].initPiece();
+		}
+
+		console.log(this.pieces);
 	}
 
 	initBoard() {
@@ -22,9 +38,9 @@ class Board extends CGFobject{
 			
 		for(let i = 0; i < this.cols; i++) {
 			for(let j = 0; j < this.rows; j++) {
-				rowAux.push(new MyRectangle(this.scene, currX1, currY1, currX2, currY2));
+				rowAux.push(new MyRectangle(this.scene, currX1, currX2, currY1, currY2));
 				currX1 += colLen; currX2 += colLen;
-				console.log(currX1, currX2, currY1, currY2);
+				//console.log(rowAux[j]);
 			}
 			currX1 = -0.5; 
 			currX2 = -0.5 + colLen;
@@ -34,18 +50,34 @@ class Board extends CGFobject{
 			rowAux = [];
 		}
 
-		console.log(this.board);
+		//console.log(this.board.length);
 	}
 
-	display() {
+	displayBoard() {
 
 		for(let i = 0; i < this.cols; i++) {
 			for(let j = 0; j < this.rows; j++) {
 				this.scene.pushMatrix();
+					//this.scene.translate(0, i*j*0.2, 0);
+					this.scene.rotate(-Math.PI/2, 1, 0, 0);
 					this.board[i][j].display();
 				this.scene.popMatrix();
 			}
 		}
+	}
+
+	displayPieces() {
+		
+		for(let i = 0; i < this.pieces.length; i++) {
+			this.scene.pushMatrix();
+				this.pieces[i].display();
+			this.scene.popMatrix();
+		}
+	}
+
+	display() {
+		this.displayBoard();
+		this.displayPieces();
 	}
 
 }
