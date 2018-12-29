@@ -18,7 +18,7 @@ function getBoard(callback){
 
 function validMoves(board, row, column, callback){
     let requestString = 'valid_moves('
-        + decode(board) + ','
+        + decodeObject(board) + ','
         + row + ','
         + column + ')';
 
