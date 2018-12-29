@@ -192,13 +192,18 @@ class XMLscene extends CGFscene {
 
     logPicking() {
 
+			let col, row;
+
 			if (this.pickMode == false) {
 				if (this.pickResults != null && this.pickResults.length > 0) {
 					for (var i=0; i< this.pickResults.length; i++) {
 						var obj = this.pickResults[i][0];
 						if (obj) {
-							var customId = this.pickResults[i][1];				
+							var customId = this.pickResults[i][1];
+							row = Math.floor(customId/5);
+							col = String.fromCharCode(65 + ((customId-1)%5));
 							console.log("Picked object: " + obj + ", with pick id " + customId);
+							console.log("Row: " + row + "; Col: " + col);
 						}
 					}
 					this.pickResults.splice(0,this.pickResults.length);
@@ -276,6 +281,7 @@ class XMLscene extends CGFscene {
 							currX += 0.2;
 						}
 					}
+					this.rotate(Math.PI/2, 0, 1, 0);
 					this.translate(0, 0, -0.8);
 					this.rotate(-Math.PI/2, 1, 0, 0);
 					this.translate(currX, currY, 0);
