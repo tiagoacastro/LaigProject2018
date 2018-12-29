@@ -9,12 +9,10 @@ class MyCube extends CGFobject{
   }
   
   display() {
-
     
     this.scene.pushMatrix();
       this.face.display();
     this.scene.popMatrix();
-    
 
     this.scene.pushMatrix();
       this.scene.translate(0,0,0.5);

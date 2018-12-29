@@ -1556,6 +1556,28 @@ class MySceneGraph {
     }
 
     /**
+     * Parses the <clock> block.
+     * @param {clock element} clockNode
+     * @return clock object
+     */
+    parseClock(clockNode){
+        let time = this.reader.getFloat(clockNode, 'time');
+        if (!(time != null && !isNaN(time))) {
+            time = 30;
+            this.onXMLMinorError("unable to parse value for time plane; assuming 'time = 30'");
+        }
+        if(time < 5 || time % 1 != 0) {
+            time = 30;
+            this.onXMLMinorError("time can't be lower than 5 or float, assuming 'time = 30'");
+        }
+
+        var clock = new Clock(this.scene, time); 
+        this.log("Parsed clock");
+
+        return clock;
+    }
+
+    /**
      * Parses the <primitives> block.
      * @param {primitives block element} primitivesNode
      * @returns string with error descriptor, null if none are present
@@ -1646,6 +1668,11 @@ class MySceneGraph {
                 case "board":
                     primitive["type"] = "board";
                     primitive["primitive"] = new Board(this.scene, 5, 5); 
+                    numPrimitives++;
+                    break;
+                case "clock":
+                    primitive["type"] = "clock";
+                    primitive["primitive"] = this.parseClock(children[i].children[0])
                     numPrimitives++;
                     break;
             }
