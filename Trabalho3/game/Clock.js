@@ -174,35 +174,51 @@ class Clock extends CGFobject
     display()
 	{
         this.scene.pushMatrix();
-            this.scene.translate(1, 1, 1);
-            this.scene.scale(3, 3, 3);
+            this.scene.scale(2, 1.2, 0.8);
+            this.cube.display();
+        this.scene.popMatrix();
+
+        this.scene.pushMatrix();
+            this.scene.translate(-0.5, 0.65, 0);
+            this.scene.scale(0.4, 0.1, 0.2);
+            this.cube.display();
+        this.scene.popMatrix();
+
+        this.scene.pushMatrix();
+            this.scene.translate(0.5, 0.65, 0);
+            this.scene.scale(0.4, 0.1, 0.2);
             this.cube.display();
         this.scene.popMatrix();
         
         this.apply(Math.floor(this.whiteT/10));
 
         this.scene.pushMatrix();
+            this.scene.translate(0.3, 0, 0.41);
+            this.scene.scale(0.4, 0.8, 1);
             this.whiteD.display();
         this.scene.popMatrix();
         
         this.apply(this.whiteT%10);
 
         this.scene.pushMatrix();
-            this.scene.translate(0, 1, 0);
+            this.scene.translate(0.7, 0, 0.41);
+            this.scene.scale(0.4, 0.8, 1);
             this.whiteU.display();
         this.scene.popMatrix();
 
         this.apply(Math.floor(this.blackT/10));
 
         this.scene.pushMatrix();
-            this.scene.translate(0, 2, 0);
+            this.scene.translate(-0.7, 0, 0.41);
+            this.scene.scale(0.4, 0.8, 1);
             this.blackD.display();
         this.scene.popMatrix();
         
         this.apply(this.blackT%10);
 
         this.scene.pushMatrix();
-            this.scene.translate(0, 3, 0);
+            this.scene.translate(-0.3, 0, 0.41);
+            this.scene.scale(0.4, 0.8, 1);
             this.blackU.display();
         this.scene.popMatrix();
     };

@@ -4,7 +4,7 @@ class MyCube extends CGFobject{
     super(scene);
     this.scene = scene;
 
-    this.face = new MyRectangle(this.scene, -0.5, -0.5, 0.5, 0.5);
+    this.face = new MyRectangle(this.scene, -0.5, 0.5, -0.5, 0.5);
     this.plane = new MyPlane(scene, 20, 20);
   }
   
