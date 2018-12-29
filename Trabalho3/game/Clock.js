@@ -21,10 +21,10 @@ class Clock extends CGFobject
 
         this.cube = new MyCube(scene);
 
-        this.blackD = new MyRectangle(scene, 0, 1, 0, 1);
-        this.blackU = new MyRectangle(scene, 0, 1, 0, 1);
-        this.whiteD = new MyRectangle(scene, 0, 1, 0, 1);
-        this.whiteU = new MyRectangle(scene, 0, 1, 0, 1);
+        this.blackD = new MyRectangle(scene, -0.5, 0.5, -0.5, 0.5);
+        this.blackU = new MyRectangle(scene, -0.5, 0.5, -0.5, 0.5);
+        this.whiteD = new MyRectangle(scene, -0.5, 0.5, -0.5, 0.5);
+        this.whiteU = new MyRectangle(scene, -0.5, 0.5, -0.5, 0.5);
 
         this.zero = new CGFappearance(this.scene);
         this.zero.loadTexture("./scenes/images/zero.jpg");
@@ -175,6 +175,7 @@ class Clock extends CGFobject
 	{
         this.scene.pushMatrix();
             this.scene.translate(1, 1, 1);
+            this.scene.scale(3, 3, 3);
             this.cube.display();
         this.scene.popMatrix();
         
