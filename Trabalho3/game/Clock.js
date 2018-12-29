@@ -17,7 +17,6 @@ class Clock extends CGFobject
         this.whiteT = time;
 
         this.on = false;
-        this.player = false; //black
 
         this.cube = new MyCube(scene);
 
@@ -114,10 +113,19 @@ class Clock extends CGFobject
      * starts the clock
      */
     start(){
+        this.blackT = this.time;
+        this.whiteT = this.time;
+        this.player = false;    //black
         this.on = true;
         this.rebase = false;
         this.base = 0;
         this.current = 0;
+    }
+    /**
+     * stops the clock
+     */
+    stop(){
+        this.on = false;
     }
     /**
      * changes the player
