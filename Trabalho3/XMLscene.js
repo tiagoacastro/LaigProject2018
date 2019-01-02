@@ -155,12 +155,13 @@ class XMLscene extends CGFscene {
         this.updateClock(this.deltaTime);
         this.updateAnimations(this.deltaTime);
         this.updateWater(this.deltaTime);
-				this.checkKeys();
-				
-				//project 3
-				if (this.game != null) {
-					this.game.checkGameState();
-				}
+        this.checkKeys();
+        
+        //project 3
+        if (this.game != null) {
+            this.game.checkGameState();
+        }
+        this.updateGameAnimations(this.deltaTime);
     }
 
     /**
@@ -198,6 +199,19 @@ class XMLscene extends CGFscene {
             this.graph.components[key]["animations"][this.graph.components[key]["activeAnimation"]].update(deltaTime);
            }
 
+        }
+    }
+
+    //Project 3
+
+    updateGameAnimations(deltaTime) {
+        if (this.game != null) {
+            for (let i = 0; i < this.game.board.pieces.length; i++) {
+                if (this.game.board.pieces[i].currAnimation != null) {
+                    console.log('updating piece animations');
+                    this.game.board.pieces[i].currAnimation.update(deltaTime);
+                }
+            }
         }
     }
 

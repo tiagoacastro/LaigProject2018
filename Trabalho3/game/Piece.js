@@ -5,18 +5,42 @@ class Piece {
 				this.body = new MyCylinder(scene, 1, 1, 1, 10, 1);
 				this.color = color || '';
 				this.id = id;
-				this.pos = [0, 0, 0];
-				this.row = null;
-				this.col = null;
+				this.oldPos = [0, 0, 0];
+				this.currPos = [0, 0, 0];
+				this.oldRow = null;
+				this.oldCol = null;
+				this.currRow = null;
+				this.currCol = null;
+
+				this.isMoving = false;
+				this.currAnimation = null;
 
 				this.initPiece();
 		}
 		
 		setPos(col, row) {
-			this.pos = [-0.6 + row * 0.2, 0, 0.6 - col * 0.2];
-			this.col = col;
-			this.row = row;
-			console.log('col: ' + this.col + ' row: ' + this.row);
+			this.oldPos = this.currPos;
+			this.currPos = [-0.6 + row * 0.2, 0, 0.6 - col * 0.2];
+			this.oldCol = this.currCol;
+			this.oldRow = this.currRow;
+			this.currCol = col;
+			this.currRow = row;
+		}
+
+		movePiece() {
+			if (this.currAnimation == null) {
+				this.currAnimation = new LinearAnimation(this.scene, 10, [this.oldPos, this.currPos]);
+				console.log('created new animation');
+			} else {
+				if (!this.currAnimation.isDone) {
+					this.currAnimation.apply();
+					console.log('applying animation');
+				} else {
+					console.log('animation done');
+					this.isMoving = false;
+					this.currAnimation = null;
+				}
+			}
 		}
 
 		initPiece() {
@@ -49,12 +73,24 @@ class Piece {
 		}
 
     display() {
+
+			if (this.isMoving) {
 				this.scene.pushMatrix();
-					this.scene.translate(this.pos[0], this.pos[1], this.pos[2]);
+					this.movePiece();
 					this.scene.rotate(-Math.PI/2, 1, 0, 0);
 					this.scene.scale(0.05, 0.05, 0.05);
 					this.body.display();
-        this.scene.popMatrix();
+				this.scene.popMatrix();
+			} else {
+				console.log('hmm');
+				this.scene.pushMatrix();
+					this.scene.translate(this.currPos[0], this.currPos[1], this.currPos[2]);
+					this.scene.rotate(-Math.PI/2, 1, 0, 0);
+					this.scene.scale(0.05, 0.05, 0.05);
+					this.body.display();
+				this.scene.popMatrix();
+			}
+
     }
 
 }

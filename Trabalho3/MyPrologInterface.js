@@ -64,7 +64,7 @@ function boardToProlog(pieces) {
     }
     
     for(var i=0; i<pieces.length; i++) {
-        prologBoard[pieces[i].row-1][pieces[i].col-1] = pieces[i].color;
+        prologBoard[pieces[i].currRow-1][pieces[i].currCol-1] = pieces[i].color;
     }
     
     return JSON.stringify(prologBoard).replace(/"/g, '\'');

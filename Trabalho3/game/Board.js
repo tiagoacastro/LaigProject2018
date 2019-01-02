@@ -77,7 +77,7 @@ class Board extends CGFobject{
 	isPieceInPos(row, col) {
 		//console.log(row, col);
 		for (let i = 0; i < this.pieces.length; i++) {
-			if (this.pieces[i].col == col && this.pieces[i].row == row) {
+			if (this.pieces[i].currCol == col && this.pieces[i].currRow == row) {
 				return this.pieces[i];
 			}
 		}

@@ -68,6 +68,7 @@ class Game {
     //console.log("curr piece row: " + currPiece.row + " curr piece col: " + currPiece.col + " curr piece id: " + currPiece.id);
     //console.log("tmp row: " + tmpRow + " tmp col: " + tmpCol);
     currPiece.setPos(tmpCol, tmpRow);
+    currPiece.isMoving = true;
     //console.log(this.board.pieces);
 
   }
