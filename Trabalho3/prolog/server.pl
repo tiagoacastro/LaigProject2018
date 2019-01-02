@@ -108,6 +108,10 @@ print_header_line(_).
 
 % My Calls
 
+parse_input(get_board, Board):-
+	startBoard(Temp),
+	matrix_to_json(Temp,Board).
+
 parse_input(valid_moves(Board, Row, Column), ValidMoves):-
 	valid_moves(Board, Row, Column, Temp),
 	list_to_json(Temp, ValidMoves).
