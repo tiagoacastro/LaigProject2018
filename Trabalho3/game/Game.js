@@ -29,6 +29,7 @@ class Game {
   }
 
   checkWin(data){
+    console.log(this.boardContent)
     if(data.target.response == 1){                                                               //VER DRAW AQUI TMB
       this.state = 'end';
     }else{
