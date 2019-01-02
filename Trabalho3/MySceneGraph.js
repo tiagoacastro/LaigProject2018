@@ -1643,9 +1643,11 @@ class MySceneGraph {
                     primitive["primitive"] = this.parseWater(children[i].children[0]); 
                     numPrimitives++;
                     break;
-                case "board":
-                    primitive["type"] = "board";
-                    primitive["primitive"] = new Board(this.scene, 5, 5); 
+                case "game":
+                    primitive["type"] = "game";
+                    var game = new Game(this.scene);
+                    primitive["primitive"] = game;
+                    this.scene.game =  game;
                     numPrimitives++;
                     break;
             }

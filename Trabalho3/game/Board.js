@@ -16,11 +16,10 @@ class Board extends CGFobject{
 		
 		for (let i = 0; i < 6; i++) {
 			if (i < 3) {
-				this.pieces.push(new Piece(this.scene, 'black', i));
+				this.pieces.push(new Piece(this.scene, 'b', i));
 			} else {
-				this.pieces.push(new Piece(this.scene, 'white', i));
+				this.pieces.push(new Piece(this.scene, 'w', i));
 			}
-			this.pieces[i].initPiece();
 		}
 
 		console.log(this.pieces);
@@ -60,7 +59,6 @@ class Board extends CGFobject{
 		for(let i = 0; i < this.cols; i++) {
 			for(let j = 0; j < this.rows; j++) {
 				this.scene.pushMatrix();
-					//this.scene.translate(0, i*j*0.2, 0);
 					this.scene.rotate(-Math.PI/2, 1, 0, 0);
 					this.board[i][j].display();
 				this.scene.popMatrix();
@@ -75,6 +73,16 @@ class Board extends CGFobject{
 				this.pieces[i].display();
 			this.scene.popMatrix();
 		}
+	}
+
+	isPieceInPos(row, col) {
+		//console.log(row, col);
+		for (let i = 0; i < this.pieces.length; i++) {
+			if (this.pieces[i].col == col && this.pieces[i].row == row) {
+				return this.pieces[i];
+			}
+		}
+		return null;
 	}
 
 	display() {

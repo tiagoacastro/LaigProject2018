@@ -194,8 +194,8 @@
       <cylinder2 base="1" top="2" height="3" slices="60" stacks="60" /> 
     </primitive>
 
-    <primitive id="board">
-      <board/>
+    <primitive id="game">
+      <game/>
     </primitive>
 
   </primitives>
@@ -210,104 +210,8 @@
       </materials>
       <texture id="none" length_s="1" length_t="1" />
       <children>
-        <primitiveref id="board"/> 
+        <primitiveref id="game"/> 
       </children>
-    </component>
-
-    <component id="cube">
-        <transformation>
-            <transformationref id="identity"/>
-        </transformation>
-        <materials>
-            <material id="inherit"/>
-        </materials>
-        <texture id="inherit" length_s="1" length_t="1" />
-        <children>
-            <componentref id="cube_face0"/>
-            <componentref id="cube_face1"/>
-            <componentref id="cube_face2"/>
-            <componentref id="cube_face3"/>
-            <componentref id="cube_face4"/>
-            <componentref id="cube_face5"/>
-        </children>
-    </component>
-
-    <component id="cube_face0">
-        <transformation>
-            <transformationref id="set_cube_face0"/>
-        </transformation>
-        <materials>
-            <material id="inherit"/>
-        </materials>
-        <texture id="inherit" length_s="1" length_t="1" />
-        <children>
-            <primitiveref id="rectangle"/>
-        </children>
-    </component>
-
-    <component id="cube_face1">
-        <transformation>
-            <transformationref id="set_cube_face1"/>
-        </transformation>
-        <materials>
-            <material id="inherit"/>
-        </materials>
-        <texture id="inherit" length_s="1" length_t="1" />
-        <children>
-            <primitiveref id="rectangle"/>
-        </children>
-    </component>
-
-    <component id="cube_face2">
-        <transformation>
-            <transformationref id="set_cube_face2"/>
-        </transformation>
-        <materials>
-            <material id="inherit"/>
-        </materials>
-        <texture id="inherit" length_s="1" length_t="1" />
-        <children>
-            <primitiveref id="rectangle"/>
-        </children>
-    </component>
-
-    <component id="cube_face3">
-        <transformation>
-            <transformationref id="set_cube_face3"/>
-        </transformation>
-        <materials>
-            <material id="inherit"/>
-        </materials>
-        <texture id="inherit" length_s="1" length_t="1" />
-        <children>
-            <primitiveref id="rectangle"/>
-        </children>
-    </component>
-
-    <component id="cube_face4">
-        <transformation>
-            <transformationref id="set_cube_face4"/>
-        </transformation>
-        <materials>
-            <material id="inherit"/>
-        </materials>
-        <texture id="inherit" length_s="1" length_t="1" />
-        <children>
-            <primitiveref id="rectangle"/>
-        </children>
-    </component>
-
-    <component id="cube_face5">
-        <transformation>
-            <transformationref id="set_cube_face5"/>
-        </transformation>
-        <materials>
-            <material id="inherit"/>
-        </materials>
-        <texture id="inherit" length_s="1" length_t="1" />
-        <children>
-            <primitiveref id="rectangle"/>
-        </children>
     </component>
       
   </components>

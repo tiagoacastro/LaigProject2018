@@ -18,7 +18,7 @@ serialInclude(['../lib/CGF.js', 'XMLscene.js', 'MySceneGraph.js',
 './animations/LinearAnimation.js', './animations/CircularAnimation.js', './primitives/MyPlane.js', 
 './primitives/MyPatch.js', './primitives/MyCylinder2.js', './primitives/MyVehicle.js',
 './primitives/MyTerrain.js', './primitives/MyWater.js', './game/Board.js', './primitives/MyCube.js',
-'MyPrologInterface.js', './game/Piece.js',
+'MyPrologInterface.js', './game/Piece.js', './game/Game.js',
 
     main=function()
     {
@@ -26,8 +26,6 @@ serialInclude(['../lib/CGF.js', 'XMLscene.js', 'MySceneGraph.js',
         var app = new CGFapplication(document.body);
         var myInterface = new MyInterface();
         var myScene = new XMLscene(myInterface);
-
-        getBoard(print)
 
         app.init();
 

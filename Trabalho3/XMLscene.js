@@ -50,12 +50,14 @@ class XMLscene extends CGFscene {
 				this.ghostShader=new CGFshader(this.gl, "./shaders/normal.vert", "./shaders/ghost.frag");
 
 				this.pickableObjs = [];
-				for(let i = 0; i < GAME_DIMENSIONS*GAME_DIMENSIONS; i++) {
-					this.pickableObjs.push(new MyRectangle(this, -1/(2*GAME_DIMENSIONS), 1/(2*GAME_DIMENSIONS), -1/(2*GAME_DIMENSIONS), 1/(2*GAME_DIMENSIONS)));
+				for(let i = 0; i < GAME_DIMENSIONS*GAME_DIMENSIONS; i++) { 
+					this.pickableObjs.push(new MyCylinder(this, 1, 1, 1, 10, 1));
 				}
 				//console.log(this.pickableObjs);
 
 				this.setPickEnabled(true);
+
+				this.game = null;
     }
     /**
      * Initializes the scene cameras.
@@ -152,7 +154,12 @@ class XMLscene extends CGFscene {
 
         this.updateAnimations(this.deltaTime);
         this.updateWater(this.deltaTime);
-        this.checkKeys();
+				this.checkKeys();
+				
+				//project 3
+				if (this.game != null) {
+					this.game.checkGameState();
+				}
     }
 
     /**
@@ -200,8 +207,12 @@ class XMLscene extends CGFscene {
 						var obj = this.pickResults[i][0];
 						if (obj) {
 							var customId = this.pickResults[i][1];
-							row = Math.floor(customId/5);
-							col = String.fromCharCode(65 + ((customId-1)%5));
+							col = Math.floor((customId-1)/5) + 1;
+							row = ((customId-1)%5) + 1;
+							if (this.game.action === 'choose_piece') {
+								this.game.currPieceCol = col;
+								this.game.currPieceRow = row;
+							}
 							console.log("Picked object: " + obj + ", with pick id " + customId);
 							console.log("Row: " + row + "; Col: " + col);
 						}
@@ -209,6 +220,7 @@ class XMLscene extends CGFscene {
 					this.pickResults.splice(0,this.pickResults.length);
 				}		
 			}
+
     }
 
     /**
@@ -263,16 +275,13 @@ class XMLscene extends CGFscene {
             }
 				this.popMatrix();
 					
-				let currX = -0.4, currY = -0.4;
+				let currX = -0.4, currY = 0.4;
 
 				//values very much hardcoded, change this later maybe? prolly not
 				
 				//console.log(this.pickableObjs);
-
-				this.setActiveShader(this.ghostShader);
 				
 				for (let i = 0; i < this.pickableObjs.length; i++) {
-					this.pushMatrix();
 					if (i != 0) {
 						if (i%5 == 0){
 							currX = -0.4;
@@ -281,13 +290,19 @@ class XMLscene extends CGFscene {
 							currX += 0.2;
 						}
 					}
-					this.rotate(Math.PI/2, 0, 1, 0);
-					this.translate(0, 0, -0.8);
-					this.rotate(-Math.PI/2, 1, 0, 0);
-					this.translate(currX, currY, 0);
-					this.registerForPick(i+1, this.pickableObjs[i]);
-					this.pickableObjs[i].display();
-				this.popMatrix();
+
+					this.setActiveShader(this.ghostShader);
+					
+					this.pushMatrix();
+						//this.rotate(Math.PI/2, 0, 1, 0);
+							//this.translate(0, 0, -0.8);
+							this.translate(currX, 0, currY);
+							this.rotate(-Math.PI/2, 1, 0, 0);
+						this.scale(0.1, 0.1, 0.1);
+						this.registerForPick(i+1, this.pickableObjs[i]);
+						this.pickableObjs[i].display();
+					this.popMatrix();
+					
 			
 				}
 
