@@ -198,6 +198,10 @@
       <game/>
     </primitive>
 
+    <primitive id="clock">
+      <clock time="30" />
+    </primitive>
+
   </primitives>
 
   <components>

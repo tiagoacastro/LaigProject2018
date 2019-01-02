@@ -152,6 +152,7 @@ class XMLscene extends CGFscene {
             this.lastTime = currTime;
         }
 
+        this.updateClock(this.deltaTime);
         this.updateAnimations(this.deltaTime);
         this.updateWater(this.deltaTime);
 				this.checkKeys();
@@ -160,6 +161,17 @@ class XMLscene extends CGFscene {
 				if (this.game != null) {
 					this.game.checkGameState();
 				}
+    }
+
+    /**
+     * function to update the clock
+     */
+    updateClock(deltaTime) {
+        for (var key in this.graph.primitives) {
+            if (this.graph.primitives[key]["type"] == "clock") {
+                this.graph.primitives[key]["primitive"].update(deltaTime);
+            }
+        }
     }
 
     /**
