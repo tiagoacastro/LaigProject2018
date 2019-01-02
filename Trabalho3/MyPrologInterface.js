@@ -10,12 +10,6 @@ function getPrologRequest(requestString, onSuccess, onError, port){
     request.send()
 }
 
-function getBoard(callback){
-    let requestString = 'get_board'
-
-    getPrologRequest(requestString, callback)
-}
-
 function validMoves(board, row, column, callback){
     let requestString = 'valid_moves('
         + boardToProlog(board) + ','

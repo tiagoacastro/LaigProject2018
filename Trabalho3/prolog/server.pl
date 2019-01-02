@@ -108,21 +108,23 @@ print_header_line(_).
 
 % My Calls
 
-parse_input(get_board, Board):-
-	startBoard(Temp),
-	matrix_to_json(Temp,Board).
-
 parse_input(valid_moves(Board, Row, Column), ValidMoves):-
 	valid_moves(Board, Row, Column, Temp),
 	list_to_json(Temp, ValidMoves).
 
-parse_input(move_player(Board, Color, Row, Column, Direction), NewBoard):-
-	player_move(Board, Color, Row, Column, Direction, Temp),
-	matrix_to_json(Temp, NewBoard).
+parse_input(move_player(Board, Color, Row, Column, Direction), NewBoard-NewRow-NewColumn):-
+	player_move(Board, Color, Row, Column, Direction, TempBoard, TempRow, TempColumn),
+	matrix_to_json(TempBoard, NewBoard),
+	json(TempRow, NewRow),
+	json(TempColumn, NewColumn).
 
-parse_input(move_bot(Board, Color, Difficulty), NewBoard):-
-	choose_move(Board, Temp, Difficulty, Color),
-	matrix_to_json(Temp, NewBoard).
+parse_input(move_bot(Board, Color, Difficulty), NewBoard-OldRow-OldColumn-NewRow-NewColumn):-
+	choose_move_more(Board, Temp, Difficulty, Color, Row, Column, Nrow, Ncolumn),
+	matrix_to_json(Temp, NewBoard),
+	json(Row, OldRow),
+	json(Column, OldColumn),
+	json(Nrow, NewRow),
+	json(Ncolumn, NewColumn).
 
 parse_input(is_game_over(Board, Color), Over):-
 	check_game_over(Board, Color, Temp), 

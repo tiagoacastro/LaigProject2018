@@ -114,6 +114,27 @@ choose_move(InBoard, OutBoard, 2, Color) :-
     changePiece(InBoard, Column, Row, 'x', IntBoard),
     changePiece(IntBoard, OutColumn, OutRow, Color, OutBoard).
 
+% Processes easy bot's turn
+choose_move_more(InBoard, OutBoard, 1, Color, Nrow, Ncolumn, OutRow, OutColumn) :-
+    random(1, 4, Piece),
+    getNthPiecePos(InBoard, Color, Nrow, Ncolumn, Piece),
+    valid_moves(InBoard, Nrow, Ncolumn, ListOfMoves),
+    randomDirection(ListOfMoves, Direction),
+    findNewPosition(Direction, InBoard, Nrow, Ncolumn, OutRow, OutColumn),
+    changePiece(InBoard, Ncolumn, Nrow, 'x', IntBoard),
+    changePiece(IntBoard, OutColumn, OutRow, Color, OutBoard).
+
+% Processes hard bot's turn
+choose_move_more(InBoard, OutBoard, 2, Color, Row, Column, OutRow, OutColumn) :-
+    getBestPlay(1, InBoard, Color, Row1, Column1, Direction1, Value1),
+    getBestPlay(2, InBoard, Color, Row2, Column2, Direction2, Value2),
+    getBestPlay(3, InBoard, Color, Row3, Column3, Direction3, Value3),
+    checkBestPiece(Value1, Value2, Value3, Piece),
+    parse(Piece, Row, Row1, Row2, Row3, Column, Column1, Column2, Column3, Direction, Direction1, Direction2, Direction3),
+    findNewPosition(Direction, InBoard, Row, Column, OutRow, OutColumn),
+    changePiece(InBoard, Column, Row, 'x', IntBoard),
+    changePiece(IntBoard, OutColumn, OutRow, Color, OutBoard).
+
 %-----------------------------------------------------------
 
 %Choosing hard bot's move
@@ -223,7 +244,7 @@ move(Direction, InBoard, Player, OutBoard) :-
     changePiece(IntBoard, OutColumn, OutRow, Player, OutBoard).
 
 %Finds the piece's new position and updates board
-player_move(InBoard, Color, Row, Column, Direction, OutBoard) :-
+player_move(InBoard, Color, Row, Column, Direction, OutBoard, OutRow, OutColumn) :-
     findNewPosition(Direction, InBoard, Row, Column, OutRow, OutColumn),
     changePiece(InBoard, Column, Row, 'x', IntBoard),
     changePiece(IntBoard, OutColumn, OutRow, Color, OutBoard).
