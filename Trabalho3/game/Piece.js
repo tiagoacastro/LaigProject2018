@@ -13,8 +13,8 @@ class Piece {
 		}
 		
 		setPos(col, row) {
-			this.pos = [-0.6 + (row) * 0.2, 0, 0.6 - (col.charCodeAt() - 64) * 0.2];
-			this.col = (col.charCodeAt() - 64);
+			this.pos = [-0.6 + row * 0.2, 0, 0.6 - col * 0.2];
+			this.col = col;
 			this.row = row;
 			console.log('col: ' + this.col + ' row: ' + this.row);
 		}
@@ -22,27 +22,27 @@ class Piece {
 		initPiece() {
 			switch(this.id) { // 0-2 black, 3-5 white 
 				case 0:
-					this.setPos('B', 1);
+					this.setPos(2, 1);
 					this.color = 'b';
 					break;
 				case 1:
-					this.setPos('C', 4);
+					this.setPos(3, 4);
 					this.color = 'b';
 					break;
 				case 2:
-					this.setPos('D', 1);
+					this.setPos(4, 1);
 					this.color = 'b';
 					break;
 				case 3:
-					this.setPos('B', 5);
+					this.setPos(2, 5);
 					this.color = 'w';
 					break;
 				case 4:
-					this.setPos('C', 2);
+					this.setPos(3, 2);
 					this.color = 'w';
 					break;
 				case 5:
-					this.setPos('D', 5);
+					this.setPos(4, 5);
 					this.color = 'w';
 					break;
 			}

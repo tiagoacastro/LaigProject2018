@@ -67,7 +67,7 @@ class Game {
 
     //console.log("curr piece row: " + currPiece.row + " curr piece col: " + currPiece.col + " curr piece id: " + currPiece.id);
     //console.log("tmp row: " + tmpRow + " tmp col: " + tmpCol);
-    currPiece.setPos(String.fromCharCode(64 + tmpCol), tmpRow);
+    currPiece.setPos(tmpCol, tmpRow);
     //console.log(this.board.pieces);
 
   }
@@ -93,35 +93,47 @@ class Game {
             //send move to prolog
             movePlayer(this.board.pieces, 'b', this.currPieceRow, this.currPieceCol, this.currPieceDir, print);
             this.updateBoard();
-            this.state = 'white_player_turn';
             this.action = 'check_game_over';
           }
         } else if (this.action === 'check_game_over') {
           //check game state
-
           //if they won, go to end state
           //if not, start white player turn
+          this.state = 'white_player_turn';
+          this.action = 'choose_piece';
         }
 
         break;
       case 'white_player_turn':
+        //choose move
         if (this.action === 'choose_piece') {
-          //check if move is valid, assuming it is always for now
+          //check if move is valid, assuming it always is for now
           var pieceExists = this.board.isPieceInPos(this.currPieceRow, this.currPieceCol);
-          console.log(pieceExists);
-          if (pieceExists != null && pieceExists.color === 'white') {
-            //move is valid
-            console.log('Move is valid');
+          //console.log(pieceExists);
+          if (pieceExists != null && pieceExists.color === "w") {
+            console.log('piece exists');
+            //check valid moves
+            validMoves(this.board.pieces, this.currPieceRow, this.currPieceCol, print);
+            //choose direction (for test purposes assuming south by default)
+            this.currPieceDir = 2;
             //send move to prolog
+            movePlayer(this.board.pieces, 'w', this.currPieceRow, this.currPieceCol, this.currPieceDir, print);
+            this.updateBoard();
+            this.action = 'check_game_over';
           }
+        } else if (this.action === 'check_game_over') {
+          //check game state TODO
+          //if they won, go to end state TODO
+          //if not, start white player turn
+          this.state = 'black_player_turn';
+          this.action = 'choose_piece';
         }
-        //same as black player turn
         break;
       case 'end_game':
-        //?? victory screen ?
+        //?? victory screen ? TODO
         break;
       case 'draw':
-       //?? draw screen ?
+       //?? draw screen ? TODO
        break;
     }
   }
