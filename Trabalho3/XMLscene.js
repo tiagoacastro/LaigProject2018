@@ -159,7 +159,7 @@ class XMLscene extends CGFscene {
 				
 				//project 3
 				if (this.game != null) {
-					this.game.checkGameState();
+					this.game.updateGameState();
 				}
     }
 

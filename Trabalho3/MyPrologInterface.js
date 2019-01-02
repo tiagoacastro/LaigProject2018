@@ -18,7 +18,7 @@ function getBoard(callback){
 
 function validMoves(board, row, column, callback){
     let requestString = 'valid_moves('
-        + boardToProlog(board) + ','
+        + decodeObject(board) + ','
         + row + ','
         + column + ')';
 
@@ -27,7 +27,7 @@ function validMoves(board, row, column, callback){
 
 function movePlayer(board, color, row, column, direction, callback){
     let requestString = 'move_player('
-        + boardToProlog(board) + ','
+        + decodeObject(board) + ','
         + decodeString(color) + ','
         + row + ','
         + column + ','
@@ -53,30 +53,13 @@ function isGameOver(board, color, callback){
     getPrologRequest(requestString, callback)
 }
 
-
-function boardToProlog(pieces) {
-    var prologBoard = [];
-    for(var i=0; i<5; i++) {
-        prologBoard[i] = [];
-        for(var j=0; j<5; j++) {
-            prologBoard[i][j] = 'x';
-        }
-    }
-    
-    for(var i=0; i<pieces.length; i++) {
-        prologBoard[pieces[i].row-1][pieces[i].col-1] = pieces[i].color;
-    }
-    
-    return JSON.stringify(prologBoard).replace(/"/g, '\'');
-}
-
 function decodeString(string){
     return JSON.stringify(string).replace(/"/g, '\'');
 }
 
-function decodeObject(string){
-    return JSON.stringify(string).replace(/"/g, '')
+function decodeObject(object){
+    return object.replace(/"/g, '\'');
 }
-function print() {
-    console.log(this.response)
+function print(data) {
+    console.log(data.target.response)
 }
