@@ -14,13 +14,12 @@ class Board extends CGFobject{
 
 	initPieces() {
 		
-		for (let i = 0; i < 6; i++) {
-			if (i < 3) {
-				this.pieces.push(new Piece(this.scene, 'b', i));
-			} else {
-				this.pieces.push(new Piece(this.scene, 'w', i));
-			}
-		}
+		this.pieces.push(new Piece(this.scene, 'b', 0));
+		this.pieces.push(new Piece(this.scene, 'b', 1));
+		this.pieces.push(new Piece(this.scene, 'b', 2));
+		this.pieces.push(new Piece(this.scene, 'w', 3));
+		this.pieces.push(new Piece(this.scene, 'w', 4));
+		this.pieces.push(new Piece(this.scene, 'w', 5));
 
 		console.log(this.pieces);
 	}
