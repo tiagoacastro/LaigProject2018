@@ -119,6 +119,7 @@ class XMLscene extends CGFscene {
         this.interface.addAxisCheckBox();
         this.interface.addLightsGroup(this.graph.lights);
         this.interface.addViewsGroup(this.graph.cameras);
+        this.interface.addGameGroup(this.game);
 
         this.sceneInited = true;
     }

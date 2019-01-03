@@ -37,7 +37,6 @@ class MyInterface extends CGFinterface {
      */
     addLightsGroup(lights) {
         var group = this.gui.addFolder("Lights");
-        group.open();
 
         for (var key in lights) {
             if (lights.hasOwnProperty(key)) {
@@ -52,7 +51,6 @@ class MyInterface extends CGFinterface {
      */
     addViewsGroup(cameras) {
         var group = this.gui.addFolder("Views");
-        group.open();   
 
         const cameraIds = Object.keys(cameras);
         this.currentCamera = this.scene.graph.default;
@@ -64,6 +62,14 @@ class MyInterface extends CGFinterface {
             scene.camera = cameras[val];
             inter.setActiveCamera(cameras[val]);
         });
+    }
+    /**
+     * Adds a folder containing game information and commands
+     * @param {array} game
+     */
+    addGameGroup(game) {
+        var group = this.gui.addFolder("Game");
+        group.add(game, 'undo');
     }
     /**
      * initializes key data

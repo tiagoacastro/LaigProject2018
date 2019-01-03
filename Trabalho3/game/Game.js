@@ -89,7 +89,6 @@ class Game {
 
   chooseDir() {
     var validDir = this.isValidDir();
-    console.log(validDir);
     if (validDir != null) {
       this.moveDir = validDir; 
       this.state = 'move_piece';
@@ -99,7 +98,7 @@ class Game {
   movePiece(data) {
     let response = data.target.response.split("-");
 
-    this.turns.push([response[0], this.currPiece, this.currPiece.getPos(), [parseInt(response[1]), parseInt(response[2])]]); //board, piece, oldPos, newPos
+    this.turns.push([response[0], this.currPiece.getId(), this.currPiece.getPos()]); //board, piece id, oldPos, newPos
     console.log(this.turns);
 
     this.boardContent = response[0];
@@ -117,6 +116,17 @@ class Game {
     } else {
       this.switchPlayers();
       this.state = 'choose_piece';
+    }
+  }
+
+  undo(){
+    if(this.turns.length > 0  && !this.areAnimationsRunning()){
+      this.switchPlayers();
+      let turn = this.turns.pop();
+      this.boardContent = turn[0];
+      let piece = this.board.pieces[turn[1]];
+      piece.setPos(turn[2][1], turn[2][0]);
+      piece.isMoving = true;
     }
   }
 

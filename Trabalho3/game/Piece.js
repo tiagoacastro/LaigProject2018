@@ -17,6 +17,10 @@ class Piece {
 
 				this.initPiece();
 		}
+
+		getId(){
+			return this.id;
+		}
 		
 		setPos(col, row) {
 			this.oldPos = this.currPos;
