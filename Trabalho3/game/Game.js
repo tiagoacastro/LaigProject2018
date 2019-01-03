@@ -168,7 +168,7 @@ class Game {
   end() {
     //check the winner
     if (!this.areAnimationsRunning()) {
-      this.state = 'wait';
+      this.state = 'none';
       this.currPlayer = null;
       this.selectedPieceCol = -1;
       this.selectedPieceRow = -1;
