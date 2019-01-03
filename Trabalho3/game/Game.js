@@ -141,6 +141,7 @@ class Game {
       let piece = this.board.pieces[turn[1]];
       piece.setPos(turn[2][1], turn[2][0]);
       piece.isMoving = true;
+      this.moveCamera();
     }
   }
 
