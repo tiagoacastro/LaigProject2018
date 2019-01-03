@@ -24,6 +24,7 @@ class Game {
     this.prologBoard = null;
     this.currPiece = null;
     this.moveDir = -1;
+    this.turns = [];
 
     console.log(dirMap);
 
@@ -74,14 +75,20 @@ class Game {
 
   movePiece(data) {
     let response = data.target.response.split("-");
+
+    this.turns.push([response[0], this.currPiece, this.currPiece.getPos(), [parseInt(response[1]), parseInt(response[2])]]); //board, piece, oldPos, newPos
+    console.log(this.turns);
+
     this.boardContent = response[0];
     console.log('new row: ' + response[1] + ' new col: ' + response[2]);
-    this.currPiece.setPos(response[2],response[1]);
+    this.currPiece.setPos(parseInt(response[2]),parseInt(response[1]));
     this.state = 'check_game_over';
   }
 
   checkGameOver(data) {
-    if(data.target.response == 1){                                                              
+    let occurences = this.turns.filter(turn => turn[0] === this.boardContent);
+
+    if(data.target.response == 1 || occurences.length === 3){                                                              
       this.state = 'end';
     } else {
       this.switchPlayers();

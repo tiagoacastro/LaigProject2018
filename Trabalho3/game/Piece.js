@@ -27,6 +27,10 @@ class Piece {
 			this.currRow = row;
 		}
 
+		getPos() {
+			return [this.currRow, this.currCol];
+		}
+
 		movePiece() {
 			if (this.currAnimation == null) {
 				this.currAnimation = new LinearAnimation(this.scene, 1, [this.oldPos, this.currPos]);
