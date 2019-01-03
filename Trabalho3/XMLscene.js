@@ -160,8 +160,8 @@ class XMLscene extends CGFscene {
         //project 3
         if (this.game != null) {
             this.game.stateMachine();
+            this.updateGameAnimations(this.deltaTime);
         }
-        this.updateGameAnimations(this.deltaTime);
     }
 
     /**
@@ -205,12 +205,10 @@ class XMLscene extends CGFscene {
     //Project 3
 
     updateGameAnimations(deltaTime) {
-        if (this.game != null) {
-            for (let i = 0; i < this.game.board.pieces.length; i++) {
-                if (this.game.board.pieces[i].currAnimation != null) {
-                    console.log(this.game.board.pieces[i].currAnimation);
-                    this.game.board.pieces[i].currAnimation.update(deltaTime);
-                }
+        for (let i = 0; i < this.game.board.pieces.length; i++) {
+            if (this.game.board.pieces[i].currAnimation != null) {
+                //console.log('animation piece ' + this.game.board.pieces[i].id);
+                this.game.board.pieces[i].currAnimation.update(deltaTime);
             }
         }
     }

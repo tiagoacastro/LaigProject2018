@@ -41,6 +41,15 @@ class Game {
     this.boardContent = data.target.response;
   }
 
+  areAnimationsRunning() {
+    for (let i = 0; i < this.board.pieces.length; i++) {
+      if (this.board.pieces[i].currAnimation != null) {
+        return true;
+      }
+    }
+    return false;
+  }
+
   switchPlayers() {
     this.selectedPieceCol = -1;
     this.selectedPieceRow = -1;
@@ -82,6 +91,7 @@ class Game {
     this.boardContent = response[0];
     console.log('new row: ' + response[1] + ' new col: ' + response[2]);
     this.currPiece.setPos(parseInt(response[2]),parseInt(response[1]));
+    this.currPiece.isMoving = true;
     this.state = 'check_game_over';
   }
 
@@ -98,18 +108,20 @@ class Game {
 
   end() {
     //check the winner
-    this.state = 'init';
-    this.currPlayer = null;
-    this.selectedPieceCol = -1;
-    this.selectedPieceRow = -1;
-    this.prologBoard = null;
-    this.currPiece = null;
-    this.moveDir = -1;
-    this.initGame();
+    if (!this.areAnimationsRunning()) {
+      this.state = 'init';
+      this.currPlayer = null;
+      this.selectedPieceCol = -1;
+      this.selectedPieceRow = -1;
+      this.prologBoard = null;
+      this.currPiece = null;
+      this.moveDir = -1;
+      this.initGame();
+    }
   }
 
   stateMachine() {
-    console.log('in state: ' + this.state + ' for player ' + this.currPlayer);
+    //console.log('in state: ' + this.state + ' for player ' + this.currPlayer);
     switch (this.state) {
       case 'init':
         this.currPlayer = 'b';
