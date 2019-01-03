@@ -1,102 +1,138 @@
+//assuming dirPos - currPiecePos
+
+var dirMap = {}; // key: row, col
+dirMap[[-1,0]] = 1; // N
+dirMap[[0,1]] = 3; // E 
+dirMap[[1,0]] = 4; // S
+dirMap[[0,-1]] = 2; // W
+dirMap[[-1,1]] = 5; // NE 
+dirMap[[1,1]] = 7; // SE
+dirMap[[-1,-1]] = 6; // NW
+dirMap[[1,-1]] = 8; // SW
+
 class Game {
 
   constructor(scene) {
     this.scene = scene;
     this.state = 'init';
-    this.action = '';
-    this.currPieceCol = -1;
-    this.currPieceRow = -1;
-    this.currPieceDir = -1;
-    this.piece = null;
+    //this.currDirRow = -1;
+    //this.currDirCol = -1;
+    //this.currPieceDir = -1;
+    this.currPlayer = null;
+    this.selectedPieceCol = -1;
+    this.selectedPieceRow = -1;
+    this.prologBoard = null;
+    this.currPiece = null;
+    this.moveDir = -1;
+
+    console.log(dirMap);
 
     this.initGame();
   }
 
   initGame() {
     this.board = new Board(this.scene, 5, 5); // hmm constants
-    var bindedSetBoard = this.setBoard.bind(this);
-    getBoard(bindedSetBoard);
+    var boundSetBoard = this.setBoard.bind(this);
+    getBoard(boundSetBoard);
   }
 
   setBoard(data){
     this.boardContent = data.target.response;
   }
 
-  updateBoard(data){
-    let response = data.target.response.split("-");
-    this.boardContent = response[0];
-    this.piece.setPos(response[1],response[2]);
-    this.piece.isMoving = true;
-  }
-
-  checkWin(data){
-    console.log(this.boardContent)
-    if(data.target.response == 1){                                                               //VER DRAW AQUI TMB
-      this.state = 'end';
-    }else{
-      if(this.state == 'black_player_turn')
-        this.state = 'white_player_turn';
-      else
-        this.state = 'black_player_turn';
-
-      this.action = 'choose_piece';
+  switchPlayers() {
+    this.selectedPieceCol = -1;
+    this.selectedPieceRow = -1;
+    this.moveDir = -1;
+    this.currPiece = null;
+    if (this.currPlayer == 'b') {
+      this.currPlayer = 'w';
+    } else {
+      this.currPlayer = 'b';
     }
   }
 
-  updateGameState() {
-    switch(this.state){
+  choosePiece() {
+
+    var validPiece = this.board.isPieceInPos(this.selectedPieceRow, this.selectedPieceCol);
+    if (validPiece != null && validPiece.color == this.currPlayer) {
+      this.currPiece = validPiece;
+      this.state = 'get_valid_dirs';
+    }
+
+  }
+
+  getValidDirs(data) {
+    this.currValidDirs = data.target.response;
+    this.state = 'choose_direction';
+  }
+
+  chooseDir() {
+    this.moveDir = 4; //hardcoded for now
+    this.state = 'move_piece';
+  }
+
+  movePiece(data) {
+    let response = data.target.response.split("-");
+    this.boardContent = response[0];
+    console.log('new row: ' + response[1] + ' new col: ' + response[2]);
+    this.currPiece.setPos(response[2],response[1]);
+    this.state = 'check_game_over';
+  }
+
+  checkGameOver(data) {
+    if(data.target.response == 1){                                                              
+      this.state = 'end';
+    } else {
+      this.switchPlayers();
+      this.state = 'choose_piece';
+    }
+  }
+
+  end() {
+    //check the winner
+    this.state = 'init';
+    this.currPlayer = null;
+    this.selectedPieceCol = -1;
+    this.selectedPieceRow = -1;
+    this.prologBoard = null;
+    this.currPiece = null;
+    this.moveDir = -1;
+    this.initGame();
+  }
+
+  stateMachine() {
+    console.log('in state: ' + this.state + ' for player ' + this.currPlayer);
+    switch (this.state) {
       case 'init':
-        this.state = 'black_player_turn';
-        this.action = 'choose_piece';
+        this.currPlayer = 'b';
+        this.state = 'choose_piece';
         break;
-      case 'black_player_turn':
-        if (this.action === 'choose_piece') {
-          console.log('black turn');
-          this.piece = this.board.isPieceInPos(this.currPieceRow, this.currPieceCol);
-          if (this.piece != null && this.piece.color === "b") {
-            validMoves(this.boardContent, this.currPieceRow, this.currPieceCol, print);
-            this.action = 'get_direction';
-          }
-        } else if (this.action === 'get_direction') {
-          this.currPieceDir = 2;                                                                 //NEEDS PICKING FOR DIR
-          this.action = 'move_piece';
-        } else if (this.action === 'move_piece') {
-          let boundUpdateBoard = this.updateBoard.bind(this);
-          movePlayer(this.boardContent, 'b', this.currPieceRow, this.currPieceCol, this.currPieceDir, boundUpdateBoard);
-          this.action = 'check_game_over';
-        } else if (this.action === 'check_game_over') {
-          let boundCheckWin = this.checkWin.bind(this);
-          isGameOver(this.boardContent, 'b', boundCheckWin);
-          this.action = 'wait';
-        }
+      case 'choose_piece':
+        this.choosePiece();
         break;
-      case 'white_player_turn':
-        if (this.action === 'choose_piece') {
-          console.log('white turn');
-          this.piece = this.board.isPieceInPos(this.currPieceRow, this.currPieceCol);
-          if (this.piece != null && this.piece.color === "w") {
-            validMoves(this.boardContent, this.currPieceRow, this.currPieceCol, print);
-            this.action = 'get_direction';
-          }
-        } else if (this.action === 'get_direction') {
-          this.currPieceDir = 2;                                                                //NEEDS PICKING FOR DIR
-          this.action = 'move_piece';
-        } else if (this.action === 'move_piece') {
-          let boundUpdateBoard = this.updateBoard.bind(this);
-          movePlayer(this.boardContent, 'w', this.currPieceRow, this.currPieceCol, this.currPieceDir, boundUpdateBoard);
-          this.action = 'check_game_over';
-        } else if (this.action === 'check_game_over') {
-          let boundCheckWin = this.checkWin.bind(this);
-          isGameOver(this.boardContent, 'w', boundCheckWin);
-          this.action = 'wait';
-        }
+      case 'get_valid_dirs':
+        var boundGetValidDirs = this.getValidDirs.bind(this);
+        this.state = 'wait';
+        validMoves(this.boardContent, this.selectedPieceRow, this.selectedPieceCol, boundGetValidDirs);
+        break;
+      case 'choose_direction':
+        this.chooseDir();
+        break;
+      case 'move_piece':
+        let boundMovePiece = this.movePiece.bind(this);
+        this.state = 'wait';
+        movePlayer(this.boardContent, this.currPlayer, this.selectedPieceRow, this.selectedPieceCol, this.moveDir, boundMovePiece);
+        break;
+      case 'check_game_over':
+        var boundCheckGameOver = this.checkGameOver.bind(this);
+        this.state = 'wait';
+        isGameOver(this.boardContent, this.currPlayer, boundCheckGameOver);
         break;
       case 'end':
-        //?? victory screen ? TODO
+        this.end();
+      case 'wait':
         break;
-      case 'draw':
-       //?? draw screen ? TODO
-       break;
     }
   }
 

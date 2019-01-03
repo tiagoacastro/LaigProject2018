@@ -29,7 +29,7 @@ class Piece {
 
 		movePiece() {
 			if (this.currAnimation == null) {
-				this.currAnimation = new LinearAnimation(this.scene, 10, [this.oldPos, this.currPos]);
+				this.currAnimation = new LinearAnimation(this.scene, 1, [this.oldPos, this.currPos]);
 				console.log('created new animation');
 			} else {
 				if (!this.currAnimation.isDone) {
@@ -73,7 +73,7 @@ class Piece {
 		}
 
     display() {
-
+/*
 			if (this.isMoving) {
 				this.scene.pushMatrix();
 					this.movePiece();
@@ -82,14 +82,14 @@ class Piece {
 					this.body.display();
 				this.scene.popMatrix();
 			} else {
-				console.log('hmm');
+				*/
 				this.scene.pushMatrix();
 					this.scene.translate(this.currPos[0], this.currPos[1], this.currPos[2]);
 					this.scene.rotate(-Math.PI/2, 1, 0, 0);
 					this.scene.scale(0.05, 0.05, 0.05);
 					this.body.display();
 				this.scene.popMatrix();
-			}
+			//}
 
     }
 

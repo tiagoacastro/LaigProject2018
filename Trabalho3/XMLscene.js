@@ -159,7 +159,7 @@ class XMLscene extends CGFscene {
         
         //project 3
         if (this.game != null) {
-            this.game.updateGameState();
+            this.game.stateMachine();
         }
         this.updateGameAnimations(this.deltaTime);
     }
@@ -208,7 +208,7 @@ class XMLscene extends CGFscene {
         if (this.game != null) {
             for (let i = 0; i < this.game.board.pieces.length; i++) {
                 if (this.game.board.pieces[i].currAnimation != null) {
-                    console.log('updating piece animations');
+                    console.log(this.game.board.pieces[i].currAnimation);
                     this.game.board.pieces[i].currAnimation.update(deltaTime);
                 }
             }
@@ -235,10 +235,14 @@ class XMLscene extends CGFscene {
 							var customId = this.pickResults[i][1];
 							col = Math.floor((customId-1)/5) + 1;
 							row = ((customId-1)%5) + 1;
-							if (this.game.action === 'choose_piece') {
-								this.game.currPieceCol = col;
-								this.game.currPieceRow = row;
-							}
+							if (this.game.state === 'choose_piece') {
+								this.game.selectedPieceCol = col;
+								this.game.selectedPieceRow = row;
+							} else if (this.game.state === 'choose_direction') {
+                                console.log(col, row);
+                                //this.game.currDirCol = col;
+                                //this.game.currDirRow = row;
+                            }
 							console.log("Picked object: " + obj + ", with pick id " + customId);
 							console.log("Row: " + row + "; Col: " + col);
 						}
