@@ -135,13 +135,12 @@ class Game {
 
   undo(){
     if(this.turns.length > 0  && !this.areAnimationsRunning()){
-      this.switchPlayers();
+      this.moveCamera();
       let turn = this.turns.pop();
       this.boardContent = turn[0];
       let piece = this.board.pieces[turn[1]];
       piece.setPos(turn[2][1], turn[2][0]);
       piece.isMoving = true;
-      this.moveCamera();
     }
   }
 
