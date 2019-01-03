@@ -1,4 +1,4 @@
-//assuming dirPos - currPiecePos
+//assuming moveDirPos - currPiecePos
 
 var dirMap = {}; // key: row, col
 dirMap[[-1,0]] = 1; // N
@@ -26,8 +26,6 @@ class Game {
     this.moveDir = -1;
     this.turns = [];
 
-    console.log(dirMap);
-
     this.initGame();
   }
 
@@ -53,6 +51,8 @@ class Game {
   switchPlayers() {
     this.selectedPieceCol = -1;
     this.selectedPieceRow = -1;
+    this.moveDirRow = -1;
+    this.moveDirCol = -1;
     this.moveDir = -1;
     this.currPiece = null;
     if (this.currPlayer == 'b') {
@@ -78,7 +78,7 @@ class Game {
     this.state = 'choose_direction';
   }
 
-  isValidDir(row, col) {
+  isValidDir() {
     var currDir = dirMap[[this.moveDirRow - this.selectedPieceRow, this.moveDirCol - this.selectedPieceCol]];
     if (this.currValidDirs.includes(currDir)) {
       return currDir;
@@ -88,7 +88,7 @@ class Game {
   }
 
   chooseDir() {
-    var validDir = this.isValidDir(this.moveDirRow, this.moveDirCol);
+    var validDir = this.isValidDir();
     console.log(validDir);
     if (validDir != null) {
       this.moveDir = validDir; 
@@ -129,9 +129,11 @@ class Game {
       this.selectedPieceRow = -1;
       this.prologBoard = null;
       this.currPiece = null;
+      this.moveDirRow = -1;
+      this.moveDirCol = -1;
       this.moveDir = -1;
-      this.initGame();
       this.turns = [];
+      this.initGame();
     }
   }
 
