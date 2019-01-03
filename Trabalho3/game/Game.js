@@ -15,8 +15,8 @@ class Game {
   constructor(scene) {
     this.scene = scene;
     this.state = 'init';
-    //this.currDirRow = -1;
-    //this.currDirCol = -1;
+    this.moveDirRow = -1;
+    this.moveDirCol = -1;
     //this.currPieceDir = -1;
     this.currPlayer = null;
     this.selectedPieceCol = -1;
@@ -74,12 +74,26 @@ class Game {
 
   getValidDirs(data) {
     this.currValidDirs = data.target.response;
+    console.log(this.currValidDirs);
     this.state = 'choose_direction';
   }
 
+  isValidDir(row, col) {
+    var currDir = dirMap[[this.moveDirRow - this.selectedPieceRow, this.moveDirCol - this.selectedPieceCol]];
+    if (this.currValidDirs.includes(currDir)) {
+      return currDir;
+    } else {
+      return null;
+    }
+  }
+
   chooseDir() {
-    this.moveDir = 4; //hardcoded for now
-    this.state = 'move_piece';
+    var validDir = this.isValidDir(this.moveDirRow, this.moveDirCol);
+    console.log(validDir);
+    if (validDir != null) {
+      this.moveDir = validDir; 
+      this.state = 'move_piece';
+    }
   }
 
   movePiece(data) {

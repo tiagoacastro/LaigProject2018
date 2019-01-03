@@ -237,9 +237,8 @@ class XMLscene extends CGFscene {
 								this.game.selectedPieceCol = col;
 								this.game.selectedPieceRow = row;
 							} else if (this.game.state === 'choose_direction') {
-                                console.log(col, row);
-                                //this.game.currDirCol = col;
-                                //this.game.currDirRow = row;
+                                this.game.moveDirCol = col;
+                                this.game.moveDirRow = row;
                             }
 							console.log("Picked object: " + obj + ", with pick id " + customId);
 							console.log("Row: " + row + "; Col: " + col);
@@ -256,8 +255,8 @@ class XMLscene extends CGFscene {
      */
     display() {
 
-				this.logPicking();
-				this.clearPickRegistration();
+        this.logPicking();
+        this.clearPickRegistration();
   
         // Clear image and depth buffer everytime we update the scene
         this.gl.viewport(0, 0, this.gl.canvas.width, this.gl.canvas.height);
@@ -330,7 +329,6 @@ class XMLscene extends CGFscene {
 						this.registerForPick(i+1, this.pickableObjs[i]);
 						this.pickableObjs[i].display();
 					this.popMatrix();
-					
 			
 				}
 
