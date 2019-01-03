@@ -35,6 +35,8 @@ class Game {
     this.blackBotDifficulty = 2;
     this.whiteBotDifficulty = 2;
 
+    this.undoAgain = false;
+
     this.gamePOV = new CGFcamera(0.4, 0.1, 10, vec3.fromValues(3, 5, 0), vec3.fromValues(0, 0, 0));
     this.dirArrow = new Arrow(this.scene);
 
@@ -136,17 +138,20 @@ class Game {
     this.state = 'check_game_over';
   }
 
-  checkGameOver(data) {
+  checkGameOver(data) { 
     let occurences = this.turns.filter(turn => turn[0] === this.boardContent);
 
     if(data.target.response == 1 || occurences.length === 3){                                                              
       this.state = 'end';
     } else {
-      this.state = 'move_camera';
+      if(this.style === 0)
+        this.state = 'move_camera';
+      else{
+        this.switchPlayers();
+        this.state = 'check_style';
+      }
     }
   }
-
-
 
   moveCamera() {
     if (!this.areAnimationsRunning()) {
@@ -172,12 +177,17 @@ class Game {
 
   undo(){
     if(this.turns.length > 0  && !this.areAnimationsRunning()){
-      this.moveCamera();
+      if(this.style === 0)
+        this.state = 'move_camera';
+      else
+        this.state = 'check_style';
       let turn = this.turns.pop();
       this.boardContent = turn[0];
       let piece = this.board.pieces[turn[1]];
       piece.setPos(turn[2][1], turn[2][0]);
       piece.isMoving = true;
+      if(this.style !== 0)
+        this.undoAgain = !this.undoAgain;
     }
   }
 
@@ -217,6 +227,7 @@ class Game {
       this.moveDirCol = -1;
       this.moveDir = -1;
       this.turns = [];
+      this.undoAgain = false;
       this.initGame();
     }
   }
@@ -232,20 +243,30 @@ class Game {
             this.actualChosenSide = this.chosenSide;
             this.actualBotDifficulty = this.botDifficulty;
             break;
+          case 2:
+            this.actualWhiteBotDifficulty = this.whiteBotDifficulty;
+            this.actualBlackBotDifficulty = this.blackBotDifficulty;
+            break;
         }
         break;
       case 'check_style':
-        switch(this.style){
-          case 0:
-            this.state = 'choose_piece';
-            break;
-          case 1:
-            if(this.currPlayer === this.actualChosenSide)
+        if(this.undoAgain){
+          this.undo();
+        } else 
+          switch(this.style){
+            case 0:
               this.state = 'choose_piece';
-            else
-              this.state = 'bot_move';
-            break;
-        }
+              break;
+            case 1:
+              if(this.currPlayer === this.actualChosenSide)
+                this.state = 'choose_piece';
+              else
+                this.state = 'bot_move';
+              break;
+            case 2:
+                this.state = 'bot_move';
+              break;
+          }
         break;
       case 'choose_piece':
         this.choosePiece();
@@ -264,9 +285,16 @@ class Game {
         movePlayer(this.boardContent, this.currPlayer, this.selectedPieceRow, this.selectedPieceCol, this.moveDir, boundMovePiece);
         break;
       case 'bot_move':
-        let boundBotMove = this.botMove.bind(this);
-        this.state = 'wait';
-        moveBot(this.boardContent, this.currPlayer, this.actualBotDifficulty, boundBotMove);
+          let boundBotMove = this.botMove.bind(this);
+          this.state = 'wait';
+          if(this.style === 2)
+            moveBot(this.boardContent, this.currPlayer, this.actualBotDifficulty, boundBotMove);
+          else{
+            if(this.currPlayer = 'b')
+              moveBot(this.boardContent, this.currPlayer, this.actualBlackBotDifficulty, boundBotMove);
+            else
+              moveBot(this.boardContent, this.currPlayer, this.actualWhiteBotDifficulty, boundBotMove);
+          }
         break;
       case 'check_game_over':
         var boundCheckGameOver = this.checkGameOver.bind(this);
