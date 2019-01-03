@@ -17,14 +17,15 @@ class Game {
     this.state = 'init';
     this.moveDirRow = -1;
     this.moveDirCol = -1;
-    //this.currPieceDir = -1;
     this.currPlayer = null;
     this.selectedPieceCol = -1;
     this.selectedPieceRow = -1;
-    this.prologBoard = null;
+    this.boardContent = null;
     this.currPiece = null;
     this.moveDir = -1;
     this.turns = [];
+
+    this.gamePOV = new CGFcamera(0.4, 0.1, 10, vec3.fromValues(3, 5, 0), vec3.fromValues(0, 0, 0));
 
     this.initGame();
   }
@@ -33,6 +34,8 @@ class Game {
     this.board = new Board(this.scene, 5, 5); // hmm constants
     var boundSetBoard = this.setBoard.bind(this);
     getBoard(boundSetBoard);
+
+    this.scene.camera = this.gamePOV;
   }
 
   setBoard(data){
@@ -115,9 +118,20 @@ class Game {
     if(data.target.response == 1 || occurences.length === 3){                                                              
       this.state = 'end';
     } else {
+      this.state = 'move_camera';
+    }
+  }
+
+  moveCamera() {
+    if (!this.areAnimationsRunning()) {
+      if (this.currPlayer == 'b') {
+        this.gamePOV.orbit(CGFcameraAxis.Y, -Math.PI);
+      } else {
+        this.gamePOV.orbit(CGFcameraAxis.Y, Math.PI);
+      }
       this.switchPlayers();
       this.state = 'choose_piece';
-    }
+    } 
   }
 
   end() {
@@ -127,7 +141,7 @@ class Game {
       this.currPlayer = null;
       this.selectedPieceCol = -1;
       this.selectedPieceRow = -1;
-      this.prologBoard = null;
+      this.boardContent = null;
       this.currPiece = null;
       this.moveDirRow = -1;
       this.moveDirCol = -1;
@@ -165,8 +179,12 @@ class Game {
         this.state = 'wait';
         isGameOver(this.boardContent, this.currPlayer, boundCheckGameOver);
         break;
+      case 'move_camera':
+        this.moveCamera();
+        break;
       case 'end':
         this.end();
+        break;
       case 'wait':
         break;
     }
