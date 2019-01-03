@@ -204,7 +204,8 @@ class Game {
   end() {
     //check the winner
     if (!this.areAnimationsRunning()) {
-      this.moveCamera();
+      //this.moveCamera();
+      this.gamePOV.setPosition(vec3.fromValues(3,5,0)); //kinda of a temp solution for now, should probably do one last animation to reset the player pov
       this.state = 'none';
       this.currPlayer = null;
       this.selectedPieceCol = -1;
