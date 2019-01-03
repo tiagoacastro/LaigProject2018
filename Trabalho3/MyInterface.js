@@ -69,7 +69,21 @@ class MyInterface extends CGFinterface {
      */
     addGameGroup(game) {
         var group = this.gui.addFolder("Game");
-        group.add(game, 'undo');
+ 
+        group.add(game, 'undo').name('Undo');
+
+        var groupPvsP = group.addFolder("Player VS Player");
+        groupPvsP.add(game, 'startPvsP').name('Play');
+
+        var groupPvsBot = group.addFolder("Player VS Bot");
+        groupPvsBot.add(game, 'botDifficulty', { Easy: 1, Hard:2 }).name('Difficulty');
+        groupPvsBot.add(game, 'chosenSide', { Black: 'b', White:'w' }).name('Side');
+        groupPvsBot.add(game, 'startPvsBot').name('Play');
+
+        var groupBotvsBot = group.addFolder("Bot VS Bot");
+        groupBotvsBot.add(game, 'blackBotDifficulty', { Easy: 1, Hard:2 }).name('Black Bot Difficulty');
+        groupBotvsBot.add(game, 'whiteBotDifficulty', { Easy: 1, Hard:2 }).name('White Bot Difficulty');
+        groupBotvsBot.add(game, 'startBotvsBot').name('Play');
     }
     /**
      * initializes key data

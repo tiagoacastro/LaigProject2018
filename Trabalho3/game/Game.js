@@ -14,7 +14,7 @@ class Game {
 
   constructor(scene) {
     this.scene = scene;
-    this.state = 'init';
+    this.state = 'none';
     this.moveDirRow = -1;
     this.moveDirCol = -1;
     this.currPlayer = null;
@@ -27,6 +27,13 @@ class Game {
 
     this.currCameraAng = 0;
     this.cameraAngInc = 0;
+    this.botDifficulty = 2;
+    this.actualBotDifficulty = 2;
+    this.chosenSide = 'b';
+    this.actualChosenSide = 'b';
+
+    this.blackBotDifficulty = 2;
+    this.whiteBotDifficulty = 2;
 
     this.gamePOV = new CGFcamera(0.4, 0.1, 10, vec3.fromValues(3, 5, 0), vec3.fromValues(0, 0, 0));
 
@@ -114,6 +121,20 @@ class Game {
     this.state = 'check_game_over';
   }
 
+  botMove(data){
+    let response = data.target.response.split("-");
+
+    this.currPiece = this.board.isPieceInPos(parseInt(response[1]), parseInt(response[2]));
+    this.turns.push([this.boardContent, this.currPiece.getId(), this.currPiece.getPos()]); //board, pieceId, oldPos, newPos
+    console.log(this.turns);
+
+    this.boardContent = response[0];
+    console.log('new row: ' + response[3] + ' new col: ' + response[4]);
+    this.currPiece.setPos(parseInt(response[4]),parseInt(response[3]));
+    this.currPiece.isMoving = true;
+    this.state = 'check_game_over';
+  }
+
   checkGameOver(data) {
     let occurences = this.turns.filter(turn => turn[0] === this.boardContent);
 
@@ -142,7 +163,7 @@ class Game {
           this.gamePOV.setPosition(vec3.fromValues(3,5,0));
         }
         this.switchPlayers();
-        this.state = 'choose_piece';
+        this.state = 'check_style';
       }
 
     } 
@@ -159,10 +180,32 @@ class Game {
     }
   }
 
+  startPvsP(){
+    if(this.state === 'none'){
+      this.state = 'init';
+      this.style = 0;
+    }
+  }
+
+  startPvsBot(){
+    if(this.state === 'none'){
+      this.state = 'init';
+      this.style = 1;
+    }
+  }
+
+  startBotvsBot(){
+    if(this.state === 'none'){
+      this.state = 'init';
+      this.style = 2;
+    }
+  }
+
   end() {
     //check the winner
     if (!this.areAnimationsRunning()) {
-      this.state = 'init';
+      this.moveCamera();
+      this.state = 'none';
       this.currPlayer = null;
       this.selectedPieceCol = -1;
       this.selectedPieceRow = -1;
@@ -181,7 +224,26 @@ class Game {
     switch (this.state) {
       case 'init':
         this.currPlayer = 'b';
-        this.state = 'choose_piece';
+        this.state = 'check_style';
+        switch(this.style){
+          case 1:
+            this.actualChosenSide = this.chosenSide;
+            this.actualBotDifficulty = this.botDifficulty;
+            break;
+        }
+        break;
+      case 'check_style':
+        switch(this.style){
+          case 0:
+            this.state = 'choose_piece';
+            break;
+          case 1:
+            if(this.currPlayer === this.actualChosenSide)
+              this.state = 'choose_piece';
+            else
+              this.state = 'bot_move';
+            break;
+        }
         break;
       case 'choose_piece':
         this.choosePiece();
@@ -199,6 +261,11 @@ class Game {
         this.state = 'wait';
         movePlayer(this.boardContent, this.currPlayer, this.selectedPieceRow, this.selectedPieceCol, this.moveDir, boundMovePiece);
         break;
+      case 'bot_move':
+        let boundBotMove = this.botMove.bind(this);
+        this.state = 'wait';
+        moveBot(this.boardContent, this.currPlayer, this.actualBotDifficulty, boundBotMove);
+        break;
       case 'check_game_over':
         var boundCheckGameOver = this.checkGameOver.bind(this);
         this.state = 'wait';
@@ -211,6 +278,8 @@ class Game {
         this.end();
         break;
       case 'wait':
+        break;
+      case 'none':
         break;
     }
   }
