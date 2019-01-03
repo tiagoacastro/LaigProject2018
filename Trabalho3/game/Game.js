@@ -117,6 +117,7 @@ class Game {
       this.currPiece = null;
       this.moveDir = -1;
       this.initGame();
+      this.turns = [];
     }
   }
 
