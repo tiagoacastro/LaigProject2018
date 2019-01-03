@@ -36,6 +36,7 @@ class Game {
     this.whiteBotDifficulty = 2;
 
     this.gamePOV = new CGFcamera(0.4, 0.1, 10, vec3.fromValues(3, 5, 0), vec3.fromValues(0, 0, 0));
+    this.dirArrow = new Arrow(this.scene);
 
     this.initGame();
   }

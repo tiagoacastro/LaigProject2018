@@ -42,22 +42,29 @@ class XMLscene extends CGFscene {
 
         this.prevTime = -1;
         this.deltaTime = 0;
-				this.setUpdatePeriod(1000 * (1/FPS));
-				
-				//project 3
+        this.setUpdatePeriod(1000 * (1/FPS));
+        
+        //project 3
 
-				//Picking
-				this.ghostShader=new CGFshader(this.gl, "./shaders/normal.vert", "./shaders/ghost.frag");
+        //Picking
+        this.ghostShader = new CGFshader(this.gl, "./shaders/normal.vert", "./shaders/ghost.frag");
+        this.highlightMaterial = new CGFappearance(this);
+        this.highlightMaterial.setShininess(80);
+        this.highlightMaterial.setEmission(0,0,0,1);
+        this.highlightMaterial.setAmbient(0.4,0.4,0.4,1);
+        this.highlightMaterial.setDiffuse(0.74,1,0.71,1);
+        this.highlightMaterial.setSpecular(0.7,0.7,0.7,1);
 
-				this.pickableObjs = [];
-				for(let i = 0; i < GAME_DIMENSIONS*GAME_DIMENSIONS; i++) { 
-					this.pickableObjs.push(new MyCylinder(this, 1, 1, 1, 10, 1));
-				}
-				//console.log(this.pickableObjs);
+        this.pickableObjs = [];
+        for(let i = 0; i < GAME_DIMENSIONS*GAME_DIMENSIONS; i++) { 
+            this.pickableObjs.push(new MyCylinder(this, 1, 1, 1, 10, 1));
+        }
+        //console.log(this.pickableObjs);
 
-				this.setPickEnabled(true);
+        this.setPickEnabled(true);
 
-				this.game = null;
+        this.game = null;
+        
     }
     /**
      * Initializes the scene cameras.
@@ -314,36 +321,84 @@ class XMLscene extends CGFscene {
             }
 				this.popMatrix();
 					
-				let currX = -0.4, currY = 0.4;
+                let currX = -0.4, currY = 0.4;
+                let currRow = 1, currCol = 1;
 
 				//values very much hardcoded, change this later maybe? prolly not
 				
 				//console.log(this.pickableObjs);
 				
 				for (let i = 0; i < this.pickableObjs.length; i++) {
+
+                    this.highlightMaterial.apply();
+
 					if (i != 0) {
 						if (i%5 == 0){
 							currX = -0.4;
-							currY -= 0.2
+                            currY -= 0.2
+                            currRow = 1;
+                            currCol++;
 						} else {
-							currX += 0.2;
+                            currX += 0.2;
+                            currRow++;
 						}
-					}
+                    }
+                    
+                    this.setActiveShader(this.ghostShader);
 
-					this.setActiveShader(this.ghostShader);
+                    if (this.game != null && this.game.state == 'choose_direction') {
+                        var isHighlighted = dirMap[[currRow - this.game.selectedPieceRow, currCol - this.game.selectedPieceCol]];
+                        if (this.game.currValidDirs.includes(isHighlighted)) {
+                            //set arrow direction 
+                            var rot = 0;
+                            switch (isHighlighted) {
+                                case 1: // N
+                                rot = -Math.PI/2;
+                                break;
+                                case 2: // W
+                                break;
+                                case 3: // E
+                                rot = Math.PI;
+                                break;
+                                case 4: // S
+                                rot = Math.PI/2;
+                                break
+                                case 5: // NE
+                                rot = -(Math.PI/4)*3; 
+                                break;
+                                case 6: // NW
+                                rot = -Math.PI/4;
+                                break;
+                                case 7: // SE
+                                rot = (Math.PI/4)*3; 
+                                break;
+                                case 8: // SW
+                                rot = Math.PI/4; 
+                            }
+
+
+                            this.setActiveShader(this.defaultShader);
+                            this.pushMatrix();
+                                this.translate(currX, 0.01, currY);
+                                this.rotate(rot, 0, 1, 0);
+                                this.scale(0.1, 0.1, 0.1);
+                                this.game.dirArrow.display();
+                            this.popMatrix();
+                            this.setActiveShader(this.ghostShader);
+                        }
+                    }
 					
 					this.pushMatrix();
-						//this.rotate(Math.PI/2, 0, 1, 0);
-							//this.translate(0, 0, -0.8);
-							this.translate(currX, 0, currY);
-							this.rotate(-Math.PI/2, 1, 0, 0);
+                        this.translate(currX, 0, currY);
+                        this.rotate(-Math.PI/2, 1, 0, 0);
 						this.scale(0.1, 0.1, 0.1);
 						this.registerForPick(i+1, this.pickableObjs[i]);
 						this.pickableObjs[i].display();
 					this.popMatrix();
 			
-				}
-
+                    this.gl.disable(this.gl.GL_BLEND);
+                }
+                
 				this.setActiveShader(this.defaultShader);
 				
 		}
