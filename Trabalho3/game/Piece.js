@@ -15,6 +15,13 @@ class Piece {
 				this.isMoving = false;
 				this.currAnimation = null;
 
+				this.material = new CGFappearance(this.scene);
+        this.material.setShininess(80);
+        this.material.setEmission(0,0,0,1);
+        this.material.setAmbient(0.2,0.2,0.2,1);
+        this.material.setDiffuse(0,0,0,1);
+        this.material.setSpecular(0.6,0.6,0.6,1);
+
 				this.initPiece();
 		}
 
@@ -57,14 +64,17 @@ class Piece {
 				case 0:
 					this.setPos(2, 1);
 					this.color = 'w';
+					this.material.setDiffuse(1,1,1,1);
 					break;
 				case 1:
 					this.setPos(3, 4);
 					this.color = 'w';
+					this.material.setDiffuse(1,1,1,1);
 					break;
 				case 2:
 					this.setPos(4, 1);
 					this.color = 'w';
+					this.material.setDiffuse(1,1,1,1);
 					break;
 				case 3:
 					this.setPos(2, 5);
@@ -82,6 +92,8 @@ class Piece {
 		}
 
     display() {
+
+			this.material.apply();
 
 			if (this.isMoving) {
 				this.scene.pushMatrix();

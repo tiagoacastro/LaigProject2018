@@ -25,6 +25,9 @@ class Game {
     this.moveDir = -1;
     this.turns = [];
 
+    this.currCameraAng = 0;
+    this.cameraAngInc = 0;
+
     this.gamePOV = new CGFcamera(0.4, 0.1, 10, vec3.fromValues(3, 5, 0), vec3.fromValues(0, 0, 0));
 
     this.initGame();
@@ -102,10 +105,10 @@ class Game {
     let response = data.target.response.split("-");
 
     this.turns.push([this.boardContent, this.currPiece.getId(), this.currPiece.getPos()]); //board, piece id, oldPos, newPos
-    console.log(this.turns);
+    //console.log(this.turns);
 
     this.boardContent = response[0];
-    console.log('new row: ' + response[1] + ' new col: ' + response[2]);
+    //console.log('new row: ' + response[1] + ' new col: ' + response[2]);
     this.currPiece.setPos(parseInt(response[2]),parseInt(response[1]));
     this.currPiece.isMoving = true;
     this.state = 'check_game_over';
@@ -121,15 +124,27 @@ class Game {
     }
   }
 
+
+
   moveCamera() {
     if (!this.areAnimationsRunning()) {
       if (this.currPlayer == 'b') {
-        this.gamePOV.orbit(CGFcameraAxis.Y, -Math.PI);
+        this.gamePOV.orbit(CGFcameraAxis.Y, -this.cameraAngInc);
       } else {
-        this.gamePOV.orbit(CGFcameraAxis.Y, Math.PI);
+        this.gamePOV.orbit(CGFcameraAxis.Y, this.cameraAngInc);
       }
-      this.switchPlayers();
-      this.state = 'choose_piece';
+
+      if (Math.abs(this.currCameraAng) >= Math.PI) { 
+        this.currCameraAng = 0;
+        if (this.currPlayer == 'b') {
+          this.gamePOV.setPosition(vec3.fromValues(-3,5,0));
+        } else {
+          this.gamePOV.setPosition(vec3.fromValues(3,5,0));
+        }
+        this.switchPlayers();
+        this.state = 'choose_piece';
+      }
+
     } 
   }
 

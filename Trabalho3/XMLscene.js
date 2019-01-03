@@ -162,6 +162,7 @@ class XMLscene extends CGFscene {
         if (this.game != null) {
             this.game.stateMachine();
             this.updateGameAnimations(this.deltaTime);
+            this.updateGameCamera(this.deltaTime);
         }
     }
 
@@ -203,6 +204,14 @@ class XMLscene extends CGFscene {
         }
     }
 
+    updateWater(deltaTime) {
+        for (var key in this.graph.primitives) {
+            if (this.graph.primitives[key]["type"] == "water") {
+                this.graph.primitives[key]["primitive"].update(deltaTime);
+            }
+        }
+    }
+
     //Project 3
 
     updateGameAnimations(deltaTime) {
@@ -214,13 +223,15 @@ class XMLscene extends CGFscene {
         }
     }
 
-    updateWater(deltaTime) {
-        for (var key in this.graph.primitives) {
-            if (this.graph.primitives[key]["type"] == "water") {
-                this.graph.primitives[key]["primitive"].update(deltaTime);
-            }
+    updateGameCamera(deltaTime) {
+        if (this.game.state == 'move_camera' && !this.game.areAnimationsRunning()) {
+            this.game.cameraAngInc = Math.PI * (deltaTime/1000);
+            this.game.currCameraAng += this.game.cameraAngInc;
+            console.log(this.game.currCameraAng);
         }
     }
+    
+
 
     logPicking() {
 
