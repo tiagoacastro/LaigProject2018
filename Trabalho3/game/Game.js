@@ -101,7 +101,7 @@ class Game {
   movePiece(data) {
     let response = data.target.response.split("-");
 
-    this.turns.push([response[0], this.currPiece.getId(), this.currPiece.getPos()]); //board, piece id, oldPos, newPos
+    this.turns.push([this.boardContent, this.currPiece.getId(), this.currPiece.getPos()]); //board, piece id, oldPos, newPos
     console.log(this.turns);
 
     this.boardContent = response[0];
