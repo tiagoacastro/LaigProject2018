@@ -242,12 +242,16 @@ class Game {
             this.actualChosenSide = this.chosenSide;
             this.actualBotDifficulty = this.botDifficulty;
             break;
+          case 2:
+            this.actualWhiteBotDifficulty = this.whiteBotDifficulty;
+            this.actualBlackBotDifficulty = this.blackBotDifficulty;
+            break;
         }
         break;
       case 'check_style':
-      if(this.undoAgain){
-        this.undo();
-      } else 
+        if(this.undoAgain){
+          this.undo();
+        } else 
           switch(this.style){
             case 0:
               this.state = 'choose_piece';
@@ -256,6 +260,9 @@ class Game {
               if(this.currPlayer === this.actualChosenSide)
                 this.state = 'choose_piece';
               else
+                this.state = 'bot_move';
+              break;
+            case 2:
                 this.state = 'bot_move';
               break;
           }
@@ -279,7 +286,14 @@ class Game {
       case 'bot_move':
           let boundBotMove = this.botMove.bind(this);
           this.state = 'wait';
-          moveBot(this.boardContent, this.currPlayer, this.actualBotDifficulty, boundBotMove);
+          if(this.style === 2)
+            moveBot(this.boardContent, this.currPlayer, this.actualBotDifficulty, boundBotMove);
+          else{
+            if(this.currPlayer = 'b')
+              moveBot(this.boardContent, this.currPlayer, this.actualBlackBotDifficulty, boundBotMove);
+            else
+              moveBot(this.boardContent, this.currPlayer, this.actualWhiteBotDifficulty, boundBotMove);
+          }
         break;
       case 'check_game_over':
         var boundCheckGameOver = this.checkGameOver.bind(this);
