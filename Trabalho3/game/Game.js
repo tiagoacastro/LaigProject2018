@@ -14,7 +14,7 @@ class Game {
 
   constructor(scene) {
     this.scene = scene;
-    this.state = 'init';
+    this.state = 'none';
     this.moveDirRow = -1;
     this.moveDirCol = -1;
     this.currPlayer = null;
@@ -24,6 +24,12 @@ class Game {
     this.currPiece = null;
     this.moveDir = -1;
     this.turns = [];
+
+    this.botDifficulty = 1;
+    this.chosenSide = 'b';
+
+    this.blackBotDifficulty = 1;
+    this.whiteBotDifficulty = 1;
 
     this.gamePOV = new CGFcamera(0.4, 0.1, 10, vec3.fromValues(3, 5, 0), vec3.fromValues(0, 0, 0));
 
@@ -144,10 +150,25 @@ class Game {
     }
   }
 
+  startPvsP(){
+    if(this.state === 'none')
+      this.state = 'init';
+  }
+
+  startPvsBot(){
+    if(this.state === 'none')
+      this.state = 'init';
+  }
+
+  startBotvsBot(){
+    if(this.state === 'none')
+      this.state = 'init';
+  }
+
   end() {
     //check the winner
     if (!this.areAnimationsRunning()) {
-      this.state = 'init';
+      this.state = 'wait';
       this.currPlayer = null;
       this.selectedPieceCol = -1;
       this.selectedPieceRow = -1;
@@ -196,6 +217,8 @@ class Game {
         this.end();
         break;
       case 'wait':
+        break;
+      case 'none':
         break;
     }
   }
