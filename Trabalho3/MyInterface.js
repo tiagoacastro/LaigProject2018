@@ -69,7 +69,8 @@ class MyInterface extends CGFinterface {
      */
     addGameGroup(game) {
         var group = this.gui.addFolder("Game");
- 
+        
+        group.add(game, 'replay').name('Replay');
         group.add(game, 'undo').name('Undo');
 
         var groupPvsP = group.addFolder("Player VS Player");

@@ -36,6 +36,8 @@ class Game {
     this.whiteBotDifficulty = 2;
 
     this.undoAgain = false;
+    this.replayRevertCounter = 0;
+    this.replayReenactCounter = 0;
 
     this.gamePOV = new CGFcamera(0.4, 0.1, 10, vec3.fromValues(3, 5, 0), vec3.fromValues(0, 0, 0));
     this.dirArrow = new Arrow(this.scene);
@@ -114,7 +116,7 @@ class Game {
   movePiece(data) {
     let response = data.target.response.split("-");
 
-    this.turns.push([this.boardContent, this.currPiece.getId(), this.currPiece.getPos()]); //board, piece id, oldPos, newPos
+    this.turns.push([this.boardContent, this.currPiece.getId(), this.currPiece.getPos(), [parseInt(response[1]), parseInt(response[2])]]); //board, piece id, oldPos, newPos
     //console.log(this.turns);
 
     this.boardContent = response[0];
@@ -128,7 +130,7 @@ class Game {
     let response = data.target.response.split("-");
 
     this.currPiece = this.board.isPieceInPos(parseInt(response[1]), parseInt(response[2]));
-    this.turns.push([this.boardContent, this.currPiece.getId(), this.currPiece.getPos()]); //board, pieceId, oldPos, newPos
+    this.turns.push([this.boardContent, this.currPiece.getId(), this.currPiece.getPos(), [parseInt(response[3]), parseInt(response[4])]]); //board, pieceId, oldPos, newPos
     console.log(this.turns);
 
     this.boardContent = response[0];
@@ -176,20 +178,61 @@ class Game {
     } 
   }
 
+  replay(){
+    if(this.turns.length > 0  && !this.areAnimationsRunning()){
+      this.state = 'replay';
+      this.replayRevertCounter = 0;
+      this.replayReenactCounter = 0;
+    }
+  }
+
+  replayState(){
+    for(; this.replayRevertCounter < this.board.pieces.length;){
+      if(!this.areAnimationsRunning()){
+        let piece = this.board.pieces[this.replayRevertCounter];
+        piece.revert();
+        piece.isMoving = true;
+        this.replayRevertCounter++;
+        return;
+      }else
+        return;
+    }
+    for(; this.replayReenactCounter < this.turns.length;){
+      if(!this.areAnimationsRunning()){
+        let turn = this.turns[this.replayReenactCounter];
+        console.log(turn)
+        let piece = this.board.pieces[turn[1]];
+        piece.setPos(turn[3][1], turn[3][0]);
+        piece.isMoving = true;
+        this.replayReenactCounter++;
+        return;
+      }else
+        return;
+    }
+    if(this.style === 0)
+      this.state = 'move_camera';
+    else
+      this.state = 'check_style';
+  }
+
   undo(){
     if(this.turns.length > 0  && !this.areAnimationsRunning()){
-      if(this.style === 0)
-        this.state = 'move_camera';
-      else
-        this.state = 'check_style';
-      let turn = this.turns.pop();
-      this.boardContent = turn[0];
-      let piece = this.board.pieces[turn[1]];
-      piece.setPos(turn[2][1], turn[2][0]);
-      piece.isMoving = true;
-      if(this.style !== 0)
-        this.undoAgain = !this.undoAgain;
+      this.state = 'undo';
     }
+  }
+
+  undoState(){
+    if(this.style === 0)
+      this.state = 'move_camera';
+    else
+      this.state = 'check_style';
+    let turn = this.turns.pop();
+    this.boardContent = turn[0];
+    let piece = this.board.pieces[turn[1]];
+    piece.setPos(turn[2][1], turn[2][0]);
+    piece.isMoving = true;
+    if(this.style !== 0)
+      this.undoAgain = !this.undoAgain;
   }
 
   checkStyle() {
@@ -292,16 +335,16 @@ class Game {
         movePlayer(this.boardContent, this.currPlayer, this.selectedPieceRow, this.selectedPieceCol, this.moveDir, boundMovePiece);
         break;
       case 'bot_move':
-          let boundBotMove = this.botMove.bind(this);
-          this.state = 'wait';
-          if(this.style === 1)
-            moveBot(this.boardContent, this.currPlayer, this.actualBotDifficulty, boundBotMove);
-          else{
-            if(this.currPlayer === 'b')
-              moveBot(this.boardContent, this.currPlayer, this.actualBlackBotDifficulty, boundBotMove);
-            else
-              moveBot(this.boardContent, this.currPlayer, this.actualWhiteBotDifficulty, boundBotMove);
-          }
+        let boundBotMove = this.botMove.bind(this);
+        this.state = 'wait';
+        if(this.style === 1)
+          moveBot(this.boardContent, this.currPlayer, this.actualBotDifficulty, boundBotMove);
+        else{
+          if(this.currPlayer === 'b')
+            moveBot(this.boardContent, this.currPlayer, this.actualBlackBotDifficulty, boundBotMove);
+          else
+            moveBot(this.boardContent, this.currPlayer, this.actualWhiteBotDifficulty, boundBotMove);
+        }
         break;
       case 'check_game_over':
         var boundCheckGameOver = this.checkGameOver.bind(this);
@@ -313,6 +356,12 @@ class Game {
         break;
       case 'end':
         this.end();
+        break;
+      case 'undo':
+        this.undoState();
+        break;
+      case 'replay':
+        this.replayState();
         break;
       case 'wait': //for async functions
         break;
