@@ -98,8 +98,6 @@ class MyInterface extends CGFinterface {
                 }
             });
 
-            group.add(game, 'undo').name('Undo');
-    
             var groupPvsP = group.addFolder("Player VS Player");
             groupPvsP.add(game, 'startPvsP').name('Play');
     
