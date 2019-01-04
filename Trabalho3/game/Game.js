@@ -293,7 +293,7 @@ class Game {
     if(this.replayRevertCounter < this.board.pieces.length){
       if(!this.areAnimationsRunning()){
         let piece = this.board.pieces[this.replayRevertCounter];
-        piece.revert();
+        piece.initPiece();
         piece.isMoving = true;
         this.replayRevertCounter++;
       }
