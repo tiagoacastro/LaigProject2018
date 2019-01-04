@@ -2,7 +2,7 @@ class Piece {
 
     constructor(scene, color, id) {
 				this.scene = scene;
-				this.body = new MyCylinder(scene, 1, 1, 1, 10, 1);
+				this.body = new MyCylinder(scene, 1, 1, 1, 30, 1);
 				this.color = color || '';
 				this.id = id;
 				this.oldRow = null;
@@ -14,11 +14,17 @@ class Piece {
 				this.currAnimation = null;
 
 				this.material = new CGFappearance(this.scene);
-			this.material.setShininess(80);
-			this.material.setEmission(0,0,0,1);
-			this.material.setAmbient(0.2,0.2,0.2,1);
-			this.material.setDiffuse(0,0,0,1);
-			this.material.setSpecular(0.6,0.6,0.6,1);
+				this.material.setShininess(20);
+				this.material.setEmission(0,0,0,1);
+				this.material.setAmbient(0.2,0.2,0.2,1);
+				this.material.setSpecular(0.6,0.6,0.6,1);
+				if(color === 'b') {
+					this.material.setDiffuse(1,1,1,1);
+					this.material.loadTexture("./scenes/images/black_marble.jpg");
+				} else {
+					this.material.setDiffuse(1,1,1,1);
+					this.material.loadTexture("./scenes/images/marble.jpg");
+				}
 
 				this.initPiece();
 		}
@@ -66,17 +72,14 @@ class Piece {
 				case 0:
 					this.setPos(2, 1);
 					this.color = 'w';
-					this.material.setDiffuse(1,1,1,1);
 					break;
 				case 1:
 					this.setPos(3, 4);
 					this.color = 'w';
-					this.material.setDiffuse(1,1,1,1);
 					break;
 				case 2:
 					this.setPos(4, 1);
 					this.color = 'w';
-					this.material.setDiffuse(1,1,1,1);
 					break;
 				case 3:
 					this.setPos(2, 5);

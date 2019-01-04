@@ -42,6 +42,7 @@
     <texture id="red_wallpaper" file="./scenes/images/red_wallpaper_fixed.jpg"/>
     <texture id="gold" file="./scenes/images/gold_fixed.jpg"/>
     <texture id="board" file="./scenes/images/chess.jpg"/>
+    <texture id="marble" file="./scenes/images/black_marble.jpg"/>
   </textures>
 
   <materials>
@@ -781,7 +782,7 @@
       <materials>
           <material id="inherit"/>
       </materials>
-      <texture id="red_velvet" length_s="1" length_t="1" />
+      <texture id="marble" length_s="1" length_t="1" />
       <children>
           <primitiveref id="clock"/>
       </children>
@@ -794,7 +795,7 @@
       <materials>
           <material id="inherit"/>
       </materials>
-      <texture id="board" length_s="1" length_t="1" />
+      <texture id="none" length_s="1" length_t="1" />
       <children>
           <primitiveref id="game"/>
       </children>

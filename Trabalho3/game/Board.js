@@ -8,6 +8,23 @@ class Board extends CGFobject{
 		this.board = [];
 		this.pieces = [];
 
+		this.black = new CGFappearance(this.scene);
+		this.black.setShininess(20);
+		this.black.setEmission(0,0,0,1);
+		this.black.setAmbient(0.2,0.2,0.2,1);
+		this.black.setSpecular(0.6,0.6,0.6,1);
+		this.black.setDiffuse(1,1,1,1);
+		this.black.loadTexture("./scenes/images/black_marble.jpg");
+
+		this.white = new CGFappearance(this.scene);
+		this.white.setShininess(20);
+		this.white.setEmission(0,0,0,1);
+		this.white.setAmbient(0.2,0.2,0.2,1);
+		this.white.setSpecular(0.6,0.6,0.6,1);
+		this.white.setDiffuse(1,1,1,1);
+		this.white.loadTexture("./scenes/images/marble.jpg");
+	
+
 		this.initPieces();
 		this.initBoard();
 	}
@@ -56,6 +73,10 @@ class Board extends CGFobject{
 		for(let i = 0; i < this.cols; i++) {
 			for(let j = 0; j < this.rows; j++) {
 				this.scene.pushMatrix();
+					if((j+i)%2===0)
+						this.black.apply();
+					else
+						this.white.apply();
 					this.scene.rotate(-Math.PI/2, 1, 0, 0);
 					this.board[i][j].display();
 				this.scene.popMatrix();
