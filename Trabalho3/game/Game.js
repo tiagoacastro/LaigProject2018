@@ -297,7 +297,7 @@ class Game {
           if(this.style === 1)
             moveBot(this.boardContent, this.currPlayer, this.actualBotDifficulty, boundBotMove);
           else{
-            if(this.currPlayer = 'b')
+            if(this.currPlayer === 'b')
               moveBot(this.boardContent, this.currPlayer, this.actualBlackBotDifficulty, boundBotMove);
             else
               moveBot(this.boardContent, this.currPlayer, this.actualWhiteBotDifficulty, boundBotMove);
