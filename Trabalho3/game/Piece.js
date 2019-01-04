@@ -14,11 +14,11 @@ class Piece {
 				this.currAnimation = null;
 
 				this.material = new CGFappearance(this.scene);
-        this.material.setShininess(80);
-        this.material.setEmission(0,0,0,1);
-        this.material.setAmbient(0.2,0.2,0.2,1);
-        this.material.setDiffuse(0,0,0,1);
-        this.material.setSpecular(0.6,0.6,0.6,1);
+			this.material.setShininess(80);
+			this.material.setEmission(0,0,0,1);
+			this.material.setAmbient(0.2,0.2,0.2,1);
+			this.material.setDiffuse(0,0,0,1);
+			this.material.setSpecular(0.6,0.6,0.6,1);
 
 				this.initPiece();
 		}

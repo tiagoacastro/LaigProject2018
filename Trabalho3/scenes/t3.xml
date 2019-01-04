@@ -228,7 +228,7 @@
     </transformation>
 
     <transformation id="set_game">
-      <translate x="0" y="1.251" z="0"/>
+      <translate x="0" y="1.252" z="0"/>
       <scale x="2.5" y="2.5" z="2.5"/>
     </transformation>
     
