@@ -24,6 +24,7 @@ class Game {
     this.currPiece = null;
     this.moveDir = -1;
     this.turns = [];
+    this.reset = true;
 
     this.currCameraAng = 0;
     this.cameraAngInc = 0;
@@ -55,6 +56,27 @@ class Game {
     this.board = new Board(this.scene, 5, 5); // hmm constants
     var boundSetBoard = this.setBoard.bind(this);
     getBoard(boundSetBoard);
+
+    this.scene.camera = this.gamePOV;
+  }
+
+  resetBoard(){
+    for(; this.replayRevertCounter < this.board.pieces.length;){
+      if(!this.areAnimationsRunning()){
+        let piece = this.board.pieces[this.replayRevertCounter];
+        piece.revert();
+        piece.isMoving = true;
+        this.replayRevertCounter++;
+        return;
+      }else
+        return;
+    }
+    this.ended = false;
+    this.turns = [];
+    var boundSetBoard = this.setBoard.bind(this);
+    getBoard(boundSetBoard);
+    this.reset = true;
+    this.replayRevertCounter = 0;
 
     this.scene.camera = this.gamePOV;
   }
@@ -319,7 +341,7 @@ class Game {
       this.replayRevertCounter = 0;
       this.replayReenactCounter = 0;
       this.undoAgain = false;
-      this.initGame();
+      this.reset = false;
     }
   }
 
@@ -327,19 +349,22 @@ class Game {
     //console.log('in state: ' + this.state + ' for player ' + this.currPlayer);
     switch (this.state) {
       case 'init':
-        this.currPlayer = 'b';
-        this.state = 'check_style';
-        this.clock.setTime(this.duration);
-        switch(this.style){
-          case 1:
-            this.actualChosenSide = this.chosenSide;
-            this.actualBotDifficulty = this.botDifficulty;
-            break;
-          case 2:
-            this.actualWhiteBotDifficulty = this.whiteBotDifficulty;
-            this.actualBlackBotDifficulty = this.blackBotDifficulty;
-            break;
-        }
+        if(this.reset){
+          this.currPlayer = 'b';
+          this.state = 'check_style';
+          this.clock.setTime(this.duration);
+          switch(this.style){
+            case 1:
+              this.actualChosenSide = this.chosenSide;
+              this.actualBotDifficulty = this.botDifficulty;
+              break;
+            case 2:
+              this.actualWhiteBotDifficulty = this.whiteBotDifficulty;
+              this.actualBlackBotDifficulty = this.blackBotDifficulty;
+              break;
+          }
+        } else
+          this.resetBoard();
         break;
       case 'check_style':
         this.checkStyle();
