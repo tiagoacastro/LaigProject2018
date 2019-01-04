@@ -168,8 +168,10 @@ class XMLscene extends CGFscene {
         
         //project 3
         if (this.game != null) {
-            if(this.game.clock == null)
+            if(this.game.clock == null){
                 this.game.clock = this.clock;
+                this.game.duration = this.clock.time;
+            }
             this.game.stateMachine();
             this.updateGameAnimations(this.deltaTime);
             this.updateGameCamera(this.deltaTime);

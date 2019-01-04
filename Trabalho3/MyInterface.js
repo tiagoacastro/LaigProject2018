@@ -65,11 +65,13 @@ class MyInterface extends CGFinterface {
     }
     /**
      * Adds a folder containing game information and commands
-     * @param {array} game
+     * @param {object} game
+     * @param {object} game
      */
     addGameGroup(game) {
         var group = this.gui.addFolder("Game");
         
+        group.add(game, 'duration', 5, 60).name('Turn Duration');
         group.add(game, 'replay').name('Replay');
         group.add(game, 'undo').name('Undo');
 

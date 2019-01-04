@@ -203,7 +203,7 @@
     </primitive>
 
     <primitive id="clock">
-      <clock time="10" />
+      <clock/>
     </primitive>
 
   </primitives>

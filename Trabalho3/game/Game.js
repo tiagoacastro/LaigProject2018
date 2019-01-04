@@ -41,6 +41,7 @@ class Game {
 
     this.clock = null;
     this.clockStopped = false;
+    this.duration = 30;
 
     this.gamePOV = new CGFcamera(0.4, 0.1, 10, vec3.fromValues(3, 5, 0), vec3.fromValues(0, 0, 0));
     this.dirArrow = new Arrow(this.scene);
@@ -328,6 +329,7 @@ class Game {
       case 'init':
         this.currPlayer = 'b';
         this.state = 'check_style';
+        this.clock.setTime(this.duration);
         switch(this.style){
           case 1:
             this.actualChosenSide = this.chosenSide;

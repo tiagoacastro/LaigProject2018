@@ -8,13 +8,13 @@ class Clock extends CGFobject
      * @param {XMLscene} scene 
      * @param {int} time
      */
-	constructor(scene, time)
+	constructor(scene)
 	{
 		super(scene);
         
-        this.time = time;
-        this.blackT = time;
-        this.whiteT = time;
+        this.time = 30;
+        this.blackT = 30;
+        this.whiteT = 30;
 
         this.on = false;
 
@@ -106,6 +106,14 @@ class Clock extends CGFobject
 
 		this.display();
     };
+    /**
+     * sets time
+     */
+    setTime(newTime){
+        this.time = newTime;
+        this.blackT = newTime;
+        this.whiteT = newTime;
+    }
     /**
      * starts the clock
      */
