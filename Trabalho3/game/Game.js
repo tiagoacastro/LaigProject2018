@@ -294,7 +294,7 @@ class Game {
       case 'bot_move':
           let boundBotMove = this.botMove.bind(this);
           this.state = 'wait';
-          if(this.style === 2)
+          if(this.style === 1)
             moveBot(this.boardContent, this.currPlayer, this.actualBotDifficulty, boundBotMove);
           else{
             if(this.currPlayer = 'b')
