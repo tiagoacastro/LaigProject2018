@@ -73,17 +73,21 @@ class MyInterface extends CGFinterface {
     }
     /**
      * Adds a folder containing game information and commands
-     * @param {array} game
+     * @param {object} game
+     * @param {object} game
      */
     addGameGroup(game) {
         if (game != null) {
             var group = this.gui.addFolder("Game");
-
-            var controller = group.add(this.scene, "playerPOV").name("Player's POV");
-
+            
+            group.add(game, 'duration', 5, 60).name('Turn Duration');
+            group.add(game, 'replay').name('Replay');
+            group.add(game, 'undo').name('Undo');
+            
             let scene = this.scene;
             let inter = this;
-
+            
+            var controller = group.add(this.scene, "playerPOV").name("Player's POV");
             controller.onChange(function() {
                 scene.game.setCamera();
                 if (scene.game.isPlayerPOVActive) {

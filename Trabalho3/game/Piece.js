@@ -42,7 +42,9 @@ class Piece {
 
 		movePiece() {
 			if (this.currAnimation == null) {
-				this.currAnimation = new LinearAnimation(this.scene, 1, [this.oldPos, this.currPos]);
+				let dist = Math.sqrt((this.currPos[0]-this.oldPos[0])*(this.currPos[0]-this.oldPos[0]) + (this.currPos[2]-this.oldPos[2])*(this.currPos[2]-this.oldPos[2]));
+				let mid = [this.currPos[0], this.currPos[1]+dist*0.75, this.currPos[2]];
+				this.currAnimation = new LinearAnimation(this.scene, Math.sqrt((this.currRow-this.oldRow)*(this.currRow-this.oldRow)+(this.currCol-this.oldCol)*(this.currCol-this.oldCol))*0.75, [this.oldPos, mid, this.currPos]);
 				this.currAnimation.isActive = 1;
 				this.currAnimation.apply();
 				console.log('created new animation');
@@ -87,6 +89,29 @@ class Piece {
 				case 5:
 					this.setPos(4, 5);
 					this.color = 'b';
+					break;
+			}
+		}
+
+		revert() {
+			switch(this.id) { // 0-2 black, 3-5 white 
+				case 0:
+					this.setPos(2, 1);
+					break;
+				case 1:
+					this.setPos(3, 4);
+					break;
+				case 2:
+					this.setPos(4, 1);
+					break;
+				case 3:
+					this.setPos(2, 5);
+					break;
+				case 4:
+					this.setPos(3, 2);
+					break;
+				case 5:
+					this.setPos(4, 5);
 					break;
 			}
 		}

@@ -24,6 +24,7 @@ class Game {
     this.currPiece = null;
     this.moveDir = -1;
     this.turns = [];
+    this.reset = true;
 
     this.currCameraAng = 0;
     this.cameraAngInc = 0;
@@ -36,6 +37,12 @@ class Game {
     this.whiteBotDifficulty = 2;
 
     this.undoAgain = false;
+    this.replayRevertCounter = 0;
+    this.replayReenactCounter = 0;
+
+    this.clock = null;
+    this.clockStopped = false;
+    this.duration = 30;
 
     this.isPlayerPOVActive = false;
     this.playerPOV = new CGFcamera(0.4, 0.1, 500, vec3.fromValues(10, 13, 0), vec3.fromValues(0, 0, 0));
@@ -88,9 +95,36 @@ class Game {
   }
 
   initGame() {
+    this.ended = false;
+    this.turns = [];
     this.board = new Board(this.scene, 5, 5); // hmm constants
     var boundSetBoard = this.setBoard.bind(this);
     getBoard(boundSetBoard);
+  }
+
+  resetBoard(){
+    for(; this.replayRevertCounter < this.board.pieces.length;){
+      if(!this.areAnimationsRunning()){
+        let piece = this.board.pieces[this.replayRevertCounter];
+        piece.revert();
+        piece.isMoving = true;
+        this.replayRevertCounter++;
+        return;
+      }else
+        return;
+    }
+    this.gamePOV.setPosition(vec3.fromValues(3,5,0)); //kinda of a temp solution for now, should probably do one last animation to reset the player pov
+    this.ended = false;
+    this.turns = [];
+    var boundSetBoard = this.setBoard.bind(this);
+    getBoard(boundSetBoard);
+    this.reset = true;
+    this.replayRevertCounter = 0;
+    this.currPlayer = null;
+    this.boardContent = null;
+    this.undoAgain = false;
+
+    this.scene.camera = this.gamePOV;
   }
 
   setBoard(data){
@@ -177,7 +211,7 @@ class Game {
   movePiece(data) {
     let response = data.target.response.split("-");
 
-    this.turns.push([this.boardContent, this.currPiece.getId(), this.currPiece.getPos()]); //board, piece id, oldPos, newPos
+    this.turns.push([this.boardContent, this.currPiece.getId(), this.currPiece.getPos(), [parseInt(response[1]), parseInt(response[2])]]); //board, piece id, oldPos, newPos
     //console.log(this.turns);
 
     this.boardContent = response[0];
@@ -191,7 +225,7 @@ class Game {
     let response = data.target.response.split("-");
 
     this.currPiece = this.board.isPieceInPos(parseInt(response[1]), parseInt(response[2]));
-    this.turns.push([this.boardContent, this.currPiece.getId(), this.currPiece.getPos()]); //board, pieceId, oldPos, newPos
+    this.turns.push([this.boardContent, this.currPiece.getId(), this.currPiece.getPos(), [parseInt(response[3]), parseInt(response[4])]]); //board, pieceId, oldPos, newPos
     console.log(this.turns);
 
     this.boardContent = response[0];
@@ -202,12 +236,13 @@ class Game {
   }
 
   checkGameOver(data) { 
-    
     let occurences = this.turns.filter(turn => turn[0] === this.boardContent);
 
     if(data.target.response == 1 || occurences.length === 3){                                                              
       this.state = 'end';
+      this.clock.stop();
     } else {
+      this.clock.change();
       if(this.style === 0)
         this.state = 'move_camera';
       else{
@@ -242,27 +277,80 @@ class Game {
     } 
   }
 
-  undo(){
-    if(this.turns.length > 0  && !this.areAnimationsRunning()){
-      if(this.style === 0)
-        this.state = 'move_camera';
-      else
-        this.state = 'check_style';
-      let turn = this.turns.pop();
-      this.boardContent = turn[0];
-      let piece = this.board.pieces[turn[1]];
-      piece.setPos(turn[2][1], turn[2][0]);
-      piece.isMoving = true;
-      if(this.style !== 0)
-        this.undoAgain = !this.undoAgain;
+  replay(){
+    if(this.turns.length > 0  && !this.areAnimationsRunning() && (this.style !== 2 || this.ended) && 
+    (this.style !== 1 || this.currPlayer === this.actualChosenSide || this.ended)){
+      this.state = 'replay';
+      this.replayRevertCounter = 0;
+      this.replayReenactCounter = 0;
     }
+  }
+
+  replayState(){
+    if(!this.clockStopped){
+      this.clock.stop();
+      this.clockStopped = true;
+    }
+    for(; this.replayRevertCounter < this.board.pieces.length;){
+      if(!this.areAnimationsRunning()){
+        let piece = this.board.pieces[this.replayRevertCounter];
+        piece.revert();
+        piece.isMoving = true;
+        this.replayRevertCounter++;
+        return;
+      }else
+        return;
+    }
+    for(; this.replayReenactCounter < this.turns.length;){
+      if(!this.areAnimationsRunning()){
+        let turn = this.turns[this.replayReenactCounter];
+        console.log(turn)
+        let piece = this.board.pieces[turn[1]];
+        piece.setPos(turn[3][1], turn[3][0]);
+        piece.isMoving = true;
+        this.replayReenactCounter++;
+        return;
+      }else
+        return;
+    }
+    this.state = 'check_style';
+  }
+
+  undo(){
+    if(this.turns.length > 0  && !this.areAnimationsRunning() && this.style !== 2 && !this.ended &&
+    (this.style !== 1 || this.currPlayer === this.actualChosenSide)){
+      this.state = 'undo';
+    }
+  }
+
+  undoState(){
+    if(!this.clockStopped){
+      this.clock.stop();
+      this.clockStopped = true;
+    }
+    this.clock.change();
+    if(this.style === 0)
+      this.state = 'move_camera';
+    else
+      this.state = 'check_style';
+    let turn = this.turns.pop();
+    this.boardContent = turn[0];
+    let piece = this.board.pieces[turn[1]];
+    piece.setPos(turn[2][1], turn[2][0]);
+    piece.isMoving = true;
+    if(this.style !== 0)
+      this.undoAgain = !this.undoAgain;
   }
 
   checkStyle() {
     if(!this.areAnimationsRunning()) {
       if(this.undoAgain) {
         this.undo();
-      } else 
+      } else{
+        if(this.clockStopped){
+          this.clock.continue();
+          this.clockStopped = false;
+        }
         switch(this.style) {
           case 0:
             this.state = 'choose_piece';
@@ -276,6 +364,7 @@ class Game {
           case 2:
               this.state = 'bot_move';
             break;
+        }
       }
     }
   }
@@ -284,6 +373,7 @@ class Game {
     if(this.state === 'none'){
       this.state = 'init';
       this.style = 0;
+      this.clock.start();
     }
   }
 
@@ -291,6 +381,7 @@ class Game {
     if(this.state === 'none'){
       this.state = 'init';
       this.style = 1;
+      this.clock.start();
     }
   }
 
@@ -298,6 +389,7 @@ class Game {
     if(this.state === 'none'){
       this.state = 'set_bot_camera';
       this.style = 2;
+      this.clock.start();
     }
   }
 
@@ -306,35 +398,38 @@ class Game {
     if (!this.areAnimationsRunning()) {
       this.playerPOV.setPosition(vec3.fromValues(10, 13, 0)); //kinda of a temp solution for now, should probably do one last animation to reset the player pov
       this.state = 'none';
-      this.currPlayer = null;
       this.selectedPieceCol = -1;
       this.selectedPieceRow = -1;
-      this.boardContent = null;
       this.currPiece = null;
       this.moveDirRow = -1;
       this.moveDirCol = -1;
       this.moveDir = -1;
-      this.turns = [];
-      this.undoAgain = false;
-      this.initGame();
+      this.ended = true;
+      this.replayRevertCounter = 0;
+      this.replayReenactCounter = 0;
+      this.reset = false;
     }
   }
 
   stateMachine() {
     switch (this.state) {
       case 'init':
-        this.currPlayer = 'b';
-        this.state = 'check_style';
-        switch(this.style){
-          case 1:
-            this.actualChosenSide = this.chosenSide;
-            this.actualBotDifficulty = this.botDifficulty;
-            break;
-          case 2:
-            this.actualWhiteBotDifficulty = this.whiteBotDifficulty;
-            this.actualBlackBotDifficulty = this.blackBotDifficulty;
-            break;
-        }
+        if(this.reset){
+          this.currPlayer = 'b';
+          this.state = 'check_style';
+          this.clock.setTime(this.duration);
+          switch(this.style){
+            case 1:
+              this.actualChosenSide = this.chosenSide;
+              this.actualBotDifficulty = this.botDifficulty;
+              break;
+            case 2:
+              this.actualWhiteBotDifficulty = this.whiteBotDifficulty;
+              this.actualBlackBotDifficulty = this.blackBotDifficulty;
+              break;
+          }
+        } else
+          this.resetBoard();
         break;
       case 'set_bot_camera':
         this.setBotCamera();
@@ -359,16 +454,16 @@ class Game {
         movePlayer(this.boardContent, this.currPlayer, this.selectedPieceRow, this.selectedPieceCol, this.moveDir, boundMovePiece);
         break;
       case 'bot_move':
-          let boundBotMove = this.botMove.bind(this);
-          this.state = 'wait';
-          if(this.style === 1)
-            moveBot(this.boardContent, this.currPlayer, this.actualBotDifficulty, boundBotMove);
-          else{
-            if(this.currPlayer === 'b')
-              moveBot(this.boardContent, this.currPlayer, this.actualBlackBotDifficulty, boundBotMove);
-            else
-              moveBot(this.boardContent, this.currPlayer, this.actualWhiteBotDifficulty, boundBotMove);
-          }
+        let boundBotMove = this.botMove.bind(this);
+        this.state = 'wait';
+        if(this.style === 1)
+          moveBot(this.boardContent, this.currPlayer, this.actualBotDifficulty, boundBotMove);
+        else{
+          if(this.currPlayer === 'b')
+            moveBot(this.boardContent, this.currPlayer, this.actualBlackBotDifficulty, boundBotMove);
+          else
+            moveBot(this.boardContent, this.currPlayer, this.actualWhiteBotDifficulty, boundBotMove);
+        }
         break;
       case 'check_game_over':
         var boundCheckGameOver = this.checkGameOver.bind(this);
@@ -380,6 +475,12 @@ class Game {
         break;
       case 'end':
         this.end();
+        break;
+      case 'undo':
+        this.undoState();
+        break;
+      case 'replay':
+        this.replayState();
         break;
       case 'wait': //for async functions
         break;
