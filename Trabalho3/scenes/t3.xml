@@ -227,7 +227,7 @@
     </transformation>
 
     <transformation id="set_game">
-      <translate x="0" y="1.3 " z="0"/>
+      <translate x="0" y="1.251" z="0"/>
       <scale x="2.5" y="2.5" z="2.5"/>
     </transformation>
     
@@ -458,6 +458,11 @@
     <transformation id="set_cube_face5">
         <translate x="-0.5" y="0" z="0"/>
         <rotate axis="y" angle="-90"/>
+    </transformation>
+
+    <transformation id="set_clock">
+      <translate x="0" y="1.55" z="-1.6"/>
+      <scale x="0.5" y="0.5" z="0.5"/>
     </transformation>
 
   </transformations>
@@ -739,7 +744,7 @@
     </primitive>
 
     <primitive id="clock">
-      <clock time="30" />
+      <clock/>
     </primitive>
 
   </primitives>
@@ -755,6 +760,7 @@
       <texture id="none" length_s="1" length_t="1" />
       <children>
         <componentref id="game"/> 
+        <componentref id="clock"/>
         <componentref id="room"/>
         <componentref id="room_pillars"/>
         <componentref id="room_barriers"/>
@@ -764,6 +770,19 @@
         <componentref id="doors"/>
         <componentref id="doors_div"/>
         <componentref id="door_handles"/>
+      </children>
+    </component>
+
+    <component id="clock">
+      <transformation>
+          <transformationref id="set_clock"/>
+      </transformation>
+      <materials>
+          <material id="inherit"/>
+      </materials>
+      <texture id="red_velvet" length_s="1" length_t="1" />
+      <children>
+          <primitiveref id="clock"/>
       </children>
     </component>
 

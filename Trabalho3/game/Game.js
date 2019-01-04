@@ -103,15 +103,14 @@ class Game {
   }
 
   resetBoard(){
-    for(; this.replayRevertCounter < this.board.pieces.length;){
+    if(this.replayRevertCounter < this.board.pieces.length){
       if(!this.areAnimationsRunning()){
         let piece = this.board.pieces[this.replayRevertCounter];
         piece.revert();
         piece.isMoving = true;
         this.replayRevertCounter++;
-        return;
-      }else
-        return;
+      }
+      return;
     }
     this.playerPOV.setPosition(vec3.fromValues(10,13,0)); //kinda of a temp solution for now, should probably do one last animation to reset the player pov
     this.ended = false;
@@ -291,17 +290,16 @@ class Game {
       this.clock.stop();
       this.clockStopped = true;
     }
-    for(; this.replayRevertCounter < this.board.pieces.length;){
+    if(this.replayRevertCounter < this.board.pieces.length){
       if(!this.areAnimationsRunning()){
         let piece = this.board.pieces[this.replayRevertCounter];
         piece.revert();
         piece.isMoving = true;
         this.replayRevertCounter++;
-        return;
-      }else
-        return;
+      }
+      return;
     }
-    for(; this.replayReenactCounter < this.turns.length;){
+    if(this.replayReenactCounter < this.turns.length){
       if(!this.areAnimationsRunning()){
         let turn = this.turns[this.replayReenactCounter];
         console.log(turn)
@@ -309,11 +307,13 @@ class Game {
         piece.setPos(turn[3][1], turn[3][0]);
         piece.isMoving = true;
         this.replayReenactCounter++;
-        return;
-      }else
-        return;
+      }
+      return;
     }
-    this.state = 'check_style';
+    if(this.ended)
+      this.state = 'end';
+    else
+      this.state = 'check_style';
   }
 
   undo(){
