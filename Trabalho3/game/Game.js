@@ -44,6 +44,8 @@ class Game {
     this.clockStopped = false;
     this.duration = 30;
 
+    this.counter = null;
+
     this.isPlayerPOVActive = false;
     this.playerPOV = new CGFcamera(0.4, 0.1, 500, vec3.fromValues(8, 11, 0), vec3.fromValues(0, 0, 0));
     this.dirArrow = new Arrow(this.scene);

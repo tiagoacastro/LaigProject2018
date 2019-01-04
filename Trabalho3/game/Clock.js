@@ -102,8 +102,6 @@ class Clock extends CGFobject
         this.nine.setDiffuse(0.5,0.5,0.5,1);
         this.nine.setSpecular(0.5,0.5,0.5,1);
 
-        //this.start();                                       // REMOVER DEPOIS, SO PARA TESTAR
-
 		this.display();
     };
     /**
