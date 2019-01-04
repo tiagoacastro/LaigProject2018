@@ -71,12 +71,16 @@ class Game {
       }else
         return;
     }
+    this.gamePOV.setPosition(vec3.fromValues(3,5,0)); //kinda of a temp solution for now, should probably do one last animation to reset the player pov
     this.ended = false;
     this.turns = [];
     var boundSetBoard = this.setBoard.bind(this);
     getBoard(boundSetBoard);
     this.reset = true;
     this.replayRevertCounter = 0;
+    this.currPlayer = null;
+    this.boardContent = null;
+    this.undoAgain = false;
 
     this.scene.camera = this.gamePOV;
   }
@@ -247,7 +251,7 @@ class Game {
   }
 
   undo(){
-    if(this.turns.length > 0  && !this.areAnimationsRunning() && this.style !== 2 && 
+    if(this.turns.length > 0  && !this.areAnimationsRunning() && this.style !== 2 && !this.ended &&
     (this.style !== 1 || this.currPlayer === this.actualChosenSide)){
       this.state = 'undo';
     }
@@ -327,12 +331,9 @@ class Game {
     //check the winner
     if (!this.areAnimationsRunning()) {
       //this.moveCamera();
-      this.gamePOV.setPosition(vec3.fromValues(3,5,0)); //kinda of a temp solution for now, should probably do one last animation to reset the player pov
       this.state = 'none';
-      this.currPlayer = null;
       this.selectedPieceCol = -1;
       this.selectedPieceRow = -1;
-      this.boardContent = null;
       this.currPiece = null;
       this.moveDirRow = -1;
       this.moveDirCol = -1;
@@ -340,7 +341,6 @@ class Game {
       this.ended = true;
       this.replayRevertCounter = 0;
       this.replayReenactCounter = 0;
-      this.undoAgain = false;
       this.reset = false;
     }
   }
