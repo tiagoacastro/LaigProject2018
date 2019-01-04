@@ -121,7 +121,7 @@ class LinearAnimation extends Animation {
 
         this.timeCounter += (deltaTime/1000);
         this.currLineSegment = this.getCurrSegment(this.timeCounter);
-
+        
         //reset animation
         if (this.currLineSegment == -1) {
           this.reset();

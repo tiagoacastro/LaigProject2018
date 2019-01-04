@@ -5,8 +5,6 @@ class Piece {
 				this.body = new MyCylinder(scene, 1, 1, 1, 10, 1);
 				this.color = color || '';
 				this.id = id;
-				this.oldPos = [0, 0, 0];
-				this.currPos = [0, 0, 0];
 				this.oldRow = null;
 				this.oldCol = null;
 				this.currRow = null;
@@ -46,6 +44,7 @@ class Piece {
 			if (this.currAnimation == null) {
 				this.currAnimation = new LinearAnimation(this.scene, 1, [this.oldPos, this.currPos]);
 				this.currAnimation.isActive = 1;
+				this.currAnimation.apply();
 				console.log('created new animation');
 			} else {
 				if (!this.currAnimation.isDone) {
@@ -53,6 +52,7 @@ class Piece {
 					console.log('applying animation');
 				} else {
 					console.log('animation done');
+					this.scene.translate(this.currPos[0], this.currPos[1], this.currPos[2]);
 					this.isMoving = false;
 					this.currAnimation = null;
 				}
