@@ -208,6 +208,9 @@ class Game {
   movePiece(data) {
     let response = data.target.response.split("-");
 
+    this.clock.stop();
+    this.clockStopped = true;
+
     this.turns.push([this.boardContent, this.currPiece.getId(), this.currPiece.getPos(), [parseInt(response[1]), parseInt(response[2])]]); //board, piece id, oldPos, newPos
     //console.log(this.turns);
 
