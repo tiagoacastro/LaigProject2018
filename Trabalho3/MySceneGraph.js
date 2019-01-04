@@ -1669,7 +1669,8 @@ class MySceneGraph {
                     primitive["type"] = "game";
                     var game = new Game(this.scene);
                     primitive["primitive"] = game;
-                    this.scene.game =  game;
+                    this.scene.game = game;
+                    //this.cameras["game"] = game.playerPOV;
                     numPrimitives++;
                     break;
                 case "clock":

@@ -59,6 +59,14 @@ class MyInterface extends CGFinterface {
         let inter = this;
 
         group.add(this, 'currentCamera', cameraIds).name('Camera').onChange(function(val){
+            if (scene.game != null) {
+                if (!scene.playerPOV) {
+                    scene.camera = cameras[val];
+                    inter.setActiveCamera(cameras[val]);
+                } else {
+                    return;
+                }
+            }
             scene.camera = cameras[val];
             inter.setActiveCamera(cameras[val]);
         });
@@ -68,23 +76,41 @@ class MyInterface extends CGFinterface {
      * @param {array} game
      */
     addGameGroup(game) {
-        var group = this.gui.addFolder("Game");
- 
-        group.add(game, 'undo').name('Undo');
+        if (game != null) {
+            var group = this.gui.addFolder("Game");
 
-        var groupPvsP = group.addFolder("Player VS Player");
-        groupPvsP.add(game, 'startPvsP').name('Play');
+            var controller = group.add(this.scene, "playerPOV").name("Player's POV");
 
-        var groupPvsBot = group.addFolder("Player VS Bot");
-        groupPvsBot.add(game, 'botDifficulty', { Easy: 1, Hard:2 }).name('Difficulty');
-        groupPvsBot.add(game, 'chosenSide', { Black: 'b', White:'w' }).name('Side');
-        groupPvsBot.add(game, 'startPvsBot').name('Play');
+            let scene = this.scene;
+            let inter = this;
 
-        var groupBotvsBot = group.addFolder("Bot VS Bot");
-        groupBotvsBot.add(game, 'blackBotDifficulty', { Easy: 1, Hard:2 }).name('Black Bot Difficulty');
-        groupBotvsBot.add(game, 'whiteBotDifficulty', { Easy: 1, Hard:2 }).name('White Bot Difficulty');
-        groupBotvsBot.add(game, 'startBotvsBot').name('Play');
+            controller.onChange(function() {
+                scene.game.setCamera();
+                if (scene.game.isPlayerPOVActive) {
+                    scene.camera = scene.game.playerPOV;
+                } else {
+                    scene.camera = scene.graph.cameras['default'];
+                    inter.setActiveCamera(scene.graph.cameras['default']);
+                }
+            });
+
+            group.add(game, 'undo').name('Undo');
+    
+            var groupPvsP = group.addFolder("Player VS Player");
+            groupPvsP.add(game, 'startPvsP').name('Play');
+    
+            var groupPvsBot = group.addFolder("Player VS Bot");
+            groupPvsBot.add(game, 'botDifficulty', { Easy: 1, Hard:2 }).name('Difficulty');
+            groupPvsBot.add(game, 'chosenSide', { Black: 'b', White:'w' }).name('Side');
+            groupPvsBot.add(game, 'startPvsBot').name('Play');
+    
+            var groupBotvsBot = group.addFolder("Bot VS Bot");
+            groupBotvsBot.add(game, 'blackBotDifficulty', { Easy: 1, Hard:2 }).name('Black Bot Difficulty');
+            groupBotvsBot.add(game, 'whiteBotDifficulty', { Easy: 1, Hard:2 }).name('White Bot Difficulty');
+            groupBotvsBot.add(game, 'startBotvsBot').name('Play');
+        }
     }
+
     /**
      * initializes key data
      */

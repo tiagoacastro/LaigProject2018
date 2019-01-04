@@ -37,22 +37,85 @@ class Game {
 
     this.undoAgain = false;
 
-    this.gamePOV = new CGFcamera(0.4, 0.1, 10, vec3.fromValues(3, 5, 0), vec3.fromValues(0, 0, 0));
+    this.isPlayerPOVActive = false;
+    this.playerPOV = new CGFcamera(0.4, 0.1, 500, vec3.fromValues(10, 13, 0), vec3.fromValues(0, 0, 0));
     this.dirArrow = new Arrow(this.scene);
 
+    this.pickableObjs = [];
+    for(let i = 0; i < 5*5; i++) { 
+      this.pickableObjs.push(new MyCylinder(this.scene, 1, 1, 1, 10, 1));
+    }
+
+    this.ghostShader = new CGFshader(this.scene.gl, "./shaders/normal.vert", "./shaders/ghost.frag");
+    this.highlightMaterial = new CGFappearance(this.scene);
+    this.highlightMaterial.setShininess(80);
+    this.highlightMaterial.setEmission(0,0,0,1);
+    this.highlightMaterial.setAmbient(0.4,0.4,0.4,1);
+    this.highlightMaterial.setDiffuse(0.74,1,0.71,1);
+    this.highlightMaterial.setSpecular(0.7,0.7,0.7,1);
+
+    this.scene.setPickEnabled(true);
+
     this.initGame();
+  }
+
+  logPicking() {
+
+    let col, row;
+
+    if (this.scene.pickMode == false) {
+      if (this.scene.pickResults != null && this.scene.pickResults.length > 0) {
+        for (var i=0; i< this.scene.pickResults.length; i++) {
+          var obj = this.scene.pickResults[i][0];
+          if (obj) {
+            var customId = this.scene.pickResults[i][1];
+            col = Math.floor((customId-1)/5) + 1;
+            row = ((customId-1)%5) + 1;
+            if (this.state === 'choose_piece') {
+              this.selectedPieceCol = col;
+              this.selectedPieceRow = row;
+            } else if (this.state === 'choose_direction') {
+                              this.moveDirCol = col;
+                              this.moveDirRow = row;
+                          }
+            console.log("Picked object: " + obj + ", with pick id " + customId);
+            console.log("Row: " + row + "; Col: " + col);
+          }
+        }
+        this.scene.pickResults.splice(0,this.scene.pickResults.length);
+      }		
+    }
   }
 
   initGame() {
     this.board = new Board(this.scene, 5, 5); // hmm constants
     var boundSetBoard = this.setBoard.bind(this);
     getBoard(boundSetBoard);
-
-    this.scene.camera = this.gamePOV;
   }
 
   setBoard(data){
     this.boardContent = data.target.response;
+  }
+
+  setBotCamera() {
+    if (!this.areAnimationsRunning()) {
+      if (this.currPlayer == 'b') {
+        this.playerPOV.orbit(CGFcameraAxis.Y, -this.cameraAngInc);
+      } else {
+        this.playerPOV.orbit(CGFcameraAxis.Y, this.cameraAngInc);
+      }
+
+      if (Math.abs(this.currCameraAng) >= Math.PI/2) { 
+        this.currCameraAng = 0;
+        this.playerPOV.setPosition(vec3.fromValues(0,13,-10));
+        this.state = 'init';
+      }
+
+    } 
+  }
+
+  setCamera() {
+    this.isPlayerPOVActive = !this.isPlayerPOVActive;
   }
 
   areAnimationsRunning() {
@@ -157,18 +220,21 @@ class Game {
   moveCamera() {
     if (!this.areAnimationsRunning()) {
       if (this.currPlayer == 'b') {
-        this.gamePOV.orbit(CGFcameraAxis.Y, -this.cameraAngInc);
+        this.playerPOV.orbit(CGFcameraAxis.Y, -this.cameraAngInc);
       } else {
-        this.gamePOV.orbit(CGFcameraAxis.Y, this.cameraAngInc);
+        this.playerPOV.orbit(CGFcameraAxis.Y, this.cameraAngInc);
       }
+
+      console.log(this.playerPOV.position.toString());
 
       if (Math.abs(this.currCameraAng) >= Math.PI) { 
         this.currCameraAng = 0;
         if (this.currPlayer == 'b') {
-          this.gamePOV.setPosition(vec3.fromValues(-3,5,0));
+          this.playerPOV.setPosition(vec3.fromValues(-10, 13, 0));
         } else {
-          this.gamePOV.setPosition(vec3.fromValues(3,5,0));
+          this.playerPOV.setPosition(vec3.fromValues(10, 13, 0));
         }
+        this.cameraAngInc = 0;
         this.switchPlayers();
         this.state = 'check_style';
       }
@@ -230,7 +296,7 @@ class Game {
 
   startBotvsBot(){
     if(this.state === 'none'){
-      this.state = 'init';
+      this.state = 'set_bot_camera';
       this.style = 2;
     }
   }
@@ -238,8 +304,7 @@ class Game {
   end() {
     //check the winner
     if (!this.areAnimationsRunning()) {
-      //this.moveCamera();
-      this.gamePOV.setPosition(vec3.fromValues(3,5,0)); //kinda of a temp solution for now, should probably do one last animation to reset the player pov
+      this.playerPOV.setPosition(vec3.fromValues(10, 13, 0)); //kinda of a temp solution for now, should probably do one last animation to reset the player pov
       this.state = 'none';
       this.currPlayer = null;
       this.selectedPieceCol = -1;
@@ -256,7 +321,6 @@ class Game {
   }
 
   stateMachine() {
-    //console.log('in state: ' + this.state + ' for player ' + this.currPlayer);
     switch (this.state) {
       case 'init':
         this.currPlayer = 'b';
@@ -271,6 +335,9 @@ class Game {
             this.actualBlackBotDifficulty = this.blackBotDifficulty;
             break;
         }
+        break;
+      case 'set_bot_camera':
+        this.setBotCamera();
         break;
       case 'check_style':
         this.checkStyle();
@@ -322,7 +389,82 @@ class Game {
   }
 
   display() {
+    this.logPicking();
+    this.scene.clearPickRegistration();
+
     this.board.display();
+					
+    let currX = -0.4, currY = 0.4;
+    let currRow = 1, currCol = 1;
+
+    for (let i = 0; i < this.pickableObjs.length; i++) {
+
+      this.highlightMaterial.apply();
+
+      if (i != 0) {
+        if (i%5 == 0){
+          currX = -0.4;
+          currY -= 0.2
+          currRow = 1;
+          currCol++;
+        } else {
+          currX += 0.2;
+          currRow++;
+        } 
+      }
+        
+      this.scene.setActiveShader(this.ghostShader);
+
+      if (this.state == 'choose_direction') {
+        var isHighlighted = dirMap[[currRow - this.selectedPieceRow, currCol - this.selectedPieceCol]];
+        if (this.currValidDirs.includes(isHighlighted)) {
+          //set arrow direction 
+          var rot = 0;
+          switch (isHighlighted) {
+            case 1: // N
+            rot = -Math.PI/2;
+            break;
+            case 2: // W
+            break;
+            case 3: // E
+            rot = Math.PI;
+            break;
+            case 4: // S
+            rot = Math.PI/2;
+            break
+            case 5: // NE
+            rot = -(Math.PI/4)*3; 
+            break;
+            case 6: // NW
+            rot = -Math.PI/4;
+            break;
+            case 7: // SE
+            rot = (Math.PI/4)*3; 
+            break;
+            case 8: // SW
+            rot = Math.PI/4; 
+          }
+          this.scene.setActiveShader(this.scene.defaultShader);
+          this.scene.pushMatrix();
+              this.scene.translate(currX, 0.01, currY);
+              this.scene.rotate(rot, 0, 1, 0);
+              this.scene.scale(0.1, 0.1, 0.1);
+              this.dirArrow.display();
+          this.scene.popMatrix();
+          this.scene.setActiveShader(this.ghostShader);
+        }
+      }
+
+      this.scene.pushMatrix();
+        this.scene.translate(currX, 0, currY);
+        this.scene.rotate(-Math.PI/2, 1, 0, 0);
+        this.scene.scale(0.1, 0.1, 0.1);
+        this.scene.registerForPick(i+1, this.pickableObjs[i]);
+        this.pickableObjs[i].display();
+      this.scene.popMatrix();
+    }
+    
+    this.scene.setActiveShader(this.scene.defaultShader);
   }
 }
 

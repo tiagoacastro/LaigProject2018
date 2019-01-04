@@ -8,16 +8,6 @@
       <to x="0" y="0" z="0" />
     </perspective>
 
-    <perspective id="player1" near="0.1" far="500" angle="60">
-      <from x="-3" y="5" z="0" />
-      <to x="0" y="0" z="0" />
-    </perspective>
-
-    <perspective id="player2" near="0.1" far="500" angle="60">
-      <from x="3" y="5" z="0" />
-      <to x="0" y="0" z="0" />
-    </perspective>
-
   </views>
 
   <ambient>
@@ -234,6 +224,11 @@
     <transformation id="scale_room">
       <translate x="0" y="5" z="0"/>
       <scale x="50" y="10" z="50"/>
+    </transformation>
+
+    <transformation id="set_game">
+      <translate x="0" y="1.3 " z="0"/>
+      <scale x="2.5" y="2.5" z="2.5"/>
     </transformation>
     
     <transformation id="set_game_station">
@@ -739,6 +734,14 @@
       <cylinder base="0.1" top="0.1" height="0.05" slices="10" stacks="10" /> 
     </primitive>
 
+    <primitive id="game">
+      <game/>
+    </primitive>
+
+    <primitive id="clock">
+      <clock time="30" />
+    </primitive>
+
   </primitives>
 
   <components>
@@ -751,6 +754,7 @@
       </materials>
       <texture id="none" length_s="1" length_t="1" />
       <children>
+        <componentref id="game"/> 
         <componentref id="room"/>
         <componentref id="room_pillars"/>
         <componentref id="room_barriers"/>
@@ -760,6 +764,19 @@
         <componentref id="doors"/>
         <componentref id="doors_div"/>
         <componentref id="door_handles"/>
+      </children>
+    </component>
+
+    <component id="game">
+      <transformation>
+          <transformationref id="set_game"/>
+      </transformation>
+      <materials>
+          <material id="inherit"/>
+      </materials>
+      <texture id="none" length_s="1" length_t="1" />
+      <children>
+          <primitiveref id="game"/>
       </children>
     </component>
 

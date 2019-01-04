@@ -64,6 +64,7 @@ class XMLscene extends CGFscene {
         this.setPickEnabled(true);
 
         this.game = null;
+        this.playerPOV = false;
         
     }
     /**
@@ -231,7 +232,7 @@ class XMLscene extends CGFscene {
     }
 
     updateGameCamera(deltaTime) {
-        if (this.game.state == 'move_camera' && !this.game.areAnimationsRunning()) {
+        if ((this.game.state == 'move_camera' || this.game.state == 'set_bot_camera') && !this.game.areAnimationsRunning()) {
             this.game.cameraAngInc = Math.PI * (deltaTime/1000);
             this.game.currCameraAng += this.game.cameraAngInc;
             console.log(this.game.currCameraAng);
@@ -239,7 +240,7 @@ class XMLscene extends CGFscene {
     }
     
 
-
+/*
     logPicking() {
 
 			let col, row;
@@ -268,14 +269,16 @@ class XMLscene extends CGFscene {
 			}
 
     }
+    */
 
     /**
      * Displays the scene.
      */
     display() {
-
+        /*
         this.logPicking();
         this.clearPickRegistration();
+        */
   
         // Clear image and depth buffer everytime we update the scene
         this.gl.viewport(0, 0, this.gl.canvas.width, this.gl.canvas.height);
@@ -319,8 +322,9 @@ class XMLscene extends CGFscene {
                 // Draw axis
                 this.axis.display();
             }
-				this.popMatrix();
-					
+            this.popMatrix();
+            
+            /*
                 let currX = -0.4, currY = 0.4;
                 let currRow = 1, currCol = 1;
 
@@ -396,11 +400,11 @@ class XMLscene extends CGFscene {
 						this.pickableObjs[i].display();
 					this.popMatrix();
 			
-                    this.gl.disable(this.gl.GL_BLEND);
+                    
                 }
                 
 				this.setActiveShader(this.defaultShader);
-				
+				*/
 		}
 		
 }
