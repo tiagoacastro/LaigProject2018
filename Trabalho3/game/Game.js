@@ -46,6 +46,8 @@ class Game {
   }
 
   initGame() {
+    this.ended = false;
+    this.turns = [];
     this.board = new Board(this.scene, 5, 5); // hmm constants
     var boundSetBoard = this.setBoard.bind(this);
     getBoard(boundSetBoard);
@@ -179,7 +181,8 @@ class Game {
   }
 
   replay(){
-    if(this.turns.length > 0  && !this.areAnimationsRunning()){
+    if(this.turns.length > 0  && !this.areAnimationsRunning() && (this.style !== 2 || this.ended) && 
+    (this.style !== 1 || this.currPlayer === this.actualChosenSide || this.ended)){
       this.state = 'replay';
       this.replayRevertCounter = 0;
       this.replayReenactCounter = 0;
@@ -216,7 +219,8 @@ class Game {
   }
 
   undo(){
-    if(this.turns.length > 0  && !this.areAnimationsRunning()){
+    if(this.turns.length > 0  && !this.areAnimationsRunning() && this.style !== 2 && 
+    (this.style !== 1 || this.currPlayer === this.actualChosenSide)){
       this.state = 'undo';
     }
   }
@@ -292,7 +296,9 @@ class Game {
       this.moveDirRow = -1;
       this.moveDirCol = -1;
       this.moveDir = -1;
-      this.turns = [];
+      this.ended = true;
+      this.replayRevertCounter = 0;
+      this.replayReenactCounter = 0;
       this.undoAgain = false;
       this.initGame();
     }
