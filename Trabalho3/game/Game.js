@@ -45,7 +45,7 @@ class Game {
     this.duration = 30;
 
     this.isPlayerPOVActive = false;
-    this.playerPOV = new CGFcamera(0.4, 0.1, 500, vec3.fromValues(10, 13, 0), vec3.fromValues(0, 0, 0));
+    this.playerPOV = new CGFcamera(0.4, 0.1, 500, vec3.fromValues(8, 11, 0), vec3.fromValues(0, 0, 0));
     this.dirArrow = new Arrow(this.scene);
 
     this.pickableObjs = [];
@@ -111,8 +111,7 @@ class Game {
         this.replayRevertCounter++;
       }
       return;
-    }
-    this.playerPOV.setPosition(vec3.fromValues(10,13,0)); //kinda of a temp solution for now, should probably do one last animation to reset the player pov
+    } 
     this.ended = false;
     this.turns = [];
     var boundSetBoard = this.setBoard.bind(this);
@@ -123,7 +122,6 @@ class Game {
     this.boardContent = null;
     this.undoAgain = false;
 
-    this.scene.camera = this.playerPOV;
   }
 
   setBoard(data){
@@ -140,7 +138,7 @@ class Game {
 
       if (Math.abs(this.currCameraAng) >= Math.PI/2) { 
         this.currCameraAng = 0;
-        this.playerPOV.setPosition(vec3.fromValues(0,13,-10));
+        this.playerPOV.setPosition(vec3.fromValues(0,11,-8));
         this.state = 'init';
       }
 
@@ -264,9 +262,9 @@ class Game {
       if (Math.abs(this.currCameraAng) >= Math.PI) { 
         this.currCameraAng = 0;
         if (this.currPlayer == 'b') {
-          this.playerPOV.setPosition(vec3.fromValues(-10, 13, 0));
+          this.playerPOV.setPosition(vec3.fromValues(-8, 11, 0));
         } else {
-          this.playerPOV.setPosition(vec3.fromValues(10, 13, 0));
+          this.playerPOV.setPosition(vec3.fromValues(8, 11, 0));
         }
         this.cameraAngInc = 0;
         this.switchPlayers();
@@ -286,19 +284,22 @@ class Game {
   }
 
   replayState(){
+
     if(!this.clockStopped){
       this.clock.stop();
       this.clockStopped = true;
     }
+
     if(this.replayRevertCounter < this.board.pieces.length){
       if(!this.areAnimationsRunning()){
         let piece = this.board.pieces[this.replayRevertCounter];
-        piece.revert();
+        piece.initPiece();
         piece.isMoving = true;
         this.replayRevertCounter++;
       }
       return;
     }
+
     if(this.replayReenactCounter < this.turns.length){
       if(!this.areAnimationsRunning()){
         let turn = this.turns[this.replayReenactCounter];
@@ -310,6 +311,7 @@ class Game {
       }
       return;
     }
+
     if(this.ended)
       this.state = 'end';
     else
@@ -396,7 +398,7 @@ class Game {
   end() {
     //check the winner
     if (!this.areAnimationsRunning()) {
-      this.playerPOV.setPosition(vec3.fromValues(10, 13, 0)); //kinda of a temp solution for now, should probably do one last animation to reset the player pov
+      this.playerPOV.setPosition(vec3.fromValues(8, 11, 0)); //kinda of a temp solution for now, should probably do one last animation to reset the player pov
       this.state = 'none';
       this.selectedPieceCol = -1;
       this.selectedPieceRow = -1;

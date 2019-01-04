@@ -74,47 +74,18 @@ class Piece {
 			switch(this.id) { // 0-2 black, 3-5 white 
 				case 0:
 					this.setPos(2, 1);
-					this.color = 'w';
-					break;
-				case 1:
-					this.setPos(3, 4);
-					this.color = 'w';
-					break;
-				case 2:
-					this.setPos(4, 1);
-					this.color = 'w';
-					break;
-				case 3:
-					this.setPos(2, 5);
-					this.color = 'b';
-					break;
-				case 4:
-					this.setPos(3, 2);
-					this.color = 'b';
-					break;
-				case 5:
-					this.setPos(4, 5);
-					this.color = 'b';
-					break;
-			}
-		}
-
-		revert() {
-			switch(this.id) { // 0-2 black, 3-5 white 
-				case 0:
-					this.setPos(2, 1);
 					break;
 				case 1:
 					this.setPos(3, 4);
 					break;
 				case 2:
-					this.setPos(4, 1);
+					this.setPos(4, 1);		
 					break;
 				case 3:
-					this.setPos(2, 5);
+					this.setPos(2, 5);		
 					break;
 				case 4:
-					this.setPos(3, 2);
+					this.setPos(3, 2);			
 					break;
 				case 5:
 					this.setPos(4, 5);

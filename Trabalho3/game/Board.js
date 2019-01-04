@@ -31,12 +31,12 @@ class Board extends CGFobject{
 
 	initPieces() {
 		
-		this.pieces.push(new Piece(this.scene, 'b', 0));
-		this.pieces.push(new Piece(this.scene, 'b', 1));
-		this.pieces.push(new Piece(this.scene, 'b', 2));
-		this.pieces.push(new Piece(this.scene, 'w', 3));
-		this.pieces.push(new Piece(this.scene, 'w', 4));
-		this.pieces.push(new Piece(this.scene, 'w', 5));
+		this.pieces.push(new Piece(this.scene, 'w', 0));
+		this.pieces.push(new Piece(this.scene, 'w', 1));
+		this.pieces.push(new Piece(this.scene, 'w', 2));
+		this.pieces.push(new Piece(this.scene, 'b', 3));
+		this.pieces.push(new Piece(this.scene, 'b', 4));
+		this.pieces.push(new Piece(this.scene, 'b', 5));
 
 		console.log(this.pieces);
 	}
