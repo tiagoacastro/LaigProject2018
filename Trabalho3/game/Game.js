@@ -103,6 +103,8 @@ class Game {
   }
 
   resetBoard(){
+    this.clock.stop();
+    this.clockStopped = true;
     if(this.replayRevertCounter < this.board.pieces.length){
       if(!this.areAnimationsRunning()){
         let piece = this.board.pieces[this.replayRevertCounter];
@@ -111,7 +113,9 @@ class Game {
         this.replayRevertCounter++;
       }
       return;
-    } 
+    }
+    this.clock.continue();
+    this.clockStopped = false; 
     this.ended = false;
     this.turns = [];
     var boundSetBoard = this.setBoard.bind(this);
