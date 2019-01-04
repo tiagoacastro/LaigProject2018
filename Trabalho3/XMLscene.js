@@ -226,7 +226,7 @@ class XMLscene extends CGFscene {
     }
 
     updateGameCamera(deltaTime) {
-        if ((this.game.state == 'move_camera' || this.game.state == 'set_bot_camera' || this.game.state == 'reset_camera') && !this.game.areAnimationsRunning()) {
+        if ((this.game.state == 'move_camera' || this.game.state == 'set_bot_camera' || this.game.state == 'reset_camera' || this.game.state == 'reset_bot_camera') && !this.game.areAnimationsRunning()) {
             this.game.cameraAngInc = Math.PI * (deltaTime/1000);
             this.game.currCameraAng += this.game.cameraAngInc;
             console.log(this.game.currCameraAng);

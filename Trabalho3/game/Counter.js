@@ -168,7 +168,7 @@ class Counter extends CGFobject {
     this.apply(this.blackPlayerWins%10)
 
     this.scene.pushMatrix();
-      this.scene.translate(0.95, 0, 0.130);
+      this.scene.translate(1.05, 0, 0.130);
       this.scene.scale(0.1, 0.2, 0.2);
       this.screen.display();
     this.scene.popMatrix();
@@ -178,7 +178,7 @@ class Counter extends CGFobject {
     this.apply(Math.floor(this.blackPlayerWins/10));
 
     this.scene.pushMatrix();
-      this.scene.translate(1.05, 0, 0.130);
+      this.scene.translate(0.95, 0, 0.130);
       this.scene.scale(0.1, 0.2, 0.2);
       this.screen.display();
     this.scene.popMatrix();

@@ -232,6 +232,10 @@
       <translate x="0" y="1.252" z="0"/>
       <scale x="2.5" y="2.5" z="2.5"/>
     </transformation>
+
+    <transformation id="set_counter">
+      <translate x="0" y="1.35" z="-1.875"/>
+    </transformation>
     
     <transformation id="set_game_station">
       <translate x="0" y="0" z="0"/>
@@ -749,6 +753,10 @@
       <clock/>
     </primitive>
 
+    <primitive id="counter">
+      <counter/>
+    </primitive>
+
   </primitives>
 
   <components>
@@ -763,6 +771,7 @@
       <children>
         <componentref id="game"/> 
         <componentref id="clock"/>
+        <componentref id="counter"/>
         <componentref id="room"/>
         <componentref id="room_pillars"/>
         <componentref id="room_barriers"/>
@@ -785,6 +794,19 @@
       <texture id="marble" length_s="1" length_t="1" />
       <children>
           <primitiveref id="clock"/>
+      </children>
+    </component>
+
+    <component id="counter">
+      <transformation>
+        <transformationref id="set_counter"/>
+      </transformation>
+      <materials>
+        <material id="default"/>
+      </materials>
+      <texture id="default" length_s="1" length_t="1" />
+      <children>
+        <primitiveref id="counter"/> 
       </children>
     </component>
 

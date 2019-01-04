@@ -137,14 +137,14 @@ class Game {
   setBotCamera() {
     if (!this.areAnimationsRunning()) {
       if (this.currPlayer == 'b') {
-        this.playerPOV.orbit(CGFcameraAxis.Y, -this.cameraAngInc);
-      } else {
         this.playerPOV.orbit(CGFcameraAxis.Y, this.cameraAngInc);
+      } else {
+        this.playerPOV.orbit(CGFcameraAxis.Y, -this.cameraAngInc);
       }
 
       if (Math.abs(this.currCameraAng) >= Math.PI/2) { 
         this.currCameraAng = 0;
-        this.playerPOV.setPosition(vec3.fromValues(0,11,-8));
+        this.playerPOV.setPosition(vec3.fromValues(0,11,8));
         this.state = 'init';
       }
 
@@ -244,8 +244,17 @@ class Game {
   checkGameOver(data) { 
     let occurences = this.turns.filter(turn => turn[0] === this.boardContent);
 
-    if(data.target.response == 1 || occurences.length === 3){                                                              
-      this.state = 'reset_camera';
+    if(data.target.response == 1 || occurences.length === 3) {
+      if (this.style == 2) {
+        this.state = 'reset_bot_camera';
+      } else {
+        this.state = 'reset_camera';
+      }                                                   
+      if (this.currPlayer === 'b') {
+        this.counter.blackPlayerWins++;
+      } else {
+        this.counter.whitePlayerWins++;
+      }
       this.clock.stop();
     } else {
       this.clock.change();
@@ -266,7 +275,7 @@ class Game {
         this.playerPOV.orbit(CGFcameraAxis.Y, this.cameraAngInc);
       }
 
-      console.log(this.playerPOV.position.toString());
+      //console.log(this.playerPOV.position.toString());
 
       if (Math.abs(this.currCameraAng) >= Math.PI) { 
         this.currCameraAng = 0;
@@ -293,6 +302,19 @@ class Game {
       }
 
       if (Math.abs(this.currCameraAng) >= Math.PI) { 
+        this.currCameraAng = 0;
+        this.playerPOV.setPosition(vec3.fromValues(8,11,0));
+        this.state = 'end';
+      }
+
+    } 
+  }
+
+  resetBotCamera() {
+    if (!this.areAnimationsRunning()) {
+      this.playerPOV.orbit(CGFcameraAxis.Y, this.cameraAngInc);
+
+      if (Math.abs(this.currCameraAng) >= Math.PI/2) { 
         this.currCameraAng = 0;
         this.playerPOV.setPosition(vec3.fromValues(8,11,0));
         this.state = 'end';
@@ -504,6 +526,9 @@ class Game {
         break;
       case 'reset_camera':
         this.resetCamera();
+        break;
+      case 'reset_bot_camera':
+        this.resetBotCamera();
         break;
       case 'end':
         this.end();
