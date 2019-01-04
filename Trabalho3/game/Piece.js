@@ -42,7 +42,9 @@ class Piece {
 
 		movePiece() {
 			if (this.currAnimation == null) {
-				this.currAnimation = new LinearAnimation(this.scene, 1, [this.oldPos, this.currPos]);
+				let dist = Math.sqrt((this.currPos[0]-this.oldPos[0])*(this.currPos[0]-this.oldPos[0]) + (this.currPos[2]-this.oldPos[2])*(this.currPos[2]-this.oldPos[2]));
+				let mid = [this.currPos[0], this.currPos[1]+dist*0.75, this.currPos[2]];
+				this.currAnimation = new LinearAnimation(this.scene, Math.sqrt((this.currRow-this.oldRow)*(this.currRow-this.oldRow)+(this.currCol-this.oldCol)*(this.currCol-this.oldCol))*0.75, [this.oldPos, mid, this.currPos]);
 				this.currAnimation.isActive = 1;
 				this.currAnimation.apply();
 				console.log('created new animation');
