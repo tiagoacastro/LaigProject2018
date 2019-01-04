@@ -139,6 +139,7 @@ class Game {
   }
 
   checkGameOver(data) { 
+    
     let occurences = this.turns.filter(turn => turn[0] === this.boardContent);
 
     if(data.target.response == 1 || occurences.length === 3){                                                              
@@ -188,6 +189,28 @@ class Game {
       piece.isMoving = true;
       if(this.style !== 0)
         this.undoAgain = !this.undoAgain;
+    }
+  }
+
+  checkStyle() {
+    if(!this.areAnimationsRunning()) {
+      if(this.undoAgain) {
+        this.undo();
+      } else 
+        switch(this.style) {
+          case 0:
+            this.state = 'choose_piece';
+            break;
+          case 1:
+            if(this.currPlayer === this.actualChosenSide)
+              this.state = 'choose_piece';
+            else
+              this.state = 'bot_move';
+            break;
+          case 2:
+              this.state = 'bot_move';
+            break;
+      }
     }
   }
 
@@ -250,23 +273,7 @@ class Game {
         }
         break;
       case 'check_style':
-        if(this.undoAgain){
-          this.undo();
-        } else 
-          switch(this.style){
-            case 0:
-              this.state = 'choose_piece';
-              break;
-            case 1:
-              if(this.currPlayer === this.actualChosenSide)
-                this.state = 'choose_piece';
-              else
-                this.state = 'bot_move';
-              break;
-            case 2:
-                this.state = 'bot_move';
-              break;
-          }
+        this.checkStyle();
         break;
       case 'choose_piece':
         this.choosePiece();
@@ -307,7 +314,7 @@ class Game {
       case 'end':
         this.end();
         break;
-      case 'wait':
+      case 'wait': //for async functions
         break;
       case 'none':
         break;
