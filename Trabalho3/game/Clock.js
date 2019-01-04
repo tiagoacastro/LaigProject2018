@@ -20,10 +20,7 @@ class Clock extends CGFobject
 
         this.cube = new MyCube(scene);
 
-        this.blackD = new MyRectangle(scene, -0.5, 0.5, -0.5, 0.5);
-        this.blackU = new MyRectangle(scene, -0.5, 0.5, -0.5, 0.5);
-        this.whiteD = new MyRectangle(scene, -0.5, 0.5, -0.5, 0.5);
-        this.whiteU = new MyRectangle(scene, -0.5, 0.5, -0.5, 0.5);
+        this.rectangle = new MyRectangle(scene, -0.5, 0.5, -0.5, 0.5);
 
         this.zero = new CGFappearance(this.scene);
         this.zero.loadTexture("./scenes/images/zero.jpg");
@@ -128,24 +125,29 @@ class Clock extends CGFobject
         this.on = false;
     }
     /**
+     * starts without reseting the clock
+     */
+    continue(){
+        this.on = true;
+    }
+    /**
      * changes the player
      */
     change(){
-        if(this.on){
-            this.player = !this.player;
-            this.rebase = true;
+        this.player = !this.player;
+        this.rebase = true;
 
-            if(this.player)
-                this.whiteT = this.time;
-            else
-                this.blackT = this.time;
-        }
+        if(this.player)
+            this.whiteT = this.time;
+        else
+            this.blackT = this.time;
     }
     /**
      * update function
-     * @param {float} deltaTime 
+     * @param {float} deltaTime
+     * @param {object} game
      */
-    update(deltaTime) {
+    update(deltaTime, game) {
         if(this.on){
             this.current += deltaTime;
             if(this.rebase){
@@ -154,6 +156,7 @@ class Clock extends CGFobject
             }
 
             if((this.current - this.base)/1000 > this.time){
+                game.state = 'end';
                 this.on = false;
                 if(this.player)
                     this.whiteT=0;
@@ -198,36 +201,36 @@ class Clock extends CGFobject
             this.cube.display();
         this.scene.popMatrix();
         
-        this.apply(Math.floor(this.whiteT/10));
+        this.apply(Math.floor(this.blackT/10));
 
         this.scene.pushMatrix();
             this.scene.translate(0.3, 0, 0.41);
             this.scene.scale(0.4, 0.8, 1);
-            this.whiteD.display();
-        this.scene.popMatrix();
-        
-        this.apply(this.whiteT%10);
-
-        this.scene.pushMatrix();
-            this.scene.translate(0.7, 0, 0.41);
-            this.scene.scale(0.4, 0.8, 1);
-            this.whiteU.display();
-        this.scene.popMatrix();
-
-        this.apply(Math.floor(this.blackT/10));
-
-        this.scene.pushMatrix();
-            this.scene.translate(-0.7, 0, 0.41);
-            this.scene.scale(0.4, 0.8, 1);
-            this.blackD.display();
+            this.rectangle.display();
         this.scene.popMatrix();
         
         this.apply(this.blackT%10);
 
         this.scene.pushMatrix();
+            this.scene.translate(0.7, 0, 0.41);
+            this.scene.scale(0.4, 0.8, 1);
+            this.rectangle.display();
+        this.scene.popMatrix();
+
+        this.apply(Math.floor(this.whiteT/10));
+
+        this.scene.pushMatrix();
+            this.scene.translate(-0.7, 0, 0.41);
+            this.scene.scale(0.4, 0.8, 1);
+            this.rectangle.display();
+        this.scene.popMatrix();
+        
+        this.apply(this.whiteT%10);
+
+        this.scene.pushMatrix();
             this.scene.translate(-0.3, 0, 0.41);
             this.scene.scale(0.4, 0.8, 1);
-            this.blackU.display();
+            this.rectangle.display();
         this.scene.popMatrix();
     };
     /**

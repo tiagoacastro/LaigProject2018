@@ -160,27 +160,19 @@ class XMLscene extends CGFscene {
             this.lastTime = currTime;
         }
 
-        this.updateClock(this.deltaTime);
+        if(this.clock != null)
+            this.clock.update(this.deltaTime, this.game);
         this.updateAnimations(this.deltaTime);
         this.updateWater(this.deltaTime);
         this.checkKeys();
         
         //project 3
         if (this.game != null) {
+            if(this.game.clock == null)
+                this.game.clock = this.clock;
             this.game.stateMachine();
             this.updateGameAnimations(this.deltaTime);
             this.updateGameCamera(this.deltaTime);
-        }
-    }
-
-    /**
-     * function to update the clock
-     */
-    updateClock(deltaTime) {
-        for (var key in this.graph.primitives) {
-            if (this.graph.primitives[key]["type"] == "clock") {
-                this.graph.primitives[key]["primitive"].update(deltaTime);
-            }
         }
     }
 

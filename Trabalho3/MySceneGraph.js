@@ -1674,7 +1674,8 @@ class MySceneGraph {
                     break;
                 case "clock":
                     primitive["type"] = "clock";
-                    primitive["primitive"] = this.parseClock(children[i].children[0])
+                    this.scene.clock = this.parseClock(children[i].children[0]);
+                    primitive["primitive"] = this.scene.clock;
                     numPrimitives++;
                     break;
             }

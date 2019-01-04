@@ -39,6 +39,9 @@ class Game {
     this.replayRevertCounter = 0;
     this.replayReenactCounter = 0;
 
+    this.clock = null;
+    this.clockStopped = false;
+
     this.gamePOV = new CGFcamera(0.4, 0.1, 10, vec3.fromValues(3, 5, 0), vec3.fromValues(0, 0, 0));
     this.dirArrow = new Arrow(this.scene);
 
@@ -143,12 +146,13 @@ class Game {
   }
 
   checkGameOver(data) { 
-    
     let occurences = this.turns.filter(turn => turn[0] === this.boardContent);
 
     if(data.target.response == 1 || occurences.length === 3){                                                              
       this.state = 'end';
+      this.clock.stop();
     } else {
+      this.clock.change();
       if(this.style === 0)
         this.state = 'move_camera';
       else{
@@ -190,6 +194,10 @@ class Game {
   }
 
   replayState(){
+    if(!this.clockStopped){
+      this.clock.stop();
+      this.clockStopped = true;
+    }
     for(; this.replayRevertCounter < this.board.pieces.length;){
       if(!this.areAnimationsRunning()){
         let piece = this.board.pieces[this.replayRevertCounter];
@@ -212,10 +220,7 @@ class Game {
       }else
         return;
     }
-    if(this.style === 0)
-      this.state = 'move_camera';
-    else
-      this.state = 'check_style';
+    this.state = 'check_style';
   }
 
   undo(){
@@ -226,6 +231,11 @@ class Game {
   }
 
   undoState(){
+    if(!this.clockStopped){
+      this.clock.stop();
+      this.clockStopped = true;
+    }
+    this.clock.change();
     if(this.style === 0)
       this.state = 'move_camera';
     else
@@ -243,7 +253,11 @@ class Game {
     if(!this.areAnimationsRunning()) {
       if(this.undoAgain) {
         this.undo();
-      } else 
+      } else{
+        if(this.clockStopped){
+          this.clock.continue();
+          this.clockStopped = false;
+        }
         switch(this.style) {
           case 0:
             this.state = 'choose_piece';
@@ -257,6 +271,7 @@ class Game {
           case 2:
               this.state = 'bot_move';
             break;
+        }
       }
     }
   }
@@ -265,6 +280,7 @@ class Game {
     if(this.state === 'none'){
       this.state = 'init';
       this.style = 0;
+      this.clock.start();
     }
   }
 
@@ -272,6 +288,7 @@ class Game {
     if(this.state === 'none'){
       this.state = 'init';
       this.style = 1;
+      this.clock.start();
     }
   }
 
@@ -279,6 +296,7 @@ class Game {
     if(this.state === 'none'){
       this.state = 'init';
       this.style = 2;
+      this.clock.start();
     }
   }
 
