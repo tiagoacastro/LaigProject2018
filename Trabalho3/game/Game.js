@@ -106,7 +106,7 @@ class Game {
     if(this.replayRevertCounter < this.board.pieces.length){
       if(!this.areAnimationsRunning()){
         let piece = this.board.pieces[this.replayRevertCounter];
-        piece.revert();
+        piece.initPiece();
         piece.isMoving = true;
         this.replayRevertCounter++;
       }
@@ -236,7 +236,7 @@ class Game {
     let occurences = this.turns.filter(turn => turn[0] === this.boardContent);
 
     if(data.target.response == 1 || occurences.length === 3){                                                              
-      this.state = 'end';
+      this.state = 'reset_camera';
       this.clock.stop();
     } else {
       this.clock.change();
@@ -269,6 +269,24 @@ class Game {
         this.cameraAngInc = 0;
         this.switchPlayers();
         this.state = 'check_style';
+      }
+
+    } 
+  }
+
+  resetCamera() {
+    if (!this.areAnimationsRunning()) {
+      if (this.currPlayer == 'w') {
+        this.playerPOV.orbit(CGFcameraAxis.Y, this.cameraAngInc);
+      } else {
+        this.state = 'end';
+        return;
+      }
+
+      if (Math.abs(this.currCameraAng) >= Math.PI) { 
+        this.currCameraAng = 0;
+        this.playerPOV.setPosition(vec3.fromValues(8,11,0));
+        this.state = 'end';
       }
 
     } 
@@ -475,6 +493,9 @@ class Game {
       case 'move_camera':
         this.moveCamera();
         break;
+      case 'reset_camera':
+        this.resetCamera();
+        break;
       case 'end':
         this.end();
         break;
@@ -492,6 +513,7 @@ class Game {
   }
 
   display() {
+
     this.logPicking();
     this.scene.clearPickRegistration();
 
