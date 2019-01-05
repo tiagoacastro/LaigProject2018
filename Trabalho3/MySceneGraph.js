@@ -1,16 +1,6 @@
 var DEGREE_TO_RAD = Math.PI / 180;
 var NUM_OF_GRAPHS = 2;
 
-function cloneAnimation(obj) {
-    if (null == obj || "object" != typeof obj) return obj;
-    console.log("cloning ", obj);
-    var copy = {};
-    for (var attr in obj) {
-        if (obj.hasOwnProperty(attr)) copy[attr] = obj[attr];
-    }
-    return copy;
-}
-
 // Order of the groups in the XML document.
 var SCENE_INDEX = 0
 var VIEWS_INDEX = 1;

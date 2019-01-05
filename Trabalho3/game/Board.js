@@ -64,7 +64,6 @@ class Board extends CGFobject{
 			for(let j = 0; j < this.rows; j++) {
 				rowAux.push(new MyRectangle(this.scene, currX1, currX2, currY1, currY2));
 				currX1 += colLen; currX2 += colLen;
-				//console.log(rowAux[j]);
 			}
 			currX1 = -0.5; 
 			currX2 = -0.5 + colLen;
@@ -74,7 +73,6 @@ class Board extends CGFobject{
 			rowAux = [];
 		}
 
-		//console.log(this.board.length);
 	}
 
 	displayBoard() {
@@ -112,7 +110,6 @@ class Board extends CGFobject{
 	}
 
 	isPieceInPos(row, col) {
-		//console.log(row, col);
 		for (let i = 0; i < this.pieces.length; i++) {
 			if (this.pieces[i].currCol == col && this.pieces[i].currRow == row) {
 				return this.pieces[i];

@@ -87,8 +87,6 @@ class Game {
                               this.moveDirCol = col;
                               this.moveDirRow = row;
                           }
-            console.log("Picked object: " + obj + ", with pick id " + customId);
-            console.log("Row: " + row + "; Col: " + col);
           }
         }
         this.scene.pickResults.splice(0,this.scene.pickResults.length);
@@ -237,10 +235,8 @@ class Game {
     this.clockStopped = true;
 
     this.turns.push([this.boardContent, this.currPiece.getId(), this.currPiece.getPos(), [parseInt(response[1]), parseInt(response[2])]]); //board, piece id, oldPos, newPos
-    //console.log(this.turns);
 
     this.boardContent = response[0];
-    //console.log('new row: ' + response[1] + ' new col: ' + response[2]);
     this.currPiece.setPos(parseInt(response[2]),parseInt(response[1]));
     this.currPiece.isMoving = true;
     this.state = 'check_game_over';
@@ -254,10 +250,9 @@ class Game {
 
     this.currPiece = this.board.isPieceInPos(parseInt(response[1]), parseInt(response[2]));
     this.turns.push([this.boardContent, this.currPiece.getId(), this.currPiece.getPos(), [parseInt(response[3]), parseInt(response[4])]]); //board, pieceId, oldPos, newPos
-    console.log(this.turns);
 
     this.boardContent = response[0];
-    console.log('new row: ' + response[3] + ' new col: ' + response[4]);
+    
     this.currPiece.setPos(parseInt(response[4]),parseInt(response[3]));
     this.currPiece.isMoving = true;
     this.state = 'check_game_over';
@@ -327,8 +322,6 @@ class Game {
       } else {
         this.playerPOV.orbit(CGFcameraAxis.Y, this.cameraAngInc);
       }
-
-      //console.log(this.playerPOV.position.toString());
 
       if (Math.abs(this.currCameraAng) >= Math.PI) { 
         this.currCameraAng = 0;
@@ -521,7 +514,7 @@ class Game {
 
   end() {
     if (!this.areAnimationsRunning()) {
-      this.playerPOV.setPosition(vec3.fromValues(8, 11, 0)); //kinda of a temp solution for now, should probably do one last animation to reset the player pov
+      this.playerPOV.setPosition(vec3.fromValues(8, 11, 0));
       this.state = 'none';
       this.selectedPieceCol = -1;
       this.selectedPieceRow = -1;
@@ -537,7 +530,6 @@ class Game {
   }
 
   stateMachine() {
-    console.log(this.state);
     switch (this.state) {
       case 'init':
         if(this.reset){

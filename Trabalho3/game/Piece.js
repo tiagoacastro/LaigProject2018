@@ -57,13 +57,13 @@ class Piece {
 				this.currAnimation = new LinearAnimation(this.scene, time, [this.oldPos, mid, this.currPos]);
 				this.currAnimation.isActive = 1;
 				this.currAnimation.apply();
-				console.log('created new animation');
+				
 			} else {
 				if (!this.currAnimation.isDone) {
 					this.currAnimation.apply();
-					console.log('applying animation');
+					
 				} else {
-					console.log('animation done');
+					
 					this.scene.translate(this.currPos[0], this.currPos[1], this.currPos[2]);
 					this.isMoving = false;
 					this.currAnimation = null;

@@ -173,14 +173,10 @@ class Clock extends CGFobject
             if(this.player){
                 if(Math.floor((this.current - this.base)/1000) > this.time - this.whiteT){
                     this.whiteT--;
-                    //if(this.whiteT == 25)                                                           // REMOVER DEPOIS, SO PARA TESTAR
-                        //this.change();                                                              // REMOVER DEPOIS, SO PARA TESTAR
                 }
             } else {
                 if(Math.floor((this.current - this.base)/1000) > this.time - this.blackT){
                     this.blackT--;
-                    //if(this.blackT == 25)                                                           // REMOVER DEPOIS, SO PARA TESTAR
-                        //this.change();                                                              // REMOVER DEPOIS, SO PARA TESTAR
                 }
             }                
         }
