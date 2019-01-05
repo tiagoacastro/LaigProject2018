@@ -46,6 +46,7 @@
     <texture id="gold" file="./scenes/images/gold_fixed.jpg"/>
     <texture id="windows" file="./scenes/images/windows.jpg"/>
     <texture id="window_landscape" file="./scenes/images/window_landscape.jpg"/>
+    <texture id="shut_window" file="./scenes/images/shut_window.jpg"/>
   </textures>
 
   <materials>
@@ -569,6 +570,12 @@
             <scale x="0.1" y="6" z="10"/>
         </transformation>
 
+        <transformation id="set_shut_window">
+            <translate x="0" y="5" z="-10"/>
+            <scale x="9" y="5" z="0.1"/>
+            <rotate axis="y" angle="90"/>
+        </transformation>
+
         <transformation id="set_window_back">
             <translate x="-10.1" y="5" z="0"/>
             <scale x="0.1" y="6" z="10"/>
@@ -893,6 +900,7 @@
         <componentref id="desk_chair"/>
         <componentref id="window"/>
         <componentref id="window_back"/>
+        <componentref id="shut_window"/>
         <componentref id="office_door"/>
         <componentref id="office_door_handle"/>
       </children>
@@ -932,6 +940,19 @@
           <material id="inherit"/>
       </materials>
       <texture id="black_plastic" length_s="1" length_t="1" />
+      <children>
+          <componentref id="cube"/>
+      </children>
+    </component>
+
+    <component id="shut_window">
+      <transformation>
+          <transformationref id="set_shut_window"/>
+      </transformation>
+      <materials>
+          <material id="inherit"/>
+      </materials>
+      <texture id="shut_window" length_s="1" length_t="1" />
       <children>
           <componentref id="cube"/>
       </children>
