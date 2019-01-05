@@ -31,6 +31,7 @@
     <texture id="red_velvet" file="./scenes/images/red_velvet_fixed.jpg"/>
     <texture id="dark_wood" file="./scenes/images/dark_wood_fixed.jpg"/>
     <texture id="black_wood" file="./scenes/images/black_wood_fixed.jpg"/>
+    <texture id="black_plastic" file="./scenes/images/black_plastic.jpg"/>
     <texture id="mint_green" file="./scenes/images/mint_green_fixed.jpg"/>
     <texture id="black_stone" file="./scenes/images/black_stone_fixed.jpg"/>
     <texture id="cigarette" file="./scenes/images/cigarette_fixed.jpg"/>
@@ -42,6 +43,8 @@
     <texture id="notepad_ring" file="./scenes/images/stainless_steel.jpg"/>
     <texture id="red_wallpaper" file="./scenes/images/red_wallpaper_fixed.jpg"/>
     <texture id="gold" file="./scenes/images/gold_fixed.jpg"/>
+    <texture id="windows" file="./scenes/images/windows.jpg"/>
+    <texture id="window_landscape" file="./scenes/images/window_landscape.jpg"/>
   </textures>
 
   <materials>
@@ -413,6 +416,10 @@
       <scale x="0.25" y="0.25" z="0.25"/>
     </transformation>
 
+    <transformation id="set_desk_chair">
+        <translate x="2.25" y="0.25" z="5.5"/>
+    </transformation>
+
     <transformation id="set_chair1">
         <translate x="3" y="0.25" z="0"/>
     </transformation>
@@ -420,6 +427,39 @@
     <transformation id="set_chair2">
         <translate x="-3" y="0.25" z="0"/>
     </transformation>
+
+    <transformation id="set_cushion_upper">
+            <translate x="0.725" y="2.1" z="0.4"/>
+            <scale x="0.75" y="0.3" z="0.6"/>
+            <translate x="2.9" y="2.2" z="0.8"/>
+            <scale x="1" y="2" z="1"/>
+            <rotate axis="x" angle="90"/>
+            <scale x="1.3" y="0.1" z="1"/>
+        </transformation>
+
+        <transformation id="set_cushion_lower">
+            <translate x="0.725" y="0.56" z="0.35"/>
+            <scale x="0.75" y="0.6" z="0.75"/>
+            <translate x="2.9" y="1.2" z="1.25"/>
+            <scale x="1.3" y="0.1" z="1"/>
+        </transformation>
+
+        <transformation id="set_chair_legs">
+            <translate x="2" y="0" z="0"/>
+            <scale x="0.3" y="0.6" z="0.5"/>
+        </transformation>
+
+        <transformation id="set_chair_back">
+            <translate x="2.9" y="2.2" z="0.8"/>
+            <scale x="1" y="2" z="1"/>
+            <rotate axis="x" angle="90"/>
+            <scale x="1.3" y="0.1" z="1"/>
+        </transformation>
+
+        <transformation id="set_chair_top">
+            <translate x="2.9" y="1.2" z="1.25"/>
+            <scale x="1.3" y="0.1" z="1"/>
+        </transformation>
 
     <transformation id="set_cushion_top">
         <translate x="0" y="0.125" z="0"/>
@@ -496,7 +536,7 @@
         </transformation>
 
         <transformation id="set_table">
-            <translate x="2" y="0" z="6.575"/>
+            <translate x="2" y="0" z="6.5"/>
         </transformation>
 
         <transformation id="set_tv">
@@ -521,6 +561,27 @@
         <transformation id="set_tv_stand_base">
             <translate x="0" y="-0.9" z="0"/>
             <scale x="1.5" y="0.1" z="0.75"/>
+        </transformation>
+
+        <transformation id="set_window">
+            <translate x="-10" y="5" z="0"/>
+            <scale x="0.1" y="6" z="10"/>
+        </transformation>
+
+        <transformation id="set_window_back">
+            <translate x="-10.1" y="5" z="0"/>
+            <scale x="0.1" y="6" z="10"/>
+        </transformation>
+
+        <transformation id="set_office_door">
+            <translate x="10" y="4" z="-5"/>
+            <scale x="0.1" y="8" z="4"/>
+        </transformation>
+
+        <transformation id="set_office_door_handle">
+            <translate x="9.9" y="4" z="-3.8"/>
+            <scale x="2" y="2" z="2"/>
+            <rotate axis="y" angle="90"/>
         </transformation>
 
   </transformations>
@@ -828,6 +889,63 @@
         <componentref id="room"/>
         <componentref id="tv"/>
         <componentref id="table"/>
+        <componentref id="desk_chair"/>
+        <componentref id="window"/>
+        <componentref id="window_back"/>
+        <componentref id="office_door"/>
+        <componentref id="office_door_handle"/>
+      </children>
+    </component>
+
+    <component id="office_door_handle">
+      <transformation>
+          <transformationref id="set_office_door_handle"/>
+      </transformation>
+      <materials>
+          <material id="inherit"/>
+      </materials>
+      <texture id="gold" length_s="1" length_t="1" />
+      <children>
+          <primitiveref id="cylinder_door_handle"/>
+      </children>
+    </component>
+
+    <component id="office_door">
+      <transformation>
+          <transformationref id="set_office_door"/>
+      </transformation>
+      <materials>
+          <material id="inherit"/>
+      </materials>
+      <texture id="dark_wood" length_s="1" length_t="1" />
+      <children>
+          <componentref id="cube"/>
+      </children>
+    </component>
+
+    <component id="window_back">
+      <transformation>
+          <transformationref id="set_window_back"/>
+      </transformation>
+      <materials>
+          <material id="inherit"/>
+      </materials>
+      <texture id="black_plastic" length_s="1" length_t="1" />
+      <children>
+          <componentref id="cube"/>
+      </children>
+    </component>
+
+    <component id="window">
+      <transformation>
+          <transformationref id="set_window"/>
+      </transformation>
+      <materials>
+          <material id="inherit"/>
+      </materials>
+      <texture id="window_landscape" length_s="1" length_t="1" />
+      <children>
+          <componentref id="cube"/>
       </children>
     </component>
 
@@ -912,6 +1030,91 @@
       </children>
     </component>
 
+    <component id="desk_chair">
+            <transformation>
+                <transformationref id="set_desk_chair"/>
+            </transformation>
+            <materials>
+                <material id="dark"/>
+                <material id="inherit"/>
+            </materials>
+            <texture id="black_wood" length_s="1" length_t="1" />
+            <children>
+                <componentref id="chair_top"/>
+                <componentref id="chair_legs"/>
+                <componentref id="chair_back"/>
+                <componentref id="cushion_upper"/>
+                <componentref id="cushion_lower"/>
+            </children>
+        </component>
+
+        <component id="cushion_upper">
+            <transformation>
+                <transformationref id="set_cushion_upper"/>
+            </transformation>
+            <materials>
+                <material id="velvet"/>
+                <material id="inherit"/>
+            </materials>
+            <texture id="red_velvet" length_s="1" length_t="1" />
+            <children>
+                <componentref id="cube"/>
+            </children>
+        </component>
+
+        <component id="cushion_lower">
+            <transformation>
+                <transformationref id="set_cushion_lower"/>
+            </transformation>
+            <materials>
+                <material id="velvet"/>
+                <material id="inherit"/>
+            </materials>
+            <texture id="red_velvet" length_s="1" length_t="1" />
+            <children>
+                <componentref id="cube"/>
+            </children>
+        </component>
+
+        <component id="chair_back">
+            <transformation>
+                <transformationref id="set_chair_back"/>
+            </transformation>
+            <materials>
+                <material id="inherit"/>
+            </materials>
+            <texture id="inherit" length_s="1" length_t="1" />
+            <children>
+                <componentref id="cube"/>
+            </children>
+        </component>
+
+        <component id="chair_top">
+            <transformation>
+                <transformationref id="set_chair_top"/>
+            </transformation>
+            <materials>
+                <material id="inherit"/>
+            </materials>
+            <texture id="inherit" length_s="1" length_t="1" />
+            <children>
+                <componentref id="cube"/>
+            </children>
+        </component>
+
+        <component id="chair_legs">
+            <transformation>
+                <transformationref id="set_chair_legs"/>
+            </transformation>
+            <materials>
+                <material id="inherit"/>
+            </materials>
+            <texture id="inherit" length_s="1" length_t="1" />
+            <children>
+                <componentref id="legs"/>
+            </children>
+        </component>
+
     <component id="tv">
             <transformation>
                 <transformationref id="set_tv"/>
@@ -995,18 +1198,6 @@
             </children>
         </component>
 
-        <component id="chair_legs">
-            <transformation>
-                <transformationref id="set_chair_legs"/>
-            </transformation>
-            <materials>
-                <material id="inherit"/>
-            </materials>
-            <texture id="inherit" length_s="1" length_t="1" />
-            <children>
-                <componentref id="legs"/>
-            </children>
-        </component>
 
         <component id="legs">
             <transformation>
@@ -1084,7 +1275,7 @@
                 <material id="dark"/>
                 <material id="inherit"/>
             </materials>
-            <texture id="gray_wood" length_s="2" length_t="1" />
+            <texture id="black_wood" length_s="2" length_t="1" />
             <children>
                 <componentref id="table_top"/>
                 <componentref id="legs"/>
