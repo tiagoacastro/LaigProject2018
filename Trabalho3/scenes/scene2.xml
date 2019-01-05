@@ -16,12 +16,13 @@
   </ambient>
 
   <lights>
-    <omni id="lamp" enabled="1">
-      <location x="0" y="10" z="0" w="1"/>
+    <spot angle="1" id="lamp" enabled="1" exponent="6">
+     	<location x="0" y="8" z="0" w="1"/>
+	    <target x="0" y="0" z="0"/>
       <ambient r="0" g="0" b="0" a="1"/>
-      <diffuse r="0.8" g="0.8" b="0.8" a="1"/>
-      <specular r="0.8" g="0.8" b="0.8" a="1"/>
-    </omni>
+      <diffuse r="0.6" g="0.6" b="0.6" a="1"/>
+      <specular r="0.6" g="0.6" b="0.6" a="1"/>
+    </spot> 
   </lights>
 
   <textures>
