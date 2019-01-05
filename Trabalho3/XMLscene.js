@@ -123,8 +123,15 @@ class XMLscene extends CGFscene {
             //placeholder values
             this.camera.near = 0.1;
             this.camera.far = 500;
+
+            console.log(this.graph.filename);
     
-            //console.log(this.allGraphs);
+            //making sure all graphs have the correct game associated with them
+            for (let i = 0; i < this.allGraphs.length; i++) {
+                this.allGraphs[i].primitives["game"]["primitive"] = this.game;
+                this.allGraphs[i].primitives["clock"]["primitive"] = this.clock;
+                this.allGraphs[i].primitives["counter"]["primitive"] = this.game.counter;
+            }
     
             this.axis = new CGFaxis(this, this.graph.axis_length);
     
@@ -138,6 +145,7 @@ class XMLscene extends CGFscene {
             this.interface.addScenesGroup();
             this.interface.addViewsGroup(this.graph.cameras);
             this.interface.addGameGroup(this.game);
+
         }
         this.sceneInited = true;
         
@@ -152,7 +160,7 @@ class XMLscene extends CGFscene {
             this.currGraph++;
         }
         this.graph = this.allGraphs[this.currGraph];
-        
+        /*
         if (this.game != null && !this.graph.gameSet) {
           
             this.graph.primitives["game"]["primitive"] = this.game;
@@ -160,6 +168,7 @@ class XMLscene extends CGFscene {
             this.graph.primitives["counter"]["primitive"] = this.game.counter;
             this.graph.gameSet = true;
         }
+        */
         this.initLights();
         this.setGlobalAmbientLight(this.graph.ambient[0], this.graph.ambient[1], this.graph.ambient[2], this.graph.ambient[3]);
         this.gl.clearColor(this.graph.background[0], this.graph.background[1], this.graph.background[2], this.graph.background[3]);
