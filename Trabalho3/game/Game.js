@@ -199,7 +199,6 @@ class Game {
   }
 
   choosePiece() {
-
     var validPiece = this.board.isPieceInPos(this.selectedPieceRow, this.selectedPieceCol);
     if (validPiece != null && validPiece.color == this.currPlayer) {
       this.currPiece = validPiece;
@@ -224,6 +223,7 @@ class Game {
   }
 
   chooseDir() {
+
     var validDir = this.isValidDir();
     if (validDir != null) {
       this.moveDir = validDir; 
@@ -261,7 +261,30 @@ class Game {
     this.state = 'check_game_over';
   }
 
-  checkGameOver(data) { 
+  checkGameOver(data) {
+
+    if ((this.clock.current - this.clock.base)/1000 > this.clock.time) {
+      switch(this.style) {
+        case 0:
+        this.state = 'reset_camera';
+        break;
+        case 1:
+        this.state = 'reset_pvc_camera';
+        break;
+        case 2:
+        this.state = 'reset_bot_camera';
+        break;
+      }
+
+      if (this.currPlayer === 'b') {
+        this.counter.whitePlayerWins++;
+      } else {
+        this.counter.blackPlayerWins++;
+      }
+
+      return;
+    }
+    
     let occurences = this.turns.filter(turn => turn[0] === this.boardContent);
 
     if(data.target.response == 1 || occurences.length === 3) {
@@ -298,9 +321,9 @@ class Game {
   moveCamera() {
     if (!this.areAnimationsRunning()) {
       if (this.currPlayer == 'b') {
-        this.playerPOV.orbit(CGFcameraAxis.Y, this.cameraAngInc);
-      } else {
         this.playerPOV.orbit(CGFcameraAxis.Y, -this.cameraAngInc);
+      } else {
+        this.playerPOV.orbit(CGFcameraAxis.Y, this.cameraAngInc);
       }
 
       //console.log(this.playerPOV.position.toString());
@@ -495,7 +518,6 @@ class Game {
   }
 
   end() {
-    //check the winner
     if (!this.areAnimationsRunning()) {
       this.playerPOV.setPosition(vec3.fromValues(8, 11, 0)); //kinda of a temp solution for now, should probably do one last animation to reset the player pov
       this.state = 'none';

@@ -162,7 +162,7 @@ class Clock extends CGFobject
             }
 
             if((this.current - this.base)/1000 > this.time){
-                game.state = 'end';
+                game.state = 'check_game_over';
                 this.on = false;
                 if(this.player)
                     this.whiteT=0;
