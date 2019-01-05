@@ -234,7 +234,7 @@
     </transformation>
 
     <transformation id="set_counter">
-      <translate x="0" y="1.35" z="-1.875"/>
+      <translate x="0" y="1.35" z="-1.525"/>
     </transformation>
     
     <transformation id="set_game_station">
