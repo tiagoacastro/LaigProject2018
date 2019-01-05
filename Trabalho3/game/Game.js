@@ -151,6 +151,26 @@ class Game {
     } 
   }
 
+  setPVCCamera() {
+    if (!this.areAnimationsRunning()) {
+      console.log(this.actualChosenSide);
+      if (this.actualChosenSide == 'w') {
+        this.playerPOV.orbit(CGFcameraAxis.Y, -this.cameraAngInc);
+        console.log('hmm');
+      } else {
+        this.state = 'init';
+        return;
+      }
+
+      if (Math.abs(this.currCameraAng) >= Math.PI) { 
+        this.currCameraAng = 0;
+        this.playerPOV.setPosition(vec3.fromValues(-8,11,0));
+        this.state = 'init';
+      }
+
+    } 
+  }
+
   setCamera() {
     this.isPlayerPOVActive = !this.isPlayerPOVActive;
   }
@@ -245,16 +265,24 @@ class Game {
     let occurences = this.turns.filter(turn => turn[0] === this.boardContent);
 
     if(data.target.response == 1 || occurences.length === 3) {
-      if (this.style == 2) {
-        this.state = 'reset_bot_camera';
-      } else {
+      switch(this.style) {
+        case 0:
         this.state = 'reset_camera';
-      }                                                   
+        break;
+        case 1:
+        this.state = 'reset_pvc_camera';
+        break;
+        case 2:
+        this.state = 'reset_bot_camera';
+        break;
+      }
+
       if (this.currPlayer === 'b') {
         this.counter.blackPlayerWins++;
       } else {
         this.counter.whitePlayerWins++;
       }
+
       this.clock.stop();
     } else {
       this.clock.change();
@@ -270,9 +298,9 @@ class Game {
   moveCamera() {
     if (!this.areAnimationsRunning()) {
       if (this.currPlayer == 'b') {
-        this.playerPOV.orbit(CGFcameraAxis.Y, -this.cameraAngInc);
-      } else {
         this.playerPOV.orbit(CGFcameraAxis.Y, this.cameraAngInc);
+      } else {
+        this.playerPOV.orbit(CGFcameraAxis.Y, -this.cameraAngInc);
       }
 
       //console.log(this.playerPOV.position.toString());
@@ -315,6 +343,24 @@ class Game {
       this.playerPOV.orbit(CGFcameraAxis.Y, this.cameraAngInc);
 
       if (Math.abs(this.currCameraAng) >= Math.PI/2) { 
+        this.currCameraAng = 0;
+        this.playerPOV.setPosition(vec3.fromValues(8,11,0));
+        this.state = 'end';
+      }
+
+    } 
+  }
+
+  resetPVCCamera() {
+    if (!this.areAnimationsRunning()) {
+      if (this.actualChosenSide == 'w') {
+        this.playerPOV.orbit(CGFcameraAxis.Y, this.cameraAngInc);
+      } else {
+        this.state = 'end';
+        return;
+      }
+
+      if (Math.abs(this.currCameraAng) >= Math.PI) { 
         this.currCameraAng = 0;
         this.playerPOV.setPosition(vec3.fromValues(8,11,0));
         this.state = 'end';
@@ -430,7 +476,9 @@ class Game {
 
   startPvsBot(){
     if(this.state === 'none'){
-      this.state = 'init';
+      this.state = 'set_pvc_camera';
+      this.actualChosenSide = this.chosenSide;
+      this.actualBotDifficulty = this.botDifficulty;
       this.style = 1;
       this.clock.start();
     }
@@ -440,6 +488,8 @@ class Game {
     if(this.state === 'none'){
       this.state = 'set_bot_camera';
       this.style = 2;
+      this.actualWhiteBotDifficulty = this.whiteBotDifficulty;
+      this.actualBlackBotDifficulty = this.blackBotDifficulty;
       this.clock.start();
     }
   }
@@ -463,27 +513,21 @@ class Game {
   }
 
   stateMachine() {
+    console.log(this.state);
     switch (this.state) {
       case 'init':
         if(this.reset){
           this.currPlayer = 'b';
           this.state = 'check_style';
           this.clock.setTime(this.duration);
-          switch(this.style){
-            case 1:
-              this.actualChosenSide = this.chosenSide;
-              this.actualBotDifficulty = this.botDifficulty;
-              break;
-            case 2:
-              this.actualWhiteBotDifficulty = this.whiteBotDifficulty;
-              this.actualBlackBotDifficulty = this.blackBotDifficulty;
-              break;
-          }
         } else
           this.resetBoard();
         break;
       case 'set_bot_camera':
         this.setBotCamera();
+        break;
+      case 'set_pvc_camera':
+        this.setPVCCamera();
         break;
       case 'check_style':
         this.checkStyle();
@@ -529,6 +573,9 @@ class Game {
         break;
       case 'reset_bot_camera':
         this.resetBotCamera();
+        break;
+      case 'reset_pvc_camera':
+        this.resetPVCCamera();
         break;
       case 'end':
         this.end();
