@@ -2,7 +2,8 @@ class Piece {
 
     constructor(scene, color, id) {
 				this.scene = scene;
-				this.body = new MyCylinder(scene, 1, 1, 1, 30, 1);
+				this.body = new MyCylinder(scene, 1, 1, 1, 30, 10);
+				this.top = new MyTorus(scene, 0.15, 0.7, 30, 30);
 				this.color = color || '';
 				this.id = id;
 				this.oldRow = null;
@@ -103,6 +104,12 @@ class Piece {
 					this.scene.rotate(-Math.PI/2, 1, 0, 0);
 					this.scene.scale(0.05, 0.05, 0.05);
 					this.body.display();
+					this.scene.translate(0, 0, 1);
+					this.scene.pushMatrix();
+						this.scene.translate(0, 0, 1);
+						this.scene.scale(1, 1, 0.5);
+						this.top.display();
+					this.scene.popMatrix();
 				this.scene.popMatrix();
 			} else {	
 				this.scene.pushMatrix();
@@ -110,6 +117,11 @@ class Piece {
 					this.scene.rotate(-Math.PI/2, 1, 0, 0);
 					this.scene.scale(0.05, 0.05, 0.05);
 					this.body.display();
+					this.scene.pushMatrix();
+						this.scene.translate(0, 0, 1);
+						this.scene.scale(1, 1, 0.3);
+						this.top.display();
+					this.scene.popMatrix();
 				this.scene.popMatrix();
 			}
 
