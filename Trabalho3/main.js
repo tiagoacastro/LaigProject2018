@@ -38,9 +38,11 @@ serialInclude(['../lib/CGF.js', 'XMLscene.js', 'MySceneGraph.js',
         // or use "demo.xml" as default (assumes files in subfolder "scenes", check MySceneGraph constructor) 
         
         var filename=getUrlVars()['file'] || "t3.xml";
+        var scene2=getUrlVars()['file'] || "scene2.xml";
 
         // create and load graph, and associate it to scene. 
         // Check console for loading errors
+        var scene2 = new MySceneGraph(scene2, myScene);
         var myGraph = new MySceneGraph(filename, myScene);
         
         // start

@@ -71,6 +71,12 @@ class MyInterface extends CGFinterface {
             inter.setActiveCamera(cameras[val]);
         });
     }
+
+    addScenesGroup() {
+        var group = this.gui.addFolder("Scenes");
+        group.add(this.scene, 'reloadGraph').name('Change scene');
+    }
+
     /**
      * Adds a folder containing game information and commands
      * @param {object} game

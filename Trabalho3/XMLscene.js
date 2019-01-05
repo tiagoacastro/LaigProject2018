@@ -61,6 +61,9 @@ class XMLscene extends CGFscene {
         }
         //console.log(this.pickableObjs);
 
+        this.allGraphs = [];
+        this.currGraph = -1;
+
         this.setPickEnabled(true);
 
         this.game = null;
@@ -116,6 +119,8 @@ class XMLscene extends CGFscene {
         this.camera.near = 0.1;
         this.camera.far = 500;
 
+        console.log(this.allGraphs);
+
         this.axis = new CGFaxis(this, this.graph.axis_length);
 
         //ambient and background details according to parsed graph
@@ -126,10 +131,31 @@ class XMLscene extends CGFscene {
         // Adds lights group.
         this.interface.addAxisCheckBox();
         this.interface.addLightsGroup(this.graph.lights);
+        this.interface.addScenesGroup();
         this.interface.addViewsGroup(this.graph.cameras);
         this.interface.addGameGroup(this.game);
 
         this.sceneInited = true;
+    }
+
+    reloadGraph() {
+        //console.log(this.currGraph);
+        //console.log(this.allGraphs[this.currGraph]);
+        if (this.currGraph == this.allGraphs.length-1) {
+            this.currGraph = 0;
+        } else {
+            this.currGraph++;
+        }
+        this.graph = this.allGraphs[this.currGraph];
+        //console.log(this.graph);
+        if (this.game != null) {
+            this.graph.primitives["game"]["primitive"] = this.game;
+            this.graph.primitives["clock"]["primitive"] = this.game.clock;
+            this.graph.primitives["counter"]["primitive"] = this.game.counter;
+        }
+        this.initLights();
+        this.setGlobalAmbientLight(this.graph.ambient[0], this.graph.ambient[1], this.graph.ambient[2], this.graph.ambient[3]);
+        this.gl.clearColor(this.graph.background[0], this.graph.background[1], this.graph.background[2], this.graph.background[3]);
     }
     /**
      * Checks if M was pressed to cycle materials

@@ -35,6 +35,8 @@ class MySceneGraph {
         // Establish bidirectional references between scene and graph.
         this.scene = scene;
         scene.graph = this;
+        scene.allGraphs.push(this);
+        scene.currGraph++;
 
         this.nodes = [];
 
@@ -52,6 +54,8 @@ class MySceneGraph {
 
         this.currAppearance = {};
         this.currTexture = {};
+
+        this.gameSet = false;
 
         // File reading 
         this.reader = new CGFXMLreader(this.scene);
