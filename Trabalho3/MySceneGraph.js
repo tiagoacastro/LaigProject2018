@@ -1,4 +1,5 @@
 var DEGREE_TO_RAD = Math.PI / 180;
+var NUM_OF_GRAPHS = 2;
 
 function cloneAnimation(obj) {
     if (null == obj || "object" != typeof obj) return obj;
@@ -38,6 +39,12 @@ class MySceneGraph {
         scene.allGraphs.push(this);
         scene.currGraph++;
 
+        this.gameSet = false; //stops the scene from unnecessarily reloading the game primitive once the correct one has been set
+
+        if (scene.currGraph == NUM_OF_GRAPHS - 1) {
+            this.gameSet = true;
+        }
+
         this.nodes = [];
 
         this.idRoot = null;                    // The id of the root element.
@@ -55,7 +62,6 @@ class MySceneGraph {
         this.currAppearance = {};
         this.currTexture = {};
 
-        this.gameSet = false;
 
         // File reading 
         this.reader = new CGFXMLreader(this.scene);

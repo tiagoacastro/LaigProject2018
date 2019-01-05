@@ -148,10 +148,11 @@ class XMLscene extends CGFscene {
         }
         this.graph = this.allGraphs[this.currGraph];
         //console.log(this.graph);
-        if (this.game != null) {
+        if (this.game != null && !this.graph.gameSet) {
             this.graph.primitives["game"]["primitive"] = this.game;
             this.graph.primitives["clock"]["primitive"] = this.game.clock;
             this.graph.primitives["counter"]["primitive"] = this.game.counter;
+            this.graph.gameSet = true;
         }
         this.initLights();
         this.setGlobalAmbientLight(this.graph.ambient[0], this.graph.ambient[1], this.graph.ambient[2], this.graph.ambient[3]);

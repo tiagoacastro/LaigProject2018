@@ -773,7 +773,6 @@
         <componentref id="clock"/>
         <componentref id="counter"/>
         <componentref id="room"/>
-       
         <componentref id="room_barriers"/>
         <componentref id="room_stairs"/>
         <componentref id="game_station"/>
