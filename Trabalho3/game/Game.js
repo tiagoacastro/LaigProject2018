@@ -249,6 +249,9 @@ class Game {
   botMove(data){
     let response = data.target.response.split("-");
 
+    this.clock.stop();
+    this.clockStopped = true;
+
     this.currPiece = this.board.isPieceInPos(parseInt(response[1]), parseInt(response[2]));
     this.turns.push([this.boardContent, this.currPiece.getId(), this.currPiece.getPos(), [parseInt(response[3]), parseInt(response[4])]]); //board, pieceId, oldPos, newPos
     console.log(this.turns);
