@@ -119,7 +119,7 @@ class XMLscene extends CGFscene {
         this.camera.near = 0.1;
         this.camera.far = 500;
 
-        console.log(this.allGraphs);
+        //console.log(this.allGraphs);
 
         this.axis = new CGFaxis(this, this.graph.axis_length);
 
@@ -129,7 +129,7 @@ class XMLscene extends CGFscene {
         this.gl.clearColor(this.graph.background[0], this.graph.background[1], this.graph.background[2], this.graph.background[3]);
 
         // Adds lights group.
-        this.interface.addAxisCheckBox();
+        //this.interface.addAxisCheckBox();
         this.interface.addLightsGroup(this.graph.lights);
         this.interface.addScenesGroup();
         this.interface.addViewsGroup(this.graph.cameras);
