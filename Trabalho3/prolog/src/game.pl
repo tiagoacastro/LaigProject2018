@@ -217,15 +217,15 @@ getWinDirection(Dir, Board, Color, Row, Column, Moves, A) :-
 % Evaluates board state checking if it as a win for the player, if it has an opponent win,
 % if it has a win on the next turn and if it has 2 pieces together
 value(Board, 'b', Value) :-
-    (checkWin(Board, 'b'), Value is 3);
     (simulateBotWin(Board, 2, 'w'), Value is -1);
+    (checkWin(Board, 'b'), Value is 3);
     (simulateBotWin(Board, 2, 'b'), Value is 2);
     (check2(Board, 'b'), Value is 1);
     Value is 0.
 
 value(Board, 'w', Value) :-
-    (checkWin(Board, 'w'), Value is 3);
     (simulateBotWin(Board, 2, 'b'), Value is -1);
+    (checkWin(Board, 'w'), Value is 3);
     (simulateBotWin(Board, 2, 'w'), Value is 2);
     (check2(Board, 'w'), Value is 1);
     Value is 0.
