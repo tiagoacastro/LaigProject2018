@@ -63,6 +63,7 @@ class XMLscene extends CGFscene {
 
         this.allGraphs = [];
         this.currGraph = -1;
+        this.numGraphsLoaded = 0;
 
         this.setPickEnabled(true);
 
@@ -115,40 +116,45 @@ class XMLscene extends CGFscene {
      * Handler called when the graph is finally loaded. As loading is asynchronous, this may be called already after the application has started the run loop
      */
     onGraphLoaded() {
-        //placeholder values
-        this.camera.near = 0.1;
-        this.camera.far = 500;
 
-        //console.log(this.allGraphs);
-
-        this.axis = new CGFaxis(this, this.graph.axis_length);
-
-        //ambient and background details according to parsed graph
-        this.initLights();
-        this.setGlobalAmbientLight(this.graph.ambient[0], this.graph.ambient[1], this.graph.ambient[2], this.graph.ambient[3]);
-        this.gl.clearColor(this.graph.background[0], this.graph.background[1], this.graph.background[2], this.graph.background[3]);
-
-        // Adds lights group.
-        //this.interface.addAxisCheckBox();
-        this.interface.addLightsGroup(this.graph.lights);
-        this.interface.addScenesGroup();
-        this.interface.addViewsGroup(this.graph.cameras);
-        this.interface.addGameGroup(this.game);
-
+        this.numGraphsLoaded++;
+        
+        if (this.numGraphsLoaded == NUM_OF_GRAPHS) {
+            //placeholder values
+            this.camera.near = 0.1;
+            this.camera.far = 500;
+    
+            //console.log(this.allGraphs);
+    
+            this.axis = new CGFaxis(this, this.graph.axis_length);
+    
+            //ambient and background details according to parsed graph
+            this.initLights();
+            this.setGlobalAmbientLight(this.graph.ambient[0], this.graph.ambient[1], this.graph.ambient[2], this.graph.ambient[3]);
+            this.gl.clearColor(this.graph.background[0], this.graph.background[1], this.graph.background[2], this.graph.background[3]);
+            // Adds lights group.
+            //this.interface.addAxisCheckBox();
+            this.interface.addLightsGroup(this.graph.lights);
+            this.interface.addScenesGroup();
+            this.interface.addViewsGroup(this.graph.cameras);
+            this.interface.addGameGroup(this.game);
+        }
         this.sceneInited = true;
+        
+
     }
 
     reloadGraph() {
-        //console.log(this.currGraph);
-        //console.log(this.allGraphs[this.currGraph]);
+        
         if (this.currGraph == this.allGraphs.length-1) {
             this.currGraph = 0;
         } else {
             this.currGraph++;
         }
         this.graph = this.allGraphs[this.currGraph];
-        //console.log(this.graph);
+        
         if (this.game != null && !this.graph.gameSet) {
+          
             this.graph.primitives["game"]["primitive"] = this.game;
             this.graph.primitives["clock"]["primitive"] = this.game.clock;
             this.graph.primitives["counter"]["primitive"] = this.game.counter;
@@ -180,6 +186,8 @@ class XMLscene extends CGFscene {
      * update function
      */
     update(currTime) {
+
+        //console.log('currently in game ' + this.game.id);
 
         if (this.lastTime === -1) {
             this.lastTime = currTime;
@@ -261,7 +269,7 @@ class XMLscene extends CGFscene {
         this.game.state == 'reset_pvc_camera') && !this.game.areAnimationsRunning()) {
             this.game.cameraAngInc = Math.PI * (deltaTime/1000);
             this.game.currCameraAng += this.game.cameraAngInc;
-            console.log(this.game.currCameraAng);
+            
         }
     }
     
