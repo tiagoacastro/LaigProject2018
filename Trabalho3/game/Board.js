@@ -14,7 +14,7 @@ class Board extends CGFobject{
 		this.black.setAmbient(0.2,0.2,0.2,1);
 		this.black.setSpecular(0.6,0.6,0.6,1);
 		this.black.setDiffuse(1,1,1,1);
-		this.black.loadTexture("./scenes/images/black_marble.jpg");
+		this.black.loadTexture("./scenes/images/wood3.jpg");
 
 		this.white = new CGFappearance(this.scene);
 		this.white.setShininess(20);
@@ -22,8 +22,17 @@ class Board extends CGFobject{
 		this.white.setAmbient(0.2,0.2,0.2,1);
 		this.white.setSpecular(0.6,0.6,0.6,1);
 		this.white.setDiffuse(1,1,1,1);
-		this.white.loadTexture("./scenes/images/marble.jpg");
-	
+		this.white.loadTexture("./scenes/images/wood4.jpg");
+
+		this.border = new CGFappearance(this.scene);
+		this.border.setShininess(20);
+		this.border.setEmission(0,0,0,1);
+		this.border.setAmbient(0.2,0.2,0.2,1);
+		this.border.setSpecular(0.6,0.6,0.6,1);
+		this.border.setDiffuse(1,1,1,1);
+		this.border.loadTexture("./scenes/images/wood.jpg");
+		
+		this.rectangle = new MyRectangle(scene, 0, 1, 0, 1);
 
 		this.initPieces();
 		this.initBoard();
@@ -75,13 +84,22 @@ class Board extends CGFobject{
 				this.scene.pushMatrix();
 					if((j+i)%2===0)
 						this.black.apply();
-					else
+					else{
+						this.scene.rotate(Math.PI/2, 0, 1, 0);
 						this.white.apply();
+					}
 					this.scene.rotate(-Math.PI/2, 1, 0, 0);
 					this.board[i][j].display();
 				this.scene.popMatrix();
 			}
 		}
+		this.scene.pushMatrix();
+			this.border.apply();
+			this.scene.scale(1.1,1,1.1);
+			this.scene.translate(-0.5,-0.002,0.5);
+			this.scene.rotate(-Math.PI/2, 1, 0, 0);
+			this.rectangle.display();
+		this.scene.popMatrix();
 	}
 
 	displayPieces() {
