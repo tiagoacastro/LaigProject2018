@@ -125,7 +125,6 @@ class Game {
     this.reset = true;
     this.replayRevertCounter = 0;
     this.currPlayer = null;
-    this.boardContent = null;
     this.undoAgain = false;
 
   }

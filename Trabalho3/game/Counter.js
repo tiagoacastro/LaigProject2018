@@ -16,6 +16,7 @@ class Counter extends CGFobject {
     this.whiteCounter.setAmbient(0.2,0.2,0.2,1);
     this.whiteCounter.setSpecular(0.6,0.6,0.6,1);
     this.whiteCounter.setDiffuse(1,1,1,1);
+    this.whiteCounter.loadTexture("./scenes/images/marble.jpg");
 
     this.blackCounter = new CGFappearance(this.scene);
     this.blackCounter.setShininess(20);
@@ -23,6 +24,7 @@ class Counter extends CGFobject {
     this.blackCounter.setAmbient(0.2,0.2,0.2,1);
     this.blackCounter.setSpecular(0.6,0.6,0.6,1);
     this.blackCounter.setDiffuse(0,0,0,1);
+    this.blackCounter.loadTexture("./scenes/images/black_marble.jpg");
 
     this.zero = new CGFappearance(this.scene);
     this.zero.loadTexture("./scenes/images/zero.jpg");
